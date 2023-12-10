@@ -39,7 +39,7 @@ const ReadingQuestion = () => {
         const answerStatus = answerStatuses[questionNumber];
         const isCorrect = answerStatus === 'correct';
         const isIncorrect = answerStatus === 'incorrect';
-        const borderColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
+        const bgColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
     
         switch (group.questionType) {
             case "Match":
@@ -51,7 +51,7 @@ const ReadingQuestion = () => {
                         <Select 
                             className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)}
-                            borderColor={borderColor}
+                            bg={bgColor}
                             isReadOnly={isCorrect || isIncorrect}
                         >
                             <option value="" disabled>-</option>
@@ -83,7 +83,7 @@ const ReadingQuestion = () => {
                             type="text" 
                             className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)} 
-                            borderColor={borderColor}
+                            bg={bgColor}
                             value={userAnswers[questionNumber] || ''}
                             isReadOnly={isCorrect || isIncorrect}
                         />
@@ -155,7 +155,7 @@ const ReadingQuestion = () => {
                         overflowY="auto" 
                         maxH= {{base: "38vh", md: "75vh"}}
                         mt = {{base: -2, md: 0}} // Margin top on mobile
-                        mb={{ base: 2, md: 0 }} // Margin bottom on mobile
+                        mb={{ base: 3, md: 0 }} // Margin bottom on mobile
                         mx = {{md:1}}
                     >
                         <Text fontWeight="bold">{passageTitle}:</Text>
@@ -183,7 +183,7 @@ const ReadingQuestion = () => {
                         ))}
                     </Box>
                 </Flex>
-                <Flex justifyContent="center" mt={-2}>
+                <Flex justifyContent="center" mt = {-1}>
                     <Button colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
