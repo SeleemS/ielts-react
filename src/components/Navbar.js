@@ -5,8 +5,10 @@ import {
   Spacer,
   Button,
   Image,
-  HStack
+  HStack,
+  Link
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom'; // Import RouterLink from react-router-dom
 
 const Navbar = () => {
     const buttonStyle = {
@@ -23,9 +25,11 @@ const Navbar = () => {
     return (
         <Flex as="header" bg="black" p={3} color="white" align="center"> {/* Reduced padding */}
             {/* Logo */}
-            <Box p="1">
-                <Image src="/image.png" alt="Logo" boxSize="50px" /> {/* Adjusted box size */}
-            </Box>
+            <Link as={RouterLink} to="/">
+                <Box p="1">
+                    <Image src="/image.png" alt="Logo" boxSize="50px" />
+                </Box>
+            </Link>
 
             <Spacer />
 
