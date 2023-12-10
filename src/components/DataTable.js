@@ -1,34 +1,27 @@
-import React from 'react';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box
-} from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Table, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
+import {db} from '../firebase';// Adjust the import path
+import { collection } from 'firebase/firestore';
 
 const DataTable = () => {
-    const data = [
-        { title: 'Endless Harvest', difficulty: 'Easy' },
-        { title: 'Coal and Pollution', difficulty: 'Medium' },
-        { title: 'Early Childhood Education', difficulty: 'Hard' },
-        { title: 'Endless Harvest', difficulty: 'Easy' },
-        { title: 'Coal and Pollution', difficulty: 'Medium' },
-        { title: 'Early Childhood Education', difficulty: 'Hard' },
-        { title: 'Endless Harvest', difficulty: 'Easy' },
-        { title: 'Coal and Pollution', difficulty: 'Medium' },
-        { title: 'Early Childhood Education', difficulty: 'Hard' },
-        { title: 'Endless Harvest', difficulty: 'Easy' },
-        { title: 'Coal and Pollution', difficulty: 'Medium' },
-        { title: 'Early Childhood Education', difficulty: 'Hard' },
-        // ... more data
-    ];
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const querySnapshot = collection(db, 'readingPassages');
+            const data = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setData(data);
+        };
+
+        fetchData();
+    }, []);
 
     return (
-        <Box w="100%" overflowX="auto">
-            <Table width="100%" variant="simple">
+        <Box overflowX="auto">
+            <Table variant="simple">
                 <Thead>
                     <Tr>
                         <Th fontWeight="bold">#</Th>
@@ -38,7 +31,7 @@ const DataTable = () => {
                 </Thead>
                 <Tbody>
                     {data.map((item, index) => (
-                        <Tr key={index} bg={index % 2 === 0 ? "gray.50" : "white"}>
+                        <Tr key={item.id}>
                             <Td>{index + 1}</Td>
                             <Td>{item.title}</Td>
                             <Td>{item.difficulty}</Td>
