@@ -153,10 +153,10 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "38vh", md: "75vh"}}
+                        maxH= {{base: "39vh", md: "75vh"}}
                         mt = {{base: -2, md: 0}} // Margin top on mobile
                         mb={{ base: 3, md: 0 }} // Margin bottom on mobile
-                        mx = {{md:1}}
+                        mx = {{md:2}}
                     >
                         <Text fontWeight="bold">{passageTitle}:</Text>
                         <Divider my={4} />
@@ -169,7 +169,7 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "38vh", md: "75vh"}}
+                        maxH= {{base: "39vh", md: "75vh"}}
                         mx = {{md:1}}
                     >
                         <Text fontWeight="bold">Questions:</Text>
