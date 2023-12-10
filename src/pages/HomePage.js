@@ -1,30 +1,28 @@
 import React from 'react';
+import {
+  Box,
+  Container,
+  Heading,
+  Text,
+  Link,
+  VStack,
+} from '@chakra-ui/react';
+import Navbar from '../components/Navbar.js'; // Make sure the path is correct
 
 const HomePage = () => {
     return (
-        <div>
-            <header>
-                <h1>Welcome to My Website</h1>
-                <nav>
-                    {/* Navigation items here */}
-                </nav>
-            </header>
-            
-            <main>
-                <section>
-                    <h2>About Us</h2>
-                    <p>This is a great place to introduce yourself and your site, or to include some credits.</p>
-                </section>
-                <section>
-                    <h2>Contact</h2>
-                    <p>Have questions? Reach out to us at <a href="mailto:contact@example.com">contact@example.com</a></p>
-                </section>
-            </main>
+        <Box>
+            {/* Include Navbar */}
+            <Navbar />
 
-            <footer>
-                <p>© 2023 My Website</p>
-            </footer>
-        </div>
+            {/* Main Content */}
+            <Container maxW="container.md" centerContent py={6}>
+                {/* Your content */}
+            </Container>
+
+            {/* Footer */}
+            {/* Your footer */}
+        </Box>
     );
 }
 
