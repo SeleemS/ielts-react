@@ -3,6 +3,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, Box, Flex, Button } from '@chakra-ui/r
 import { app } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import ReadingQuestion from '../pages/ReadingQuestion';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
@@ -41,7 +42,7 @@ const DataTable = ({ selectedOption }) => {
 
     const handleRowClick = (id) => {
         if (selectedOption === 'Reading') {
-            navigate(`../pages/ReadingQuestion.js/${id}`); // Navigate to ReadingQuestion with the document ID
+            navigate(`ReadingQuestion/${id}`); // Navigate to ReadingQuestion with the document ID
         }
         // You can add logic for other options if needed
     };
