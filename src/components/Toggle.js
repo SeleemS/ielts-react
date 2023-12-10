@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Flex, Button } from '@chakra-ui/react';
+import { Flex, Button, Box } from '@chakra-ui/react';
 
 const Toggle = ({ onChange }) => {
     const [selected, setSelected] = useState('Reading');
-
     const options = ['Reading', 'Writing', 'Listening'];
 
     const handleSelect = (option) => {
@@ -13,18 +12,31 @@ const Toggle = ({ onChange }) => {
         }
     };
 
+    // Calculate the left position for the slider
+    const sliderLeft = options.indexOf(selected) * (100 / options.length) + "%";
+
     return (
-        <Flex border="1px solid" borderColor="gray.200" borderRadius="md">
+        <Flex position="relative" border="1px solid" borderColor="gray.200" borderRadius="md" bg="white">
+            <Box
+                position="absolute"
+                left={sliderLeft}
+                width={`${100 / options.length}%`}
+                bg="black"
+                borderRadius="md"
+                transition="left 0.3s ease-out"
+                height="100%"
+            />
             {options.map((option) => (
                 <Button
                     flex={1}
-                    bg={selected === option ? 'blue.500' : 'white'}
+                    bg="transparent"
                     color={selected === option ? 'white' : 'gray.600'}
-                    borderRadius="none"
                     fontWeight="bold"
-                    _hover={{ bg: 'blue.600', color: 'white' }}
+                    borderRadius="md"
+                    _hover={{ bg: 'transparent', color: 'white' }}
                     onClick={() => handleSelect(option)}
                     key={option}
+                    zIndex="2" // Ensure buttons are above the slider
                 >
                     {option}
                 </Button>
