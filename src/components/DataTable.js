@@ -20,6 +20,20 @@ const DataTable = () => {
         fetchData();
     }, []);
 
+    // Function to determine the color based on difficulty
+    const getDifficultyColor = (difficulty) => {
+        switch (difficulty) {
+            case 'Hard':
+                return 'red.500';
+            case 'Medium':
+                return 'yellow.500';
+            case 'Easy':
+                return 'green.500';
+            default:
+                return 'gray.500';
+        }
+    };
+
     return (
         <Box overflowX="auto">
             <Table variant="simple">
@@ -35,7 +49,7 @@ const DataTable = () => {
                         <Tr key={item.id}>
                             <Td>{index + 1}</Td>
                             <Td>{item.passageTitle}</Td>
-                            <Td>{item.passageDifficulty}</Td>
+                            <Td color={getDifficultyColor(item.passageDifficulty)}>{item.passageDifficulty}</Td>
                         </Tr>
                     ))}
                 </Tbody>
