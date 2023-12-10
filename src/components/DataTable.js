@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
-import { app } from '../firebase'; // Adjust the import path as necessary
+import { Table, Thead, Tbody, Tr, Th, Td, Box, Flex, Button } from '@chakra-ui/react';
+import { app } from '../firebase';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const resultsPerPage = 10;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +21,7 @@ const DataTable = ({ selectedOption }) => {
                 case 'Listening':
                     querySnapshot = await getDocs(collection(db, 'listeningPassages'));
                     break;
-                default: // 'Reading' and other cases
+                default:
                     querySnapshot = await getDocs(collection(db, 'readingPassages'));
             }
 
@@ -28,12 +31,12 @@ const DataTable = ({ selectedOption }) => {
             }));
 
             setData(fetchedData);
+            setTotalPages(Math.ceil(fetchedData.length / resultsPerPage));
         };
 
         fetchData();
     }, [selectedOption]);
 
-    // Function to determine the color based on difficulty
     const getDifficultyColor = (difficulty) => {
         switch (difficulty) {
             case 'Hard':
@@ -45,7 +48,14 @@ const DataTable = ({ selectedOption }) => {
             default:
                 return 'gray.500';
         }
-    };
+    };    
+
+    // Pagination controls
+    const goToPreviousPage = () => setCurrentPage(page => Math.max(1, page - 1));
+    const goToNextPage = () => setCurrentPage(page => Math.min(totalPages, page + 1));
+
+    // Slice data for current page
+    const paginatedData = data.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage);
 
     return (
         <Box overflowX="auto">
@@ -58,15 +68,25 @@ const DataTable = ({ selectedOption }) => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {data.map((item, index) => (
+                    {paginatedData.map((item, index) => (
                         <Tr key={item.id}>
-                            <Td>{index + 1}</Td>
+                            <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
                             <Td>{item.passageTitle}</Td>
-                            <Td color={getDifficultyColor(item.passageDifficulty)}>{item.passageDifficulty}</Td>
+                            <Td color={getDifficultyColor(item.passageDifficulty)} fontWeight={"bold"}>{item.passageDifficulty}</Td>
                         </Tr>
                     ))}
                 </Tbody>
             </Table>
+            <Flex justifyContent="center" mt={2}>
+                {currentPage > 1 && (
+                    <Button onClick={goToPreviousPage} mr={4}>
+                        Previous
+                    </Button>
+                )}
+                <Button onClick={goToNextPage} disabled={currentPage === totalPages}>
+                    Next
+                </Button>
+            </Flex>
         </Box>
     );
 };
