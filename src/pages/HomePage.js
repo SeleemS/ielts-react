@@ -23,7 +23,7 @@ const HomePage = () => {
             <Navbar />
 
             {/* Main Content */}
-            <Container maxW="container.md" centerContent py={6}>
+            <Container maxW="100%" centerContent py={6}>
                 <VStack spacing={4}>
                     {/* Place the Toggle component here */}
                     <Toggle onChange={handleToggleChange} />
@@ -33,7 +33,7 @@ const HomePage = () => {
                     {/* Rest of your content */}
                     {/* Example content */}
                     <Heading>IELTSBank</Heading>
-                    <Text>This is the main area for your content.</Text>
+                    <Text> </Text>
                 </VStack>
             </Container>
 

@@ -10,27 +10,26 @@ import {
 } from '@chakra-ui/react';
 
 const DataTable = () => {
-    // Ensure data is an array
     const data = [
-        { title: 'Reading Comprehension', difficulty: 'Easy' },
-        { title: 'Essay Writing', difficulty: 'Medium' },
-        { title: 'Listening Test', difficulty: 'Hard' },
+        { title: 'Endless Harvest', difficulty: 'Easy' },
+        { title: 'Coal and Pollution', difficulty: 'Medium' },
+        { title: 'Early Childhood Education', difficulty: 'Hard' },
         // ... more data
     ];
 
     return (
-        <Box overflowX="auto">
-            <Table variant="simple">
+        <Box w="100%" overflowX="auto">
+            <Table width="100%" variant="simple">
                 <Thead>
                     <Tr>
-                        <Th>#</Th>
-                        <Th>Title</Th>
-                        <Th>Difficulty</Th>
+                        <Th fontWeight="bold">#</Th>
+                        <Th fontWeight="bold">Title</Th>
+                        <Th fontWeight="bold">Difficulty</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {data.map((item, index) => (
-                        <Tr key={index}>
+                        <Tr key={index} bg={index % 2 === 0 ? "gray.50" : "white"}>
                             <Td>{index + 1}</Td>
                             <Td>{item.title}</Td>
                             <Td>{item.difficulty}</Td>
