@@ -9,6 +9,9 @@ const ReadingQuestion = () => {
     const [passageText, setPassageText] = useState('');
     const [passageTitle, setPassageTitle] = useState('');
     const [questionGroups, setQuestionGroups] = useState([]);
+    const [userAnswers, setUserAnswers] = useState({});
+    const [answerStatuses, setAnswerStatuses] = useState({});
+
 
     // Use useParams to get the passageId from the URL
     const { id: passageId } = useParams();
@@ -33,17 +36,27 @@ const ReadingQuestion = () => {
     }, [passageId]);
 
     const renderQuestion = (qMap, questionNumber, group) => {
+        const answerStatus = answerStatuses[questionNumber];
+        const isCorrect = answerStatus === 'correct';
+        const isIncorrect = answerStatus === 'incorrect';
+        const borderColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
+    
         switch (group.questionType) {
             case "Match":
             case "True or False":
             case "Yes or No":
                 return (
-                    <Box className="mb-4" my ={4}>
+                    <Box className="mb-4" my={4}>
                         <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
-                        <Select className="form-control mb-2">
-                            <option value="" selected disabled>-</option>
-                            {group.questionType === "Match" && group.options.map(option => (
-                                <option value={option}>{option}</option>
+                        <Select 
+                            className="form-control mb-2" 
+                            onChange={e => handleAnswerChange(e, questionNumber)}
+                            borderColor={borderColor}
+                            isReadOnly={isCorrect || isIncorrect}
+                        >
+                            <option value="" disabled>-</option>
+                            {group.questionType === "Match" && group.options.map((option, idx) => (
+                                <option key={idx} value={option}>{option}</option>
                             ))}
                             {group.questionType === "True or False" && (
                                 <>
@@ -66,7 +79,14 @@ const ReadingQuestion = () => {
                 return (
                     <Box className="mb-4">
                         <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
-                        <Input type="text" className="form-control mb-2" placeholder="Your answer here..." />
+                        <Input 
+                            type="text" 
+                            className="form-control mb-2" 
+                            onChange={e => handleAnswerChange(e, questionNumber)} 
+                            borderColor={borderColor}
+                            value={userAnswers[questionNumber] || ''}
+                            isReadOnly={isCorrect || isIncorrect}
+                        />
                     </Box>
                 );
             default:
@@ -74,10 +94,48 @@ const ReadingQuestion = () => {
         }
     };
 
-    const handleSubmit = () => {
-        // Handle the submission logic here
-        console.log("Submit button clicked");
+    const handleAnswerChange = (event, questionNumber) => {
+        setUserAnswers(prevAnswers => ({
+            ...prevAnswers,
+            [questionNumber]: event.target.value.trim().toLowerCase()
+        }));
     };
+    
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        let newAnswerStatuses = {};
+        let correctAnswersCount = 0;
+        let answerIndex = 1; // Start from 1 to match question numbers
+    
+        const db = getFirestore(app);
+        const questionDoc = doc(db, 'readingPassages', passageId);
+        const docSnapshot = await getDoc(questionDoc);
+    
+        if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+            data.questionGroups.forEach(group => {
+                group.questions.forEach(qMap => {
+                    const correctAnswer = qMap.answer.toLowerCase();
+                    const userAnswer = userAnswers[answerIndex] || "-";
+    
+                    if (userAnswer === correctAnswer) {
+                        correctAnswersCount++;
+                        newAnswerStatuses[answerIndex] = 'correct';
+                    } else {
+                        newAnswerStatuses[answerIndex] = 'incorrect';
+                    }
+                    answerIndex++;
+                });
+            });
+    
+            setAnswerStatuses(newAnswerStatuses);
+            console.log(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`);
+        } else {
+            console.error("No such document!");
+        }
+    };
+    
 
     return (
         <>
