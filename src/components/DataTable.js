@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td, Box, Flex, Button } from '@chakra-ui/react';
 import { app } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const DataTable = ({ selectedOption }) => {
@@ -8,6 +9,7 @@ const DataTable = ({ selectedOption }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const resultsPerPage = 10;
+    const navigate = useNavigate(); // Initialize navigate here
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +38,13 @@ const DataTable = ({ selectedOption }) => {
 
         fetchData();
     }, [selectedOption]);
+
+    const handleRowClick = (id) => {
+        if (selectedOption === 'Reading') {
+            navigate(`../pages/ReadingQuestion.js/${id}`); // Navigate to ReadingQuestion with the document ID
+        }
+        // You can add logic for other options if needed
+    };
 
     const getDifficultyColor = (difficulty) => {
         switch (difficulty) {
@@ -69,10 +78,12 @@ const DataTable = ({ selectedOption }) => {
                 </Thead>
                 <Tbody>
                     {paginatedData.map((item, index) => (
-                        <Tr key={item.id}>
-                            <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
+                        <Tr key={item.id} onClick={() => handleRowClick(item.id)} cursor="pointer">
+                            <Td>{index + 1}</Td>
                             <Td>{item.passageTitle}</Td>
-                            <Td color={getDifficultyColor(item.passageDifficulty)} fontWeight={"bold"}>{item.passageDifficulty}</Td>
+                            <Td color={getDifficultyColor(item.passageDifficulty)}>
+                                {item.passageDifficulty}
+                            </Td>
                         </Tr>
                     ))}
                 </Tbody>
