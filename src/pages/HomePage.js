@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -12,35 +12,24 @@ import Toggle from '../components/Toggle';
 import DataTable from '../components/DataTable';
 
 const HomePage = () => {
-    const handleToggleChange = (value) => {
-        console.log("Selected:", value);
-        // Additional logic to handle the change
+    const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
+
+    const handleToggleChange = (option) => {
+        setSelectedOption(option);
     };
 
     return (
         <Box>
-            {/* Include Navbar */}
             <Navbar />
-
-            {/* Main Content */}
-            <Container maxW="100%" centerContent py={6}>
-                <VStack maxW = "100%" spacing={4}>
-                    {/* Place the Toggle component here */}
+            <Container maxW="container.md" centerContent py={6}>
+                <VStack spacing={4}>
                     <Toggle onChange={handleToggleChange} />
-                    <DataTable />
-                    
-
-                    {/* Rest of your content */}
-                    {/* Example content */}
-                    <Heading>IELTSBank</Heading>
-                    <Text> </Text>
+                    <DataTable selectedOption={selectedOption} /> {/* Pass selectedOption as a prop */}
                 </VStack>
             </Container>
-
             {/* Footer */}
-            {/* Your footer */}
         </Box>
     );
-}
+};
 
 export default HomePage;

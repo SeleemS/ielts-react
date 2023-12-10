@@ -3,22 +3,35 @@ import { Table, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
 import { app } from '../firebase'; // Adjust the import path as necessary
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-const DataTable = () => {
+const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const db = getFirestore(app);
-            const querySnapshot = await getDocs(collection(db, 'readingPassages'));
+            let querySnapshot;
+
+            switch (selectedOption) {
+                case 'Writing':
+                    querySnapshot = await getDocs(collection(db, 'writingPassages'));
+                    break;
+                case 'Listening':
+                    querySnapshot = await getDocs(collection(db, 'listeningPassages'));
+                    break;
+                default: // 'Reading' and other cases
+                    querySnapshot = await getDocs(collection(db, 'readingPassages'));
+            }
+
             const fetchedData = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
+
             setData(fetchedData);
         };
 
         fetchData();
-    }, []);
+    }, [selectedOption]);
 
     // Function to determine the color based on difficulty
     const getDifficultyColor = (difficulty) => {
