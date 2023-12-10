@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar'; 
 import Toggle from '../components/Toggle';
+import DataTable from '../components/DataTable';
 
 const HomePage = () => {
     const handleToggleChange = (value) => {
@@ -26,6 +27,7 @@ const HomePage = () => {
                 <VStack spacing={4}>
                     {/* Place the Toggle component here */}
                     <Toggle onChange={handleToggleChange} />
+                    <DataTable />
 
                     {/* Rest of your content */}
                     {/* Example content */}
