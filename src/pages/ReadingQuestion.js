@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
-import { Box, Flex, Container, VStack, Text, Divider } from '@chakra-ui/react';
+import { Box, Flex, Container, VStack, Text, Divider, Select, Input } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
@@ -32,6 +32,48 @@ const ReadingQuestion = () => {
         fetchData();
     }, [passageId]);
 
+    const renderQuestion = (qMap, questionNumber, group) => {
+        switch (group.questionType) {
+            case "Match":
+            case "True or False":
+            case "Yes or No":
+                return (
+                    <Box className="mb-4">
+                        <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
+                        <Select className="form-control mb-2">
+                            <option value="" selected disabled>-</option>
+                            {group.questionType === "Match" && group.options.map(option => (
+                                <option value={option}>{option}</option>
+                            ))}
+                            {group.questionType === "True or False" && (
+                                <>
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                    <option value="not given">Not Given</option>
+                                </>
+                            )}
+                            {group.questionType === "Yes or No" && (
+                                <>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="not given">Not Given</option>
+                                </>
+                            )}
+                        </Select>
+                    </Box>
+                );
+            case "Short Answer":
+                return (
+                    <Box className="mb-4">
+                        <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
+                        <Input type="text" className="form-control mb-2" placeholder="Your answer here..." />
+                    </Box>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -48,7 +90,7 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "40vh", md: "75vh"}}
+                        maxH= {{base: "35vh", md: "75vh"}}
                         mb={{ base: 4, md: 0 }} // Margin bottom on mobile
                         mx = {{md:2}}
                     >
@@ -63,15 +105,16 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH="50vh" // Adjusted height
+                        maxH= {{base: "35vh", md: "75vh"}}
                         mx = {{md:2}}
                     >
                         <Text fontWeight="bold">Questions:</Text>
                         <Divider my={4} />
-                        {questionGroups.map((group, index) => (
-                            <Box key={index}>
-                                <Text>{group.questionText}</Text>
-                                {/* More question details */}
+                        {questionGroups.map((group, groupIndex) => (
+                            <Box key={groupIndex}>
+                                {group.questions.map((qMap, questionIndex) => (
+                                    renderQuestion(qMap, groupIndex * 10 + questionIndex + 1, group)
+                                ))}
                             </Box>
                         ))}
                     </Box>
