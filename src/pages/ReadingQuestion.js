@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
-import { Box, Flex, Container, VStack, Text, Divider, Select, Input } from '@chakra-ui/react';
+import { Box, Button, Flex, Container, VStack, Text, Divider, Select, Input } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
@@ -38,7 +38,7 @@ const ReadingQuestion = () => {
             case "True or False":
             case "Yes or No":
                 return (
-                    <Box className="mb-4">
+                    <Box className="mb-4" my ={4}>
                         <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
                         <Select className="form-control mb-2">
                             <option value="" selected disabled>-</option>
@@ -72,6 +72,11 @@ const ReadingQuestion = () => {
             default:
                 return null;
         }
+    };
+
+    const handleSubmit = () => {
+        // Handle the submission logic here
+        console.log("Submit button clicked");
     };
 
     return (
@@ -118,6 +123,11 @@ const ReadingQuestion = () => {
                             </Box>
                         ))}
                     </Box>
+                </Flex>
+                <Flex justifyContent="center" mt={4}>
+                    <Button colorScheme="blue" onClick={handleSubmit}>
+                        Submit
+                    </Button>
                 </Flex>
             </Container>
         </>
