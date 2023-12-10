@@ -7,9 +7,15 @@ import {
   Link,
   VStack,
 } from '@chakra-ui/react';
-import Navbar from '../components/Navbar.js'; // Make sure the path is correct
+import Navbar from '../components/Navbar'; 
+import Toggle from '../components/Toggle';
 
 const HomePage = () => {
+    const handleToggleChange = (value) => {
+        console.log("Selected:", value);
+        // Additional logic to handle the change
+    };
+
     return (
         <Box>
             {/* Include Navbar */}
@@ -17,7 +23,15 @@ const HomePage = () => {
 
             {/* Main Content */}
             <Container maxW="container.md" centerContent py={6}>
-                {/* Your content */}
+                <VStack spacing={4}>
+                    {/* Place the Toggle component here */}
+                    <Toggle onChange={handleToggleChange} />
+
+                    {/* Rest of your content */}
+                    {/* Example content */}
+                    <Heading>Welcome to the HomePage</Heading>
+                    <Text>This is the main area for your content.</Text>
+                </VStack>
             </Container>
 
             {/* Footer */}
