@@ -95,9 +95,10 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "35vh", md: "75vh"}}
-                        mb={{ base: 4, md: 0 }} // Margin bottom on mobile
-                        mx = {{md:2}}
+                        maxH= {{base: "38vh", md: "75vh"}}
+                        mt = {{base: -2, md: 0}} // Margin top on mobile
+                        mb={{ base: 2, md: 0 }} // Margin bottom on mobile
+                        mx = {{md:1}}
                     >
                         <Text fontWeight="bold">{passageTitle}:</Text>
                         <Divider my={4} />
@@ -110,8 +111,8 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "35vh", md: "75vh"}}
-                        mx = {{md:2}}
+                        maxH= {{base: "38vh", md: "75vh"}}
+                        mx = {{md:1}}
                     >
                         <Text fontWeight="bold">Questions:</Text>
                         <Divider my={4} />
@@ -124,7 +125,7 @@ const ReadingQuestion = () => {
                         ))}
                     </Box>
                 </Flex>
-                <Flex justifyContent="center" mt={4}>
+                <Flex justifyContent="center" mt={-2}>
                     <Button colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
