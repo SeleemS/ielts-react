@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
-import {db} from '../firebase';// Adjust the import path
-import { collection } from 'firebase/firestore';
+import { app } from '../firebase'; // Adjust the import path as necessary
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const DataTable = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const querySnapshot = collection(db, 'readingPassages');
-            const data = querySnapshot.docs.map(doc => ({
+            const db = getFirestore(app);
+            const querySnapshot = await getDocs(collection(db, 'readingPassages'));
+            const fetchedData = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            setData(data);
+            setData(fetchedData);
         };
 
         fetchData();
@@ -33,8 +34,8 @@ const DataTable = () => {
                     {data.map((item, index) => (
                         <Tr key={item.id}>
                             <Td>{index + 1}</Td>
-                            <Td>{item.title}</Td>
-                            <Td>{item.difficulty}</Td>
+                            <Td>{item.passageTitle}</Td>
+                            <Td>{item.passageDifficulty}</Td>
                         </Tr>
                     ))}
                 </Tbody>
