@@ -28,10 +28,11 @@ const HomePage = () => {
                     {/* Place the Toggle component here */}
                     <Toggle onChange={handleToggleChange} />
                     <DataTable />
+                    
 
                     {/* Rest of your content */}
                     {/* Example content */}
-                    <Heading>Welcome to the HomePage</Heading>
+                    <Heading>IELTSBank</Heading>
                     <Text>This is the main area for your content.</Text>
                 </VStack>
             </Container>
