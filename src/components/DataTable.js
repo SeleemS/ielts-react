@@ -14,6 +14,15 @@ const DataTable = () => {
         { title: 'Endless Harvest', difficulty: 'Easy' },
         { title: 'Coal and Pollution', difficulty: 'Medium' },
         { title: 'Early Childhood Education', difficulty: 'Hard' },
+        { title: 'Endless Harvest', difficulty: 'Easy' },
+        { title: 'Coal and Pollution', difficulty: 'Medium' },
+        { title: 'Early Childhood Education', difficulty: 'Hard' },
+        { title: 'Endless Harvest', difficulty: 'Easy' },
+        { title: 'Coal and Pollution', difficulty: 'Medium' },
+        { title: 'Early Childhood Education', difficulty: 'Hard' },
+        { title: 'Endless Harvest', difficulty: 'Easy' },
+        { title: 'Coal and Pollution', difficulty: 'Medium' },
+        { title: 'Early Childhood Education', difficulty: 'Hard' },
         // ... more data
     ];
 

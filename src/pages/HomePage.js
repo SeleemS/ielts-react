@@ -24,7 +24,7 @@ const HomePage = () => {
 
             {/* Main Content */}
             <Container maxW="100%" centerContent py={6}>
-                <VStack spacing={4}>
+                <VStack maxW = "100%" spacing={4}>
                     {/* Place the Toggle component here */}
                     <Toggle onChange={handleToggleChange} />
                     <DataTable />
