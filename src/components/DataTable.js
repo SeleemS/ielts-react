@@ -87,7 +87,7 @@ const DataTable = ({ selectedOption }) => {
                     >
                         <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
                         <Td>{item.passageTitle}</Td>
-                        <Td color={getDifficultyColor(item.passageDifficulty)}>
+                        <Td color={getDifficultyColor(item.passageDifficulty)} fontWeight={"bold"}>
                             {item.passageDifficulty}
                         </Td>
                     </Tr>
