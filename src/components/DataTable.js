@@ -79,13 +79,18 @@ const DataTable = ({ selectedOption }) => {
                 </Thead>
                 <Tbody>
                     {paginatedData.map((item, index) => (
-                        <Tr key={item.id} onClick={() => handleRowClick(item.id)} cursor="pointer">
-                            <Td>{index + 1}</Td>
-                            <Td>{item.passageTitle}</Td>
-                            <Td color={getDifficultyColor(item.passageDifficulty)}>
-                                {item.passageDifficulty}
-                            </Td>
-                        </Tr>
+                        <Tr 
+                        key={item.id} 
+                        onClick={() => handleRowClick(item.id)} 
+                        cursor="pointer"
+                        bg={index % 2 === 0 ? "gray.100" : "white"} // Alternating background color
+                    >
+                        <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
+                        <Td>{item.passageTitle}</Td>
+                        <Td color={getDifficultyColor(item.passageDifficulty)}>
+                            {item.passageDifficulty}
+                        </Td>
+                    </Tr>
                     ))}
                 </Tbody>
             </Table>
