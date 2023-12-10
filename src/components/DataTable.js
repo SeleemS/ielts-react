@@ -83,7 +83,7 @@ const DataTable = ({ selectedOption }) => {
                         key={item.id} 
                         onClick={() => handleRowClick(item.id)} 
                         cursor="pointer"
-                        bg={index % 2 === 0 ? "gray.100" : "white"} // Alternating background color
+                        bg={index % 2 === 0 ? "gray.50" : "white"} // Alternating background color
                     >
                         <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
                         <Td>{item.passageTitle}</Td>
