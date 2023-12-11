@@ -72,8 +72,8 @@ const WritingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH={{ base: "39vh", md: "75vh" }}
-                        minH = {{base: "39vh", md: "75vh"}}
+                        maxH={{ base: "33vh", md: "75vh" }}
+                        minH = {{base: "33vh", md: "75vh"}}
                         mt = {{base: -2, md: 0}} // Margin top on mobile
                         mb={{ base: 3, md: 0 }} // Margin bottom on mobile
                         mx = {{md:2}}
@@ -91,8 +91,8 @@ const WritingQuestion = () => {
                         overflowY="auto" 
                         display="flex" 
                         flexDirection="column" 
-                        maxH={{ base: "39vh", md: "75vh" }}
-                        minH={{ base: "39vh", md: "75vh" }}
+                        maxH={{ base: "33vh", md: "75vh" }}
+                        minH={{ base: "33vh", md: "75vh" }}
                     >
                         <Flex alignItems="center">
                             <Text fontSize = "lg" fontWeight="bold" mr={2}>Your Response:</Text>
