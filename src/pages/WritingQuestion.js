@@ -160,12 +160,12 @@ const WritingQuestion = () => {
                 <Modal isOpen={isOpen} onClose={onClose} isCentered size="xs">
                     <ModalOverlay />
                     <ModalContent mx={4} my="auto" maxW="400px">
-                        <ModalHeader>Your Score</ModalHeader>
+                        <ModalHeader fontWeight="bold">Your Score</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody overflowY="auto" maxH="250px">
                             <Text>{apiResponse}</Text>
                         </ModalBody>
-                        <ModalFooter>
+                        <ModalFooter justifyContent={'center'}>
                             <Button colorScheme="blue" mr={3} onClick={onClose}>
                                 Close
                             </Button>
