@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
-  Heading,
-  Text,
-  Link,
+  Flex,
   VStack,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar'; 
 import Toggle from '../components/Toggle';
@@ -19,15 +17,34 @@ const HomePage = () => {
         setSelectedOption(option);
     };
 
+    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
+
     return (
         <Box>
             <Navbar />
-            <Container maxW="container.md" centerContent py={6}>
-                <VStack spacing={4}>
+            <Flex
+                direction={{ base: "column", md: "row" }}
+                justify="space-between"
+                align="center"
+                wrap="wrap"
+                px={{ md: 8 }} // Horizontal padding on medium and larger screens
+                py={6}
+            >
+                {/* Left Ad Container */}
+                <Box display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2}>
+                    {/* Ad content goes here */}
+                </Box>
+
+                <VStack spacing={4} flex="1" minWidth="300px">
                     <Toggle onChange={handleToggleChange} />
-                    <DataTable selectedOption={selectedOption} /> {/* Pass selectedOption as a prop */}
+                    <DataTable selectedOption={selectedOption} />
                 </VStack>
-            </Container>
+
+                {/* Right Ad Container */}
+                <Box display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2}>
+                    {/* Ad content goes here */}
+                </Box>
+            </Flex>
             <Footer />
         </Box>
     );
