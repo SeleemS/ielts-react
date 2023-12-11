@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Text, Flex, Link, Spacer } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
+import TermsOfService from '../pages/TermsOfService';
 
 const Footer = () => {
     return (
@@ -11,7 +12,7 @@ const Footer = () => {
                     <Text fontSize="sm">© {new Date().getFullYear()} IELTSBank | All rights reserved.</Text>
                     <Spacer />
                     <Flex mt={{ base: 4, md: 0 }}>
-                        <Link href="#" mx={2} fontSize="sm">
+                        <Link href="/termsofservice" mx={2} fontSize="sm">
                             Terms of Service
                         </Link>
                         {/* Updated Privacy Policy Link */}
