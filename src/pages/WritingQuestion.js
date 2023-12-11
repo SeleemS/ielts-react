@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Textarea, Flex, Container, Text, Divider } from '@chakra-ui/react';
+import { Box,Button, Textarea, Flex, Container, Text, Divider } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+  } from '@chakra-ui/react';
 
 const WritingQuestion = () => {
     const [passageText, setPassageText] = useState('');
@@ -37,6 +47,10 @@ const WritingQuestion = () => {
 
     // You can add a submit handler if needed
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    };
+
     return (
         <>
             <Navbar />
@@ -53,7 +67,11 @@ const WritingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH={{ base: "35vh", md: "70vh" }}
+                        maxH={{ base: "39vh", md: "75vh" }}
+                        minH = {{base: "39vh", md: "75vh"}}
+                        mt = {{base: -2, md: 0}} // Margin top on mobile
+                        mb={{ base: 3, md: 0 }} // Margin bottom on mobile
+                        mx = {{md:2}}
                     >
                         <Text fontWeight="bold">{passageTitle}:</Text>
                         <Divider my={4} />
@@ -66,18 +84,25 @@ const WritingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH={{ base: "35vh", md: "70vh" }}
+                        maxH={{ base: "39vh", md: "75vh" }}
+                        minH = {{base: "39vh", md: "75vh"}}
+                        
                     >
                         <Text fontWeight="bold">Your Response:</Text>
                         <Divider my={4} />
                         <Textarea
                             placeholder="Type your response here..."
                             size="lg"
-                            height="100%" // Ensure the textarea takes up the remaining height
+                            flex = "1"
                             value={userResponse}
                             onChange={handleResponseChange}
                         />
                     </Box>
+                </Flex>
+                <Flex justifyContent="center" mt = {-1}>
+                    <Button colorScheme="blue" onClick={handleSubmit}>
+                        Submit
+                    </Button>
                 </Flex>
                 {/* Add a submit button if needed */}
             </Container>
