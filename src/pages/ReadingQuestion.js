@@ -177,7 +177,7 @@ const ReadingQuestion = () => {
                         mb={{ base: 3, md: 0 }} // Margin bottom on mobile
                         mx = {{md:2}}
                     >
-                        <Text fontWeight="bold">{passageTitle}:</Text>
+                        <Text fontSize = "lg" fontWeight="bold">{passageTitle}:</Text>
                         <Divider my={4} />
                         <Box dangerouslySetInnerHTML={{ __html: passageText }} />
                     </Box>
@@ -191,7 +191,7 @@ const ReadingQuestion = () => {
                         maxH= {{base: "39vh", md: "75vh"}}
                         mx = {{md:1}}
                     >
-                        <Text fontWeight="bold">Questions:</Text>
+                        <Text fontSize = "lg" fontWeight="bold">Questions:</Text>
                         <Divider my={4} />
                             {questionGroups.map((group, groupIndex) => (
                             <Box key={groupIndex}>
