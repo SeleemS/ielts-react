@@ -12,6 +12,8 @@ const ReadingQuestion = () => {
     const [userAnswers, setUserAnswers] = useState({});
     const [answerStatuses, setAnswerStatuses] = useState({});
 
+    let questionNumber = -1;
+
 
     // Use useParams to get the passageId from the URL
     const { id: passageId } = useParams();
@@ -36,6 +38,7 @@ const ReadingQuestion = () => {
     }, [passageId]);
 
     const renderQuestion = (qMap, questionNumber, group) => {
+        questionNumber += 1; // Increment question number for each question
         const answerStatus = answerStatuses[questionNumber];
         const isCorrect = answerStatus === 'correct';
         const isIncorrect = answerStatus === 'incorrect';
@@ -175,11 +178,12 @@ const ReadingQuestion = () => {
                     >
                         <Text fontWeight="bold">Questions:</Text>
                         <Divider my={4} />
-                        {questionGroups.map((group, groupIndex) => (
+                            {questionGroups.map((group, groupIndex) => (
                             <Box key={groupIndex}>
-                                {group.questions.map((qMap, questionIndex) => (
-                                    renderQuestion(qMap, groupIndex * 10 + questionIndex + 1, group)
-                                ))}
+                                {group.questions.map(qMap => {
+                                    questionNumber += 1;
+                                    return renderQuestion(qMap, questionNumber, group);
+                                })}
                             </Box>
                         ))}
                     </Box>
