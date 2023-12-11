@@ -84,16 +84,18 @@ const WritingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
+                        display="flex" // Set this box to be a flex container
+                        flexDirection="column" // Stack children vertically
                         maxH={{ base: "39vh", md: "75vh" }}
-                        minH = {{base: "39vh", md: "75vh"}}
-                        
+                        minH={{ base: "39vh", md: "75vh" }}
                     >
                         <Text fontWeight="bold">Your Response:</Text>
                         <Divider my={4} />
                         <Textarea
                             placeholder="Type your response here..."
                             size="lg"
-                            flex = "1"
+                            flex="1" // Allow Textarea to expand
+                            minHeight="0" // Ensures flex children expand properly in some browsers
                             value={userResponse}
                             onChange={handleResponseChange}
                         />
