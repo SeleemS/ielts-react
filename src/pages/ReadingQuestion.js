@@ -52,6 +52,7 @@ const ReadingQuestion = () => {
                             className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)}
                             bg={bgColor}
+                            value={userAnswers[questionNumber] || ''}
                             isReadOnly={isCorrect || isIncorrect}
                         >
                             <option value="" disabled>-</option>
