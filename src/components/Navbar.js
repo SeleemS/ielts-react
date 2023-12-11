@@ -49,8 +49,8 @@ const Navbar = () => {
                     shadow="md"
                 >
                     {/* Menu items can be added here */}
-                    <Text color="white">Menu Item 1</Text>
-                    <Text color="white">Menu Item 2</Text>
+                    {/*<Text color="white">Sign Up</Text>
+                    <Text color="white">Rate My Writing</Text>
                     {/* ... other items */}
                 </Flex>
             </Collapse>
