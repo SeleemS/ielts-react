@@ -13,6 +13,7 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
+    Spinner,
 } from '@chakra-ui/react';
 
 const WritingQuestion = () => {
@@ -21,6 +22,7 @@ const WritingQuestion = () => {
     const [userResponse, setUserResponse] = useState('');
     const [apiResponse, setApiResponse] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
     // Use useParams to get the docId from the URL
@@ -72,6 +74,8 @@ const WritingQuestion = () => {
 
         const apiUrl = "https://wamm2ytjk5.execute-api.us-east-1.amazonaws.com/IELTSWritingBot";
 
+        setIsLoading(true);
+
         try {
             const response = await fetch(apiUrl, {
                 method: "POST",
@@ -79,12 +83,15 @@ const WritingQuestion = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ question: passageText, answer: userResponse })
+                
+                
             });
 
             if (response.ok) {
                 const responseData = await response.json(); // Assuming the response is JSON formatted
                 setApiResponse(responseData.message);
                 onOpen(); // Open the modal with the response
+                setIsLoading(false);
             } else {
                 toast({
                     title: "Error",
@@ -95,6 +102,7 @@ const WritingQuestion = () => {
                 });
             }
         } catch (error) {
+            setIsLoading(false); // Ensure loading is set to false in case of error
             console.error("Error:", error);
         }
     };
@@ -157,6 +165,16 @@ const WritingQuestion = () => {
                         Submit
                     </Button>
                 </Flex>
+                {/* Loading Modal */}
+                <Modal isOpen={isLoading} isCentered >
+                    <ModalOverlay />
+                    <ModalContent maxW = "300px">
+                        <ModalBody textAlign="center" p={6}>
+                            <Spinner size="xl" />
+                            <Text mt={4}>Scoring your response... Could take up to 1 minute..</Text>
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
                 <Modal isOpen={isOpen} onClose={onClose} isCentered size="xs">
                     <ModalOverlay />
                     <ModalContent mx={4} my="auto" maxW="400px">
