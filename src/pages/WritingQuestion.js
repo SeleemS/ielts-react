@@ -45,6 +45,11 @@ const WritingQuestion = () => {
         setUserResponse(event.target.value);
     };
 
+    // Word Counter
+    const countWords = (text) => {
+        return text.split(/\s+/).filter(Boolean).length; // Split by spaces and filter out empty strings
+    };
+
     // You can add a submit handler if needed
 
     const handleSubmit = async (event) => {
@@ -73,7 +78,7 @@ const WritingQuestion = () => {
                         mb={{ base: 3, md: 0 }} // Margin bottom on mobile
                         mx = {{md:2}}
                     >
-                        <Text fontWeight="bold">{passageTitle}:</Text>
+                        <Text fontSize = "large" fontWeight="bold">{passageTitle}:</Text>
                         <Divider my={4} />
                         <Box dangerouslySetInnerHTML={{ __html: passageText }} />
                     </Box>
@@ -84,18 +89,21 @@ const WritingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        display="flex" // Set this box to be a flex container
-                        flexDirection="column" // Stack children vertically
+                        display="flex" 
+                        flexDirection="column" 
                         maxH={{ base: "39vh", md: "75vh" }}
                         minH={{ base: "39vh", md: "75vh" }}
                     >
-                        <Text fontWeight="bold">Your Response:</Text>
+                        <Flex alignItems="center">
+                            <Text fontSize = "lg" fontWeight="bold" mr={2}>Your Response:</Text>
+                            <Text fontSize="sm" fontWeight="bold" color="gray.600">({countWords(userResponse)} words / 250)</Text>
+                        </Flex>
                         <Divider my={4} />
                         <Textarea
                             placeholder="Type your response here..."
                             size="lg"
-                            flex="1" // Allow Textarea to expand
-                            minHeight="0" // Ensures flex children expand properly in some browsers
+                            flex="1" 
+                            minHeight="0" 
                             value={userResponse}
                             onChange={handleResponseChange}
                         />
