@@ -3,6 +3,7 @@ import { Box, Container, Text, Flex, Link, Spacer } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import TermsOfService from '../pages/TermsOfService';
+import ContactUs from '../pages/ContactUs';
 
 const Footer = () => {
     return (
@@ -19,7 +20,7 @@ const Footer = () => {
                         <RouterLink to="/privacypolicy" style={{ textDecoration: 'none', color: 'white' }}>
                             <Text mx={2} fontSize="sm">Privacy Policy</Text>
                         </RouterLink>
-                        <Link href="#" mx={2} fontSize="sm">
+                        <Link href="/contactus" mx={2} fontSize="sm">
                             Contact Us
                         </Link>
                     </Flex>
