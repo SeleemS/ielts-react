@@ -6,6 +6,9 @@ import WritingQuestion from './pages/WritingQuestion';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import ContactUs from './pages/ContactUs';
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-1KRYZZY68X');
+
 
 function App() {
   return (
