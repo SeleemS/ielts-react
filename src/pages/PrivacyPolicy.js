@@ -19,7 +19,9 @@ const PrivacyPolicy = () => {
             >
                 {/* Left Ad Container */}
                 <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <Text>Ad Container</Text>
+                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
+                        <Text>Ad Container</Text>
+                    </Flex>
                 </Flex>
 
                 {/* Privacy Policy Content */}
@@ -54,7 +56,9 @@ const PrivacyPolicy = () => {
 
                 {/* Right Ad Container */}
                 <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <Text>Ad Container</Text>
+                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
+                        <Text>Ad Container</Text>
+                    </Flex>
                 </Flex>
             </Flex>
             <Footer />
