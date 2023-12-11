@@ -3,7 +3,8 @@ import {
   Box,
   Flex,
   VStack,
-  useBreakpointValue
+  useBreakpointValue,
+  Text,
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar'; 
 import Toggle from '../components/Toggle';
@@ -31,9 +32,12 @@ const HomePage = () => {
                 py={6}
             >
                 {/* Left Ad Container */}
-                <Box display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2}>
-                    {/* Ad content goes here */}
-                </Box>
+                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
+                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
+                        <Text>Ad Container</Text>
+                    </Flex>
+                </Flex>
+
 
                 <VStack spacing={4} flex="1" minWidth="300px">
                     <Toggle onChange={handleToggleChange} />
@@ -41,9 +45,11 @@ const HomePage = () => {
                 </VStack>
 
                 {/* Right Ad Container */}
-                <Box display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2}>
-                    {/* Ad content goes here */}
-                </Box>
+                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
+                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
+                        <Text>Ad Container</Text>
+                    </Flex>
+                </Flex>
             </Flex>
             <Footer />
         </Box>
