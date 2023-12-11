@@ -4,6 +4,7 @@ import { app } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import ReadingQuestion from '../pages/ReadingQuestion';
+import WritingQuestion from '../pages/WritingQuestion';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
@@ -44,7 +45,9 @@ const DataTable = ({ selectedOption }) => {
         if (selectedOption === 'Reading') {
             navigate(`ReadingQuestion/${id}`); // Navigate to ReadingQuestion with the document ID
         }
-        // You can add logic for other options if needed
+        if (selectedOption === 'Writing') {
+            navigate(`WritingQuestion/${id}`); 
+        }
     };
 
     const getDifficultyColor = (difficulty) => {
