@@ -172,7 +172,7 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "39vh", md: "75vh"}}
+                        maxH= {{base: "33vh", md: "75vh"}}
                         mt = {{base: -1, md: 0}} // Margin top on mobile
                         mb={{ base: 3, md: 0 }} // Margin bottom on mobile
                         mx = {{md:2}}
@@ -188,7 +188,7 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "39vh", md: "75vh"}}
+                        maxH= {{base: "33vh", md: "75vh"}}
                         mx = {{md:1}}
                     >
                         <Text fontSize = "lg" fontWeight="bold">Questions:</Text>
