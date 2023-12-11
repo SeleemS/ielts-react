@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Container, Text, Flex, Link, Spacer } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 
 const Footer = () => {
     return (
@@ -12,9 +14,10 @@ const Footer = () => {
                         <Link href="#" mx={2} fontSize="sm">
                             Terms of Service
                         </Link>
-                        <Link href="#" mx={2} fontSize="sm">
-                            Privacy Policy
-                        </Link>
+                        {/* Updated Privacy Policy Link */}
+                        <RouterLink to="/privacypolicy" style={{ textDecoration: 'none', color: 'white' }}>
+                            <Text mx={2} fontSize="sm">Privacy Policy</Text>
+                        </RouterLink>
                         <Link href="#" mx={2} fontSize="sm">
                             Contact Us
                         </Link>
@@ -26,3 +29,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
