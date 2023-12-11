@@ -203,7 +203,7 @@ const ReadingQuestion = () => {
                         ))}
                     </Box>
                 </Flex>
-                <Flex justifyContent="center" mt = {-1}>
+                <Flex justifyContent="center" mt = {-2}>
                     <Button colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
