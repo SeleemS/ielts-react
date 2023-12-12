@@ -136,8 +136,38 @@ const ListeningQuestion = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Same scoring logic as in ReadingQuestion.js
-        // ...
+        let newAnswerStatuses = {};
+        let correctAnswersCount = 0;
+        let answerIndex = 1; // Start from 1 to match question numbers
+    
+        const db = getFirestore(app);
+        const questionDoc = doc(db, 'listeningPassages', passageId);
+        const docSnapshot = await getDoc(questionDoc);
+    
+        if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+            data.questionGroups.forEach(group => {
+                group.questions.forEach(qMap => {
+                    const correctAnswer = qMap.answer.toLowerCase();
+                    const userAnswer = userAnswers[answerIndex] || "-";
+    
+                    if (userAnswer === correctAnswer) {
+                        correctAnswersCount++;
+                        newAnswerStatuses[answerIndex] = 'correct';
+                    } else {
+                        newAnswerStatuses[answerIndex] = 'incorrect';
+                    }
+                    answerIndex++;
+                });
+            });
+    
+            setAnswerStatuses(newAnswerStatuses);
+            setUserScore(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`); // Update the score here
+            onOpen(); // Then open the modal
+            console.log(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`);
+        } else {
+            console.error("No such document!");
+        }
     };
 
     return (
