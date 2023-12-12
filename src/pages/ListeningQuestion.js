@@ -223,7 +223,19 @@ const ListeningQuestion = () => {
                     </Button>
                 </Flex>
                 <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
-                    {/* Modal content similar to ReadingQuestion.js */}
+                    <ModalOverlay />
+                    <ModalContent mx={4} my="auto" maxW="sm" w="auto"> {/* Adjust width and margins */}
+                        <ModalHeader>Your Score</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Text>{userScore}</Text>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
+                                Close
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
                 </Modal>
             </Container>
         </>
