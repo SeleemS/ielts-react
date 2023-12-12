@@ -190,14 +190,15 @@ const ListeningQuestion = () => {
                         borderWidth="1px" 
                         overflowY="auto" 
                         maxH={{ base: "33vh", md: "75vh" }}
-                        minH= {{base: "33vh", md: "75vh"}}
                         mt={{ base: -1, md: 0 }}
                         mb={{ base: 3, md: 0 }}
                         mx={{ md: 2 }}
+                        display="flex" // Make this a flex container
+                        flexDirection="column" // Stack children vertically
+                        justifyContent="center" // Center children vertically
                     >
-                        <Text fontSize="lg" fontWeight="bold">{passageTitle}:</Text>
-                        <Divider my={4} />
-                        <audio src={audioUrl} controls />
+                        <Text fontSize="lg" fontWeight="bold" mb={3} alignSelf="start">{passageTitle}:</Text>
+                        <audio src={audioUrl} controls style={{ maxWidth: '400px', width: '100%' }} />
                     </Box>
 
                     <Box 
@@ -206,8 +207,8 @@ const ListeningQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH={{ base: "33vh", md: "75vh" }}
-                        minH= {{base: "33vh", md: "75vh"}}
+                        maxH={{ base: "50vh", md: "75vh" }}
+                        minH= {{base: "50vh", md: "75vh"}}
                         mx={{ md: 1 }}
                     >
                         <Text fontSize="lg" fontWeight="bold">Questions:</Text>
