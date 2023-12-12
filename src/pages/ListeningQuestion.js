@@ -54,7 +54,14 @@ const ListeningQuestion = () => {
     return (
         <>
             <Helmet>
-                {/* Add Helmet content similar to WritingQuestion */}
+                <title>{passageTitle ? `${passageTitle} - IELTS Listening Test` : 'IELTS Listening Test'}</title>
+                <meta name="description" content={`AI-Powered IELTS grading for your listening skills. Practice with real IELTS listening tasks like: '${passageTitle}'. Get instant feedback and improve your listening skills for a better IELTS score.`} />
+                <meta name="keywords" content="IELTS Listening, IELTS Listening Tests, IELTS Task, IELTS Listening Practice, IELTS Test Preparation, IELTS Listening Task, IELTS Listening Questions, IELTS Listening Feedback, Improve IELTS Listening"/>
+                <meta name="robots" content="index, follow"/>
+                <meta property="og:title" content={passageTitle ? `${passageTitle} - IELTS Listening Task` : 'IELTS Listening Question'}/>
+                <meta property="og:description" content="Enhance your IELTS listening skills with authentic IELTS listening tasks. Practice with immediate AI-driven feedback to sharpen your abilities and prepare for your IELTS test."/>
+                <meta property="og:url" content={`https://ielts-bank.com/listening/${docId}`}/>
+                <meta property="og:image" content="https://ielts-bank.com/favicon.png"/>
             </Helmet>
             <Navbar />
             <Container maxW="container.xl">
