@@ -41,13 +41,13 @@ const ContactUs = () => {
                 {/* Contact Us Content */}
                 <VStack spacing={4} flex="1" minWidth="300px" px={4} align="center">
                     <Text fontSize="2xl" fontWeight="bold" textAlign="center">Contact Us</Text>
-                    <Center overflowY="auto" maxH="75vh" minH = "71vh"width="100%">
+                    <Box  maxH="75vh" minH = "71vh"width="100%">
                         <Text textAlign="center">
                             If you have any questions or comments, we'd love to hear from you. Please feel free to reach out to us at the following email address:<br /><br />
                             <Link href="mailto:info@ielts-bank.com" color="blue.500">info@ielts-bank.com</Link><br /><br />
                             We aim to respond to all inquiries as quickly as possible. Thank you for your interest in IELTSBank!
                         </Text>
-                    </Center>
+                    </Box>
                 </VStack>
 
                 {/* Right Ad Container */}
