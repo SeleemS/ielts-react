@@ -58,8 +58,11 @@ const DataTable = ({ selectedOption }) => {
                 return 'yellow.500';
             case 'Easy':
                 return 'green.500';
+            case 'Task 2':
+                return 'black.500';
             default:
                 return 'gray.500';
+
         }
     };    
 
