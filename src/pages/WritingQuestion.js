@@ -179,7 +179,7 @@ const WritingQuestion = () => {
                     </Box>
                 </Flex>
                 <Flex justifyContent="center" mt = {-1}>
-                    <Button colorScheme="blue" onClick={handleSubmit}>
+                    <Button bg="black" colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
                 </Flex>
@@ -197,7 +197,7 @@ const WritingQuestion = () => {
                             </Text>
                         </ModalBody>
                         <ModalFooter justifyContent="center">
-                            <Button colorScheme="blue" onClick={onInfoClose}>Got it!</Button>
+                            <Button bg="black" colorScheme="blue" onClick={onInfoClose}>Got it!</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>
@@ -219,7 +219,7 @@ const WritingQuestion = () => {
                             <Text>{apiResponse}</Text>
                         </ModalBody>
                         <ModalFooter justifyContent={'center'}>
-                            <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
                                 Close
                             </Button>
                         </ModalFooter>

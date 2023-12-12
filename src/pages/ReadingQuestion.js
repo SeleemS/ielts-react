@@ -232,7 +232,7 @@ const ReadingQuestion = () => {
                     </Box>
                 </Flex>
                 <Flex justifyContent="center" mt = {-2}>
-                    <Button colorScheme="blue" onClick={handleSubmit}>
+                    <Button bg="black" colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
                 </Flex>
@@ -245,7 +245,7 @@ const ReadingQuestion = () => {
                             <Text>{userScore}</Text>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme="blue" mr={3} onClick={onClose}>
+                            <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
                                 Close
                             </Button>
                         </ModalFooter>
