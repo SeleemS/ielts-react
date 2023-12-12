@@ -10,7 +10,7 @@ const Footer = () => {
         <Box bg="black" color="white" py={4}>
             <Container maxW="container.xl">
                 <Flex direction={{ base: "column", md: "row" }} alignItems="center">
-                    <Text fontSize="sm">© {new Date().getFullYear()} IELTSBank | All rights reserved.</Text>
+                    <Text fontSize="sm">© {new Date().getFullYear()} IELTS-Bank | All rights reserved.</Text>
                     <Spacer />
                     <Flex mt={{ base: 4, md: 0 }}>
                         {/* Updated Terms of Service Link */}
