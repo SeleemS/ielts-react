@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/www.ielts-bank.com/static/js/main.efe66976.js",
-    "index.html": "/www.ielts-bank.com/index.html",
-    "main.efe66976.js.map": "/www.ielts-bank.com/static/js/main.efe66976.js.map"
+    "main.js": "/static/js/main.456dea79.js",
+    "index.html": "/index.html",
+    "main.456dea79.js.map": "/static/js/main.456dea79.js.map"
   },
   "entrypoints": [
-    "static/js/main.efe66976.js"
+    "static/js/main.456dea79.js"
   ]
 }
