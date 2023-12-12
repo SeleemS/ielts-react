@@ -1,0 +1,2 @@
+# ads.txt file for ielts-bank.com
+google.com, pub-5189362957619937, DIRECT, f08c47fec0942fa0
