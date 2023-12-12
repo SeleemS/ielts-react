@@ -24,7 +24,7 @@ const Navbar = () => {
                     <Box p="1">
                         <Image src="/image.png" alt="Logo" boxSize="50px" />
                     </Box>
-                    <Text fontSize="lg" fontWeight="bold" ml={2}>IELTSBank</Text>
+                    <Text fontSize="lg" fontWeight="bold" ml={2}>IELTS-Bank</Text>
                 </Flex>
             </Link>
 
