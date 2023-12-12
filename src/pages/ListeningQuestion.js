@@ -15,53 +15,135 @@ import {
     ModalCloseButton,
     useDisclosure,
     Spinner,
+    Select,
+    Input,
 } from '@chakra-ui/react';
 
 const ListeningQuestion = () => {
+    let globalQuestionNumber = 0; // Global question number
     const [audioUrl, setAudioUrl] = useState('');
     const [passageTitle, setPassageTitle] = useState('');
-    const [userResponse, setUserResponse] = useState('');
-    // ... other state variables and hooks
+    const [questionGroups, setQuestionGroups] = useState([]);
+    const [userAnswers, setUserAnswers] = useState({});
+    const [answerStatuses, setAnswerStatuses] = useState({});
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [userScore, setUserScore] = useState(null);
 
-    const { id: docId } = useParams();
+    const { id: passageId } = useParams();
 
     useEffect(() => {
+        globalQuestionNumber = 0;
         const fetchData = async () => {
             const db = getFirestore(app);
-            const docRef = doc(db, 'listeningPassages', docId);
+            const docRef = doc(db, 'listeningPassages', passageId);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 setAudioUrl(data.audioUrl);
                 setPassageTitle(data.passageTitle);
+                setQuestionGroups(data.questionGroups);
             } else {
                 console.log("No such document!");
             }
         };
 
         fetchData();
-    }, [docId]);
+    }, [passageId]);
 
-    // ... other functions and handlers
+    const renderQuestion = (qMap, questionNumber, group) => {
+        globalQuestionNumber++; // Increment the global question number
+        const answerStatus = answerStatuses[globalQuestionNumber];
+        const isCorrect = answerStatus === 'correct';
+        const isIncorrect = answerStatus === 'incorrect';
+        const bgColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
 
-    const handleResponseChange = (event) => {
-        setUserResponse(event.target.value);
+        switch (group.questionType) {
+            case "Match":
+            case "True or False":
+            case "Yes or No":
+                return (
+                    
+                    <Box className="mb-4" my={4}>
+                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
+                        <Select 
+                            className="form-control mb-2" 
+                            onChange={e => handleAnswerChange(e, questionNumber)}
+                            bg={bgColor}
+                            value={userAnswers[questionNumber] || ''}
+                            isReadOnly={isCorrect || isIncorrect}
+                        >
+                            <option value="" disabled>-</option>
+                            {group.questionType === "Match" && group.options.map((option, idx) => (
+                                <option key={idx} value={option}>{option}</option>
+                            ))}
+                            {group.questionType === "True or False" && (
+                                <>
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                    <option value="not given">Not Given</option>
+                                </>
+                            )}
+                            {group.questionType === "Yes or No" && (
+                                <>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                    <option value="not given">Not Given</option>
+                                </>
+                            )}
+                        </Select>
+                    </Box>
+                );
+            case "Short Answer":
+                return (
+                    <Box className="mb-4">
+                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
+                        <Input 
+                            type="text" 
+                            className="form-control mb-2" 
+                            onChange={e => handleAnswerChange(e, questionNumber)} 
+                            bg={bgColor}
+                            value={userAnswers[questionNumber] || ''}
+                            isReadOnly={isCorrect || isIncorrect}
+                        />
+                    </Box>
+                );
+            default:
+                return null;
+        }
+        globalQuestionNumber++;
     };
 
-    // ... other necessary functions
+    const renderQuestionGroup = (group) => {
+        let localQuestionNumber = 0;
+        return (
+            <Box key={group.prompt} mb={6}>
+                <Text fontSize="lg" fontWeight="bold" mb={2}>{group.prompt}</Text>
+                {group.questions.map(qMap => {
+                    localQuestionNumber++;
+                    return renderQuestion(qMap, localQuestionNumber, group);
+                })}
+            </Box>
+        );
+    };
+
+    const handleAnswerChange = (event, questionNumber) => {
+        setUserAnswers(prevAnswers => ({
+            ...prevAnswers,
+            [questionNumber]: event.target.value.trim().toLowerCase()
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // Same scoring logic as in ReadingQuestion.js
+        // ...
+    };
 
     return (
         <>
             <Helmet>
-                <title>{passageTitle ? `${passageTitle} - IELTS Listening Test` : 'IELTS Listening Test'}</title>
-                <meta name="description" content={`AI-Powered IELTS grading for your listening skills. Practice with real IELTS listening tasks like: '${passageTitle}'. Get instant feedback and improve your listening skills for a better IELTS score.`} />
-                <meta name="keywords" content="IELTS Listening, IELTS Listening Tests, IELTS Task, IELTS Listening Practice, IELTS Test Preparation, IELTS Listening Task, IELTS Listening Questions, IELTS Listening Feedback, Improve IELTS Listening"/>
-                <meta name="robots" content="index, follow"/>
-                <meta property="og:title" content={passageTitle ? `${passageTitle} - IELTS Listening Task` : 'IELTS Listening Question'}/>
-                <meta property="og:description" content="Enhance your IELTS listening skills with authentic IELTS listening tasks. Practice with immediate AI-driven feedback to sharpen your abilities and prepare for your IELTS test."/>
-                <meta property="og:url" content={`https://ielts-bank.com/listening/${docId}`}/>
-                <meta property="og:image" content="https://ielts-bank.com/favicon.png"/>
+                {/* Helmet content similar to ReadingQuestion.js */}
             </Helmet>
             <Navbar />
             <Container maxW="container.xl">
@@ -78,56 +160,41 @@ const ListeningQuestion = () => {
                         borderWidth="1px" 
                         overflowY="auto" 
                         maxH={{ base: "33vh", md: "75vh" }}
-                        minH={{ base: "33vh", md: "75vh" }}
-                        mt={{ base: -2, md: 0 }}
+                        minH= {{base: "33vh", md: "75vh"}}
+                        mt={{ base: -1, md: 0 }}
                         mb={{ base: 3, md: 0 }}
                         mx={{ md: 2 }}
                     >
-                        <Text fontSize="large" fontWeight="bold" mb={3}>{passageTitle}:</Text>
-                        <Flex 
-                            direction="column" 
-                            alignItems="center" 
-                            justifyContent="center"
-                            h="100%" // Full height of the container
-                        >
-                            <audio src={audioUrl} controls style={{ width: '100%', maxWidth: '400px' }}>
-                                Your browser does not support the audio element.
-                            </audio>
-                        </Flex>
+                        <Text fontSize="lg" fontWeight="bold">{passageTitle}:</Text>
+                        <Divider my={4} />
+                        <audio src={audioUrl} controls />
                     </Box>
-    
+
                     <Box 
                         flex="1" 
                         p={5} 
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        display="flex" 
-                        flexDirection="column" 
                         maxH={{ base: "33vh", md: "75vh" }}
-                        minH={{ base: "33vh", md: "75vh" }}
+                        minH= {{base: "33vh", md: "75vh"}}
+                        mx={{ md: 1 }}
                     >
-                        <Flex alignItems="center">
-                            <Text fontSize="lg" fontWeight="bold" mr={2}>Your Response:</Text>
-                            {/* Add word count and other UI elements if needed */}
-                        </Flex>
+                        <Text fontSize="lg" fontWeight="bold">Questions:</Text>
                         <Divider my={4} />
-                        <Textarea
-                            placeholder="Coming Soon.."
-                            size="lg"
-                            flex="1" 
-                            minHeight="0" 
-                            value={userResponse}
-                          
-                        />
+                        {questionGroups.map((group, groupIndex) => (
+                            renderQuestionGroup(group)
+                        ))}
                     </Box>
                 </Flex>
-                <Flex justifyContent="center" mt={-1}>
-                    <Button bg="black" colorScheme="blue" >
+                <Flex justifyContent="center" mt={-2}>
+                    <Button bg="black" colorScheme="blue" onClick={handleSubmit}>
                         Submit
                     </Button>
                 </Flex>
-                {/* Add Modals for loading, information, and results similar to WritingQuestion */}
+                <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+                    {/* Modal content similar to ReadingQuestion.js */}
+                </Modal>
             </Container>
         </>
     );
