@@ -7,13 +7,13 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://ielts-bank.com/privacypolicy</loc>
+        <loc>https://ielts-bank.com/#/privacypolicy</loc>
         <lastmod>2023-12-11</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.1</priority>
     </url>
     <url>
-        <loc>https://ielts-bank.com/contactus</loc>
+        <loc>https://ielts-bank.com/#/contactus</loc>
         <lastmod>2023-12-11</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.1</priority>
@@ -25,7 +25,7 @@
         <priority>1</priority>
     </url>
     <url>
-        <loc>https://ielts-bank.com/termsofservice</loc>
+        <loc>https://ielts-bank.com/#/termsofservice</loc>
         <lastmod>2023-12-11</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.1</priority>
