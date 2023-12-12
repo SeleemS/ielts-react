@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -12,6 +12,12 @@ import DataTable from '../components/DataTable';
 import Footer from '../components/Footer';
 
 const HomePage = () => {
+    useEffect(() => {
+        setTimeout(() => {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }, 1000); // Adjust the delay as needed
+      }, []);
+
     const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
 
     const handleToggleChange = (option) => {
