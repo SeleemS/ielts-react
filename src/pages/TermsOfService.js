@@ -1,16 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { Box, Flex, VStack, Text, useBreakpointValue } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const TermsOfService = () => {
 
+    const adContainerRef = useRef(null);
+    const [isAdLoaded, setIsAdLoaded] = useState(false);
+
     useEffect(() => {
-        setTimeout(() => {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }, 1000); // Adjust the delay as needed
-      }, []);
-      
+        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
+        setIsAdLoaded(true);
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+    }, [adContainerRef.current]);
+
     const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
 
     return (

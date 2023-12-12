@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Flex,
@@ -12,11 +12,15 @@ import DataTable from '../components/DataTable';
 import Footer from '../components/Footer';
 
 const HomePage = () => {
+    const adContainerRef = useRef(null);
+    const [isAdLoaded, setIsAdLoaded] = useState(false);
+
     useEffect(() => {
-        setTimeout(() => {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }, 1000); // Adjust the delay as needed
-      }, []);
+        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
+        setIsAdLoaded(true);
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }
+    }, [adContainerRef.current]);
 
     const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
 
