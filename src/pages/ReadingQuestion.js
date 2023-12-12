@@ -5,6 +5,7 @@ import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
 import { Helmet } from 'react-helmet';
+import ShareButton from '../components/ShareButton';
 
 import {
     Modal,
@@ -26,6 +27,9 @@ const ReadingQuestion = () => {
     const [questionGroups, setQuestionGroups] = useState([]);
     const [userAnswers, setUserAnswers] = useState({});
     const [answerStatuses, setAnswerStatuses] = useState({});
+
+    const currentUrl = window.location.href;
+    const shareText = "Check out this IELTS question!";
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userScore, setUserScore] = useState(null); // State for user's score
@@ -231,10 +235,15 @@ const ReadingQuestion = () => {
                             ))}
                     </Box>
                 </Flex>
-                <Flex justifyContent="center" mt = {-2}>
-                    <Button bg="black" colorScheme="blue" onClick={handleSubmit}>
+                <Flex justifyContent="center" mt={-2}>
+                    <Button bg="black" colorScheme="blue" mr = {3} onClick={handleSubmit}>
                         Submit
                     </Button>
+                    <ShareButton 
+                        title={passageTitle} 
+                        url={window.location.href} 
+                        text={`Check out this IELTS Listening Test: ${passageTitle}`} 
+                    />
                 </Flex>
                 <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
                     <ModalOverlay />
