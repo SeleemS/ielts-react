@@ -1,6 +1,6 @@
 {
   "name": "ieltsbank",
-  "homepage": "www.ielts-bank.com/",
+  "homepage": "http://ielts-bank.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
