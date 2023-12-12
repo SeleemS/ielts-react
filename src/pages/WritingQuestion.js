@@ -23,6 +23,7 @@ const WritingQuestion = () => {
     const [userResponse, setUserResponse] = useState('');
     const [apiResponse, setApiResponse] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isInfoOpen, onOpen: onInfoOpen, onClose: onInfoClose } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
@@ -46,6 +47,12 @@ const WritingQuestion = () => {
 
         fetchData();
     }, [docId]);
+
+    useEffect(() => {
+        onInfoOpen();
+        // No dependencies means this runs once when the component mounts
+    }, []);
+    
 
     const handleResponseChange = (event) => {
         setUserResponse(event.target.value);
@@ -177,6 +184,23 @@ const WritingQuestion = () => {
                     </Button>
                 </Flex>
                 {/* Loading Modal */}
+                {/* Information Modal */}
+                <Modal isOpen={isInfoOpen} onClose={onInfoClose} isCentered>
+                    <ModalOverlay />
+                    <ModalContent maxW="300px">
+                        <ModalHeader textAlign="center">How This Works</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody textAlign="center">
+                            <Text>
+                                We use AI to grade submissions according to the official IELTS Rubric. 
+                                Please ensure your response is a minimum of 250 words to submit.
+                            </Text>
+                        </ModalBody>
+                        <ModalFooter justifyContent="center">
+                            <Button colorScheme="blue" onClick={onInfoClose}>Got it!</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
                 <Modal isOpen={isLoading} isCentered >
                     <ModalOverlay />
                     <ModalContent maxW = "300px">
