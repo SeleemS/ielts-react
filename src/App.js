@@ -16,8 +16,8 @@ function App() {
           <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/ielts-react" element={<HomePage />} />
-              <Route path="/readingquestion/:id" element={<ReadingQuestion />} />
-              <Route path="/writingquestion/:id" element={<WritingQuestion />} />
+              <Route path="/ielts-react/readingquestion/:id" element={<ReadingQuestion />} />
+              <Route path="/ielts-react/writingquestion/:id" element={<WritingQuestion />} />
               <Route path="/privacypolicy/" element={<PrivacyPolicy />} />
               <Route path="/termsofservice/" element={<TermsOfService />} />
               <Route path="/contactus/" element={<ContactUs />} />

@@ -43,10 +43,10 @@ const DataTable = ({ selectedOption }) => {
 
     const handleRowClick = (id) => {
         if (selectedOption === 'Reading') {
-            navigate(`ReadingQuestion/${id}`); // Navigate to ReadingQuestion with the document ID
+            navigate(`/ielts-react/ReadingQuestion/${id}`); // Navigate to ReadingQuestion with the document ID
         }
         if (selectedOption === 'Writing') {
-            navigate(`WritingQuestion/${id}`); 
+            navigate(`/ielts-react/WritingQuestion/${id}`); 
         }
     };
 
