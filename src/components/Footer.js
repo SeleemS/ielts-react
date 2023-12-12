@@ -13,16 +13,18 @@ const Footer = () => {
                     <Text fontSize="sm">© {new Date().getFullYear()} IELTSBank | All rights reserved.</Text>
                     <Spacer />
                     <Flex mt={{ base: 4, md: 0 }}>
-                        <Link href="/termsofservice" mx={2} fontSize="sm">
+                        {/* Updated Terms of Service Link */}
+                        <RouterLink to="/termsofservice" style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
                             Terms of Service
-                        </Link>
-                        {/* Updated Privacy Policy Link */}
-                        <RouterLink to="/privacypolicy" style={{ textDecoration: 'none', color: 'white' }}>
-                            <Text mx={2} fontSize="sm">Privacy Policy</Text>
                         </RouterLink>
-                        <Link href="/contactus" mx={2} fontSize="sm">
+                        {/* Updated Privacy Policy Link */}
+                        <RouterLink to="/privacypolicy" style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
+                            Privacy Policy
+                        </RouterLink>
+                        {/* Updated Contact Us Link */}
+                        <RouterLink to="/contactus" style={{ textDecoration: 'none', color: 'white', fontSize: '0.875rem' }}>
                             Contact Us
-                        </Link>
+                        </RouterLink>
                     </Flex>
                 </Flex>
             </Container>
