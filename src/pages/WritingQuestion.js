@@ -4,6 +4,7 @@ import { Box, Button, Textarea, Flex, Container, Text, Divider, useToast } from 
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
+import { Helmet } from 'react-helmet';
 import {
     Modal,
     ModalOverlay,
@@ -109,6 +110,16 @@ const WritingQuestion = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{passageTitle ? `${passageTitle} - IELTS Writing Task` : 'IELTS Writing Question'}</title>
+                <meta name="description" content={`AI-Powered IELTS grading for your writing. Practice with a real IELTS questions like:'${passageTitle}'. Get instant feedback and improve your writing skills for a better IELTS score.`} />
+                <meta name="keywords" content="IELTS Writing, IELTS Task, IELTS Writing Practice, IELTS Test Preparation, IELTS Writing Task, IELTS Writing Questions, IELTS Writing Feedback, Improve IELTS Writing"/>
+                <meta name="robots" content="index, follow"/>
+                <meta property="og:title" content={passageTitle ? `${passageTitle} - IELTS Writing Task` : 'IELTS Writing Question'}/>
+                <meta property="og:description" content="Sharpen your IELTS writing skills with real IELTS writing tasks. Practice with immediate AI-driven feedback to enhance your writing abilities and prepare for your IELTS test."/>
+                <meta property="og:url" content={`https://ielts-bank.com/writing/${docId}`}/>
+                <meta property="og:image" content="https://ielts-bank.com/favicon.png"/>
+            </Helmet>
             <Navbar />
             <Container maxW="container.xl">
                 <Flex 

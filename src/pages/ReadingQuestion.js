@@ -4,6 +4,8 @@ import { Box, Button, Flex, Container, VStack, Text, Divider, Select, Input } fr
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
+import { Helmet } from 'react-helmet';
+
 import {
     Modal,
     ModalOverlay,
@@ -62,6 +64,7 @@ const ReadingQuestion = () => {
             case "True or False":
             case "Yes or No":
                 return (
+                    
                     <Box className="mb-4" my={4}>
                         <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
                         <Select 
@@ -158,6 +161,13 @@ const ReadingQuestion = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{passageTitle ? `${passageTitle} - IELTS Reading Question` : 'IELTS Reading Question'}</title>
+                <meta name="description" content={`Read and answer questions for the passage: ${passageTitle}`} />
+                <meta name="keywords" content="IELTS, IELTS Reading, IELTS Academic Reading, IELTS General Reading, IELTS Reading Questions, IELTS Reading Practise Questions, IELTS Practice, IELTS Test Prep, IELTS Past Papers, IELTS Questions"/>
+                <meta name="robots" content="index, follow"/>
+                <meta property="og:url" content="https://ielts-bank.com/"/>
+            </Helmet>
             <Navbar />
             <Container maxW="container.xl">
                 <Flex 
