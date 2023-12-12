@@ -17,7 +17,10 @@ import {
     useDisclosure,
   } from '@chakra-ui/react';
 
+
 const ReadingQuestion = () => {
+    
+    let globalQuestionNumber = 0; // Global question number
     const [passageText, setPassageText] = useState('');
     const [passageTitle, setPassageTitle] = useState('');
     const [questionGroups, setQuestionGroups] = useState([]);
@@ -26,14 +29,14 @@ const ReadingQuestion = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userScore, setUserScore] = useState(null); // State for user's score
-
-    let questionNumber = -1;
+    
 
 
     // Use useParams to get the passageId from the URL
     const { id: passageId } = useParams();
 
     useEffect(() => {
+        globalQuestionNumber = 0;
         const fetchData = async () => {
             const db = getFirestore(app);
             const docRef = doc(db, 'readingPassages', passageId);
@@ -53,8 +56,9 @@ const ReadingQuestion = () => {
     }, [passageId]);
 
     const renderQuestion = (qMap, questionNumber, group) => {
-        questionNumber += 1; // Increment question number for each question
-        const answerStatus = answerStatuses[questionNumber];
+        globalQuestionNumber++; // Increment the global question number
+
+        const answerStatus = answerStatuses[globalQuestionNumber];
         const isCorrect = answerStatus === 'correct';
         const isIncorrect = answerStatus === 'incorrect';
         const bgColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
@@ -66,7 +70,7 @@ const ReadingQuestion = () => {
                 return (
                     
                     <Box className="mb-4" my={4}>
-                        <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
+                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
                         <Select 
                             className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)}
@@ -98,7 +102,7 @@ const ReadingQuestion = () => {
             case "Short Answer":
                 return (
                     <Box className="mb-4">
-                        <Text><strong>{questionNumber}.</strong> {qMap.text}</Text>
+                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
                         <Input 
                             type="text" 
                             className="form-control mb-2" 
@@ -112,6 +116,20 @@ const ReadingQuestion = () => {
             default:
                 return null;
         }
+        globalQuestionNumber++;
+    };
+
+    const renderQuestionGroup = (group) => {
+        let localQuestionNumber = 0;
+        return (
+            <Box key={group.prompt} mb={6}>
+                <Text fontSize="lg" fontWeight="bold" mb={2}>{group.prompt}</Text>
+                {group.questions.map(qMap => {
+                    localQuestionNumber++; // Increment local counter
+                    return renderQuestion(qMap, localQuestionNumber, group);
+                })}
+            </Box>
+        );
     };
 
     const handleAnswerChange = (event, questionNumber) => {
@@ -201,16 +219,16 @@ const ReadingQuestion = () => {
                         maxH= {{base: "33vh", md: "75vh"}}
                         mx = {{md:1}}
                     >
-                        <Text fontSize = "lg" fontWeight="bold">Questions:</Text>
-                        <Divider my={4} />
+                        <Text fontSize="lg" fontWeight="bold">Questions:</Text>
+                            <Divider my={4} />
                             {questionGroups.map((group, groupIndex) => (
-                            <Box key={groupIndex}>
-                                {group.questions.map(qMap => {
-                                    questionNumber += 1;
-                                    return renderQuestion(qMap, questionNumber, group);
-                                })}
-                            </Box>
-                        ))}
+                                <Box key={groupIndex} mb={6}>
+                                    <Text fontSize="md" fontWeight="bold" mb={2}>{group.prompt}</Text>
+                                    {group.questions.map((qMap, questionIndex) => {
+                                        return renderQuestion(qMap, questionIndex + 1, group);
+                                    })}
+                                </Box>
+                            ))}
                     </Box>
                 </Flex>
                 <Flex justifyContent="center" mt = {-2}>

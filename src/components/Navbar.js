@@ -53,6 +53,7 @@ const Navbar = () => {
                         rounded="md"
                         shadow="md"
                         zIndex="10"
+                        mr = {1}
                     >
                         <Link as={RouterLink} to="/index.html" p={2} w="full" textAlign="center">Home</Link>
                         <Link as={RouterLink} to="/termsofservice/" p={2} w="full" textAlign="center">Privacy Policy</Link>
