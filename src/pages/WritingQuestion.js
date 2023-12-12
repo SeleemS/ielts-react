@@ -193,7 +193,7 @@ const WritingQuestion = () => {
                         <ModalBody textAlign="center">
                             <Text>
                                 We use AI to grade submissions according to the official IELTS Rubric. 
-                                Please ensure your response is a minimum of 250 words to submit.
+                                Please ensure your response is a minimum of 250 words before you submit.
                             </Text>
                         </ModalBody>
                         <ModalFooter justifyContent="center">
