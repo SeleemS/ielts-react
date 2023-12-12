@@ -8,6 +8,7 @@ import {
   IconButton,
   useDisclosure,
   Collapse,
+  VStack,
   Link
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
@@ -17,7 +18,7 @@ const Navbar = () => {
     const { isOpen, onToggle } = useDisclosure();
 
     return (
-        <Flex as="header" bg="black" p={3} color="white" align="center">
+        <Flex as="header" bg="black" p={3} color="white" align="center" position="relative">
             {/* Logo and Title */}
             <Link as={RouterLink} to="/">
                 <Flex align="center">
@@ -36,24 +37,29 @@ const Navbar = () => {
                 variant="outline"
                 aria-label="Menu"
                 onClick={onToggle}
-                colorScheme="whiteAlpha" // This will ensure the icon and border are white
+                colorScheme="whiteAlpha"
             />
 
             {/* Expandable Menu Items */}
-            <Collapse in={isOpen} animateOpacity>
-                <Flex
-                    direction="column"
-                    bg="black"
-                    p={4}
-                    rounded="md"
-                    shadow="md"
-                >
-                    {/* Menu items can be added here */}
-                    {/*<Text color="white">Sign Up</Text>
-                    <Text color="white">Rate My Writing</Text>
-                    {/* ... other items */}
-                </Flex>
-            </Collapse>
+            {isOpen && (
+              <Collapse in={isOpen} animateOpacity>
+                    <VStack
+                        position="absolute"
+                        top="100%"
+                        right="0"
+                        bg="black"
+                        w="200px" // Fixed width for a cleaner look
+                        mt={2}
+                        rounded="md"
+                        shadow="md"
+                        zIndex="10"
+                    >
+                        <Link as={RouterLink} to="/index.html" p={2} w="full" textAlign="center">Home</Link>
+                        <Link as={RouterLink} to="/termsofservice/" p={2} w="full" textAlign="center">Privacy Policy</Link>
+                        <Link as={RouterLink} to="/contactus/" p={2} w="full" textAlign="center">Contact Us</Link>
+                    </VStack>
+                </Collapse>
+            )}
         </Flex>
     );
 }
