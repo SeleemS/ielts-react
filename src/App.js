@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import ReadingQuestion from './pages/ReadingQuestion';
 import WritingQuestion from './pages/WritingQuestion';
 import ListeningQuestion from './pages/ListeningQuestion';
+import SpeakingQuestion from './pages/SpeakingQuestion';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import ContactUs from './pages/ContactUs';
@@ -21,6 +22,7 @@ function App() {
               <Route path="/ielts-react/readingquestion/:id" element={<ReadingQuestion />} />
               <Route path="/ielts-react/writingquestion/:id" element={<WritingQuestion />} />
               <Route path="/ielts-react/listeningquestion/:id" element={<ListeningQuestion />} />
+              <Route path="/ielts-react/speakingquestion/:id" element={<SpeakingQuestion />} />
               <Route path="/privacypolicy/" element={<PrivacyPolicy />} />
               <Route path="/termsofservice/" element={<TermsOfService />} />
               <Route path="/contactus/" element={<ContactUs />} />

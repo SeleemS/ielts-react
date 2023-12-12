@@ -6,6 +6,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import ReadingQuestion from '../pages/ReadingQuestion';
 import WritingQuestion from '../pages/WritingQuestion';
 import ListeningQuestion from '../pages/ListeningQuestion';
+import SpeakingQuestion from '../pages/SpeakingQuestion';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
@@ -25,6 +26,9 @@ const DataTable = ({ selectedOption }) => {
                     break;
                 case 'Listening':
                     querySnapshot = await getDocs(collection(db, 'listeningPassages'));
+                    break;
+                case 'Speaking':
+                    querySnapshot = await getDocs(collection(db, 'speakingPassages'));
                     break;
                 default:
                     querySnapshot = await getDocs(collection(db, 'readingPassages'));

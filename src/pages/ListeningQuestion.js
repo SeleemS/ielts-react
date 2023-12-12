@@ -106,7 +106,7 @@ const ListeningQuestion = () => {
                         </Flex>
                         <Divider my={4} />
                         <Textarea
-                            placeholder="Type your response here..."
+                            placeholder="Coming Soon.."
                             size="lg"
                             flex="1" 
                             minHeight="0" 

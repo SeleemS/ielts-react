@@ -3,7 +3,7 @@ import { Flex, Button, Box } from '@chakra-ui/react';
 
 const Toggle = ({ onChange }) => {
     const [selected, setSelected] = useState('Reading');
-    const options = ['Reading', 'Writing', 'Listening'];
+    const options = ['Reading', 'Writing', 'Listening', 'Speaking'];
 
     const handleSelect = (option) => {
         setSelected(option);
@@ -16,7 +16,7 @@ const Toggle = ({ onChange }) => {
     const sliderLeft = options.indexOf(selected) * (100 / options.length) + "%";
 
     return (
-        <Flex position="relative" border="1px solid" borderColor="gray.200" borderRadius="md" bg="white">
+        <Flex maxW="90vw" position="relative" border="1px solid" borderColor="gray.200" borderRadius="md" bg="white">
             <Box
                 position="absolute"
                 left={sliderLeft}
