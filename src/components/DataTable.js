@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import ReadingQuestion from '../pages/ReadingQuestion';
 import WritingQuestion from '../pages/WritingQuestion';
+import ListeningQuestion from '../pages/ListeningQuestion';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
@@ -43,11 +44,14 @@ const DataTable = ({ selectedOption }) => {
 
     const handleRowClick = (id) => {
         if (selectedOption === 'Reading') {
-            navigate(`/ielts-react/ReadingQuestion/${id}`); // Navigate to ReadingQuestion with the document ID
+            navigate(`/ielts-react/readingquestion/${id}`); // Navigate to ReadingQuestion with the document ID
         }
         if (selectedOption === 'Writing') {
-            navigate(`/ielts-react/WritingQuestion/${id}`); 
+            navigate(`/ielts-react/writingquestion/${id}`); 
         }
+        //if (selectedOption === 'Listening') {
+        //    navigate(`/ielts-react/listeningquestion/${id}`); 
+        //}
     };
 
     const getDifficultyColor = (difficulty) => {
