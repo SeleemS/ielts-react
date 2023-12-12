@@ -216,7 +216,7 @@ const WritingQuestion = () => {
                         <ModalHeader fontWeight="bold">Your Score</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody overflowY="auto" maxH="250px">
-                            <Text>{apiResponse}</Text>
+                            <div dangerouslySetInnerHTML={{ __html: apiResponse }} />
                         </ModalBody>
                         <ModalFooter justifyContent={'center'}>
                             <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
