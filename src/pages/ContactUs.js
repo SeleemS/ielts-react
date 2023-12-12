@@ -19,9 +19,12 @@ const ContactUs = () => {
             >
                 {/* Left Ad Container */}
                 <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
-                        <Text>Ad Container</Text>
-                    </Flex>
+                    <ins className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-5189362957619937"
+                        data-ad-slot="7564021019"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </Flex>
 
                 {/* Contact Us Content */}
@@ -38,9 +41,12 @@ const ContactUs = () => {
 
                 {/* Right Ad Container */}
                 <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <Flex justifyContent="center" alignItems="center" width="100%" height="100%">
-                        <Text>Ad Container</Text>
-                    </Flex>
+                    <ins className="adsbygoogle"
+                        style={{ display: "block" }}
+                        data-ad-client="ca-pub-5189362957619937"
+                        data-ad-slot="7564021019"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </Flex>
             </Flex>
             <Footer />
