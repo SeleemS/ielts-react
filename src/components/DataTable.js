@@ -49,9 +49,9 @@ const DataTable = ({ selectedOption }) => {
         if (selectedOption === 'Writing') {
             navigate(`/ielts-react/writingquestion/${id}`); 
         }
-        //if (selectedOption === 'Listening') {
-        //    navigate(`/ielts-react/listeningquestion/${id}`); 
-        //}
+        if (selectedOption === 'Listening') {
+           navigate(`/ielts-react/listeningquestion/${id}`); 
+        }
     };
 
     const getDifficultyColor = (difficulty) => {
