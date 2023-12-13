@@ -33,6 +33,21 @@ const ReadingQuestion = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userScore, setUserScore] = useState(null); // State for user's score
+
+    const [remainingTime, setRemainingTime] = useState(1200); // 20 minutes in seconds
+
+    useEffect(() => {
+        if (remainingTime > 0) {
+            const timerId = setTimeout(() => setRemainingTime(remainingTime - 1), 1000);
+            return () => clearTimeout(timerId);
+        }
+    }, [remainingTime]);
+
+    const formatTime = () => {
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    };
     
 
 
@@ -220,19 +235,22 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
-                        maxH= {{base: "33vh", md: "75vh"}}
-                        mx = {{md:1}}
+                        maxH={{base: "33vh", md: "75vh"}}
+                        mx={{md:1}}
                     >
-                        <Text fontSize="lg" fontWeight="bold">Questions:</Text>
-                            <Divider my={4} />
-                            {questionGroups.map((group, groupIndex) => (
-                                <Box key={groupIndex} mb={6}>
-                                    <Text fontSize="md" fontWeight="bold" mb={2}>{group.prompt}</Text>
-                                    {group.questions.map((qMap, questionIndex) => {
-                                        return renderQuestion(qMap, questionIndex + 1, group);
-                                    })}
-                                </Box>
-                            ))}
+                        <Flex justifyContent="space-between" alignItems="center">
+                            <Text fontSize="lg" fontWeight="bold">Questions:</Text>
+                            <Text fontSize="xl" fontWeight="bold" color="yellow.500">{formatTime()}</Text>
+                        </Flex>
+                        <Divider my={4} />
+                        {questionGroups.map((group, groupIndex) => (
+                            <Box key={groupIndex} mb={6}>
+                                <Text fontSize="md" fontWeight="bold" mb={2}>{group.prompt}</Text>
+                                {group.questions.map((qMap, questionIndex) => {
+                                    return renderQuestion(qMap, questionIndex + 1, group);
+                                })}
+                            </Box>
+                        ))}
                     </Box>
                 </Flex>
                 <Flex justifyContent="center" mt={-2}>
