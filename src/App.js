@@ -1,5 +1,5 @@
-import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ReadingQuestion from './pages/ReadingQuestion';
 import WritingQuestion from './pages/WritingQuestion';
@@ -11,10 +11,21 @@ import ContactUs from './pages/ContactUs';
 import ReactGA from 'react-ga';
 ReactGA.initialize('G-1KRYZZY68X');
 
+const PageTracker = () => {
+    const location = useLocation();
+    
+    useEffect(() => {
+      ReactGA.pageview(location.pathname + location.search);
+    }, [location]);
+  
+    return null; // This component doesn't render anything
+  };
+
 
 function App() {
   return (
       <Router>
+        <PageTracker />
           <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/index.html" element={<HomePage />} />
