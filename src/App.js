@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ReadingQuestion from './pages/ReadingQuestion';
 import WritingQuestion from './pages/WritingQuestion';
