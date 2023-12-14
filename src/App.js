@@ -7,6 +7,7 @@ import ListeningQuestion from './pages/ListeningQuestion';
 import SpeakingQuestion from './pages/SpeakingQuestion';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import NotFoundPage from './pages/NotFoundPage';
 import ContactUs from './pages/ContactUs';
 import ReactGA from 'react-ga';
 ReactGA.initialize('G-1KRYZZY68X');
@@ -37,6 +38,8 @@ function App() {
               <Route path="/privacypolicy/" element={<PrivacyPolicy />} />
               <Route path="/termsofservice/" element={<TermsOfService />} />
               <Route path="/contactus/" element={<ContactUs />} />
+
+              <Route path="*" element={<NotFoundPage />} />
 
               {/* ... other routes */}
           </Routes>
