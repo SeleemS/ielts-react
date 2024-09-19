@@ -86,7 +86,7 @@ const ReadingQuestion = () => {
     
         if (isIncorrect) {
             answerDisplay = (
-                <Text color="red.500" mt={2}>
+                <Text color="red.500" mt={2} fontWeight="bold">
                     Correct Answer: {qMap.answer}
                 </Text>
             );
