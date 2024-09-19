@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Button, Textarea, Flex, Container, Text, Divider, useToast } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import ReactGA from 'react-ga';
 import Navbar from '../components/Navbar';
 import { Helmet } from 'react-helmet';
 import {
@@ -69,6 +70,13 @@ const WritingQuestion = () => {
         event.preventDefault();
         const wordCount = countWords(userResponse);
         
+        // Track the submit button click with Google Analytics
+        ReactGA.event({
+            category: 'User Engagement',   // Category of the action
+            action: 'Submit Writing',      // The action taken
+            label: 'Writing Test Submission'  // Additional label for the action
+        });
+    
         if (wordCount < 250) {
             toast({
                 title: "Word Count Too Low",
@@ -79,27 +87,22 @@ const WritingQuestion = () => {
             });
             return;
         }
-
-        const apiUrl = "https://wamm2ytjk5.execute-api.us-east-1.amazonaws.com/IELTSWritingBot";
-
+    
         setIsLoading(true);
-
+    
         try {
-            const response = await fetch(apiUrl, {
+            const response = await fetch("https://wamm2ytjk5.execute-api.us-east-1.amazonaws.com/IELTSWritingBot", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ question: passageText, answer: userResponse })
-                
-                
             });
-
+    
             if (response.ok) {
                 const responseData = await response.json(); // Assuming the response is JSON formatted
                 setApiResponse(responseData.message);
                 onOpen(); // Open the modal with the response
-                setIsLoading(false);
             } else {
                 toast({
                     title: "Error",
@@ -110,10 +113,18 @@ const WritingQuestion = () => {
                 });
             }
         } catch (error) {
-            setIsLoading(false); // Ensure loading is set to false in case of error
-            console.error("Error:", error);
+            toast({
+                title: "Error",
+                description: "An error occurred. Please try again.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+        } finally {
+            setIsLoading(false);
         }
     };
+    
 
     return (
         <>
