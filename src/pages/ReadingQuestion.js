@@ -245,6 +245,7 @@ const ReadingQuestion = () => {
                         shadow="md" 
                         borderWidth="1px" 
                         overflowY="auto" 
+                        overflowX="hidden"  // Prevent horizontal scrolling
                         maxH={{base: "33vh", md: "75vh"}}
                         mx={{md:1}}
                     >
