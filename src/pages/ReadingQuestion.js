@@ -240,7 +240,7 @@ const ReadingQuestion = () => {
                     >
                         <Flex justifyContent="space-between" alignItems="center">
                             <Text fontSize="lg" fontWeight="bold">Questions:</Text>
-                            <Text fontSize="xl" fontWeight="bold" color="yellow.500">{formatTime()}</Text>
+                            <Text fontSize="4xl" fontWeight="bold" color="red.500">{formatTime()}</Text>
                         </Flex>
                         <Divider my={4} />
                         {questionGroups.map((group, groupIndex) => (
