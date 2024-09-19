@@ -76,18 +76,27 @@ const ReadingQuestion = () => {
 
     const renderQuestion = (qMap, questionNumber, group) => {
         globalQuestionNumber++; // Increment the global question number
-
+    
         const answerStatus = answerStatuses[globalQuestionNumber];
         const isCorrect = answerStatus === 'correct';
         const isIncorrect = answerStatus === 'incorrect';
         const bgColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
+    
+        let answerDisplay = null;
+    
+        if (isIncorrect) {
+            answerDisplay = (
+                <Text color="red.500" mt={2}>
+                    Correct Answer: {qMap.answer}
+                </Text>
+            );
+        }
     
         switch (group.questionType) {
             case "Match":
             case "True or False":
             case "Yes or No":
                 return (
-                    
                     <Box className="mb-4" my={4}>
                         <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
                         <Select 
@@ -116,6 +125,7 @@ const ReadingQuestion = () => {
                                 </>
                             )}
                         </Select>
+                        {answerDisplay}
                     </Box>
                 );
             case "Short Answer":
@@ -130,12 +140,12 @@ const ReadingQuestion = () => {
                             value={userAnswers[questionNumber] || ''}
                             isReadOnly={isCorrect || isIncorrect}
                         />
+                        {answerDisplay}
                     </Box>
                 );
             default:
                 return null;
         }
-        globalQuestionNumber++;
     };
 
     const renderQuestionGroup = (group) => {
