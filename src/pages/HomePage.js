@@ -10,24 +10,14 @@ import Navbar from '../components/Navbar';
 import Toggle from '../components/Toggle';
 import DataTable from '../components/DataTable';
 import Footer from '../components/Footer';
+import { keyframes} from '@chakra-ui/react';
+
+const moveStripes = keyframes`
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+`;
 
 const HomePage = () => {
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
-
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
-
-    const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
-
-    const handleToggleChange = (option) => {
-        setSelectedOption(option);
-    };
-
     const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
 
     return (
@@ -38,11 +28,21 @@ const HomePage = () => {
                 justify="space-between"
                 align="center"
                 wrap="wrap"
-                px={{ md: 8 }} // Horizontal padding on medium and larger screens
+                px={{ md: 8 }}
                 py={6}
             >
-                {/* Left Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
+                {/* Left Ad Container with pronounced moving stripes */}
+                <Flex
+                    display={adDisplay}
+                    width="300px"
+                    height="600px"
+                    bgGradient="linear(to-r, gray.400, white, gray.400)"
+                    bgSize="300% 100%"
+                    animation={`${moveStripes} 3s linear infinite`}
+                    mx={2}
+                    justifyContent="center"
+                    alignItems="center"
+                >
                     <ins className="adsbygoogle"
                         style={{ display: "block" }}
                         data-ad-client="ca-pub-5189362957619937"
@@ -51,14 +51,24 @@ const HomePage = () => {
                         data-full-width-responsive="true"></ins>
                 </Flex>
 
-
+                {/* Data Table in the center */}
                 <VStack spacing={4} flex="1" minWidth="300px">
-                    <Toggle onChange={handleToggleChange} />
-                    <DataTable selectedOption={selectedOption} />
+                    <Toggle />
+                    <DataTable />
                 </VStack>
 
-                {/* Right Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
+                {/* Right Ad Container with pronounced moving stripes */}
+                <Flex
+                    display={adDisplay}
+                    width="300px"
+                    height="600px"
+                    bgGradient="linear(to-r, gray.400, white, gray.400)"
+                    bgSize="300% 100%"
+                    animation={`${moveStripes} 3s linear infinite`}
+                    mx={2}
+                    justifyContent="center"
+                    alignItems="center"
+                >
                     <ins className="adsbygoogle"
                         style={{ display: "block" }}
                         data-ad-client="ca-pub-5189362957619937"
@@ -73,3 +83,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
