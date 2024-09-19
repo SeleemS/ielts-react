@@ -6,6 +6,8 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
 import { Helmet } from 'react-helmet';
 import ShareButton from '../components/ShareButton';
+import ReactGA from 'react-ga';
+
 
 import {
     Modal,
@@ -171,9 +173,17 @@ const ReadingQuestion = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+    
+        // Track the submit button click
+        ReactGA.event({
+            category: 'User Engagement',   // This is a broad category for similar types of actions
+            action: 'Submit Answer',       // This is the specific action that was taken
+            label: 'Reading Test Submission'  // Additional details about this specific action
+        });
+    
         let newAnswerStatuses = {};
         let correctAnswersCount = 0;
-        let answerIndex = 1; // Start from 1 to match question numbers
+        let answerIndex = 1;  // Start from 1 to match question numbers
     
         const db = getFirestore(app);
         const questionDoc = doc(db, 'readingPassages', passageId);
@@ -197,9 +207,8 @@ const ReadingQuestion = () => {
             });
     
             setAnswerStatuses(newAnswerStatuses);
-            setUserScore(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`); // Update the score here
-            onOpen(); // Then open the modal
-            console.log(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`);
+            setUserScore(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`);
+            onOpen();  // Open modal to show results
         } else {
             console.error("No such document!");
         }
