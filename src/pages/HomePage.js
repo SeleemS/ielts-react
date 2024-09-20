@@ -70,7 +70,7 @@ const HomePage = () => {
                 </Flex>
 
                 {/* DataTable remains unchanged to ensure full functionality */}
-                <VStack spacing={4} flex="1" minWidth="300px">
+                <VStack spacing={4} flex="1" minWidth="300px" minHeight="600px"> {/* Set minimum height here */}
                     <Toggle onChange={handleToggleChange} />
                     <DataTable selectedOption={selectedOption} />
                 </VStack>
