@@ -34,7 +34,7 @@ function App() {
               <Route path="/ielts-react/readingquestion/:id" element={<ReadingQuestion />} />
               <Route path="/ielts-react/writingquestion/:id" element={<WritingQuestion />} />
               <Route path="/ielts-react/listeningquestion/:id" element={<ListeningQuestion />} />
-              <Route path="/ielts-react/speakingquestion/:id" element={<SpeakingQuestion />} />
+              <Route path="/ielts-react/speakingquestion" element={<SpeakingQuestion />} />
               <Route path="/privacypolicy/" element={<PrivacyPolicy />} />
               <Route path="/termsofservice/" element={<TermsOfService />} />
               <Route path="/contactus/" element={<ContactUs />} />

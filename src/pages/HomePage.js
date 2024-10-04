@@ -1,38 +1,44 @@
+// HomePage.js
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Flex,
   VStack,
   useBreakpointValue,
-  Text,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Navbar from '../components/Navbar'; 
 import Toggle from '../components/Toggle';
 import DataTable from '../components/DataTable';
 import Footer from '../components/Footer';
-import { keyframes} from '@chakra-ui/react';
+import { keyframes } from '@chakra-ui/react';
 
 const moveStripes = keyframes`
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
 `;
 
-
 const HomePage = () => {
     const adContainerRef = useRef(null);
     const [isAdLoaded, setIsAdLoaded] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     useEffect(() => {
         if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+            setIsAdLoaded(true);
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
         }
-    }, [adContainerRef.current]);
+    }, [adContainerRef]);
 
-    const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
+    const [selectedOption, setSelectedOption] = useState('Reading');
 
     const handleToggleChange = (option) => {
         setSelectedOption(option);
+
+        // Navigate to SpeakingQuestion.js when "Speaking" is selected
+        if (option === 'Speaking') {
+            navigate('/ielts-react/speakingquestion');
+        }
     };
 
     const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
@@ -69,10 +75,12 @@ const HomePage = () => {
                         data-full-width-responsive="true"></ins>
                 </Flex>
 
-                {/* DataTable remains unchanged to ensure full functionality */}
-                <VStack spacing={4} flex="1" minWidth="300px" minHeight="600px"> {/* Set minimum height here */}
+                {/* Conditional Rendering */}
+                <VStack spacing={4} flex="1" minWidth="300px" minHeight="600px">
                     <Toggle onChange={handleToggleChange} />
-                    <DataTable selectedOption={selectedOption} />
+                    {selectedOption !== 'Speaking' && (
+                        <DataTable selectedOption={selectedOption} />
+                    )}
                 </VStack>
 
                 {/* Right Ad Container with animated stripes */}
