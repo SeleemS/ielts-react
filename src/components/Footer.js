@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Text, Flex, Link, Spacer } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import NextLink from 'next/link';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import TermsOfService from '../pages/TermsOfService';
 import ContactUs from '../pages/ContactUs';
@@ -22,17 +22,23 @@ const Footer = () => {
                     <Spacer />
                     <Flex mt={{ base: 4, md: 0 }}>
                         {/* Updated Terms of Service Link */}
-                        <RouterLink to="/termsofservice" onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
+                        <NextLink href="/termsofservice" passHref legacyBehavior>
+                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
                             Terms of Service
-                        </RouterLink>
+                            </Link>
+                        </NextLink>
                         {/* Updated Privacy Policy Link */}
-                        <RouterLink to="/privacypolicy" onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
+                        <NextLink href="/privacypolicy" passHref legacyBehavior>
+                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
                             Privacy Policy
-                        </RouterLink>
+                            </Link>
+                        </NextLink>
                         {/* Updated Contact Us Link */}
-                        <RouterLink to="/contactus" onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', fontSize: '0.875rem' }}>
+                        <NextLink href="/contactus" passHref legacyBehavior>
+                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', fontSize: '0.875rem' }}>
                             Contact Us
-                        </RouterLink>
+                            </Link>
+                        </NextLink>
                     </Flex>
                 </Flex>
             </Container>
