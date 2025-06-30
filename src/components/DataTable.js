@@ -1,86 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Flex, Button, Spinner } from '@chakra-ui/react';
-import { app } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { app } from '../firebase';
 
 const DataTable = ({ selectedOption }) => {
-    const [data, setData] = useState([]);
-    const [cache, setCache] = useState({}); // Cache to store data for each category
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const resultsPerPage = 10;
-    const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [cache, setCache] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const resultsPerPage = 10;
+  const router = useRouter();
 
-    useEffect(() => {
-        async function fetchData() {
-            if (cache[selectedOption]) {
-                // Use cached data
-                const cachedData = cache[selectedOption];
-                setData(cachedData);
-                setTotalPages(Math.ceil(cachedData.length / resultsPerPage));
-            } else {
-                // Fetch new data if not in cache
-                setLoading(true);
-                const db = getFirestore(app);
-                const collectionName = `${selectedOption.toLowerCase()}Passages`;
-                const querySnapshot = await getDocs(collection(db, collectionName));
-                const fetchedData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                setData(fetchedData);
-                setTotalPages(Math.ceil(fetchedData.length / resultsPerPage));
-                setLoading(false);
-                
-                // Update cache with new data
-                setCache(prev => ({ ...prev, [selectedOption]: fetchedData }));
-            }
-        }
+  useEffect(() => {
+    async function fetchData() {
+      if (cache[selectedOption]) {
+        const cachedData = cache[selectedOption];
+        setData(cachedData);
+        setTotalPages(Math.ceil(cachedData.length / resultsPerPage));
+      } else {
+        setLoading(true);
+        const db = getFirestore(app);
+        const collectionName = `${selectedOption.toLowerCase()}Passages`;
+        const querySnapshot = await getDocs(collection(db, collectionName));
+        const fetchedData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setData(fetchedData);
+        setTotalPages(Math.ceil(fetchedData.length / resultsPerPage));
+        setLoading(false);
+        setCache(prev => ({ ...prev, [selectedOption]: fetchedData }));
+      }
+    }
+    fetchData();
+  }, [selectedOption, cache]);
 
-        fetchData();
-    }, [selectedOption, cache]);
+  const handleRowClick = id => {
+    router.push(`/${selectedOption.toLowerCase()}question/${id}`);
+  };
 
-    const handleRowClick = id => {
-        const routePath = `/ielts-react/${selectedOption.toLowerCase()}question/${id}`;
-        navigate(routePath);
-    };
+  const getDifficultyColor = difficulty => ({
+    Hard: 'text-red-600',
+    Medium: 'text-yellow-600',
+    Easy: 'text-green-600',
+    'Task 2': 'text-black',
+  }[difficulty] || 'text-gray-600');
 
-    const getDifficultyColor = difficulty => ({
-        'Hard': 'red.500',
-        'Medium': 'yellow.500',
-        'Easy': 'green.500',
-        'Task 2': 'black.500'
-    }[difficulty] || 'gray.500');
-
-    return (
-        <Box overflowX="auto" minHeight="400px">
-            {loading ? (
-                <Flex justifyContent="center" alignItems="center" height="100%" direction="column">
-                    <Spinner size="xl" thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" />
-                    <Text fontSize="xl" mt={3}>Loading...</Text>
-                </Flex>
-            ) : (
-                <Table variant="simple">
-                    <Thead>
-                        <Tr>
-                            <Th fontWeight="bold">#</Th>
-                            <Th fontWeight="bold">Title</Th>
-                            <Th fontWeight="bold">Difficulty</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {data.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage).map((item, index) => (
-                            <Tr key={item.id} onClick={() => handleRowClick(item.id)} cursor="pointer" bg={index % 2 === 0 ? "gray.50" : "white"}>
-                                <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
-                                <Td>{item.passageTitle}</Td>
-                                <Td color={getDifficultyColor(item.passageDifficulty)} fontWeight="bold">{item.passageDifficulty}</Td>
-                            </Tr>
-                        ))}
-                    </Tbody>
-                </Table>
-            )}
-        </Box>
-    );
+  return (
+    <div className="overflow-x-auto min-h-[400px]">
+      {loading ? (
+        <div className="flex flex-col items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent" />
+          <p className="mt-3 text-xl">Loading...</p>
+        </div>
+      ) : (
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b">
+              <th className="font-bold p-2">#</th>
+              <th className="font-bold p-2">Title</th>
+              <th className="font-bold p-2">Difficulty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data
+              .slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage)
+              .map((item, index) => (
+                <tr
+                  key={item.id}
+                  onClick={() => handleRowClick(item.id)}
+                  className={`cursor-pointer ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+                >
+                  <td className="p-2">{(currentPage - 1) * resultsPerPage + index + 1}</td>
+                  <td className="p-2">{item.passageTitle}</td>
+                  <td className={`p-2 font-bold ${getDifficultyColor(item.passageDifficulty)}`}>{item.passageDifficulty}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 };
 
 export default DataTable;
