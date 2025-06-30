@@ -1,84 +1,43 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { Box, Flex, VStack, Text, useBreakpointValue } from '@chakra-ui/react';
+import React, { useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const TermsOfService = () => {
+  const adContainerRef = useRef(null);
+  useEffect(() => {
+    if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  }, [adContainerRef.current]);
 
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
-
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
-
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
-
-    return (
-        <Box>
-            <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }}
-                py={6}
-            >
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-
-                <VStack spacing={4} flex="1" minWidth="300px" px={4}>
-                    <Text fontSize="2xl" fontWeight="bold">Terms of Service</Text>
-                    <Box overflowY="auto" maxH="70vh" width="100%">
-                        <Text>
-                            Welcome to IELTSBank. Below are our Terms of Service, which outline the rules and regulations for the use of IELTSBank's Website.<br /><br />
-
-                            <strong>1. Terms</strong><br />
-                            By accessing this website, you are agreeing to be bound by these website Terms of Service and agree that you are responsible for compliance with any applicable local laws.<br /><br />
-
-                            <strong>2. Use License</strong><br />
-                            Permission is granted to temporarily download one copy of the materials on IELTSBank's website for personal, non-commercial transitory viewing only.<br /><br />
-
-                            <strong>3. Disclaimer</strong><br />
-                            The materials on IELTSBank's website are provided "as is". IELTSBank makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties.<br /><br />
-
-                            <strong>4. Limitations</strong><br />
-                            In no event shall IELTSBank or its suppliers be liable for any damages arising out of the use or inability to use the materials on IELTSBank's website.<br /><br />
-
-                            <strong>5. Revisions and Errata</strong><br />
-                            The materials appearing on IELTSBank's website could include technical, typographical, or photographic errors. IELTSBank does not warrant that any of the materials on its website are accurate, complete, or current.<br /><br />
-
-                            <strong>6. Site Terms of Use Modifications</strong><br />
-                            IELTSBank may revise these Terms of Service for its website at any time without notice. By using this website, you are agreeing to be bound by the current version of these Terms of Service.<br /><br />
-
-                            <strong>Last Updated:</strong> December 11, 2023<br /><br />
-                            If you have any questions about these Terms of Service, please contact us.
-                        </Text>
-                    </Box>
-                </VStack>
-
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
-            <Footer />
-        </Box>
-    );
+  return (
+    <div>
+      <Navbar />
+      <div className="flex flex-col md:flex-row justify-between items-center flex-wrap px-0 md:px-8 py-6">
+        <div className="hidden md:flex w-[300px] h-[600px] bg-gray-200 mx-2 justify-center items-center">
+          <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-5189362957619937" data-ad-slot="7564021019" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+        <div className="flex flex-col space-y-4 flex-1 min-w-[300px] px-4">
+          <h1 className="text-2xl font-bold">Terms of Service</h1>
+          <div className="overflow-y-auto max-h-[70vh] w-full text-sm space-y-4">
+            <p>Welcome to IELTSBank. Below are our Terms of Service, which outline the rules and regulations for the use of IELTSBank's Website.</p>
+            <p><strong>1. Terms</strong><br />By accessing this website, you agree to be bound by these Terms of Service.</p>
+            <p><strong>2. Use License</strong><br />Permission is granted to temporarily download one copy of the materials on IELTSBank's website for personal, non-commercial viewing only.</p>
+            <p><strong>3. Disclaimer</strong><br />The materials on IELTSBank's website are provided "as is" without warranties.</p>
+            <p><strong>4. Limitations</strong><br />In no event shall IELTSBank or its suppliers be liable for any damages arising out of the use of the materials on IELTSBank's website.</p>
+            <p><strong>5. Revisions and Errata</strong><br />The materials appearing on IELTSBank's website could include errors. IELTSBank does not warrant that any of the materials are accurate or current.</p>
+            <p><strong>6. Site Terms of Use Modifications</strong><br />IELTSBank may revise these Terms of Service at any time without notice.</p>
+            <p><strong>Last Updated:</strong> December 11, 2023</p>
+            <p>If you have any questions about these Terms of Service, please contact us.</p>
+          </div>
+        </div>
+        <div className="hidden md:flex w-[300px] h-[600px] bg-gray-200 mx-2 justify-center items-center">
+          <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-5189362957619937" data-ad-slot="7564021019" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default TermsOfService;

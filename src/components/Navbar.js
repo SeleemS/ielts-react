@@ -1,68 +1,39 @@
-import React from 'react';
-import {
-  Flex,
-  Box,
-  Spacer,
-  Image,
-  Text,
-  IconButton,
-  useDisclosure,
-  Collapse,
-  VStack,
-  Link
-} from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
-import NextLink from 'next/link';
+import React, { useState } from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
-    const { isOpen, onToggle } = useDisclosure();
-
-    return (
-        <Flex as="header" bg="black" p={3} color="white" align="center" position="relative">
-            {/* Logo and Title */}
-            <Link as={NextLink} href="/">
-                <Flex align="center">
-                    <Box p="1">
-                        <Image src="/image.png" alt="Logo" boxSize="50px" />
-                    </Box>
-                    <Text fontSize="lg" fontWeight="bold" ml={2}>IELTS-Bank</Text>
-                </Flex>
-            </Link>
-
-            <Spacer />
-
-            {/* Menu Icon */}
-            <IconButton
-                icon={<HamburgerIcon color="white"/>}
-                variant="outline"
-                aria-label="Menu"
-                onClick={onToggle}
-                colorScheme="whiteAlpha"
-            />
-
-            {/* Expandable Menu Items */}
-            {isOpen && (
-              <Collapse in={isOpen} animateOpacity>
-                    <VStack
-                        position="absolute"
-                        top="100%"
-                        right="0"
-                        bg="black"
-                        w="200px" // Fixed width for a cleaner look
-                        mt={2}
-                        rounded="md"
-                        shadow="md"
-                        zIndex="10"
-                        mr = {1}
-                    >
-                        <Link as={NextLink} href="/" p={2} w="full" textAlign="center">Home</Link>
-                        <Link as={NextLink} href="/termsofservice" p={2} w="full" textAlign="center">Privacy Policy</Link>
-                        <Link as={NextLink} href="/contactus" p={2} w="full" textAlign="center">Contact Us</Link>
-                    </VStack>
-                </Collapse>
-            )}
-        </Flex>
-    );
-}
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="bg-black text-white p-3 flex items-center relative">
+      <Link href="/" className="flex items-center">
+        <img src="/image.png" alt="Logo" className="w-12 h-12" />
+        <span className="ml-2 font-bold text-lg">IELTS-Bank</span>
+      </Link>
+      <div className="flex-1" />
+      <button
+        aria-label="Menu"
+        onClick={() => setOpen(!open)}
+        className="border border-white p-2 rounded"
+      >
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute right-0 mt-2 w-48 bg-black rounded shadow-md z-10 flex flex-col text-center">
+          <Link href="/" className="p-2 hover:bg-gray-800">Home</Link>
+          <Link href="/termsofservice" className="p-2 hover:bg-gray-800">Privacy Policy</Link>
+          <Link href="/contactus" className="p-2 hover:bg-gray-800">Contact Us</Link>
+        </div>
+      )}
+    </header>
+  );
+};
 
 export default Navbar;

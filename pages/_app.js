@@ -1,4 +1,3 @@
-import { ChakraProvider } from '@chakra-ui/react';
 import ReactGA from 'react-ga';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -18,11 +17,7 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
-  return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

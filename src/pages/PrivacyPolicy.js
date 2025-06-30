@@ -1,86 +1,42 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { Box, Flex, VStack, Text, useBreakpointValue } from '@chakra-ui/react';
+import React, { useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const PrivacyPolicy = () => {
+  const adContainerRef = useRef(null);
+  useEffect(() => {
+    if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  }, [adContainerRef.current]);
 
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
-
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
-    
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
-
-    return (
-        <Box>
-            <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }} // Horizontal padding on medium and larger screens
-                py={6}
-            >
-                {/* Left Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-
-                {/* Privacy Policy Content */}
-                <VStack spacing={4} flex="1" minWidth="300px" px={4}>
-                    <Text fontSize="2xl" fontWeight="bold">Privacy Policy</Text>
-                    <Box overflowY="auto" maxH="70vh" width="100%">
-                        {/* Privacy Policy Text */}
-                        <Text>
-
-                            Welcome to IELTSBank. This privacy policy outlines our policies regarding the collection, use, and disclosure of information we receive from users of our site.<br /><br />
-
-                            <strong>Information Collection and Use</strong><br />
-                            IELTSBank does not collect any personally identifiable information from its users. Our users are free to visit our site anonymously, and we do not require any personal data for access to most of our services.<br /><br />
-
-                            <strong>Log Data</strong><br />
-                            We do not collect information that your browser sends (known as "Log Data") when you visit our Site. This means we do not track information such as your computer's Internet Protocol ("IP") address, browser type, browser version, and the pages of our Site that you visit.<br /><br />
-
-                            <strong>Cookies and Tracking</strong><br />
-                            IELTSBank does not use cookies or any form of tracking to collect information about users. Your privacy is respected at all times when you visit our website.<br /><br />
-
-                            <strong>Data Security</strong><br />
-                            Since we do not collect personal data, there is no risk of such data being exposed or misused. We are committed to ensuring the security and privacy of our visitors.<br /><br />
-
-                            <strong>Changes to This Privacy Policy</strong><br />
-                            This Privacy Policy is effective as of the last updated date and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page. We reserve the right to update or change our Privacy Policy at any time and you should check this Privacy Policy periodically.<br /><br />
-
-                            <strong>Last Updated:</strong> December 11, 2023<br /><br />
-                            If you have any questions about this Privacy Policy, please contact us.
-                        </Text>
-                    </Box>
-                </VStack>
-
-                {/* Right Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
-            <Footer />
-        </Box>
-    );
+  return (
+    <div>
+      <Navbar />
+      <div className="flex flex-col md:flex-row justify-between items-center flex-wrap px-0 md:px-8 py-6">
+        <div className="hidden md:flex w-[300px] h-[600px] bg-gray-200 mx-2 justify-center items-center">
+          <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-5189362957619937" data-ad-slot="7564021019" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+        <div className="flex flex-col space-y-4 flex-1 min-w-[300px] px-4">
+          <h1 className="text-2xl font-bold">Privacy Policy</h1>
+          <div className="overflow-y-auto max-h-[70vh] w-full text-sm space-y-4">
+            <p>Welcome to IELTSBank. This privacy policy outlines our policies regarding the collection, use, and disclosure of information we receive from users of our site.</p>
+            <p><strong>Information Collection and Use</strong><br />IELTSBank does not collect any personally identifiable information from its users.</p>
+            <p><strong>Log Data</strong><br />We do not collect information that your browser sends when you visit our Site.</p>
+            <p><strong>Cookies and Tracking</strong><br />IELTSBank does not use cookies or any form of tracking.</p>
+            <p><strong>Data Security</strong><br />Since we do not collect personal data, there is no risk of such data being exposed or misused.</p>
+            <p><strong>Changes to This Privacy Policy</strong><br />This Privacy Policy is effective as of the last updated date and will remain in effect except with respect to any changes in its provisions in the future.</p>
+            <p><strong>Last Updated:</strong> December 11, 2023</p>
+            <p>If you have any questions about this Privacy Policy, please contact us.</p>
+          </div>
+        </div>
+        <div className="hidden md:flex w-[300px] h-[600px] bg-gray-200 mx-2 justify-center items-center">
+          <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-5189362957619937" data-ad-slot="7564021019" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default PrivacyPolicy;

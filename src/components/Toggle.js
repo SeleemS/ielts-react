@@ -1,49 +1,32 @@
 import React, { useState } from 'react';
-import { Flex, Button, Box } from '@chakra-ui/react';
 
 const Toggle = ({ onChange }) => {
-    const [selected, setSelected] = useState('Reading');
-    const options = ['Reading', 'Writing'];
-    // const options = ['Reading', 'Writing', 'Listening', 'Speaking'];
+  const [selected, setSelected] = useState('Reading');
+  const options = ['Reading', 'Writing'];
+  const sliderLeft = `${options.indexOf(selected) * (100 / options.length)}%`;
 
-    const handleSelect = (option) => {
-        setSelected(option);
-        if (onChange) {
-            onChange(option);
-        }
-    };
+  const handleSelect = option => {
+    setSelected(option);
+    if (onChange) onChange(option);
+  };
 
-    // Calculate the left position for the slider
-    const sliderLeft = options.indexOf(selected) * (100 / options.length) + "%";
-
-    return (
-        <Flex maxW="90vw" position="relative" border="1px solid" borderColor="gray.200" borderRadius="md" bg="white">
-            <Box
-                position="absolute"
-                left={sliderLeft}
-                width={`${100 / options.length}%`}
-                bg="black"
-                borderRadius="md"
-                transition="left 0.3s ease-out"
-                height="100%"
-            />
-            {options.map((option) => (
-                <Button
-                    flex={1}
-                    bg="transparent"
-                    color={selected === option ? 'white' : 'gray.600'}
-                    fontWeight="bold"
-                    borderRadius="md"
-                    _hover={{ bg: 'transparent', color: 'white' }}
-                    onClick={() => handleSelect(option)}
-                    key={option}
-                    zIndex="2" // Ensure buttons are above the slider
-                >
-                    {option}
-                </Button>
-            ))}
-        </Flex>
-    );
+  return (
+    <div className="relative flex w-full max-w-[90vw] border border-gray-200 rounded-md bg-white text-sm">
+      <div
+        className="absolute top-0 left-0 h-full bg-black rounded-md transition-all"
+        style={{ left: sliderLeft, width: `${100 / options.length}%` }}
+      />
+      {options.map(option => (
+        <button
+          key={option}
+          className={`flex-1 z-10 py-2 font-bold ${selected === option ? 'text-white' : 'text-gray-600'}`}
+          onClick={() => handleSelect(option)}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+  );
 };
 
 export default Toggle;
