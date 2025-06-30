@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const NotFoundPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate('/');
+            router.push('/');
         }, 3000); // Redirects after 3 seconds
 
         return () => clearTimeout(timer);
-    }, [navigate]);
+    }, [router]);
 
     return (
         <div>

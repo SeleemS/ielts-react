@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { Box, Button, Textarea, Flex, Container, Text, Divider, useToast } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
@@ -28,8 +28,9 @@ const WritingQuestion = () => {
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
-    // Use useParams to get the docId from the URL
-    const { id: docId } = useParams();
+    // Get the docId from the URL
+    const router = useRouter();
+    const { id: docId } = router.query;
 
     useEffect(() => {
         const fetchData = async () => {

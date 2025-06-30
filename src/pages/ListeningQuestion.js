@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { Box, Button, Textarea, Flex, Container, Text, Divider, useToast } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
@@ -29,7 +29,8 @@ const ListeningQuestion = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [userScore, setUserScore] = useState(null);
 
-    const { id: passageId } = useParams();
+    const router = useRouter();
+    const { id: passageId } = router.query;
 
     useEffect(() => {
         globalQuestionNumber = 0;
