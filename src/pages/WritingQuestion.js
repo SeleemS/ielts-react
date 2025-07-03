@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Button, Textarea, Flex, Container, Text, Divider, useToast } from '@chakra-ui/react';
+import { 
+    Box, 
+    Button, 
+    Textarea, 
+    Flex, 
+    Container, 
+    Text, 
+    useToast,
+    VStack,
+    HStack,
+    Heading,
+    Progress
+} from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import ReactGA from 'react-ga';
@@ -28,7 +40,6 @@ const WritingQuestion = () => {
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
 
-    // Get the docId from the URL
     const router = useRouter();
     const { id: docId } = router.query;
 
@@ -52,30 +63,27 @@ const WritingQuestion = () => {
 
     useEffect(() => {
         onInfoOpen();
-        // No dependencies means this runs once when the component mounts
     }, []);
-    
 
     const handleResponseChange = (event) => {
         setUserResponse(event.target.value);
     };
 
-    // Word Counter
     const countWords = (text) => {
-        return text.split(/\s+/).filter(Boolean).length; // Split by spaces and filter out empty strings
+        return text.split(/\s+/).filter(Boolean).length;
     };
 
-    // You can add a submit handler if needed
+    const wordCount = countWords(userResponse);
+    const progressValue = Math.min((wordCount / 250) * 100, 100);
+    const isWordCountSufficient = wordCount >= 250;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const wordCount = countWords(userResponse);
         
-        // Track the submit button click with Google Analytics
         ReactGA.event({
-            category: 'User Engagement',   // Category of the action
-            action: 'Submit Writing',      // The action taken
-            label: 'Writing Test Submission'  // Additional label for the action
+            category: 'User Engagement',
+            action: 'Submit Writing',
+            label: 'Writing Test Submission'
         });
     
         if (wordCount < 250) {
@@ -101,9 +109,9 @@ const WritingQuestion = () => {
             });
     
             if (response.ok) {
-                const responseData = await response.json(); // Assuming the response is JSON formatted
+                const responseData = await response.json();
                 setApiResponse(responseData.message);
-                onOpen(); // Open the modal with the response
+                onOpen();
             } else {
                 toast({
                     title: "Error",
@@ -125,7 +133,6 @@ const WritingQuestion = () => {
             setIsLoading(false);
         }
     };
-    
 
     return (
         <>
@@ -139,105 +146,233 @@ const WritingQuestion = () => {
                 <meta property="og:url" content={`https://ielts-bank.com/writing/${docId}`}/>
                 <meta property="og:image" content="https://ielts-bank.com/favicon.png"/>
             </Helmet>
-            <Navbar />
-            <Container maxW="container.xl">
-                <Flex 
-                    direction={{ base: "column", md: "row" }} 
-                    spacing={8} 
-                    align="stretch" 
-                    my={5}
-                >
-                    <Box 
-                        flex="1" 
-                        p={5} 
-                        shadow="md" 
-                        borderWidth="1px" 
-                        overflowY="auto" 
-                        maxH={{ base: "33vh", md: "75vh" }}
-                        minH = {{base: "33vh", md: "75vh"}}
-                        mt = {{base: -2, md: 0}} // Margin top on mobile
-                        mb={{ base: 3, md: 0 }} // Margin bottom on mobile
-                        mx = {{md:2}}
-                    >
-                        <Text fontSize = "large" fontWeight="bold">{passageTitle}:</Text>
-                        <Divider my={4} />
-                        <Box dangerouslySetInnerHTML={{ __html: passageText }} />
-                    </Box>
-
-                    <Box 
-                        flex="1" 
-                        p={5} 
-                        shadow="md" 
-                        borderWidth="1px" 
-                        overflowY="auto" 
-                        display="flex" 
-                        flexDirection="column" 
-                        maxH={{ base: "33vh", md: "75vh" }}
-                        minH={{ base: "33vh", md: "75vh" }}
-                    >
-                        <Flex alignItems="center">
-                            <Text fontSize = "lg" fontWeight="bold" mr={2}>Your Response:</Text>
-                            <Text fontSize="sm" fontWeight="bold" color="gray.600">({countWords(userResponse)} words / 250)</Text>
-                        </Flex>
-                        <Divider my={4} />
-                        <Textarea
-                            placeholder="Type your response here..."
-                            size="lg"
-                            flex="1" 
-                            minHeight="0" 
-                            value={userResponse}
-                            onChange={handleResponseChange}
-                        />
-                    </Box>
-                </Flex>
-                <Flex justifyContent="center" mt = {-1}>
-                    <Button bg="black" colorScheme="blue" onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                </Flex>
-                {/* Loading Modal */}
-                {/* Information Modal */}
-                <Modal isOpen={isInfoOpen} onClose={onInfoClose} isCentered>
-                    <ModalOverlay />
-                    <ModalContent maxW="300px">
-                        <ModalHeader textAlign="center">How This Works</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody textAlign="center">
-                            <Text>
-                                We use AI to grade submissions according to the official IELTS Rubric. 
-                                Please ensure your response is a minimum of 250 words before you submit.
+            
+            <Flex direction="column" minH="100vh" bg="gray.50">
+                <Navbar />
+                
+                <Box flex="1" py={6}>
+                    <Container maxW="container.xl">
+                        {/* Header */}
+                        <VStack align="start" spacing={1} mb={6}>
+                            <Heading size="lg" color="gray.900" fontWeight="700">
+                                {passageTitle}
+                            </Heading>
+                            <Text color="gray.600" fontSize="md">
+                                IELTS Writing Practice - AI-Powered Feedback
                             </Text>
-                        </ModalBody>
-                        <ModalFooter justifyContent="center">
-                            <Button bg="black" colorScheme="blue" onClick={onInfoClose}>Got it!</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-                <Modal isOpen={isLoading} isCentered >
-                    <ModalOverlay />
-                    <ModalContent maxW = "300px">
-                        <ModalBody textAlign="center" p={6}>
-                            <Spinner size="xl" />
-                            <Text mt={4}>Scoring your response... Could take up to 1 minute..</Text>
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
-                <Modal isOpen={isOpen} onClose={onClose} isCentered size="xs">
-                    <ModalOverlay />
-                    <ModalContent mx={4} my="auto" maxW="400px">
-                        <ModalHeader fontWeight="bold">Your Score</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody overflowY="auto" maxH="250px">
-                            <div dangerouslySetInnerHTML={{ __html: apiResponse }} />
-                        </ModalBody>
-                        <ModalFooter justifyContent={'center'}>
-                            <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
-                                Close
+                        </VStack>
+
+                        {/* Main Content */}
+                        <Flex 
+                            direction={{ base: "column", lg: "row" }} 
+                            gap={6}
+                            align="stretch"
+                        >
+                            {/* Prompt Section */}
+                            <Box 
+                                flex="1"
+                                bg="white"
+                                borderRadius="xl"
+                                border="1px"
+                                borderColor="gray.200"
+                                shadow="sm"
+                                overflow="hidden"
+                            >
+                                <Box 
+                                    p={6}
+                                    borderBottom="1px"
+                                    borderColor="gray.100"
+                                    bg="gray.50"
+                                >
+                                    <Text fontSize="lg" fontWeight="700" color="gray.900">
+                                        Writing Prompt
+                                    </Text>
+                                </Box>
+                                <Box 
+                                    p={6}
+                                    overflowY="auto" 
+                                    maxH={{ base: "300px", lg: "500px" }}
+                                    fontSize="md"
+                                    lineHeight="1.7"
+                                    color="gray.800"
+                                    fontFamily="Georgia, serif"
+                                >
+                                    <Box dangerouslySetInnerHTML={{ __html: passageText }} />
+                                </Box>
+                            </Box>
+
+                            {/* Response Section */}
+                            <Box 
+                                flex="1"
+                                bg="white"
+                                borderRadius="xl"
+                                border="1px"
+                                borderColor="gray.200"
+                                shadow="sm"
+                                overflow="hidden"
+                                display="flex"
+                                flexDirection="column"
+                            >
+                                <Box 
+                                    p={6}
+                                    borderBottom="1px"
+                                    borderColor="gray.100"
+                                    bg="gray.50"
+                                >
+                                    <Flex justify="space-between" align="center">
+                                        <Text fontSize="lg" fontWeight="700" color="gray.900">
+                                            Your Response
+                                        </Text>
+                                        <VStack align="end" spacing={1}>
+                                            <Text 
+                                                fontSize="sm" 
+                                                fontWeight="600" 
+                                                color={isWordCountSufficient ? "green.600" : "orange.600"}
+                                            >
+                                                {wordCount} / 250 words
+                                            </Text>
+                                            <Progress 
+                                                value={progressValue} 
+                                                size="sm" 
+                                                colorScheme={isWordCountSufficient ? "green" : "orange"}
+                                                w="100px"
+                                                borderRadius="full"
+                                            />
+                                        </VStack>
+                                    </Flex>
+                                </Box>
+                                <Box p={6} flex="1" display="flex" flexDirection="column">
+                                    <Textarea
+                                        placeholder="Begin writing your response here... Remember to write at least 250 words for a complete answer."
+                                        size="lg"
+                                        flex="1"
+                                        minH={{ base: "300px", lg: "400px" }}
+                                        value={userResponse}
+                                        onChange={handleResponseChange}
+                                        border="none"
+                                        _focus={{ 
+                                            boxShadow: 'none',
+                                            border: 'none'
+                                        }}
+                                        resize="none"
+                                        fontSize="md"
+                                        lineHeight="1.6"
+                                        p={0}
+                                    />
+                                </Box>
+                            </Box>
+                        </Flex>
+
+                        {/* Submit Button */}
+                        <Flex justify="center" mt={8}>
+                            <Button 
+                                size="lg"
+                                bg="blue.600"
+                                color="white"
+                                px={12}
+                                py={6}
+                                borderRadius="xl"
+                                fontWeight="600"
+                                fontSize="lg"
+                                _hover={{ 
+                                    bg: 'blue.700',
+                                    transform: 'translateY(-2px)',
+                                    shadow: 'xl'
+                                }}
+                                _active={{ transform: 'translateY(0)' }}
+                                transition="all 0.2s"
+                                onClick={handleSubmit}
+                                isDisabled={!isWordCountSufficient}
+                            >
+                                Get AI Feedback
                             </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            </Container>
+                        </Flex>
+
+                        {/* Information Modal */}
+                        <Modal isOpen={isInfoOpen} onClose={onInfoClose} isCentered>
+                            <ModalOverlay bg="blackAlpha.600" />
+                            <ModalContent maxW="400px" borderRadius="xl" overflow="hidden">
+                                <ModalHeader bg="blue.50" color="blue.900" fontWeight="700" textAlign="center">
+                                    How This Works
+                                </ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody textAlign="center" py={6}>
+                                    <Text color="gray.700" lineHeight="1.6">
+                                        We use AI to grade submissions according to the official IELTS Rubric. 
+                                        Please ensure your response is a minimum of 250 words before you submit.
+                                    </Text>
+                                </ModalBody>
+                                <ModalFooter bg="gray.50" justifyContent="center">
+                                    <Button 
+                                        bg="blue.600" 
+                                        color="white"
+                                        borderRadius="lg"
+                                        px={6}
+                                        _hover={{ bg: 'blue.700' }}
+                                        onClick={onInfoClose}
+                                    >
+                                        Got it!
+                                    </Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
+
+                        {/* Loading Modal */}
+                        <Modal isOpen={isLoading} isCentered closeOnOverlayClick={false}>
+                            <ModalOverlay bg="blackAlpha.600" />
+                            <ModalContent maxW="350px" borderRadius="xl" overflow="hidden">
+                                <ModalBody textAlign="center" py={8}>
+                                    <VStack spacing={4}>
+                                        <Spinner size="xl" thickness="4px" color="blue.500" />
+                                        <VStack spacing={2}>
+                                            <Text fontWeight="600" color="gray.900">
+                                                Analyzing your response...
+                                            </Text>
+                                            <Text fontSize="sm" color="gray.600">
+                                                This may take up to 1 minute
+                                            </Text>
+                                        </VStack>
+                                    </VStack>
+                                </ModalBody>
+                            </ModalContent>
+                        </Modal>
+
+                        {/* Results Modal */}
+                        <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
+                            <ModalOverlay bg="blackAlpha.600" />
+                            <ModalContent mx={4} borderRadius="xl" overflow="hidden" maxW="600px">
+                                <ModalHeader bg="green.50" color="green.900" fontWeight="700">
+                                    Your AI Feedback & Score
+                                </ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody overflowY="auto" maxH="400px" py={6}>
+                                    <Box 
+                                        dangerouslySetInnerHTML={{ __html: apiResponse }} 
+                                        sx={{
+                                            '& p': { mb: 3 },
+                                            '& strong': { color: 'gray.900' },
+                                            '& ul': { pl: 4 },
+                                            '& li': { mb: 1 }
+                                        }}
+                                    />
+                                </ModalBody>
+                                <ModalFooter bg="gray.50" justifyContent="center">
+                                    <Button 
+                                        bg="blue.600" 
+                                        color="white"
+                                        borderRadius="lg"
+                                        px={8}
+                                        _hover={{ bg: 'blue.700' }}
+                                        onClick={onClose}
+                                    >
+                                        Close
+                                    </Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
+                    </Container>
+                </Box>
+            </Flex>
         </>
     );
 };

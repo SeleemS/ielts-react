@@ -20,7 +20,24 @@ const ShareButton = ({ title, url, text }) => {
     };
 
     return (
-        <Button  colorScheme="green" onClick={handleShare}>
+        <Button  
+            size="lg"
+            variant="outline"
+            borderColor="blue.600"
+            color="blue.600"
+            px={8}
+            py={6}
+            borderRadius="xl"
+            fontWeight="600"
+            _hover={{ 
+                bg: 'blue.50',
+                transform: 'translateY(-1px)',
+                shadow: 'lg'
+            }}
+            _active={{ transform: 'translateY(0)' }}
+            transition="all 0.2s"
+            onClick={handleShare}
+        >
             Share
         </Button>
     );

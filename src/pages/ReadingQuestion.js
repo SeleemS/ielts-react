@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Button, Flex, Container, VStack, Text, Divider, Select, Input } from '@chakra-ui/react';
+import { 
+    Box, 
+    Button, 
+    Flex, 
+    Container, 
+    VStack, 
+    Text, 
+    Divider, 
+    Select, 
+    Input,
+    Badge,
+    HStack,
+    Heading
+} from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Navbar from '../components/Navbar';
 import { Helmet } from 'react-helmet';
 import ShareButton from '../components/ShareButton';
 import ReactGA from 'react-ga';
-
 
 import {
     Modal,
@@ -18,12 +30,10 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-  } from '@chakra-ui/react';
-
+} from '@chakra-ui/react';
 
 const ReadingQuestion = () => {
-    
-    let globalQuestionNumber = 0; // Global question number
+    let globalQuestionNumber = 0;
     const [passageText, setPassageText] = useState('');
     const [passageTitle, setPassageTitle] = useState('');
     const [questionGroups, setQuestionGroups] = useState([]);
@@ -34,7 +44,7 @@ const ReadingQuestion = () => {
     const shareText = "Check out this IELTS question!";
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [userScore, setUserScore] = useState(null); // State for user's score
+    const [userScore, setUserScore] = useState(null);
 
     const [remainingTime, setRemainingTime] = useState(1200); // 20 minutes in seconds
 
@@ -50,10 +60,7 @@ const ReadingQuestion = () => {
         const seconds = remainingTime % 60;
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
-    
 
-
-    // Get passageId from the URL
     const router = useRouter();
     const { id: passageId } = router.query;
 
@@ -67,7 +74,7 @@ const ReadingQuestion = () => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 setPassageText(data.passageText);
-                setQuestionGroups(data.questionGroups); // Assuming questionGroups is part of your document
+                setQuestionGroups(data.questionGroups);
                 setPassageTitle(data.passageTitle);
             } else {
                 console.log("No such document!");
@@ -78,18 +85,19 @@ const ReadingQuestion = () => {
     }, [passageId]);
 
     const renderQuestion = (qMap, questionNumber, group) => {
-        globalQuestionNumber++; // Increment the global question number
+        globalQuestionNumber++;
     
         const answerStatus = answerStatuses[globalQuestionNumber];
         const isCorrect = answerStatus === 'correct';
         const isIncorrect = answerStatus === 'incorrect';
-        const bgColor = isCorrect ? 'green.500' : (isIncorrect ? 'red.500' : 'gray.200');
+        const bgColor = isCorrect ? 'green.50' : (isIncorrect ? 'red.50' : 'white');
+        const borderColor = isCorrect ? 'green.200' : (isIncorrect ? 'red.200' : 'gray.200');
     
         let answerDisplay = null;
     
         if (isIncorrect) {
             answerDisplay = (
-                <Text color="red.500" mt={2} fontWeight="bold">
+                <Text color="red.600" mt={3} fontWeight="600" fontSize="sm">
                     Correct Answer: {qMap.answer}
                 </Text>
             );
@@ -100,16 +108,22 @@ const ReadingQuestion = () => {
             case "True or False":
             case "Yes or No":
                 return (
-                    <Box className="mb-4" my={4}>
-                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
+                    <Box key={globalQuestionNumber} mb={6}>
+                        <Text mb={3} fontWeight="600" color="gray.800" fontSize="md">
+                            <Text as="span" color="blue.600">{globalQuestionNumber}.</Text> {qMap.text}
+                        </Text>
                         <Select 
-                            className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)}
                             bg={bgColor}
+                            borderColor={borderColor}
                             value={userAnswers[questionNumber] || ''}
                             isReadOnly={isCorrect || isIncorrect}
+                            size="lg"
+                            borderRadius="lg"
+                            _hover={{ borderColor: 'blue.300' }}
+                            _focus={{ borderColor: 'blue.500', boxShadow: '0 0 0 1px #3182ce' }}
                         >
-                            <option value="" disabled>-</option>
+                            <option value="" disabled>Select an answer</option>
                             {group.questionType === "Match" && group.options.map((option, idx) => (
                                 <option key={idx} value={option}>{option}</option>
                             ))}
@@ -133,15 +147,22 @@ const ReadingQuestion = () => {
                 );
             case "Short Answer":
                 return (
-                    <Box className="mb-4">
-                        <Text><strong>{globalQuestionNumber}.</strong> {qMap.text}</Text>
+                    <Box key={globalQuestionNumber} mb={6}>
+                        <Text mb={3} fontWeight="600" color="gray.800" fontSize="md">
+                            <Text as="span" color="blue.600">{globalQuestionNumber}.</Text> {qMap.text}
+                        </Text>
                         <Input 
                             type="text" 
-                            className="form-control mb-2" 
                             onChange={e => handleAnswerChange(e, questionNumber)} 
                             bg={bgColor}
+                            borderColor={borderColor}
                             value={userAnswers[questionNumber] || ''}
                             isReadOnly={isCorrect || isIncorrect}
+                            size="lg"
+                            borderRadius="lg"
+                            placeholder="Type your answer here..."
+                            _hover={{ borderColor: 'blue.300' }}
+                            _focus={{ borderColor: 'blue.500', boxShadow: '0 0 0 1px #3182ce' }}
                         />
                         {answerDisplay}
                     </Box>
@@ -154,10 +175,12 @@ const ReadingQuestion = () => {
     const renderQuestionGroup = (group) => {
         let localQuestionNumber = 0;
         return (
-            <Box key={group.prompt} mb={6}>
-                <Text fontSize="lg" fontWeight="bold" mb={2}>{group.prompt}</Text>
+            <Box key={group.prompt} mb={8}>
+                <Text fontSize="lg" fontWeight="700" mb={4} color="gray.900">
+                    {group.prompt}
+                </Text>
                 {group.questions.map(qMap => {
-                    localQuestionNumber++; // Increment local counter
+                    localQuestionNumber++;
                     return renderQuestion(qMap, localQuestionNumber, group);
                 })}
             </Box>
@@ -170,21 +193,19 @@ const ReadingQuestion = () => {
             [questionNumber]: event.target.value.trim().toLowerCase()
         }));
     };
-    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        // Track the submit button click
         ReactGA.event({
-            category: 'User Engagement',   // This is a broad category for similar types of actions
-            action: 'Submit Answer',       // This is the specific action that was taken
-            label: 'Reading Test Submission'  // Additional details about this specific action
+            category: 'User Engagement',
+            action: 'Submit Answer',
+            label: 'Reading Test Submission'
         });
     
         let newAnswerStatuses = {};
         let correctAnswersCount = 0;
-        let answerIndex = 1;  // Start from 1 to match question numbers
+        let answerIndex = 1;
     
         const db = getFirestore(app);
         const questionDoc = doc(db, 'readingPassages', passageId);
@@ -209,12 +230,11 @@ const ReadingQuestion = () => {
     
             setAnswerStatuses(newAnswerStatuses);
             setUserScore(`You answered ${correctAnswersCount} out of ${answerIndex - 1} questions correctly!`);
-            onOpen();  // Open modal to show results
+            onOpen();
         } else {
             console.error("No such document!");
         }
     };
-    
 
     return (
         <>
@@ -225,81 +245,163 @@ const ReadingQuestion = () => {
                 <meta name="robots" content="index, follow"/>
                 <meta property="og:url" content="https://ielts-bank.com/"/>
             </Helmet>
-            <Navbar />
-            <Container maxW="container.xl">
-                <Flex 
-                    direction={{ base: "column", md: "row" }} 
-                    spacing={8} 
-                    align="stretch" 
-                    my={5} // Vertical margin
-                >
-                    <Box 
-                        flex="1" 
-                        p={5} 
-                        shadow="md" 
-                        borderWidth="1px" 
-                        overflowY="auto" 
-                        maxH= {{base: "33vh", md: "75vh"}}
-                        mt = {{base: -1, md: 0}} // Margin top on mobile
-                        mb={{ base: 3, md: 0 }} // Margin bottom on mobile
-                        mx = {{md:2}}
-                    >
-                        <Text fontSize = "lg" fontWeight="bold">{passageTitle}:</Text>
-                        <Divider my={4} />
-                        <Box dangerouslySetInnerHTML={{ __html: passageText }} />
-                    </Box>
-
-                    <Box 
-                        flex="1" 
-                        p={5} 
-                        shadow="md" 
-                        borderWidth="1px" 
-                        overflowY="auto" 
-                        overflowX="hidden"  // Prevent horizontal scrolling
-                        maxH={{base: "33vh", md: "75vh"}}
-                        mx={{md:1}}
-                    >
-                        <Flex justifyContent="space-between" alignItems="center">
-                            <Text fontSize="lg" fontWeight="bold">Questions:</Text>
-                            <Text fontSize="4xl" fontWeight="bold" color="red.500">{formatTime()}</Text>
+            
+            <Flex direction="column" minH="100vh" bg="gray.50">
+                <Navbar />
+                
+                <Box flex="1" py={6}>
+                    <Container maxW="container.xl">
+                        {/* Header */}
+                        <Flex justify="space-between" align="center" mb={6}>
+                            <VStack align="start" spacing={1}>
+                                <Heading size="lg" color="gray.900" fontWeight="700">
+                                    {passageTitle}
+                                </Heading>
+                                <Text color="gray.600" fontSize="md">
+                                    IELTS Reading Practice
+                                </Text>
+                            </VStack>
+                            <Badge 
+                                colorScheme="orange" 
+                                variant="subtle" 
+                                px={4} 
+                                py={2} 
+                                borderRadius="full"
+                                fontSize="lg"
+                                fontWeight="700"
+                            >
+                                {formatTime()}
+                            </Badge>
                         </Flex>
-                        <Divider my={4} />
-                        {questionGroups.map((group, groupIndex) => (
-                            <Box key={groupIndex} mb={6}>
-                                <Text fontSize="md" fontWeight="bold" mb={2}>{group.prompt}</Text>
-                                {group.questions.map((qMap, questionIndex) => {
-                                    return renderQuestion(qMap, questionIndex + 1, group);
-                                })}
+
+                        {/* Main Content */}
+                        <Flex 
+                            direction={{ base: "column", lg: "row" }} 
+                            gap={6}
+                            align="stretch"
+                        >
+                            {/* Passage Section */}
+                            <Box 
+                                flex="1"
+                                bg="white"
+                                borderRadius="xl"
+                                border="1px"
+                                borderColor="gray.200"
+                                shadow="sm"
+                                overflow="hidden"
+                            >
+                                <Box 
+                                    p={6}
+                                    borderBottom="1px"
+                                    borderColor="gray.100"
+                                    bg="gray.50"
+                                >
+                                    <Text fontSize="lg" fontWeight="700" color="gray.900">
+                                        Reading Passage
+                                    </Text>
+                                </Box>
+                                <Box 
+                                    p={6}
+                                    overflowY="auto" 
+                                    maxH={{ base: "400px", lg: "600px" }}
+                                    fontSize="md"
+                                    lineHeight="1.7"
+                                    color="gray.800"
+                                >
+                                    <Box dangerouslySetInnerHTML={{ __html: passageText }} />
+                                </Box>
                             </Box>
-                        ))}
-                    </Box>
-                </Flex>
-                <Flex justifyContent="center" mt={-2}>
-                    <Button bg="black" colorScheme="blue" mr = {3} onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                    <ShareButton
-                        title={passageTitle}
-                        url={currentUrl}
-                        text={`Check out this IELTS Listening Test: ${passageTitle}`}
-                    />
-                </Flex>
-                <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
-                    <ModalOverlay />
-                    <ModalContent mx={4} my="auto" maxW="sm" w="auto"> {/* Adjust width and margins */}
-                        <ModalHeader>Your Score</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Text>{userScore}</Text>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button bg="black" colorScheme="blue" mr={3} onClick={onClose}>
-                                Close
+
+                            {/* Questions Section */}
+                            <Box 
+                                flex="1"
+                                bg="white"
+                                borderRadius="xl"
+                                border="1px"
+                                borderColor="gray.200"
+                                shadow="sm"
+                                overflow="hidden"
+                            >
+                                <Box 
+                                    p={6}
+                                    borderBottom="1px"
+                                    borderColor="gray.100"
+                                    bg="gray.50"
+                                >
+                                    <Text fontSize="lg" fontWeight="700" color="gray.900">
+                                        Questions
+                                    </Text>
+                                </Box>
+                                <Box 
+                                    p={6}
+                                    overflowY="auto"
+                                    maxH={{ base: "400px", lg: "600px" }}
+                                >
+                                    {questionGroups.map((group, groupIndex) => (
+                                        renderQuestionGroup(group)
+                                    ))}
+                                </Box>
+                            </Box>
+                        </Flex>
+
+                        {/* Action Buttons */}
+                        <Flex justify="center" gap={4} mt={8}>
+                            <Button 
+                                size="lg"
+                                bg="blue.600"
+                                color="white"
+                                px={8}
+                                py={6}
+                                borderRadius="xl"
+                                fontWeight="600"
+                                _hover={{ 
+                                    bg: 'blue.700',
+                                    transform: 'translateY(-1px)',
+                                    shadow: 'lg'
+                                }}
+                                _active={{ transform: 'translateY(0)' }}
+                                transition="all 0.2s"
+                                onClick={handleSubmit}
+                            >
+                                Submit Answers
                             </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            </Container>
+                            <ShareButton
+                                title={passageTitle}
+                                url={currentUrl}
+                                text={`Check out this IELTS Reading Test: ${passageTitle}`}
+                            />
+                        </Flex>
+
+                        {/* Results Modal */}
+                        <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+                            <ModalOverlay bg="blackAlpha.600" />
+                            <ModalContent mx={4} borderRadius="xl" overflow="hidden">
+                                <ModalHeader bg="blue.50" color="blue.900" fontWeight="700">
+                                    Your Results
+                                </ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody py={6}>
+                                    <Text fontSize="lg" color="gray.800" textAlign="center">
+                                        {userScore}
+                                    </Text>
+                                </ModalBody>
+                                <ModalFooter bg="gray.50" justifyContent="center">
+                                    <Button 
+                                        bg="blue.600" 
+                                        color="white"
+                                        borderRadius="lg"
+                                        px={6}
+                                        _hover={{ bg: 'blue.700' }}
+                                        onClick={onClose}
+                                    >
+                                        Close
+                                    </Button>
+                                </ModalFooter>
+                            </ModalContent>
+                        </Modal>
+                    </Container>
+                </Box>
+            </Flex>
         </>
     );
 };
