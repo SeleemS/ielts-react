@@ -14,6 +14,11 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
+    "/404": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/404.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -24,15 +29,10 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/readingquestion/[id]": [
+    "/privacypolicy": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/readingquestion/[id].js"
-    ],
-    "/writingquestion/[id]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/writingquestion/[id].js"
+      "static/chunks/pages/privacypolicy.js"
     ]
   },
   "ampFirstPages": []
