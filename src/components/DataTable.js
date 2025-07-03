@@ -98,7 +98,13 @@ const DataTable = ({ selectedOption }) => {
   };
 
   const handlePageChange = newPage => {
-    setCurrentPage(newPage);
+    if (newPage < 1) {
+      setCurrentPage(totalPages);
+    } else if (newPage > totalPages) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(newPage);
+    }
   };
 
   const renderPagination = () => {
@@ -134,7 +140,6 @@ const DataTable = ({ selectedOption }) => {
           size="sm"
           variant="ghost"
           onClick={() => handlePageChange(currentPage - 1)}
-          isDisabled={currentPage === 1}
         >
           Previous
         </Button>
@@ -143,7 +148,6 @@ const DataTable = ({ selectedOption }) => {
           size="sm"
           variant="ghost"
           onClick={() => handlePageChange(currentPage + 1)}
-          isDisabled={currentPage === totalPages}
         >
           Next
         </Button>
@@ -228,37 +232,35 @@ const DataTable = ({ selectedOption }) => {
         </Box>
       )}
 
-        <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size="lg">
         <ModalOverlay />
         <ModalContent 
-            border="1px solid #CBD5E0"
-            borderRadius="xl"
-            boxShadow="2xl"
-            px={6}
-            py={4}
+          border="1px solid #CBD5E0"
+          borderRadius="xl"
+          boxShadow="2xl"
+          px={6}
+          py={4}
         >
-            <ModalHeader fontWeight="700" fontSize="xl">How We Grade Writing</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={2}>
+          <ModalHeader fontWeight="700" fontSize="xl">How We Grade Writing</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={2}>
             <Text mb={3} color="gray.700" fontSize="md">
-                When you practice IELTS Writing with us, your response is graded by OpenAI's GPT-4 model — the most advanced AI in the world.
+              When you practice IELTS Writing with us, your response is graded by OpenAI's GPT-4 model — the most advanced AI in the world.
             </Text>
             <Text mb={3} color="gray.700" fontSize="md">
-                It evaluates your grammar, coherence, vocabulary, and task response using the official IELTS scoring criteria.
+              It evaluates your grammar, coherence, vocabulary, and task response using the official IELTS scoring criteria.
             </Text>
             <Text color="gray.700" fontSize="md">
-                This makes our platform one of the most accurate, fastest, and easiest ways to improve your IELTS writing — with no human correction needed.
+              This makes our platform one of the most accurate, fastest, and easiest ways to improve your IELTS writing — with no human correction needed.
             </Text>
-            </ModalBody>
-            <Flex justify="center" py={4}>
+          </ModalBody>
+          <Flex justify="center" py={4}>
             <Button onClick={onClose} bg="black" color="white" px={8} _hover={{ bg: 'gray.800' }}>
-                Close
+              Close
             </Button>
-            </Flex>
+          </Flex>
         </ModalContent>
-        </Modal>
-
-
+      </Modal>
     </Box>
   );
 };
