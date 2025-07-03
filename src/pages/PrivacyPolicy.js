@@ -1,86 +1,80 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { Box, Flex, VStack, Text, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
+import {
+  Box,
+  Flex,
+  VStack,
+  Text,
+  Button,
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const PrivacyPolicy = () => {
+  const router = useRouter();
 
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
+  return (
+    <Flex direction="column" minHeight="100vh">
+      <Navbar />
 
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
-    
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
+      <Box flex="1" px={{ base: 4, md: 12 }} py={8}>
+        <VStack spacing={6} align="start" maxW="4xl" mx="auto">
+          <Button
+            colorScheme="blue"
+            variant="solid"
+            onClick={() => router.push('/')}
+          >
+            ← Back to Homepage
+          </Button>
 
-    return (
-        <Box>
-            <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }} // Horizontal padding on medium and larger screens
-                py={6}
-            >
-                {/* Left Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
+          <Text fontSize="3xl" fontWeight="bold">
+            Privacy Policy
+          </Text>
 
-                {/* Privacy Policy Content */}
-                <VStack spacing={4} flex="1" minWidth="300px" px={4}>
-                    <Text fontSize="2xl" fontWeight="bold">Privacy Policy</Text>
-                    <Box overflowY="auto" maxH="70vh" width="100%">
-                        {/* Privacy Policy Text */}
-                        <Text>
+          <Box fontSize="md" color="gray.700" lineHeight="1.8" width="100%">
+            <Text mb={4}>
+              Welcome to IELTSBank. This privacy policy outlines our policies regarding the collection, use, and disclosure of information we receive from users of our site.
+            </Text>
 
-                            Welcome to IELTSBank. This privacy policy outlines our policies regarding the collection, use, and disclosure of information we receive from users of our site.<br /><br />
+            <Text mb={4}>
+              <strong>Information Collection and Use</strong><br />
+              IELTSBank does not collect any personally identifiable information from its users. Users are free to visit the site anonymously and no personal data is required for access to most services.
+            </Text>
 
-                            <strong>Information Collection and Use</strong><br />
-                            IELTSBank does not collect any personally identifiable information from its users. Our users are free to visit our site anonymously, and we do not require any personal data for access to most of our services.<br /><br />
+            <Text mb={4}>
+              <strong>Log Data</strong><br />
+              We do not collect browser log data such as IP addresses, browser types, or visited pages.
+            </Text>
 
-                            <strong>Log Data</strong><br />
-                            We do not collect information that your browser sends (known as "Log Data") when you visit our Site. This means we do not track information such as your computer's Internet Protocol ("IP") address, browser type, browser version, and the pages of our Site that you visit.<br /><br />
+            <Text mb={4}>
+              <strong>Cookies and Tracking</strong><br />
+              IELTSBank does not use cookies or tracking technologies. Your privacy is fully respected.
+            </Text>
 
-                            <strong>Cookies and Tracking</strong><br />
-                            IELTSBank does not use cookies or any form of tracking to collect information about users. Your privacy is respected at all times when you visit our website.<br /><br />
+            <Text mb={4}>
+              <strong>Data Security</strong><br />
+              Since no personal data is collected, there is no risk of such data being exposed or misused.
+            </Text>
 
-                            <strong>Data Security</strong><br />
-                            Since we do not collect personal data, there is no risk of such data being exposed or misused. We are committed to ensuring the security and privacy of our visitors.<br /><br />
+            <Text mb={4}>
+              <strong>Changes to This Privacy Policy</strong><br />
+              This policy is effective as of the last updated date. We may update it in the future, with changes effective upon posting. Please check periodically.
+            </Text>
 
-                            <strong>Changes to This Privacy Policy</strong><br />
-                            This Privacy Policy is effective as of the last updated date and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page. We reserve the right to update or change our Privacy Policy at any time and you should check this Privacy Policy periodically.<br /><br />
+            <Text mb={4}>
+              <strong>Last Updated:</strong> December 11, 2024
+            </Text>
 
-                            <strong>Last Updated:</strong> December 11, 2023<br /><br />
-                            If you have any questions about this Privacy Policy, please contact us.
-                        </Text>
-                    </Box>
-                </VStack>
+            <Text>
+              If you have any questions about this Privacy Policy, please contact us.
+            </Text>
+          </Box>
+        </VStack>
+      </Box>
 
-                {/* Right Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
-            <Footer />
-        </Box>
-    );
+      <Footer />
+    </Flex>
+  );
 };
 
 export default PrivacyPolicy;

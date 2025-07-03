@@ -24,10 +24,10 @@ self.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/termsofservice": [
+    "/privacypolicy": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/termsofservice.js"
+      "static/chunks/pages/privacypolicy.js"
     ]
   },
   "ampFirstPages": []
