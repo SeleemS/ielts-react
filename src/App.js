@@ -10,10 +10,9 @@ import TermsOfService from './pages/TermsOfService';
 import NotFoundPage from './pages/NotFoundPage';
 import ContactUs from './pages/ContactUs';
 import ReactGA from 'react-ga';
-import { inject } from '@vercel/analytics';
+import { Analytics } from '@vercel/analytics/react';
 
 ReactGA.initialize('G-1KRYZZY68X');
-inject(); // ✅ Enable Vercel Analytics
 
 const PageTracker = () => {
   const location = useLocation();
@@ -42,6 +41,7 @@ function App() {
         <Route path="/contactus/" element={<ContactUs />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Analytics /> {/* ✅ Vercel Analytics component for React */}
     </Router>
   );
 }
