@@ -1,84 +1,87 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { Box, Flex, VStack, Text, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
+import {
+  Box,
+  Flex,
+  VStack,
+  Text,
+  Button,
+  useBreakpointValue,
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const TermsOfService = () => {
+  const router = useRouter();
 
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
+  return (
+    <Flex direction="column" minHeight="100vh">
+      <Navbar />
 
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
+      <Box flex="1" px={{ base: 4, md: 12 }} py={8}>
+        <VStack spacing={6} align="start" maxW="4xl" mx="auto">
+          <Button
+            colorScheme="blue"
+            variant="solid"
+            onClick={() => router.push('/')}
+          >
+            ← Back to Homepage
+          </Button>
 
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
+          <Text fontSize="3xl" fontWeight="bold">
+            Terms of Service
+          </Text>
 
-    return (
-        <Box>
-            <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }}
-                py={6}
-            >
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
+          <Box fontSize="md" color="gray.700" lineHeight="1.8" width="100%">
+            <Text mb={4}>
+              Welcome to IELTSBank. Below are our Terms of Service, which outline
+              the rules and regulations for the use of IELTSBank's Website.
+            </Text>
 
-                <VStack spacing={4} flex="1" minWidth="300px" px={4}>
-                    <Text fontSize="2xl" fontWeight="bold">Terms of Service</Text>
-                    <Box overflowY="auto" maxH="70vh" width="100%">
-                        <Text>
-                            Welcome to IELTSBank. Below are our Terms of Service, which outline the rules and regulations for the use of IELTSBank's Website.<br /><br />
+            <Text mb={4}>
+              <strong>1. Terms</strong><br />
+              By accessing this website, you agree to be bound by these Terms of Service and comply with any applicable local laws.
+            </Text>
 
-                            <strong>1. Terms</strong><br />
-                            By accessing this website, you are agreeing to be bound by these website Terms of Service and agree that you are responsible for compliance with any applicable local laws.<br /><br />
+            <Text mb={4}>
+              <strong>2. Use License</strong><br />
+              Permission is granted to temporarily download one copy of the materials on IELTSBank's website for personal, non-commercial use only.
+            </Text>
 
-                            <strong>2. Use License</strong><br />
-                            Permission is granted to temporarily download one copy of the materials on IELTSBank's website for personal, non-commercial transitory viewing only.<br /><br />
+            <Text mb={4}>
+              <strong>3. Disclaimer</strong><br />
+              The materials on IELTSBank’s website are provided "as is." IELTSBank disclaims all warranties, expressed or implied.
+            </Text>
 
-                            <strong>3. Disclaimer</strong><br />
-                            The materials on IELTSBank's website are provided "as is". IELTSBank makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties.<br /><br />
+            <Text mb={4}>
+              <strong>4. Limitations</strong><br />
+              IELTSBank or its suppliers shall not be liable for any damages arising from the use or inability to use the website.
+            </Text>
 
-                            <strong>4. Limitations</strong><br />
-                            In no event shall IELTSBank or its suppliers be liable for any damages arising out of the use or inability to use the materials on IELTSBank's website.<br /><br />
+            <Text mb={4}>
+              <strong>5. Revisions and Errata</strong><br />
+              The materials on IELTSBank’s website may include errors. IELTSBank does not guarantee their accuracy or currency.
+            </Text>
 
-                            <strong>5. Revisions and Errata</strong><br />
-                            The materials appearing on IELTSBank's website could include technical, typographical, or photographic errors. IELTSBank does not warrant that any of the materials on its website are accurate, complete, or current.<br /><br />
+            <Text mb={4}>
+              <strong>6. Site Terms of Use Modifications</strong><br />
+              IELTSBank may revise these terms at any time without notice. By using this site, you agree to be bound by the current version.
+            </Text>
 
-                            <strong>6. Site Terms of Use Modifications</strong><br />
-                            IELTSBank may revise these Terms of Service for its website at any time without notice. By using this website, you are agreeing to be bound by the current version of these Terms of Service.<br /><br />
+            <Text mb={4}>
+              <strong>Last Updated:</strong> December 11, 2024
+            </Text>
 
-                            <strong>Last Updated:</strong> December 11, 2023<br /><br />
-                            If you have any questions about these Terms of Service, please contact us.
-                        </Text>
-                    </Box>
-                </VStack>
+            <Text>
+              If you have any questions about these Terms of Service, please contact us.
+            </Text>
+          </Box>
+        </VStack>
+      </Box>
 
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
-            <Footer />
-        </Box>
-    );
+      <Footer />
+    </Flex>
+  );
 };
 
 export default TermsOfService;
