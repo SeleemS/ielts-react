@@ -12,7 +12,7 @@ import {
   Link
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { Link as RouterLink } from 'react-router-dom';
+import NextLink from 'next/link';
 
 const Navbar = () => {
     const { isOpen, onToggle } = useDisclosure();
@@ -20,7 +20,7 @@ const Navbar = () => {
     return (
         <Flex as="header" bg="black" p={3} color="white" align="center" position="relative">
             {/* Logo and Title */}
-            <Link as={RouterLink} to="/">
+            <Link as={NextLink} href="/">
                 <Flex align="center">
                     <Box p="1">
                         <Image src="/image.png" alt="Logo" boxSize="50px" />
@@ -55,9 +55,9 @@ const Navbar = () => {
                         zIndex="10"
                         mr = {1}
                     >
-                        <Link as={RouterLink} to="/index.html" p={2} w="full" textAlign="center">Home</Link>
-                        <Link as={RouterLink} to="/termsofservice/" p={2} w="full" textAlign="center">Privacy Policy</Link>
-                        <Link as={RouterLink} to="/contactus/" p={2} w="full" textAlign="center">Contact Us</Link>
+                        <Link as={NextLink} href="/" p={2} w="full" textAlign="center">Home</Link>
+                        <Link as={NextLink} href="/termsofservice" p={2} w="full" textAlign="center">Privacy Policy</Link>
+                        <Link as={NextLink} href="/contactus" p={2} w="full" textAlign="center">Contact Us</Link>
                     </VStack>
                 </Collapse>
             )}

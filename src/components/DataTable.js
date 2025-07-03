@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Flex, Button, Spinner } from '@chakra-ui/react';
 import { app } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const DataTable = ({ selectedOption }) => {
@@ -11,7 +11,7 @@ const DataTable = ({ selectedOption }) => {
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
     const resultsPerPage = 10;
-    const navigate = useNavigate();
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
@@ -41,8 +41,8 @@ const DataTable = ({ selectedOption }) => {
     }, [selectedOption, cache]);
 
     const handleRowClick = id => {
-        const routePath = `/ielts-react/${selectedOption.toLowerCase()}question/${id}`;
-        navigate(routePath);
+        const routePath = `/${selectedOption.toLowerCase()}question/${id}`;
+        router.push(routePath);
     };
 
     const getDifficultyColor = difficulty => ({

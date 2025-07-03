@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useRouter } from 'next/router';
 import { Box, Button, Flex, Container, VStack, Text, Divider, Select, Input } from '@chakra-ui/react';
 import { app } from '../firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
@@ -30,7 +30,7 @@ const ReadingQuestion = () => {
     const [userAnswers, setUserAnswers] = useState({});
     const [answerStatuses, setAnswerStatuses] = useState({});
 
-    const currentUrl = window.location.href;
+    const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
     const shareText = "Check out this IELTS question!";
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,8 +53,9 @@ const ReadingQuestion = () => {
     
 
 
-    // Use useParams to get the passageId from the URL
-    const { id: passageId } = useParams();
+    // Get passageId from the URL
+    const router = useRouter();
+    const { id: passageId } = router.query;
 
     useEffect(() => {
         globalQuestionNumber = 0;
@@ -277,10 +278,10 @@ const ReadingQuestion = () => {
                     <Button bg="black" colorScheme="blue" mr = {3} onClick={handleSubmit}>
                         Submit
                     </Button>
-                    <ShareButton 
-                        title={passageTitle} 
-                        url={window.location.href} 
-                        text={`Check out this IELTS Listening Test: ${passageTitle}`} 
+                    <ShareButton
+                        title={passageTitle}
+                        url={currentUrl}
+                        text={`Check out this IELTS Listening Test: ${passageTitle}`}
                     />
                 </Flex>
                 <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
