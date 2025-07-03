@@ -4,7 +4,6 @@ import { Flex, Button, Box } from '@chakra-ui/react';
 const Toggle = ({ onChange }) => {
     const [selected, setSelected] = useState('Reading');
     const options = ['Reading', 'Writing'];
-    // const options = ['Reading', 'Writing', 'Listening', 'Speaking'];
 
     const handleSelect = (option) => {
         setSelected(option);
@@ -13,36 +12,45 @@ const Toggle = ({ onChange }) => {
         }
     };
 
-    // Calculate the left position for the slider
-    const sliderLeft = options.indexOf(selected) * (100 / options.length) + "%";
-
     return (
-        <Flex maxW="90vw" position="relative" border="1px solid" borderColor="gray.200" borderRadius="md" bg="white">
-            <Box
-                position="absolute"
-                left={sliderLeft}
-                width={`${100 / options.length}%`}
-                bg="black"
-                borderRadius="md"
-                transition="left 0.3s ease-out"
-                height="100%"
-            />
-            {options.map((option) => (
-                <Button
-                    flex={1}
-                    bg="transparent"
-                    color={selected === option ? 'white' : 'gray.600'}
-                    fontWeight="bold"
-                    borderRadius="md"
-                    _hover={{ bg: 'transparent', color: 'white' }}
-                    onClick={() => handleSelect(option)}
-                    key={option}
-                    zIndex="2" // Ensure buttons are above the slider
-                >
-                    {option}
-                </Button>
-            ))}
-        </Flex>
+        <Box 
+            bg="gray.50" 
+            p={1} 
+            borderRadius="xl" 
+            border="1px" 
+            borderColor="gray.200"
+            maxW="400px"
+            w="full"
+        >
+            <Flex>
+                {options.map((option) => (
+                    <Button
+                        key={option}
+                        flex={1}
+                        bg={selected === option ? 'white' : 'transparent'}
+                        color={selected === option ? 'gray.900' : 'gray.600'}
+                        fontWeight={selected === option ? '600' : '500'}
+                        borderRadius="lg"
+                        border={selected === option ? '1px' : 'none'}
+                        borderColor={selected === option ? 'gray.200' : 'transparent'}
+                        shadow={selected === option ? 'sm' : 'none'}
+                        _hover={{ 
+                            bg: selected === option ? 'white' : 'gray.100',
+                            color: 'gray.900'
+                        }}
+                        _active={{
+                            transform: 'scale(0.98)'
+                        }}
+                        onClick={() => handleSelect(option)}
+                        transition="all 0.2s"
+                        size="md"
+                        py={3}
+                    >
+                        {option}
+                    </Button>
+                ))}
+            </Flex>
+        </Box>
     );
 };
 

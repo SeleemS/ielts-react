@@ -5,99 +5,63 @@ import {
   VStack,
   useBreakpointValue,
   Text,
+  Container,
+  Heading
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar'; 
 import Toggle from '../components/Toggle';
 import DataTable from '../components/DataTable';
 import Footer from '../components/Footer';
-import { keyframes} from '@chakra-ui/react';
-
-const moveStripes = keyframes`
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-`;
-
 
 const HomePage = () => {
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
-
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
-
-    const [selectedOption, setSelectedOption] = useState('Reading'); // State to track the selected option
+    const [selectedOption, setSelectedOption] = useState('Reading');
 
     const handleToggleChange = (option) => {
         setSelectedOption(option);
     };
 
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
-
     return (
-        <Box>
+        <Flex direction="column" minH="100vh" bg="gray.50">
             <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }}
-                py={6}
-            >
-                {/* Left Ad Container with animated stripes */}
-                <Flex
-                    display={adDisplay}
-                    width="300px"
-                    height="600px"
-                    bg="gray.200"
-                    bgGradient="linear(to-r, gray.300, white, gray.300)"
-                    bgSize="200% 100%"
-                    animation={`${moveStripes} 3s linear infinite`}
-                    mx={2}
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
+            
+            <Box flex="1" py={8}>
+                <Container maxW="container.xl">
+                    <VStack spacing={8} align="center">
+                        {/* Header Section */}
+                        <VStack spacing={4} textAlign="center" maxW="600px">
+                            <Heading 
+                                size="xl" 
+                                color="gray.900" 
+                                fontWeight="700"
+                                lineHeight="1.2"
+                            >
+                                Master IELTS with Real Practice Questions
+                            </Heading>
+                            <Text 
+                                fontSize="lg" 
+                                color="gray.600" 
+                                fontWeight="500"
+                                lineHeight="1.6"
+                            >
+                                Access the largest database of authentic IELTS past papers with AI-powered grading and instant feedback.
+                            </Text>
+                        </VStack>
 
-                {/* DataTable remains unchanged to ensure full functionality */}
-                <VStack spacing={4} flex="1" minWidth="300px" minHeight="600px"> {/* Set minimum height here */}
-                    <Toggle onChange={handleToggleChange} />
-                    <DataTable selectedOption={selectedOption} />
-                </VStack>
-
-                {/* Right Ad Container with animated stripes */}
-                <Flex
-                    display={adDisplay}
-                    width="300px"
-                    height="600px"
-                    bg="gray.200"
-                    bgGradient="linear(to-r, gray.300, white, gray.300)"
-                    bgSize="200% 100%"
-                    animation={`${moveStripes} 3s linear infinite`}
-                    mx={2}
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
+                        {/* Toggle Section */}
+                        <VStack spacing={6} w="full" align="center">
+                            <Toggle onChange={handleToggleChange} />
+                            
+                            {/* Table Section */}
+                            <Box w="full" maxW="900px">
+                                <DataTable selectedOption={selectedOption} />
+                            </Box>
+                        </VStack>
+                    </VStack>
+                </Container>
+            </Box>
+            
             <Footer />
-        </Box>
+        </Flex>
     );
 };
 

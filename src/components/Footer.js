@@ -1,42 +1,67 @@
 import React from 'react';
 import { Box, Container, Text, Flex, Link, Spacer } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import PrivacyPolicy from '../pages/PrivacyPolicy';
-import TermsOfService from '../pages/TermsOfService';
-import ContactUs from '../pages/ContactUs';
 
 const Footer = () => {
-
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Optional: add smooth scrolling
+            behavior: 'smooth'
         });
     };
     
     return (
-        <Box bg="black" color="white" py={4}>
+        <Box bg="gray.900" color="white" py={8} mt="auto">
             <Container maxW="container.xl">
-                <Flex direction={{ base: "column", md: "row" }} alignItems="center">
-                    <Text fontSize="sm">© {new Date().getFullYear()} IELTS-Bank | All rights reserved.</Text>
+                <Flex direction={{ base: "column", md: "row" }} alignItems="center" gap={4}>
+                    <Text fontSize="sm" color="gray.400" fontWeight="500">
+                        © {new Date().getFullYear()} IELTS-Bank. All rights reserved.
+                    </Text>
                     <Spacer />
-                    <Flex mt={{ base: 4, md: 0 }}>
-                        {/* Updated Terms of Service Link */}
+                    <Flex gap={6} direction={{ base: "column", md: "row" }} align="center">
                         <NextLink href="/termsofservice" passHref legacyBehavior>
-                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
-                            Terms of Service
+                            <Link 
+                                onClick={scrollToTop} 
+                                color="gray.300"
+                                fontSize="sm"
+                                fontWeight="500"
+                                _hover={{ 
+                                    color: 'white',
+                                    textDecoration: 'none'
+                                }}
+                                transition="color 0.2s"
+                            >
+                                Terms of Service
                             </Link>
                         </NextLink>
-                        {/* Updated Privacy Policy Link */}
                         <NextLink href="/privacypolicy" passHref legacyBehavior>
-                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', marginRight: '8px', fontSize: '0.875rem' }}>
-                            Privacy Policy
+                            <Link 
+                                onClick={scrollToTop} 
+                                color="gray.300"
+                                fontSize="sm"
+                                fontWeight="500"
+                                _hover={{ 
+                                    color: 'white',
+                                    textDecoration: 'none'
+                                }}
+                                transition="color 0.2s"
+                            >
+                                Privacy Policy
                             </Link>
                         </NextLink>
-                        {/* Updated Contact Us Link */}
                         <NextLink href="/contactus" passHref legacyBehavior>
-                            <Link onClick={scrollToTop} style={{ textDecoration: 'none', color: 'white', fontSize: '0.875rem' }}>
-                            Contact Us
+                            <Link 
+                                onClick={scrollToTop} 
+                                color="gray.300"
+                                fontSize="sm"
+                                fontWeight="500"
+                                _hover={{ 
+                                    color: 'white',
+                                    textDecoration: 'none'
+                                }}
+                                transition="color 0.2s"
+                            >
+                                Contact Us
                             </Link>
                         </NextLink>
                     </Flex>
@@ -47,4 +72,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

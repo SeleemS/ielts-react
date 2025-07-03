@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, Text, Box, Flex, Button, Spinner } from '@chakra-ui/react';
+import { 
+    Table, 
+    Thead, 
+    Tbody, 
+    Tr, 
+    Th, 
+    Td, 
+    Text, 
+    Box, 
+    Flex, 
+    Button, 
+    Spinner,
+    Badge,
+    Container
+} from '@chakra-ui/react';
 import { app } from '../firebase';
 import { useRouter } from 'next/router';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const DataTable = ({ selectedOption }) => {
     const [data, setData] = useState([]);
-    const [cache, setCache] = useState({}); // Cache to store data for each category
+    const [cache, setCache] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -16,12 +30,10 @@ const DataTable = ({ selectedOption }) => {
     useEffect(() => {
         async function fetchData() {
             if (cache[selectedOption]) {
-                // Use cached data
                 const cachedData = cache[selectedOption];
                 setData(cachedData);
                 setTotalPages(Math.ceil(cachedData.length / resultsPerPage));
             } else {
-                // Fetch new data if not in cache
                 setLoading(true);
                 const db = getFirestore(app);
                 const collectionName = `${selectedOption.toLowerCase()}Passages`;
@@ -32,7 +44,6 @@ const DataTable = ({ selectedOption }) => {
                 setTotalPages(Math.ceil(fetchedData.length / resultsPerPage));
                 setLoading(false);
                 
-                // Update cache with new data
                 setCache(prev => ({ ...prev, [selectedOption]: fetchedData }));
             }
         }
@@ -45,39 +56,184 @@ const DataTable = ({ selectedOption }) => {
         router.push(routePath);
     };
 
-    const getDifficultyColor = difficulty => ({
-        'Hard': 'red.500',
-        'Medium': 'yellow.500',
-        'Easy': 'green.500',
-        'Task 2': 'black.500'
-    }[difficulty] || 'gray.500');
+    const getDifficultyBadge = (difficulty) => {
+        const colorSchemes = {
+            'Easy': 'green',
+            'Medium': 'yellow', 
+            'Hard': 'red',
+            'Task 2': 'blue'
+        };
+        
+        return (
+            <Badge 
+                colorScheme={colorSchemes[difficulty] || 'gray'}
+                variant="subtle"
+                px={3}
+                py={1}
+                borderRadius="full"
+                fontWeight="600"
+                fontSize="xs"
+            >
+                {difficulty}
+            </Badge>
+        );
+    };
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const renderPagination = () => {
+        if (totalPages <= 1) return null;
+
+        const pages = [];
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage + 1 < maxVisiblePages) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(
+                <Button
+                    key={i}
+                    size="sm"
+                    variant={currentPage === i ? "solid" : "ghost"}
+                    colorScheme={currentPage === i ? "blue" : "gray"}
+                    onClick={() => handlePageChange(i)}
+                    mx={1}
+                >
+                    {i}
+                </Button>
+            );
+        }
+
+        return (
+            <Flex justify="center" align="center" mt={6} gap={2}>
+                <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    isDisabled={currentPage === 1}
+                >
+                    Previous
+                </Button>
+                {pages}
+                <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    isDisabled={currentPage === totalPages}
+                >
+                    Next
+                </Button>
+            </Flex>
+        );
+    };
 
     return (
-        <Box overflowX="auto" minHeight="400px">
+        <Box w="full">
             {loading ? (
-                <Flex justifyContent="center" alignItems="center" height="100%" direction="column">
-                    <Spinner size="xl" thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" />
-                    <Text fontSize="xl" mt={3}>Loading...</Text>
+                <Flex 
+                    justifyContent="center" 
+                    alignItems="center" 
+                    height="400px" 
+                    direction="column"
+                    bg="white"
+                    borderRadius="xl"
+                    border="1px"
+                    borderColor="gray.200"
+                >
+                    <Spinner size="xl" thickness="3px" speed="0.65s" emptyColor="gray.200" color="blue.500" />
+                    <Text fontSize="lg" mt={4} color="gray.600" fontWeight="500">Loading questions...</Text>
                 </Flex>
             ) : (
-                <Table variant="simple">
-                    <Thead>
-                        <Tr>
-                            <Th fontWeight="bold">#</Th>
-                            <Th fontWeight="bold">Title</Th>
-                            <Th fontWeight="bold">Difficulty</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {data.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage).map((item, index) => (
-                            <Tr key={item.id} onClick={() => handleRowClick(item.id)} cursor="pointer" bg={index % 2 === 0 ? "gray.50" : "white"}>
-                                <Td>{(currentPage - 1) * resultsPerPage + index + 1}</Td>
-                                <Td>{item.passageTitle}</Td>
-                                <Td color={getDifficultyColor(item.passageDifficulty)} fontWeight="bold">{item.passageDifficulty}</Td>
-                            </Tr>
-                        ))}
-                    </Tbody>
-                </Table>
+                <Box 
+                    bg="white" 
+                    borderRadius="xl" 
+                    border="1px" 
+                    borderColor="gray.200" 
+                    overflow="hidden"
+                    shadow="sm"
+                >
+                    <Box overflowX="auto">
+                        <Table variant="simple" size="md">
+                            <Thead bg="gray.50">
+                                <Tr>
+                                    <Th 
+                                        fontWeight="700" 
+                                        color="gray.700" 
+                                        fontSize="sm" 
+                                        textTransform="none"
+                                        letterSpacing="normal"
+                                        py={4}
+                                        w="80px"
+                                    >
+                                        #
+                                    </Th>
+                                    <Th 
+                                        fontWeight="700" 
+                                        color="gray.700" 
+                                        fontSize="sm" 
+                                        textTransform="none"
+                                        letterSpacing="normal"
+                                        py={4}
+                                    >
+                                        Title
+                                    </Th>
+                                    <Th 
+                                        fontWeight="700" 
+                                        color="gray.700" 
+                                        fontSize="sm" 
+                                        textTransform="none"
+                                        letterSpacing="normal"
+                                        py={4}
+                                        w="120px"
+                                    >
+                                        Difficulty
+                                    </Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {data.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage).map((item, index) => (
+                                    <Tr 
+                                        key={item.id} 
+                                        onClick={() => handleRowClick(item.id)} 
+                                        cursor="pointer"
+                                        _hover={{ 
+                                            bg: "blue.50",
+                                            transform: "translateY(-1px)",
+                                            shadow: "sm"
+                                        }}
+                                        transition="all 0.2s"
+                                        borderBottom="1px"
+                                        borderColor="gray.100"
+                                    >
+                                        <Td py={4} color="gray.600" fontWeight="500">
+                                            {(currentPage - 1) * resultsPerPage + index + 1}
+                                        </Td>
+                                        <Td py={4}>
+                                            <Text 
+                                                fontWeight="600" 
+                                                color="gray.900"
+                                                fontSize="sm"
+                                                noOfLines={2}
+                                            >
+                                                {item.passageTitle}
+                                            </Text>
+                                        </Td>
+                                        <Td py={4}>
+                                            {getDifficultyBadge(item.passageDifficulty)}
+                                        </Td>
+                                    </Tr>
+                                ))}
+                            </Tbody>
+                        </Table>
+                    </Box>
+                    {renderPagination()}
+                </Box>
             )}
         </Box>
     );
