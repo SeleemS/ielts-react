@@ -1,68 +1,89 @@
-import React, {useEffect, useState, useRef} from 'react';
-import { Box, Flex, VStack, Text, useBreakpointValue, Link, Center } from '@chakra-ui/react';
+import React from 'react';
+import {
+  Box,
+  Text,
+  Link,
+  VStack,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  useToast,
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const ContactUs = () => {
+  const router = useRouter();
+  const toast = useToast();
 
-    const adContainerRef = useRef(null);
-    const [isAdLoaded, setIsAdLoaded] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toast({
+      title: 'Message sent!',
+      description: 'We will get back to you as soon as possible.',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+    e.target.reset();
+  };
 
-    useEffect(() => {
-        if (adContainerRef.current && adContainerRef.current.offsetWidth > 0) {
-        setIsAdLoaded(true);
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-    }, [adContainerRef.current]);
+  return (
+    <Box minH="100vh" display="flex" flexDirection="column" bg="gray.50">
+      <Navbar />
+      <Box flex="1" maxW="lg" mx="auto" px={4} py={12} w="full">
+        <VStack spacing={6} align="stretch">
+          <Text fontSize="3xl" fontWeight="bold" color="gray.800" textAlign="center">
+            Contact Us
+          </Text>
 
-    const adDisplay = useBreakpointValue({ base: 'none', md: 'block' });
+          <Text fontSize="md" color="gray.600" textAlign="center">
+            You can also email us directly at{' '}
+            <Link href="mailto:info@ielts-bank.com" color="blue.500">
+              info@ielts-bank.com
+            </Link>
+          </Text>
 
-    return (
-        <Box>
-            <Navbar />
-            <Flex
-                direction={{ base: "column", md: "row" }}
-                justify="space-between"
-                align="center"
-                wrap="wrap"
-                px={{ md: 8 }}
-                py={6}
-            >
-                {/* Left Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
+          <form onSubmit={handleSubmit}>
+            <VStack spacing={4} align="stretch">
+              <FormControl isRequired>
+                <FormLabel>Your Name</FormLabel>
+                <Input placeholder="John Doe" />
+              </FormControl>
 
-                {/* Contact Us Content */}
-                <VStack spacing={4} flex="1" minWidth="300px" px={4} align="center">
-                    <Text fontSize="2xl" fontWeight="bold" textAlign="center">Contact Us</Text>
-                    <Box  maxH="75vh" minH = "71vh"width="100%">
-                        <Text textAlign="center">
-                            If you have any questions or comments, we'd love to hear from you. Please feel free to reach out to us at the following email address:<br /><br />
-                            <Link href="mailto:info@ielts-bank.com" color="blue.500">info@ielts-bank.com</Link><br /><br />
-                            We aim to respond to all inquiries as quickly as possible. Thank you for your interest in IELTSBank!
-                        </Text>
-                    </Box>
-                </VStack>
+              <FormControl isRequired>
+                <FormLabel>Email Address</FormLabel>
+                <Input type="email" placeholder="john@example.com" />
+              </FormControl>
 
-                {/* Right Ad Container */}
-                <Flex display={adDisplay} width="300px" height="600px" bg="gray.200" mx={2} justifyContent="center" alignItems="center">
-                    <ins className="adsbygoogle"
-                        style={{ display: "block" }}
-                        data-ad-client="ca-pub-5189362957619937"
-                        data-ad-slot="7564021019"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                </Flex>
-            </Flex>
-            <Footer />
-        </Box>
-    );
+              <FormControl isRequired>
+                <FormLabel>Message</FormLabel>
+                <Textarea rows={5} placeholder="How can we help you?" />
+              </FormControl>
+
+              <Button type="submit" colorScheme="blue" size="md">
+                Send Message
+              </Button>
+            </VStack>
+          </form>
+
+          <Button
+            variant="ghost"
+            onClick={() => router.push('/')}
+            alignSelf="center"
+            mt={4}
+            color="gray.600"
+          >
+            ← Back to Homepage
+          </Button>
+        </VStack>
+      </Box>
+      <Footer />
+    </Box>
+  );
 };
 
 export default ContactUs;
