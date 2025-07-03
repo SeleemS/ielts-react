@@ -111,7 +111,7 @@ const DataTable = ({ selectedOption }) => {
         }
 
         return (
-            <Flex justify="center" align="center" mt={6} gap={2}>
+            <Flex justify="center" align="center" mt={6} gap={2} mb={6}>
                 <Button
                     size="sm"
                     variant="ghost"
