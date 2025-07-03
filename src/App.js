@@ -9,6 +9,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import NotFoundPage from './pages/NotFoundPage';
 import ContactUs from './pages/ContactUs';
+import BlogIndex from './pages/blog/index';
+import BlogPost from './pages/blog/[slug]';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import ReactGA from 'react-ga';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -16,17 +20,16 @@ ReactGA.initialize('G-1KRYZZY68X');
 
 const PageTracker = () => {
   const location = useLocation();
-
   useEffect(() => {
     ReactGA.pageview(location.pathname + location.search);
   }, [location]);
-
   return null;
 };
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <PageTracker />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -39,9 +42,12 @@ function App() {
         <Route path="/privacypolicy/" element={<PrivacyPolicy />} />
         <Route path="/termsofservice/" element={<TermsOfService />} />
         <Route path="/contactus/" element={<ContactUs />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Analytics /> {/* ✅ Vercel Analytics component for React */}
+      <Footer />
+      <Analytics />
     </Router>
   );
 }
