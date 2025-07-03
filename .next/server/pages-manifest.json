@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/termsofservice": "pages/termsofservice.js",
-  "/privacypolicy": "pages/privacypolicy.js"
+  "/privacypolicy": "pages/privacypolicy.js",
+  "/termsofservice": "pages/termsofservice.js"
 }
