@@ -96,12 +96,12 @@ async function stripeGet(pathname, params) {
 }
 
 const PRICES = [
-  { lookup_key: 'premium_monthly',     unit_amount: 999,  interval: 'month', interval_count: 1,  nickname: 'Premium Monthly (global)' },
-  { lookup_key: 'premium_6month',      unit_amount: 2999, interval: 'month', interval_count: 6,  nickname: 'Premium 6-Month hero (global)' },
+  { lookup_key: 'premium_monthly',     unit_amount: 899,  interval: 'month', interval_count: 1,  nickname: 'Premium Monthly (global)' },
+  { lookup_key: 'premium_3month',      unit_amount: 1999, interval: 'month', interval_count: 3,  nickname: 'Premium 3-Month hero (global)' },
   { lookup_key: 'premium_annual',      unit_amount: 4499, interval: 'year',  interval_count: 1,  nickname: 'Premium Annual (global)' },
   { lookup_key: 'premium_exam_pass',   unit_amount: 1499, nickname: 'Premium Exam Pass — 28 days (global)' },
   { lookup_key: 'premium_monthly_ppp', unit_amount: 399,  interval: 'month', interval_count: 1,  nickname: 'Premium Monthly (PPP)' },
-  { lookup_key: 'premium_6month_ppp',  unit_amount: 1499, interval: 'month', interval_count: 6,  nickname: 'Premium 6-Month hero (PPP)' },
+  { lookup_key: 'premium_3month_ppp',  unit_amount: 899,  interval: 'month', interval_count: 3,  nickname: 'Premium 3-Month hero (PPP)' },
   { lookup_key: 'premium_annual_ppp',  unit_amount: 1999, interval: 'year',  interval_count: 1,  nickname: 'Premium Annual (PPP)' },
   { lookup_key: 'premium_exam_pass_ppp', unit_amount: 699, nickname: 'Premium Exam Pass — 28 days (PPP)' },
 ];

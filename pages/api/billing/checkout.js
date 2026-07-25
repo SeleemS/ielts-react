@@ -131,7 +131,11 @@ export default async function handler(req, res) {
   if (!CHECKOUT_SKUS.includes(sku)) {
     return res.status(400).json({ error: 'Unknown plan.' });
   }
-  const offer = req.body?.offer === 'winback' ? 'winback' : null;
+  // The winback coupon only applies to the monthly plan. When a returning
+  // subscriber picks a different plan, proceed at list price instead of
+  // rejecting the purchase.
+  const offer =
+    req.body?.offer === 'winback' && sku === 'monthly' ? 'winback' : null;
 
   const admin = getAdmin();
   let userRow;

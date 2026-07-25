@@ -40,6 +40,7 @@ import {
   planPricing,
   money,
   maxSavings,
+  maxPercentOff,
 } from '../src/lib/saleConfig';
 
 const PAGE_TITLE = PRICING_SEO.title;
@@ -605,7 +606,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
                       <Sparkles className="h-3.5 w-3.5" /> {SALE.name}
                     </span>
                     <p className="mt-2.5 text-lg font-extrabold tracking-tight text-amber-950 dark:text-amber-50 sm:text-xl">
-                      Up to {SALE.headlinePercentOff}% off Pro — save up to {money(saleBestSavings)}
+                      Up to {maxPercentOff(regionalPricing)}% off Pro — save up to {money(saleBestSavings)}
                     </p>
                     <p className="mt-1 text-sm font-medium text-amber-900/80 dark:text-amber-100/80">
                       {SALE.tagline}

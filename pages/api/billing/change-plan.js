@@ -12,7 +12,7 @@ import {
   isRecurringPlanUpgrade,
   mapSubscriptionToPlanFields,
   resolveLookupKey,
-  skuFromLookupKey,
+  subscriptionSku,
   subscriptionIsPpp,
 } from '../../../lib/billing';
 
@@ -203,7 +203,7 @@ export default async function handler(req, res) {
     }
 
     const item = subscription.items?.data?.[0];
-    const currentSku = skuFromLookupKey(item?.price?.lookup_key);
+    const currentSku = subscriptionSku(subscription);
     if (!item?.id || !isRecurringPlanUpgrade(currentSku, targetSku)) {
       return res.status(409).json({
         error:

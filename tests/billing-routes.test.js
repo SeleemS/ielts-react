@@ -377,7 +377,7 @@ describe('POST /api/billing/checkout', () => {
     expect(mockState.stripeCalls).toEqual({});
   });
 
-  it.each(['lifetime', 'annual', 'exam_pass'])(
+  it.each(['lifetime', 'annual', 'exam_pass', '6month'])(
     'rejects unavailable new-purchase SKU %s before account or Stripe work',
     async (sku) => {
       mockState.authUser = { id: 'user-1' };
@@ -535,6 +535,40 @@ describe('POST /api/billing/checkout', () => {
     expect(session.payment_method_collection).toBe('if_required');
     expect(session.subscription_data.metadata.user_id).toBe('user-1');
     expect(session.automatic_tax).toBeUndefined();
+  });
+
+  it('creates a global 3-month checkout on the advertised price contract', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    const res = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: '3month' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_3month']);
+    const session = mockState.stripeCalls.sessionCreate;
+    expect(session.mode).toBe('subscription');
+    expect(session.subscription_data.metadata.sku).toBe('3month');
+    expect(session.subscription_data.metadata.ppp).toBe('0');
+  });
+
+  it('lets an eligible win-back account buy the 3-month plan at list price', async () => {
+    process.env.STRIPE_WINBACK_COUPON_ID = 'IELTSBANK_WINBACK40';
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = {
+      id: 'user-1',
+      email: 'a@b.com',
+      is_anonymous: false,
+      plan: 'free',
+      canceled_at: new Date(Date.now() - 31 * 86400000).toISOString(),
+    };
+    const res = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: '3month', offer: 'winback' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
+    expect(mockState.stripeCalls.sessionCreate.allow_promotion_codes).toBe(true);
   });
 
   it('selects the PPP price from request geo, never from the client body', async () => {
@@ -1205,6 +1239,33 @@ describe('POST /api/billing/change-plan', () => {
     expect(res.statusCode).toBe(503);
     expect(res.jsonBody.error).toMatch(/confirm the upgrade price/i);
     expect(mockState.stripeCalls.subscriptionUpdate).toBeUndefined();
+  });
+
+  it('lets a legacy 6-month subscriber upgrade to annual', async () => {
+    mockState.retrievedSubscription.items.data[0].price = {
+      id: 'price_legacy_6month',
+      lookup_key: 'premium_6month',
+    };
+    const res = await callChangePlan({ action: 'preview' });
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.quote.targetSku).toBe('annual');
+  });
+
+  it('resolves the current plan from subscription metadata when the old price lost its lookup key', async () => {
+    // transfer_lookup_key moves the key to the replacement price; superseded
+    // prices keep billing but have lookup_key null.
+    mockState.retrievedSubscription.items.data[0].price = {
+      id: 'price_superseded_monthly',
+      lookup_key: null,
+    };
+    mockState.retrievedSubscription.metadata = {
+      user_id: 'user-1',
+      sku: 'monthly',
+      ppp: '0',
+    };
+    const res = await callChangePlan({ action: 'preview' });
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.quote.targetSku).toBe('annual');
   });
 
   it('preserves PPP pricing from Stripe instead of trusting request geography', async () => {

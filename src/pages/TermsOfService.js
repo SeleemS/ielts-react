@@ -99,8 +99,9 @@ const TermsOfService = () => {
                 <ul className="mt-3 list-disc space-y-2 pl-6">
                   <li>
                     <strong className="font-semibold text-foreground">Subscriptions.</strong>{' '}
-                    Monthly, six-month and annual plans renew automatically at the price and
-                    interval shown at checkout until cancelled. Taxes may be added where required.
+                    Monthly, three-month, six-month and annual plans renew automatically at the
+                    price and interval shown at checkout until cancelled. Taxes may be added where
+                    required.
                   </li>
                   <li>
                     <strong className="font-semibold text-foreground">Exam Pass.</strong>{' '}

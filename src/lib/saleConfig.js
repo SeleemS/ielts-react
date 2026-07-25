@@ -85,7 +85,7 @@ export function planPricing(planKey, ppp = false) {
 }
 
 // Largest savings across plans in a region — used for headline copy
-// ("Save up to $20"). Global-only by default; the modal shows the global line.
+// ("Save up to $15"). Global-only by default; the modal shows the global line.
 export function maxSavings(ppp = false) {
   return Object.keys(PLANS).reduce((max, key) => {
     const p = planPricing(key, ppp);

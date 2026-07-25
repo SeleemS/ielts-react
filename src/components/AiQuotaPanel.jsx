@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react';
 import Modal from './AccessibleModal';
 import { usePlan } from '../lib/usePlan';
 import { track } from '../lib/analytics';
+import { money, planPricing } from '../lib/saleConfig';
 
 // Limit modal for AI-scoring CTAs. Writing includes one lifetime free sample;
 // after that, this opens in two situations:
@@ -67,7 +68,7 @@ export default function AiQuotaPanel({ open = false, onClose = () => {}, skill =
               Upgrade to Premium
             </NextLink>
             <p className="text-center text-xs text-muted-foreground">
-              From $3.75/mo — cancel anytime.
+              From {money(planPricing('3month', false).perMonth)}/mo — cancel anytime.
             </p>
           </>
         )}

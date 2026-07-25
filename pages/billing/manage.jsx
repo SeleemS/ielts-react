@@ -293,13 +293,13 @@ export default function ManageBillingPage() {
                   <div className="flex items-start gap-3">
                     <CalendarClock className="mt-1 h-5 w-5 text-blue-600" />
                     <div>
-                      <h2 className="font-bold">Prefer no subscription next time?</h2>
+                      <h2 className="font-bold">Not sure how long you need?</h2>
                       <p className="mt-1 text-sm text-slate-600">
-                        The 4-week Exam Pass is one payment and never renews. Cancel the current plan
-                        at period end, then choose the Exam Pass whenever you return.
+                        Plans stay active until the end of the period you have paid for, even after
+                        you cancel — so you can cancel now and keep access until then.
                       </p>
                       <Button asChild variant="outline" className="mt-4">
-                        <NextLink href="/pricing#exam-pass" className="no-underline">See the Exam Pass</NextLink>
+                        <NextLink href="/pricing" className="no-underline">Compare plans</NextLink>
                       </Button>
                     </div>
                   </div>
