@@ -198,7 +198,7 @@ describe('billing account state', () => {
         (button) => button.textContent.includes('Pause once')
       )
     ).toBe(false);
-    expect(container.textContent).toContain('Upgrade to 6 months');
+    expect(container.textContent).toContain('Upgrade to 3 months');
   });
 
   it('shows a scheduled cancellation without impossible upgrade actions', async () => {
@@ -213,7 +213,7 @@ describe('billing account state', () => {
     expect(container.textContent).toContain('It will not renew');
     expect(container.textContent).toContain('Review your canceled plan');
     expect(container.textContent).toContain('scheduled cancellation at period end');
-    expect(container.textContent).not.toContain('Upgrade to 6 months');
+    expect(container.textContent).not.toContain('Upgrade to 3 months');
     expect(container.textContent).not.toContain('Upgrade to annual');
     expect(
       [...container.querySelectorAll('button')].some(
@@ -235,7 +235,7 @@ describe('billing account state', () => {
     expect(container.textContent).toContain('payment is past due');
     expect(container.textContent).toContain('Update payment details');
     expect(container.textContent).toContain('temporary grace period');
-    expect(container.textContent).not.toContain('Upgrade to 6 months');
+    expect(container.textContent).not.toContain('Upgrade to 3 months');
     expect(container.textContent).not.toContain('Upgrade to annual');
     expect(
       [...container.querySelectorAll('button')].some(

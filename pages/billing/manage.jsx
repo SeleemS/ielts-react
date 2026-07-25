@@ -154,17 +154,17 @@ export default function ManageBillingPage() {
   const pausePending = planStatus === 'paused';
   const canChangeRecurringPlan =
     isPremium
-    && ['monthly', '6month', 'annual'].includes(planSku)
+    && ['monthly', '3month', '6month', 'annual'].includes(planSku)
     && ['active', 'trialing'].includes(planStatus);
   const upgrades =
     !canChangeRecurringPlan
       ? []
       : planSku === 'monthly'
       ? [
-          { sku: '6month', label: 'Upgrade to 6 months' },
+          { sku: '3month', label: 'Upgrade to 3 months' },
           { sku: 'annual', label: 'Upgrade to annual' },
         ]
-      : planSku === '6month'
+      : planSku === '3month' || planSku === '6month'
         ? [{ sku: 'annual', label: 'Upgrade to annual' }]
         : [];
   return (

@@ -20,9 +20,9 @@ const CHANGE_WINDOW_SECONDS = 10 * 60;
 const CHANGE_MAX_PER_WINDOW = 10;
 const QUOTE_MAX_AGE_SECONDS = 5 * 60;
 const UPGRADE_PRICE_CONTRACTS = {
-  '6month': {
-    global: { amountMinor: 4999, interval: 'month', intervalCount: 6 },
-    ppp: { amountMinor: 1499, interval: 'month', intervalCount: 6 },
+  '3month': {
+    global: { amountMinor: 1999, interval: 'month', intervalCount: 3 },
+    ppp: { amountMinor: 899, interval: 'month', intervalCount: 3 },
   },
   annual: {
     global: { amountMinor: 4499, interval: 'year', intervalCount: 1 },
@@ -133,7 +133,7 @@ export default async function handler(req, res) {
   if (!user) return res.status(401).json({ error: 'Sign in to change your plan.' });
 
   const targetSku = typeof req.body?.sku === 'string' ? req.body.sku : '';
-  if (!['6month', 'annual'].includes(targetSku)) {
+  if (!['3month', 'annual'].includes(targetSku)) {
     return res.status(400).json({ error: 'Choose a valid upgrade plan.' });
   }
   const action = req.body?.action == null ? 'preview' : req.body.action;

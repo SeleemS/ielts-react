@@ -22,7 +22,7 @@ const CHECKOUT_MAX_PER_WINDOW = 10;
 
 function advertisedPriceMismatch(price, sku, ppp) {
   const expected = planPricing(sku, ppp);
-  const expectedIntervalCount = sku === '6month' ? 6 : 1;
+  const expectedIntervalCount = sku === '3month' ? 3 : 1;
   const expectedMinor = expected ? Math.round(expected.sale * 100) : null;
   const valid =
     Boolean(expected) &&

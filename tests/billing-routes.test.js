@@ -137,11 +137,11 @@ const mockState = {
 
 function priceForLookupKey(lookupKey) {
   const priceShape = {
-    premium_monthly: { unit_amount: 1499, interval: 'month', interval_count: 1 },
-    premium_6month: { unit_amount: 4999, interval: 'month', interval_count: 6 },
+    premium_monthly: { unit_amount: 899, interval: 'month', interval_count: 1 },
+    premium_3month: { unit_amount: 1999, interval: 'month', interval_count: 3 },
     premium_annual: { unit_amount: 4499, interval: 'year', interval_count: 1 },
     premium_monthly_ppp: { unit_amount: 399, interval: 'month', interval_count: 1 },
-    premium_6month_ppp: { unit_amount: 1499, interval: 'month', interval_count: 6 },
+    premium_3month_ppp: { unit_amount: 899, interval: 'month', interval_count: 3 },
     premium_annual_ppp: { unit_amount: 1999, interval: 'year', interval_count: 1 },
   }[lookupKey] || { unit_amount: 7999, interval: 'year', interval_count: 1 };
   return {
@@ -542,10 +542,10 @@ describe('POST /api/billing/checkout', () => {
     mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
     const res = await callCheckout({
       headers: { authorization: 'Bearer tok', 'x-vercel-ip-country': 'IN' },
-      body: { sku: '6month' },
+      body: { sku: '3month' },
     });
     expect(res.statusCode).toBe(200);
-    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_6month_ppp']);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_3month_ppp']);
     expect(mockState.stripeCalls.sessionCreate.subscription_data.metadata.ppp).toBe('1');
   });
 
@@ -1211,9 +1211,9 @@ describe('POST /api/billing/change-plan', () => {
     mockState.retrievedSubscription.metadata.ppp = '1';
     mockState.retrievedSubscription.items.data[0].price.lookup_key =
       'premium_monthly_ppp';
-    await callChangePlan({ sku: '6month' });
+    await callChangePlan({ sku: '3month' });
     expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual([
-      'premium_6month_ppp',
+      'premium_3month_ppp',
     ]);
   });
 
@@ -1277,7 +1277,7 @@ describe('POST /api/billing/change-plan', () => {
     mockState.retrievedSubscription.items.data[0].price.lookup_key =
       'premium_annual';
     mockState.stripeCalls = {};
-    const downgrade = await callChangePlan({ sku: '6month' });
+    const downgrade = await callChangePlan({ sku: '3month' });
     expect(downgrade.statusCode).toBe(409);
     expect(mockState.stripeCalls.subscriptionUpdate).toBeUndefined();
   });

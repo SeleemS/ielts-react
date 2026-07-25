@@ -46,7 +46,7 @@ const PAGE_TITLE = PRICING_SEO.title;
 const PAGE_DESCRIPTION = PRICING_SEO.description;
 
 // Everything Pro unlocks — shown on the Pro card and the "Everything included"
-// grid. The single Pro plan is billed monthly or every 6 months; prices and the
+// grid. The single Pro plan is billed monthly or every 3 months; prices and the
 // Summer Sale live in src/lib/saleConfig.js (the single source of truth).
 const FREE_INCLUDES = [
   'Full Reading & Listening question bank',
@@ -323,13 +323,13 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
   // Resolve the region's numbers for both cadences (sale price = real price;
   // regular = struck anchor). PPP keeps the lower regional prices.
   const monthlyPricing = planPricing('monthly', regionalPricing);
-  const sixMonthPricing = planPricing('6month', regionalPricing);
-  const proPricing = cadence === 'monthly' ? monthlyPricing : sixMonthPricing;
-  // Savings from paying every 6 months vs month-to-month (billing-frequency
+  const threeMonthPricing = planPricing('3month', regionalPricing);
+  const proPricing = cadence === 'monthly' ? monthlyPricing : threeMonthPricing;
+  // Savings from paying every 3 months vs month-to-month (billing-frequency
   // discount shown on the toggle), independent of the sale.
-  const sixVsMonthlyPct =
-    monthlyPricing && sixMonthPricing
-      ? Math.round((1 - sixMonthPricing.sale / (monthlyPricing.sale * 6)) * 100)
+  const quarterVsMonthlyPct =
+    monthlyPricing && threeMonthPricing
+      ? Math.round((1 - threeMonthPricing.sale / (monthlyPricing.sale * 3)) * 100)
       : 0;
   const saleBestSavings = maxSavings(regionalPricing);
 
@@ -621,7 +621,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
               </div>
             ) : null}
 
-            {/* Billing cadence toggle — 6 months leads (best value). */}
+            {/* Billing cadence toggle — 3 months leads (best value). */}
             <div className="flex justify-center">
               <div
                 role="tablist"
@@ -645,19 +645,19 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={cadence === '6month'}
-                  onClick={() => setCadence('6month')}
+                  aria-selected={cadence === '3month'}
+                  onClick={() => setCadence('3month')}
                   className={cn(
                     'inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                    cadence === '6month'
+                    cadence === '3month'
                       ? 'bg-background text-foreground shadow-sm'
                       : 'text-muted-foreground hover:text-foreground'
                   )}
                 >
-                  6 months
-                  {sixVsMonthlyPct > 0 ? (
+                  3 months
+                  {quarterVsMonthlyPct > 0 ? (
                     <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-accent">
-                      Save {sixVsMonthlyPct}%
+                      Save {quarterVsMonthlyPct}%
                     </span>
                   ) : null}
                 </button>
@@ -728,10 +728,10 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
                     </p>
                   ) : null}
 
-                  {cadence === '6month' && examWeeks ? (
+                  {cadence === '3month' && examWeeks && examDays <= 90 ? (
                     <p className="mt-3 rounded-lg bg-accent/10 p-2 text-xs font-semibold text-accent">
                       Your test is in {examWeeks} {examWeeks === 1 ? 'week' : 'weeks'} — this plan
-                      covers your prep{examDays > 120 ? ' and a retake cycle' : ''}.
+                      covers your prep{examDays <= 45 ? ' and a retake cycle' : ''}.
                     </p>
                   ) : null}
 
