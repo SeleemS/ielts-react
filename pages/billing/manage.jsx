@@ -136,6 +136,27 @@ export default function ManageBillingPage() {
         throw new Error(body.error || 'Could not upgrade the plan.');
       }
       track('subscription_plan_change', { from_sku: planSku, to_sku: sku });
+      // In-place upgrades never pass through Checkout, so report the prorated
+      // charge as its own GA4 purchase. prorationDate keeps the id unique and
+      // stable across retries of the same accepted quote.
+      if (acceptedQuote) {
+        track('purchase', {
+          transaction_id: `upgrade_${sku}_${acceptedQuote.prorationDate}`,
+          value: Math.round(Number(acceptedQuote.amountDue)) / 100,
+          currency: String(acceptedQuote.currency || 'usd').toUpperCase(),
+          items: [
+            {
+              item_id: `pro_${sku}`,
+              item_name: `Pro upgrade to ${sku}`,
+              item_category: 'subscription_upgrade',
+              price: Math.round(Number(acceptedQuote.amountDue)) / 100,
+              quantity: 1,
+            },
+          ],
+          sku,
+          value_source: 'proration',
+        });
+      }
       setUpgradeQuote(null);
       setMessage(body.message || 'Your plan was upgraded.');
     } catch (upgradeError) {

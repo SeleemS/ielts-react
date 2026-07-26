@@ -215,6 +215,21 @@ export function track(event, params = {}, options = {}) {
   }).catch(() => {});
 }
 
+// GA4 client id from the _ga cookie ("GA1.1.123456.789" → "123456.789").
+// Only present when analytics consent was granted (the cookie doesn't exist
+// otherwise). Used to attribute server-side Measurement Protocol purchase
+// events (webhook backstop) to the same GA user as the browser session.
+export function gaClientId() {
+  if (typeof document === 'undefined') return null;
+  if (!analyticsConsentGranted()) return null;
+  const match = /(?:^|;\s*)_ga=([^;]+)/.exec(document.cookie || '');
+  if (!match) return null;
+  const parts = match[1].split('.');
+  if (parts.length < 4) return null;
+  const clientId = `${parts[2]}.${parts[3]}`;
+  return /^\d+\.\d+$/.test(clientId) ? clientId : null;
+}
+
 export function setAnalyticsUser(userId, accessToken = null) {
   analyticsAccessToken = accessToken || null;
   if (!analyticsConsentGranted()) return;

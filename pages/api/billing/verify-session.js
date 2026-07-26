@@ -111,7 +111,16 @@ export default async function handler(req, res) {
         error: 'Pro access is not active for this checkout.',
       });
     }
-    return res.status(200).json({ active: true, outcome });
+    // Purchase facts for client-side analytics (GA4 purchase event): what
+    // Stripe actually charged, not the display price.
+    return res.status(200).json({
+      active: true,
+      outcome,
+      sku: session.metadata?.sku || null,
+      ppp: session.metadata?.ppp === '1',
+      amount_total: Number.isFinite(session.amount_total) ? session.amount_total : null,
+      currency: session.currency || null,
+    });
   } catch (error) {
     console.error('verify-session error:', error.message);
     return res.status(503).json({ error: 'Activation is still processing.' });

@@ -15,6 +15,7 @@ import {
   isPppCountry,
 } from '../../../lib/billing';
 import { isPremiumRow } from '../../../lib/premium';
+import { sanitizeGaClientId } from '../../../lib/ga4mp';
 import { planPricing } from '../../../src/lib/saleConfig';
 
 const CHECKOUT_WINDOW_SECONDS = 10 * 60;
@@ -258,10 +259,15 @@ export default async function handler(req, res) {
     }
 
     const origin = siteOrigin(req);
+    // GA4 client id from the buyer's _ga cookie (present only with analytics
+    // consent). Lets the webhook report the purchase to GA4 via Measurement
+    // Protocol when the buyer never returns to the success page (lib/ga4mp.js).
+    const gaCid = sanitizeGaClientId(req.body?.ga_cid);
     const metadata = {
       user_id: userRow.id,
       sku,
       ppp: isPppCountry(country) ? '1' : '0',
+      ...(gaCid ? { ga_cid: gaCid } : {}),
     };
     // Terms-of-service consent recorded by Stripe on the Checkout Session
     // (session.consent.terms_of_service = 'accepted' + a timestamp). Stripe

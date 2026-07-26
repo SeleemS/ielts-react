@@ -10,6 +10,7 @@ import { track } from '../lib/analytics';
 import { getLocalPref, setLocalPref, loadUserPref, saveUserPref } from '../lib/prefs';
 import { PRACTICE_EVENT } from '../lib/practiceActivity';
 import { SALE, isSaleLive, saleEndsAtMs } from '../lib/saleConfig';
+import { trackSelectPromotion, trackViewPromotion } from '../lib/ecommerce';
 
 // "Every few questions" reminder of the Summer Sale, shown to signed-in,
 // non-premium users while the sale is live. Mounted once globally in _app.js.
@@ -110,6 +111,7 @@ export default function OfferReminderModal() {
       setSessionShown(shown + 1);
       setOpen(true);
       track('sale_reminder_shown', { count, appearance: shown + 1 });
+      trackViewPromotion('reminder_modal');
     };
     window.addEventListener(PRACTICE_EVENT, onActivity);
     return () => window.removeEventListener(PRACTICE_EVENT, onActivity);
@@ -119,6 +121,7 @@ export default function OfferReminderModal() {
 
   const handleSeeOffer = React.useCallback(() => {
     track('sale_reminder_click', { destination: 'pricing' });
+    trackSelectPromotion('reminder_modal');
     setOpen(false);
     void router.push('/pricing');
   }, [router]);

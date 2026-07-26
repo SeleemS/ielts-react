@@ -28,7 +28,14 @@ import { useAuth } from '../src/lib/auth';
 import { usePlan } from '../src/lib/usePlan';
 import { getSupabase, getPublicTrustStats } from '../lib/supabase';
 import { isPppCountry } from '../lib/billing';
-import { track } from '../src/lib/analytics';
+import { gaClientId, track } from '../src/lib/analytics';
+import {
+  trackBeginCheckout,
+  trackPurchase,
+  trackSelectItem,
+  trackViewItemList,
+  trackViewPromotion,
+} from '../src/lib/ecommerce';
 import { getSessionAccess } from '../src/lib/sessionAccess';
 import { PRICING_SEO } from '../lib/pricingSeo';
 import { cn } from '../src/lib/utils';
@@ -345,6 +352,25 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
     track('paywall_view', { source: upgrade });
   }, [router.isReady, upgrade]);
 
+  // GA4 monetization funnel: one plan-list impression (plus the sale
+  // promotion impression) per pricing view. Skipped on the checkout-success
+  // return so activation views don't count as shopping impressions.
+  React.useEffect(() => {
+    if (!router.isReady || checkoutStatus === 'success') return;
+    if (trackedRef.current.itemList) return;
+    trackedRef.current.itemList = true;
+    trackViewItemList(regionalPricing, upgrade || 'pricing');
+    if (isSaleLive()) trackViewPromotion('pricing_banner');
+  }, [router.isReady, checkoutStatus, regionalPricing, upgrade]);
+
+  const selectCadence = React.useCallback(
+    (nextCadence) => {
+      setCadence(nextCadence);
+      trackSelectItem(nextCadence, regionalPricing);
+    },
+    [regionalPricing]
+  );
+
   // Live, real social proof: total practice questions answered across all
   // learners. Fetched client-side; renders only if the RPC returns a count.
   React.useEffect(() => {
@@ -391,6 +417,17 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
         const body = await response.json().catch(() => ({}));
         if (response.ok && body.active === true) {
           track('purchase_success', { source: upgrade || 'pricing' });
+          // GA4 Monetization purchase: session id as transaction_id (GA and
+          // the webhook Measurement Protocol backstop dedupe on it), amount
+          // from the verified session so coupons report the charged price.
+          trackPurchase({
+            transactionId: sessionId,
+            sku: body.sku,
+            ppp: body.ppp === true,
+            amountMinor: body.amount_total,
+            currency: body.currency || 'USD',
+            source: upgrade || 'pricing',
+          });
           setActivation('active');
         } else {
           setActivation('delayed');
@@ -416,6 +453,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
     }
     setBusySku(sku);
     track('checkout_start', { sku, source: upgrade || 'pricing', country, ppp: regionalPricing });
+    trackBeginCheckout(sku, regionalPricing, upgrade || 'pricing');
     try {
       const { headers, sessionError } = await authHeader();
       if (sessionError) {
@@ -429,7 +467,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
       const response = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...headers },
-        body: JSON.stringify({ sku, offer }),
+        body: JSON.stringify({ sku, offer, ga_cid: gaClientId() }),
       });
       const body = await response.json().catch(() => ({}));
       if (response.ok && body.url) {
@@ -633,7 +671,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
                   type="button"
                   role="tab"
                   aria-selected={cadence === 'monthly'}
-                  onClick={() => setCadence('monthly')}
+                  onClick={() => selectCadence('monthly')}
                   className={cn(
                     'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
                     cadence === 'monthly'
@@ -647,7 +685,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
                   type="button"
                   role="tab"
                   aria-selected={cadence === '3month'}
-                  onClick={() => setCadence('3month')}
+                  onClick={() => selectCadence('3month')}
                   className={cn(
                     'inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
                     cadence === '3month'

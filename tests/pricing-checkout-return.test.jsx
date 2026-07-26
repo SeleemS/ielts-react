@@ -104,6 +104,7 @@ vi.mock('../lib/billing', () => ({
 }));
 vi.mock('../src/lib/analytics', () => ({
   track: vi.fn(),
+  gaClientId: () => null,
 }));
 vi.mock('../lib/pricingSeo', () => ({
   PRICING_SEO: {
@@ -325,7 +326,7 @@ describe('pricing authentication handoff', () => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer test-access-token',
       },
-      body: JSON.stringify({ sku: 'monthly', offer: '' }),
+      body: JSON.stringify({ sku: 'monthly', offer: '', ga_cid: null }),
     });
   });
 
