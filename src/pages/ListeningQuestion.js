@@ -70,7 +70,7 @@ const ListeningQuestion = ({ id, passage, description, related = [] }) => {
     );
   }
 
-  const { title, audioUrl, transcriptHtml, groups, difficulty, slug, legacyId } = passage;
+  const { title, audioUrl, transcriptHtml, groups, difficulty, slug, legacyId, listeningPart } = passage;
   const pageTitle = title
     ? `${title} | IELTS Listening Practice | IELTS-Bank`
     : 'IELTS Listening Practice | IELTS-Bank';
@@ -158,6 +158,7 @@ const ListeningQuestion = ({ id, passage, description, related = [] }) => {
             <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
             <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
               IELTS Listening Practice
+              {listeningPart && <Badge variant="secondary">Part {listeningPart}</Badge>}
               {difficulty && (
                 <Badge variant="emerald" className="capitalize">
                   {difficulty}

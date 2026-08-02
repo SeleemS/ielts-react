@@ -34,6 +34,12 @@ function combinationsWithTotal(rows, size, target, start = 0, picked = []) {
   return matches;
 }
 
+const DIFFICULTY_RANK = { easy: 0, medium: 1, hard: 2 };
+
+function difficultyRank(row) {
+  return DIFFICULTY_RANK[row.difficulty] ?? 1;
+}
+
 function exactMockGroups(rows, groupCount, groupSize, target = 40) {
   function choose(remaining, groups) {
     if (groups.length === groupCount) return groups;
@@ -46,20 +52,71 @@ function exactMockGroups(rows, groupCount, groupSize, target = 40) {
   }
   const groups = choose(rows, []);
   if (!groups) throw new Error(`Could not compose ${groupCount} disjoint ${target}-question mocks.`);
+  // Real reading papers get harder as they go: order each mock's passages
+  // easy -> hard (stable within a rank, so slug order breaks ties).
+  return groups.map((combination) =>
+    [...combination].sort((a, b) => difficultyRank(a) - difficultyRank(b))
+  );
+}
+
+// Listening mocks mirror the real test: exactly one section per part, played
+// Part 1 -> 4 (everyday dialogue, everyday monologue, academic discussion,
+// lecture), still totalling `target` questions per mock.
+function listeningMockGroups(rows, groupCount, target = 40) {
+  const byPart = new Map([1, 2, 3, 4].map((part) => [part, rows.filter((row) => row.part === part)]));
+  for (const [part, candidates] of byPart) {
+    if (candidates.length < groupCount) {
+      throw new Error(`Not enough Part ${part} listening passages: ${candidates.length} < ${groupCount}`);
+    }
+  }
+  function partCombinations(used, partIndex = 1, picked = []) {
+    if (partIndex > 4) {
+      const total = picked.reduce((sum, row) => sum + questionCount(row), 0);
+      return total === target ? [picked] : [];
+    }
+    const runningTotal = picked.reduce((sum, row) => sum + questionCount(row), 0);
+    const matches = [];
+    for (const candidate of byPart.get(partIndex)) {
+      if (used.has(candidate.id)) continue;
+      if (runningTotal + questionCount(candidate) > target) continue;
+      matches.push(...partCombinations(used, partIndex + 1, [...picked, candidate]));
+      if (matches.length >= 100) break;
+    }
+    return matches;
+  }
+  function choose(groups, used) {
+    if (groups.length === groupCount) return groups;
+    for (const combination of partCombinations(used)) {
+      for (const row of combination) used.add(row.id);
+      const result = choose([...groups, combination], used);
+      if (result) return result;
+      for (const row of combination) used.delete(row.id);
+    }
+    return null;
+  }
+  const groups = choose([], new Set());
+  if (!groups) throw new Error(`Could not compose ${groupCount} part-ordered ${target}-question listening mocks.`);
   return groups;
 }
 
 async function publishedCandidates(supabase, skill, module = null) {
   let query = supabase
     .from('passages')
-    .select('id, slug, title, question_groups(questions(id))')
+    .select('id, slug, title, difficulty, listening_details(part), question_groups(questions(id))')
     .eq('skill', skill)
     .eq('status', 'published')
     .order('slug', { ascending: true });
   if (module) query = query.eq('module', module);
   const { data, error } = await query;
   if (error) throw error;
-  return (data || []).filter((row) => questionCount(row) > 0);
+  return (data || [])
+    .map((row) => {
+      const details = Array.isArray(row.listening_details)
+        ? row.listening_details[0]
+        : row.listening_details;
+      return { ...row, part: details?.part ?? null };
+    })
+    .filter((row) => questionCount(row) > 0);
 }
 
 async function upsertMock(supabase, definition) {
@@ -123,7 +180,7 @@ async function main() {
     throw new Error(`Not enough content: reading=${reading.length}, listening=${listening.length}`);
   }
   const readingGroups = exactMockGroups(reading, 3, 3);
-  const listeningGroups = exactMockGroups(listening, 2, 4);
+  const listeningGroups = listeningMockGroups(listening, 2);
 
   const definitions = [
     ...Array.from({ length: 3 }, (_, index) => ({
