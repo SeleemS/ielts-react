@@ -191,6 +191,7 @@ export function buildDashboardData(attempts = [], scores = []) {
         skill: attempt.skill,
         title: passage?.title || 'Practice passage',
         href: passageHref(passage),
+        slug: passage?.slug || null,
         wrong,
         date: attempt.submitted_at || attempt.created_at,
       });

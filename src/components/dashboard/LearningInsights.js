@@ -163,15 +163,24 @@ function MistakesPanel({ mistakes }) {
         <RotateCcw className="h-5 w-5 text-amber-600" />
       </div>
       {mistakes.length ? (
-        <ul className="mt-5 divide-y divide-slate-100">
-          {mistakes.slice(0, 4).map((item) => (
-            <li key={item.id} className="flex items-center gap-3 py-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700"><RotateCcw className="h-4 w-4" /></span>
-              <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-slate-800">{item.title}</p><p className="mt-0.5 text-xs capitalize text-slate-500">{item.skill} · {item.wrong} incorrect</p></div>
-              {item.href && <Button asChild size="sm" variant="outline"><NextLink href={item.href}>Retry</NextLink></Button>}
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="mt-5 divide-y divide-slate-100">
+            {mistakes.slice(0, 4).map((item) => (
+              <li key={item.id} className="flex items-center gap-3 py-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700"><RotateCcw className="h-4 w-4" /></span>
+                <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-slate-800">{item.title}</p><p className="mt-0.5 text-xs capitalize text-slate-500">{item.skill} · {item.wrong} incorrect</p></div>
+                <Button asChild size="sm" variant="outline">
+                  <NextLink href={item.slug ? `/review?passage=${encodeURIComponent(item.slug)}` : '/review'}>
+                    Review
+                  </NextLink>
+                </Button>
+              </li>
+            ))}
+          </ul>
+          <Button asChild variant="accent" size="sm" className="mt-4 w-full">
+            <NextLink href="/review" className="no-underline">Review all my mistakes</NextLink>
+          </Button>
+        </>
       ) : (
         <div className="mt-5 flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-emerald-800">
           <CheckCircle2 className="h-5 w-5 shrink-0" /><p className="text-sm font-semibold">No recorded mistakes yet. Keep practising to build your revision queue.</p>
