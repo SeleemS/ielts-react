@@ -4,11 +4,22 @@ Disallow: /dashboard
 Disallow: /api/
 Disallow: /auth/
 
-# AI crawlers are explicitly welcome to index and cite our practice content.
+# AI search and assistant agents are explicitly welcome to index and cite our
+# practice content. Search/citation indexers:
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Bingbot
+# Live user-initiated fetchers:
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+# Training crawlers (also welcome):
 User-agent: GPTBot
 User-agent: ClaudeBot
-User-agent: PerplexityBot
 User-agent: Google-Extended
+User-agent: Meta-ExternalAgent
+User-agent: Applebot-Extended
 Allow: /
 Disallow: /dashboard
 Disallow: /api/
