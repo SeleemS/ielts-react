@@ -210,7 +210,7 @@ export default function WritingScoreReport({
       {!sample && typeof result.overallBand === 'number' ? (
         <ShareRow
           source="writing_report"
-          path="/ielts-writing-checker"
+          path={`/r?band=${formatBand(result.overallBand)}&skill=writing`}
           text={`My IELTS Writing ${submissionLabel} scored Band ${formatBand(result.overallBand)} with AI examiner feedback — try it free at IELTS-Bank`}
         />
       ) : null}

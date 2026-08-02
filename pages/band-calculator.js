@@ -328,7 +328,7 @@ export default function BandCalculator() {
                 <ShareRow
                   className="mt-4"
                   source="band_calculator"
-                  path="/band-calculator"
+                  path={`/r?band=${formatBand(overall)}&skill=overall`}
                   text={`My IELTS overall band works out to ${formatBand(overall)} — calculate yours free at IELTS-Bank`}
                 />
                 <div className="mt-4 flex flex-col items-start justify-between gap-3 rounded-xl bg-slate-950 px-5 py-4 text-white sm:flex-row sm:items-center">

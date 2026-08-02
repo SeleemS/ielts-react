@@ -220,7 +220,15 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
       <ShareRow
         className="mt-4 justify-start"
         source={isMock ? 'mock_result' : `${skill}_result`}
-        path={isMock ? '/mock-test' : (router.asPath || '/').split('?')[0]}
+        path={
+          // Strong results share the /r landing (band-card OG unfurl);
+          // weaker ones share the practice page itself.
+          band != null && pct >= 60
+            ? `/r?band=${band}&skill=${isMock ? 'mock' : skill}`
+            : isMock
+              ? '/mock-test'
+              : (router.asPath || '/').split('?')[0]
+        }
         text={
           // Only frame strong results as a challenge; weak ones share the
           // practice itself, not a score the user may not want broadcast.

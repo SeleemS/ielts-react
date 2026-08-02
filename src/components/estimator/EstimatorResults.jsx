@@ -535,7 +535,7 @@ export default function EstimatorResults({
               <ShareRow
                 className="mt-4"
                 source="estimator_result"
-                path="/band-estimator"
+                path={`/r?band=${formatBand(effectiveOverall)}&skill=overall`}
                 text={`My estimated IELTS band is ${formatBand(effectiveOverall)} — check yours free in 15 minutes at IELTS-Bank`}
               />
             ) : null}
