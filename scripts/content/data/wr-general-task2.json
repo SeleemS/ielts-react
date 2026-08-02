@@ -1,0 +1,134 @@
+[
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Children and Household Chores",
+    "task": 2,
+    "topic_tags": ["family", "society"],
+    "essay_type": "opinion",
+    "prompt_html": "<p>Write about the following topic:</p><p>Some people believe that children should be given household chores to do as soon as they are old enough to manage them. Others think that children should be free to spend their time playing and studying.</p><p>Do you agree or disagree that children should help with household tasks?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "easy"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Local Shops or Large Supermarkets",
+    "task": 2,
+    "topic_tags": ["society", "economics"],
+    "essay_type": "discussion",
+    "prompt_html": "<p>Write about the following topic:</p><p>Some people prefer to do their shopping in small local shops, while others choose large supermarkets or shopping centres.</p><p>Discuss both these views and give your own opinion.</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "easy"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Working from Home",
+    "task": 2,
+    "topic_tags": ["work", "technology"],
+    "essay_type": "advantages-disadvantages",
+    "prompt_html": "<p>Write about the following topic:</p><p>Nowadays many employees are able to do their jobs from home instead of travelling to a workplace every day.</p><p>Do the advantages of working from home outweigh the disadvantages?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Knowing Our Neighbours",
+    "task": 2,
+    "topic_tags": ["society", "community"],
+    "essay_type": "problem-solution",
+    "prompt_html": "<p>Write about the following topic:</p><p>In many towns and cities today, people know very little about their neighbours and do not feel part of a local community.</p><p>Why do you think this has happened? What can be done to encourage people to get to know their neighbours?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: The Decline of Family Mealtimes",
+    "task": 2,
+    "topic_tags": ["family", "health"],
+    "essay_type": "positive-negative",
+    "prompt_html": "<p>Write about the following topic:</p><p>In many households, family members now rarely sit down to eat a meal together, preferring to eat at different times or in front of a screen.</p><p>Is this a positive or negative development?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Keeping Pets in Cities",
+    "task": 2,
+    "topic_tags": ["society", "lifestyle"],
+    "essay_type": "two-part",
+    "prompt_html": "<p>Write about the following topic:</p><p>More and more people who live in cities are choosing to keep pets such as dogs and cats, even in small flats.</p><p>Why do you think this is happening? Is it a positive or negative trend?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Flexible Working Hours",
+    "task": 2,
+    "topic_tags": ["work", "society"],
+    "essay_type": "opinion",
+    "prompt_html": "<p>Write about the following topic:</p><p>Some people believe that all employers should allow their staff to choose the hours they work, as long as the work is completed.</p><p>To what extent do you agree or disagree?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Saving Money or Enjoying It",
+    "task": 2,
+    "topic_tags": ["economics", "lifestyle"],
+    "essay_type": "discussion",
+    "prompt_html": "<p>Write about the following topic:</p><p>Some people think that young adults should save as much of their income as possible for the future. Others believe they should spend their money enjoying life while they are young.</p><p>Discuss both these views and give your own opinion.</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Moving to Another City for Work",
+    "task": 2,
+    "topic_tags": ["work", "society"],
+    "essay_type": "advantages-disadvantages",
+    "prompt_html": "<p>Write about the following topic:</p><p>Many people today have to move to a different town or city for their job, leaving family and friends behind.</p><p>What are the advantages and disadvantages of moving somewhere new for work?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "easy"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Traffic Around Schools",
+    "task": 2,
+    "topic_tags": ["transport", "community"],
+    "essay_type": "problem-solution",
+    "prompt_html": "<p>Write about the following topic:</p><p>In many residential areas, roads become extremely congested when parents drive their children to and from school.</p><p>What problems does this cause? What measures could reduce this traffic?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "hard"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Online Shopping and the High Street",
+    "task": 2,
+    "topic_tags": ["technology", "economics"],
+    "essay_type": "positive-negative",
+    "prompt_html": "<p>Write about the following topic:</p><p>As online shopping becomes more popular, many shops in town centres are closing down.</p><p>Do you think this is a positive or negative development?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "medium"
+  },
+  {
+    "skill": "writing",
+    "module": "general",
+    "title": "IELTS General Task 2: Caring for Elderly Relatives",
+    "task": 2,
+    "topic_tags": ["family", "society"],
+    "essay_type": "two-part",
+    "prompt_html": "<p>Write about the following topic:</p><p>In some countries, elderly people traditionally lived with their adult children, but nowadays more of them live alone or in retirement homes.</p><p>Why has this change happened? Do you think it is a good or bad development?</p><p>Give reasons for your answer and include any relevant examples from your own knowledge or experience. Write at least 250 words.</p>",
+    "word_limit_min": 250,
+    "difficulty": "hard"
+  }
+]
