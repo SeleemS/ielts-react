@@ -29,8 +29,9 @@ import { SITE_URL } from '../../lib/site';
 const OG_IMAGE = `${SITE_URL}/api/og?title=${encodeURIComponent(
   'Master IELTS with real, auto-scored practice'
 )}&type=home`;
-const PAGE_TITLE =
-  'IELTS-Bank — Free IELTS Practice: Reading, Writing, Listening & Speaking';
+// Kept under 70 characters — longer titles get truncated or rewritten by
+// search engines (flagged by Bing Webmaster Tools at 74).
+const PAGE_TITLE = 'IELTS-Bank — Free IELTS Practice Tests with AI Band Feedback';
 const PAGE_DESCRIPTION =
   'Practise IELTS Reading, Writing, Listening and Speaking with authentic-style questions, instant scoring and AI-powered band feedback.';
 
