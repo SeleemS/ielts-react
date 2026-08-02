@@ -5,6 +5,7 @@ import { Button } from '../../../components/ui/button';
 import { cn } from '../../lib/utils';
 import { track } from '../../lib/analytics';
 import { BandHero, BandMeter, CriterionFeedback } from './ScoreUI';
+import ShareRow from '../ShareRow';
 
 const TASK2_CRITERIA = [
   ['taskResponse', 'Task Response'],
@@ -205,6 +206,13 @@ export default function WritingScoreReport({
             </NextLink>
           </Button>
         </div>
+      ) : null}
+      {!sample && typeof result.overallBand === 'number' ? (
+        <ShareRow
+          source="writing_report"
+          path="/ielts-writing-checker"
+          text={`My IELTS Writing ${submissionLabel} scored Band ${formatBand(result.overallBand)} with AI examiner feedback — try it free at IELTS-Bank`}
+        />
       ) : null}
     </div>
   );

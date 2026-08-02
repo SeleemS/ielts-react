@@ -2,6 +2,7 @@ import * as React from 'react';
 import NextLink from 'next/link';
 import { ArrowDownRight, ArrowUpRight, Minus, Sparkles } from 'lucide-react';
 import { SKILL_META, SKILL_ORDER, bandDescriptor, formatBand } from './utils';
+import ShareRow from '../ShareRow';
 
 const WIDTH = 640;
 const HEIGHT = 220;
@@ -146,6 +147,19 @@ export default function BandTrend({ skills, targetBand, isPremium = false }) {
           </div>
           <Delta value={selectedStats.delta} />
         </div>
+        {selectedStats.series.length ? (
+          <ShareRow
+            className="mt-4 justify-start"
+            source="dashboard_trend"
+            path="/"
+            text={
+              selectedStats.series.length > 1 &&
+              selectedStats.series.at(-1) > selectedStats.series[0]
+                ? `My IELTS ${SKILL_META[selected].label} band went from ${formatBand(selectedStats.series[0])} to ${formatBand(selectedStats.series.at(-1))} practising on IELTS-Bank`
+                : `I'm tracking my IELTS band on IELTS-Bank — free practice with instant marking`
+            }
+          />
+        ) : null}
       </div>
 
       <div className="rounded-3xl bg-slate-950 p-5 text-white shadow-[0_24px_65px_-35px_rgba(2,6,23,0.85)] sm:p-7">

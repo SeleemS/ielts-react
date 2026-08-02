@@ -8,6 +8,7 @@ import { useAuth } from '../../lib/auth';
 import { usePlan } from '../../lib/usePlan';
 import { getSupabase } from '../../../lib/supabase';
 import NewsletterSignup from '../NewsletterSignup';
+import ShareRow from '../ShareRow';
 import SignInDialog from '../auth/SignInDialog';
 import { BandHero } from '../question/ScoreUI';
 import WritingScoreReport from '../question/WritingScoreReport';
@@ -530,6 +531,14 @@ export default function EstimatorResults({
               subtitle={heroCaption}
             />
             <p className="mt-2 text-center text-xs text-muted-foreground">{heroCaption}</p>
+            {typeof effectiveOverall === 'number' ? (
+              <ShareRow
+                className="mt-4"
+                source="estimator_result"
+                path="/band-estimator"
+                text={`My estimated IELTS band is ${formatBand(effectiveOverall)} — check yours free in 15 minutes at IELTS-Bank`}
+              />
+            ) : null}
           </>
         )}
         <div className="mt-4">

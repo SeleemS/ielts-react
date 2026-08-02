@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { Button } from '../../../components/ui/button';
 import { cn } from '../../lib/utils';
 import QuestionGroup from './QuestionGroup';
@@ -18,6 +19,7 @@ import {
 import BandDial from '../mock/BandDial';
 import SectionBreakdown from '../mock/SectionBreakdown';
 import { usePlayOnMount, usePrefersReducedMotion } from '../mock/scoreAnimation';
+import ShareRow from '../ShareRow';
 
 // The stateful heart of the question-taking experience. It is UI-chrome
 // agnostic: Reading and Listening pages supply their own passage/audio layout
@@ -100,6 +102,7 @@ async function persistAttemptToSupabase(userId, skill, storageKey, answers, resu
 }
 
 function ResultsSummary({ score, total, skill, module, showBand, onReset, summaryRef, signedIn, sections, byNumber }) {
+  const router = useRouter();
   const pct = total ? Math.round((score / total) * 100) : 0;
   const band = showBand ? estimateBand(score, total, skill, module) : null;
   const reduced = usePrefersReducedMotion();
@@ -181,6 +184,16 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
         Review your answers below — correct answers are shown in green and each incorrect
         question reveals the right answer.
       </p>
+      <ShareRow
+        className="mt-4 justify-start"
+        source={isMock ? 'mock_result' : `${skill}_result`}
+        path={isMock ? '/mock-test' : (router.asPath || '/').split('?')[0]}
+        text={
+          isMock && band != null
+            ? `I scored Band ${band} on a timed IELTS ${skill} mock at IELTS-Bank — can you beat it?`
+            : `I got ${score}/${total} on an IELTS ${skill} exercise at IELTS-Bank — can you beat it?`
+        }
+      />
       {(skill === 'reading' || skill === 'listening') && (
         <div className="mt-4 rounded-md border border-border bg-card p-3 text-sm">
           <span className="text-muted-foreground">Ready for the next skill? </span>

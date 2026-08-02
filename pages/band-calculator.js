@@ -19,6 +19,7 @@ import {
 } from '../lib/bandTables';
 import { track } from '../src/lib/analytics';
 import NewsletterSignup from '../src/components/NewsletterSignup';
+import ShareRow from '../src/components/ShareRow';
 import { useAuth } from '../src/lib/auth';
 
 import { BAND_CALCULATOR_SEO } from '../lib/bandCalculatorSeo';
@@ -324,6 +325,12 @@ export default function BandCalculator() {
                     {formatBand(overall)}
                   </div>
                 </div>
+                <ShareRow
+                  className="mt-4"
+                  source="band_calculator"
+                  path="/band-calculator"
+                  text={`My IELTS overall band works out to ${formatBand(overall)} — calculate yours free at IELTS-Bank`}
+                />
                 <div className="mt-4 flex flex-col items-start justify-between gap-3 rounded-xl bg-slate-950 px-5 py-4 text-white sm:flex-row sm:items-center">
                   <div>
                     <p className="font-bold">That overall estimate is only as good as your Writing band.</p>

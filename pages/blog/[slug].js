@@ -7,6 +7,7 @@ import NewsletterSignup from "../../src/components/NewsletterSignup";
 import { posts } from "../../lib/posts";
 import { sanitizeHtml } from "../../lib/sanitize";
 import AdUnit from "../../src/components/AdUnit";
+import ShareRow from "../../src/components/ShareRow";
 import { track } from "../../src/lib/analytics";
 
 import { SITE_URL } from "../../lib/site";
@@ -119,6 +120,13 @@ export default function BlogPost({ post }) {
               <div
                 className={PROSE}
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
+              />
+              <ShareRow
+                className="mt-8 justify-start border-t border-border pt-6"
+                label="Share this guide"
+                source="blog_post"
+                path={`/blog/${post.slug}`}
+                text={post.title}
               />
             </article>
             <AdUnit />
