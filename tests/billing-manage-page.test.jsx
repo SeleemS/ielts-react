@@ -291,6 +291,20 @@ describe('billing action session verification', () => {
         await Promise.resolve();
       });
 
+      // "Continue to Stripe" on a healthy plan first shows the one-time
+      // pause-or-cancel save step; continue through it to reach the portal
+      // call under test.
+      const continueCancel = [...document.querySelectorAll('button')].find(
+        (button) => button.textContent.includes('Continue to cancel')
+      );
+      if (continueCancel) {
+        await act(async () => {
+          continueCancel.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          await Promise.resolve();
+          await Promise.resolve();
+        });
+      }
+
       expect(global.fetch).not.toHaveBeenCalled();
       expect(container.querySelector('[role="alert"]')?.textContent).toContain(
         'Could not verify your signed-in session. Please refresh and try again.'
@@ -314,6 +328,17 @@ describe('billing action session verification', () => {
       await Promise.resolve();
       await Promise.resolve();
     });
+
+    const continueCancel = [...document.querySelectorAll('button')].find(
+      (button) => button.textContent.includes('Continue to cancel')
+    );
+    if (continueCancel) {
+      await act(async () => {
+        continueCancel.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+    }
 
     expect(global.fetch).not.toHaveBeenCalled();
     expect(container.querySelector('[role="alert"]')?.textContent).toContain(

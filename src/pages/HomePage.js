@@ -23,6 +23,7 @@ import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import NewsletterSignup from '../components/NewsletterSignup';
+import { track } from '../lib/analytics';
 import DashboardTeaser from '../components/home/DashboardTeaser';
 
 import { SITE_URL } from '../../lib/site';
@@ -384,6 +385,45 @@ const HomePage = ({ counts = {} }) => {
                   );
                 })}
               </div>
+            </div>
+          </section>
+
+          {/* ==================== FREE vs PRO STRIP ===================== */}
+          {/* The homepage is the top landing page but previously had no path
+              to Pricing beyond the navbar link. One honest strip, no hard
+              sell: what stays free, what Pro adds, one CTA. */}
+          <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+            <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8 lg:flex-row lg:justify-between">
+              <div className="grid flex-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                    Free forever
+                  </p>
+                  <p className="mt-1.5 text-sm text-foreground">
+                    The full Reading &amp; Listening bank with instant marking, plus one free AI
+                    Writing and one Speaking sample score.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-accent">
+                    IELTS-Bank Pro
+                  </p>
+                  <p className="mt-1.5 text-sm text-foreground">
+                    Full AI Writing reports, Speaking scoring, a live AI examiner, timed mocks
+                    and band trends — with a 14-day money-back guarantee.
+                  </p>
+                </div>
+              </div>
+              <Button asChild variant="outline" className="shrink-0">
+                <NextLink
+                  href="/pricing"
+                  className="no-underline"
+                  onClick={() => track('product_cta_click', { source: 'homepage_pro_strip', product: 'pricing' })}
+                >
+                  Compare Free vs Pro
+                  <ArrowRight className="h-4 w-4" />
+                </NextLink>
+              </Button>
             </div>
           </section>
 

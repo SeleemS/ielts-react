@@ -12,6 +12,7 @@ import { getSupabase } from '../../lib/supabase';
 import { track } from '../../src/lib/analytics';
 import { billingStatusMessage, canOfferBillingPause } from '../../src/lib/billingStatus';
 import { getSessionAccess } from '../../src/lib/sessionAccess';
+import Modal from '../../src/components/AccessibleModal';
 
 async function authHeaders() {
   const { accessToken, error } = await getSessionAccess(getSupabase);
@@ -56,6 +57,12 @@ export default function ManageBillingPage() {
   const [pauseResult, setPauseResult] = React.useState(null);
   const [upgradeQuote, setUpgradeQuote] = React.useState(null);
   const [quoteMessage, setQuoteMessage] = React.useState('');
+  // One honest pre-portal step for ACTIVE subscribers heading toward cancel:
+  // pause is usually the better fit for a test-prep gap, and returning
+  // subscribers get the win-back discount later. One screen, one clear
+  // "continue to cancel" — no dark patterns, shown at most once per visit.
+  const [saveStepSeen, setSaveStepSeen] = React.useState(false);
+  const [saveStepOpen, setSaveStepOpen] = React.useState(false);
 
   async function openPortal() {
     setBusy('portal');
@@ -350,7 +357,32 @@ export default function ManageBillingPage() {
                               ? 'Stripe will collect one cancellation reason and schedule cancellation at period end. You keep access through the time you already paid for.'
                               : 'Stripe lets you review past invoices and saved billing details. There is no active recurring plan to cancel.'}
                       </p>
-                      <Button type="button" variant="outline" className="mt-4 border-rose-300" disabled={Boolean(busy)} onClick={openPortal}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="mt-4 border-rose-300"
+                        disabled={Boolean(busy)}
+                        onClick={() => {
+                          // Only intercept the healthy-plan path (the one that
+                          // leads to cancellation), and only once.
+                          const cancelIntent =
+                            isPremium && !expiresAt && planStatus !== 'canceled' && planStatus !== 'past_due';
+                          const pauseAvailable = canOfferBillingPause({
+                            isPremium,
+                            planStatus,
+                            renewsAt,
+                            expiresAt,
+                            pauseUsedAt: effectivePauseUsedAt,
+                          });
+                          if (cancelIntent && pauseAvailable && !saveStepSeen) {
+                            setSaveStepSeen(true);
+                            setSaveStepOpen(true);
+                            track('cancel_save_step', { stage: 'impression' });
+                            return;
+                          }
+                          openPortal();
+                        }}
+                      >
                         {busy === 'portal' ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
                         Continue to Stripe
                       </Button>
@@ -365,6 +397,49 @@ export default function ManageBillingPage() {
         </main>
         <Footer />
       </div>
+      <Modal
+        open={saveStepOpen}
+        onClose={() => setSaveStepOpen(false)}
+        title="Before you go — two things worth knowing"
+      >
+        <div className="space-y-4">
+          <p className="text-sm leading-6 text-muted-foreground">
+            If you just need a break from prep, <strong>pausing for 30 days</strong> keeps your
+            history and applies your unused-time credit when billing resumes — usually the
+            better fit around a test date.
+          </p>
+          <p className="text-sm leading-6 text-muted-foreground">
+            And if you cancel and later prepare for a retake, returning subscribers get a
+            discounted month by email — your scores and feedback stay saved either way.
+          </p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button
+              type="button"
+              disabled={Boolean(busy)}
+              onClick={() => {
+                setSaveStepOpen(false);
+                track('cancel_save_step', { stage: 'pause' });
+                pausePlan();
+              }}
+            >
+              <PauseCircle className="h-4 w-4" />
+              Pause instead
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={Boolean(busy)}
+              onClick={() => {
+                setSaveStepOpen(false);
+                track('cancel_save_step', { stage: 'continue_cancel' });
+                openPortal();
+              }}
+            >
+              Continue to cancel
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <Sheet
         open={Boolean(upgradeQuote)}
         onOpenChange={(open) => {
