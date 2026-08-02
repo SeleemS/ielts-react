@@ -1,6 +1,7 @@
 import { posts } from '../lib/posts';
 import { SKILLS, listMockTests, listPassages } from '../lib/supabase';
 import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
+import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
 
 import { SITE_URL } from '../lib/site';
 
@@ -25,8 +26,12 @@ export const STATIC_ROUTES = [
   '/ielts-test-format',
   '/ielts-vs-toefl-pte-duolingo',
   '/ielts-writing-task-2-topics',
+  '/ielts-band-descriptors',
+  '/ielts-score-requirements',
   // Reading question-type hub pages (pages/reading/[type].js).
   ...READING_QUESTION_TYPE_SLUGS.map((slug) => `/reading/${slug}`),
+  // Listening part hub pages (pages/listening/[type].js).
+  ...LISTENING_PART_SLUGS.map((slug) => `/listening/${slug}`),
 ];
 
 // Build an ISO date (YYYY-MM-DD) or null. Accepts human-readable strings like
