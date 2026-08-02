@@ -76,6 +76,17 @@ export default async function handler(req, res) {
       p_bucket: bucket,
     });
     if (error) throw error;
+    // Crawler telemetry is additive — the dashboard must not fail without it.
+    let ai = null;
+    try {
+      const { data: aiData, error: aiError } = await admin().rpc('dashboard_ai_crawlers', {
+        p_from: from.toISOString(),
+        p_to: to.toISOString(),
+      });
+      if (!aiError) ai = aiData;
+    } catch {
+      /* keep ai = null */
+    }
     return res.status(200).json({
       range,
       bucket,
@@ -83,6 +94,7 @@ export default async function handler(req, res) {
       from: from.toISOString(),
       to: to.toISOString(),
       data,
+      ai,
     });
   } catch (error) {
     const fallback = fixture('fixture-overview.json');

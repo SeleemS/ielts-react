@@ -146,6 +146,7 @@ export default function DataDashboard() {
   const totals = data?.totals || {};
   const prev = data?.prev_totals || {};
   const breakdowns = data?.breakdowns || {};
+  const ai = overview?.ai;
   const [showGlobe, setShowGlobe] = React.useState(false);
 
   // Size the embedded globe to the space left of the happening-now panel.
@@ -401,6 +402,42 @@ export default function DataDashboard() {
               </Card>
               <Card title="Conversion funnel" subtitle="Distinct visitors reaching each stage" className="xl:col-span-5">
                 <Funnel funnel={data?.funnel} />
+              </Card>
+            </div>
+
+            {/* AI visibility: channel rollup + crawler telemetry */}
+            <div className="mb-3 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-12">
+              <Card title="Channels" subtitle="AI assistants vs search, social, direct" className="xl:col-span-4">
+                <RankedList
+                  rows={(breakdowns.channels || []).map((row) => ({
+                    label: row.label,
+                    value: row.visitors,
+                    revenue: row.revenue_minor || 0,
+                    suffix: pct(row.signups || 0, Math.max(1, row.visitors)) + ' ↑',
+                  }))}
+                  maxRows={6}
+                />
+              </Card>
+              <Card title="AI crawlers" subtitle="Server-side fetches by agent" className="xl:col-span-4">
+                <RankedList
+                  rows={(ai?.agents || []).map((row) => ({
+                    label: row.label,
+                    value: row.hits,
+                    suffix: `${fmtNum(row.paths)} pages`,
+                  }))}
+                  maxRows={6}
+                  emptyLabel="No crawler hits recorded yet"
+                />
+              </Card>
+              <Card title="Read by assistants" subtitle="Pages fetched inside live AI answers" className="xl:col-span-4">
+                <RankedList
+                  rows={(ai?.top_paths || []).map((row) => ({
+                    label: row.label,
+                    value: row.hits,
+                  }))}
+                  maxRows={6}
+                  emptyLabel="No assistant fetches yet"
+                />
               </Card>
             </div>
 

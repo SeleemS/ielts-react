@@ -13,7 +13,55 @@ import { consentDefaultForCountry } from './src/lib/consentRegions';
 
 const COOKIE = 'ib_consent_default';
 
-export function middleware(request) {
+// AI/search crawler telemetry: one row per page fetch by a known agent, into
+// public.crawler_hits (service-role REST, fire-and-forget via waitUntil so no
+// latency is added). User-fetch agents (ChatGPT-User etc.) hitting a URL mean
+// an assistant is reading that page inside a live answer. Order matters where
+// one token contains another (Claude-User before ClaudeBot's plain match).
+const AI_CRAWLERS = [
+  ['OAI-SearchBot', /OAI-SearchBot/i],
+  ['ChatGPT-User', /ChatGPT-User/i],
+  ['GPTBot', /GPTBot/i],
+  ['Claude-SearchBot', /Claude-SearchBot/i],
+  ['Claude-User', /Claude-User/i],
+  ['ClaudeBot', /ClaudeBot/i],
+  ['Perplexity-User', /Perplexity-User/i],
+  ['PerplexityBot', /PerplexityBot/i],
+  ['DuckAssistBot', /DuckAssistBot/i],
+  ['Bingbot', /bingbot/i],
+  ['Googlebot', /Googlebot/i],
+  ['Google-Extended', /Google-Extended/i],
+  ['Meta-ExternalAgent', /meta-externalagent/i],
+  ['Amazonbot', /Amazonbot/i],
+  ['Applebot', /Applebot/i],
+  ['Bytespider', /Bytespider/i],
+  ['CCBot', /CCBot/i],
+];
+
+function recordCrawlerHit(request, event) {
+  const ua = request.headers.get('user-agent') || '';
+  if (!ua) return;
+  const match = AI_CRAWLERS.find(([, re]) => re.test(ua));
+  if (!match) return;
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return;
+  event.waitUntil(
+    fetch(`${url}/rest/v1/crawler_hits`, {
+      method: 'POST',
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({ agent: match[0], path: request.nextUrl.pathname.slice(0, 200) }),
+    }).catch(() => {})
+  );
+}
+
+export function middleware(request, event) {
+  recordCrawlerHit(request, event);
   const country = request.headers.get('x-vercel-ip-country');
   const value = consentDefaultForCountry(country);
   // Only write when it changed, so unchanged responses stay CDN-cacheable.

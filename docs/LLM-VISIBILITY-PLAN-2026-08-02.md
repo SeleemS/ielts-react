@@ -37,8 +37,8 @@ Why this matters here: chatgpt.com is already our largest attributed acquisition
 5. Optional: a citation tracker (Otterly ~$29/mo) watching ~20 core prompts ("best free IELTS practice", "check my IELTS essay free", "IELTS band calculator", per-question-type queries) across ChatGPT/Perplexity/AIO.
 
 ### Engineering next (small, high confidence)
-6. **AI-channel analytics**: group acquisition_source matching `chatgpt.com|openai.com|perplexity.ai|claude.ai|gemini.google.com|copilot.microsoft.com` as an "AI assistants" channel in the /data dashboard; note OpenAI's `utm_source=chatgpt.com` convention. Mobile-app clicks often arrive as Direct, so treat Direct spikes after content pushes as partially AI.
-7. **Crawler telemetry**: log OAI-SearchBot / ChatGPT-User / Claude-User / PerplexityBot hits per URL (middleware counter into activity_events or a lightweight table). ChatGPT-User hits on a page ≈ "ChatGPT is reading this page in answers" — our ground-truth feedback loop.
+6. ✅ **AI-channel analytics** (shipped 2026-08-02): the dashboard_overview channels rollup (AI assistants / Organic search / Social / Referral / Direct) is now rendered on /data as a "Channels" card. OpenAI appends `utm_source=chatgpt.com`; mobile-app clicks often arrive as Direct, so treat Direct spikes after content pushes as partially AI.
+7. ✅ **Crawler telemetry** (shipped 2026-08-02): edge middleware logs every known AI/search agent fetch into `crawler_hits` (agent + path); `dashboard_ai_crawlers` RPC feeds two /data cards — "AI crawlers" (hits by agent) and "Read by assistants" (pages fetched by ChatGPT-User/Claude-User/Perplexity during live answers) — our ground-truth feedback loop.
 
 ### Content strategy (correlational but consistently supported)
 8. **Answer capsules**: on blog + question-type guide pages, phrase H2s as questions and follow each with a 1–2 sentence direct answer; put the core answer in the first 30% of the page (44% of ChatGPT citations come from the first 30%).

@@ -72,3 +72,50 @@ describe('geo-aware consent middleware', () => {
     expect(response.cookies.set).not.toHaveBeenCalled();
   });
 });
+
+describe('AI crawler telemetry', () => {
+  beforeEach(() => {
+    nextResponse.next.mockReset();
+    nextResponse.next.mockImplementation(() => ({ cookies: { set: vi.fn() } }));
+    process.env.SUPABASE_URL = 'https://example.supabase.co';
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-key';
+    global.fetch = vi.fn(() => Promise.resolve({ ok: true }));
+  });
+
+  function crawlerRequest(userAgent, path = '/readingquestion/foo') {
+    return {
+      headers: {
+        get: vi.fn((name) => (name === 'user-agent' ? userAgent : 'US')),
+      },
+      cookies: { get: vi.fn(() => undefined) },
+      nextUrl: { pathname: path },
+    };
+  }
+
+  it('records a hit for a known AI agent without blocking the response', () => {
+    const event = { waitUntil: vi.fn() };
+    middleware(crawlerRequest('Mozilla/5.0; compatible; ChatGPT-User/1.0; +https://openai.com/bot'), event);
+
+    expect(event.waitUntil).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://example.supabase.co/rest/v1/crawler_hits',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ agent: 'ChatGPT-User', path: '/readingquestion/foo' }),
+      })
+    );
+  });
+
+  it('distinguishes Claude-User from ClaudeBot', () => {
+    const event = { waitUntil: vi.fn() };
+    middleware(crawlerRequest('Mozilla/5.0 Claude-User/1.0'), event);
+    expect(global.fetch.mock.calls[0][1].body).toContain('"agent":"Claude-User"');
+  });
+
+  it('ignores ordinary browsers', () => {
+    const event = { waitUntil: vi.fn() };
+    middleware(crawlerRequest('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Safari/605.1'), event);
+    expect(event.waitUntil).not.toHaveBeenCalled();
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+});
