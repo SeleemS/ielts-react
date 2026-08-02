@@ -179,16 +179,18 @@ export default function ReadingTypeHub({ typeKey, items }) {
                     <table className="w-full border-collapse text-left">
                       <thead>
                         <tr className="border-b border-border bg-muted/50">
-                          <th className="w-14 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:px-6">
+                          {/* Hidden on mobile so Title/Difficulty/Action fit 375px
+                              without sideways scrolling (matches DataTable). */}
+                          <th className="hidden w-14 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:table-cell sm:px-6">
                             #
                           </th>
-                          <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                          <th className="px-3 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:px-4">
                             Title
                           </th>
-                          <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                          <th className="px-2 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:px-4">
                             Difficulty
                           </th>
-                          <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:px-6">
+                          <th className="px-2 py-3 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:px-6">
                             <span className="sr-only">Action</span>
                           </th>
                         </tr>
@@ -202,10 +204,10 @@ export default function ReadingTypeHub({ typeKey, items }) {
                               key={item.id}
                               className="group border-b border-border transition-colors last:border-b-0 hover:bg-secondary/60"
                             >
-                              <td className="px-4 py-4 align-middle text-sm font-medium tabular-nums text-muted-foreground sm:px-6">
+                              <td className="hidden px-4 py-4 align-middle text-sm font-medium tabular-nums text-muted-foreground sm:table-cell sm:px-6">
                                 {index + 1}
                               </td>
-                              <td className="px-4 py-4 align-middle">
+                              <td className="px-3 py-4 align-middle sm:px-4">
                                 <NextLink
                                   href={href}
                                   className="text-sm font-semibold text-foreground no-underline transition-colors hover:text-accent"
@@ -213,10 +215,10 @@ export default function ReadingTypeHub({ typeKey, items }) {
                                   {item.title}
                                 </NextLink>
                               </td>
-                              <td className="px-4 py-4 align-middle">
+                              <td className="px-2 py-4 align-middle sm:px-4">
                                 <DifficultyBadge difficulty={item.difficulty} />
                               </td>
-                              <td className="px-4 py-4 text-right align-middle sm:px-6">
+                              <td className="px-2 py-4 text-right align-middle sm:px-6">
                                 <Button asChild size="sm" variant="ghost" className="text-accent hover:text-accent">
                                   <NextLink href={href} className="no-underline">
                                     Practise
