@@ -198,11 +198,22 @@ export default function BandCalculator() {
               <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 IELTS Band Score Calculator
               </h1>
+              {/* Answer capsule: direct answer above the fold for AI citation. */}
+              <div className="mt-4 rounded-xl border border-accent/30 bg-accent/5 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quick answer</p>
+                <p className="mt-1 leading-relaxed text-foreground">
+                  Your overall IELTS band is the average of your four skill bands (Listening,
+                  Reading, Writing, Speaking) rounded to the nearest half band — averages ending in
+                  .25 round up to .5, and .75 rounds up to the next whole band. Listening and
+                  Reading bands come from your raw score out of 40 via conversion tables.
+                </p>
+              </div>
               <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
                 Enter your Listening and Reading raw scores and your Writing and Speaking bands to
                 estimate each skill band and your overall IELTS band score, calculated with the
                 official rounding rule.
               </p>
+              <p className="mt-2 text-sm text-muted-foreground">Updated August 2026</p>
             </header>
 
             {/* ===================== CALCULATOR WIDGET ===================== */}

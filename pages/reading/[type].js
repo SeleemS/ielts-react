@@ -19,6 +19,9 @@ const DIFFICULTY_STYLES = {
   medium: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20',
   hard: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20',
 };
+// Visible freshness for the strategy guides — bump when guide prose changes.
+const GUIDE_UPDATED = 'August 2026';
+
 const DIFFICULTY_FALLBACK =
   'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-500/10 dark:text-slate-300 dark:border-slate-500/20';
 
@@ -100,7 +103,16 @@ export default function ReadingTypeHub({ typeKey, items }) {
 
             <header className="mb-8 max-w-2xl">
               <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{h1}</h1>
+              {/* Answer capsule: the 1-2 sentence direct answer, above the fold —
+                  the strongest common trait of passages AI assistants cite. */}
+              {guide.answer ? (
+                <div className="mt-4 rounded-xl border border-accent/30 bg-accent/5 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quick answer</p>
+                  <p className="mt-1 leading-relaxed text-foreground">{guide.answer}</p>
+                </div>
+              ) : null}
               <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{guide.intro}</p>
+              <p className="mt-2 text-sm text-muted-foreground">Updated {GUIDE_UPDATED}</p>
             </header>
 
             {/* ===================== STRATEGY GUIDE ===================== */}
@@ -108,7 +120,7 @@ export default function ReadingTypeHub({ typeKey, items }) {
               <section>
                 <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
                   <Target className="h-5 w-5 text-accent" />
-                  What {label} questions test
+                  What do {label} questions test?
                 </h2>
                 <p className="mt-3 leading-relaxed text-muted-foreground">{guide.tests}</p>
               </section>
@@ -116,7 +128,7 @@ export default function ReadingTypeHub({ typeKey, items }) {
               <section>
                 <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
                   <ListChecks className="h-5 w-5 text-accent" />
-                  Step-by-step strategy
+                  How do you answer {label} questions?
                 </h2>
                 <ol className="mt-3 space-y-3">
                   {guide.steps.map((step, i) => (
@@ -133,7 +145,7 @@ export default function ReadingTypeHub({ typeKey, items }) {
               <section>
                 <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
                   <AlertTriangle className="h-5 w-5 text-accent" />
-                  Common traps to avoid
+                  What are the common traps to avoid?
                 </h2>
                 <ul className="mt-3 space-y-2">
                   {guide.traps.map((trap, i) => (
@@ -148,7 +160,7 @@ export default function ReadingTypeHub({ typeKey, items }) {
               <section>
                 <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
                   <Clock className="h-5 w-5 text-accent" />
-                  Timing advice
+                  How long should you spend on them?
                 </h2>
                 <p className="mt-3 leading-relaxed text-muted-foreground">{guide.timing}</p>
               </section>

@@ -40,7 +40,8 @@ export default function BlogPost({ post }) {
     description: post.excerpt,
     image: [ogImage],
     datePublished: new Date(post.date).toISOString(),
-    dateModified: new Date(post.date).toISOString(),
+    // Honest freshness signal: posts carry `updated` only when actually revised.
+    dateModified: new Date(post.updated || post.date).toISOString(),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": canonical,
@@ -108,7 +109,7 @@ export default function BlogPost({ post }) {
             <article className="mt-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-10">
               <header className="mb-8 border-b border-border pb-8">
                 <time className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {post.date}
+                  {post.updated ? `Updated ${post.updated} · Published ${post.date}` : post.date}
                 </time>
                 <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
                   {post.title}

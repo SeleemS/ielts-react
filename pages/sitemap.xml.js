@@ -21,6 +21,10 @@ export const STATIC_ROUTES = [
   '/listeningquestion',
   '/speakingquestion',
   '/mock-test',
+  // AI-citation-optimized content pages (LLM-visibility plan, Aug 2026).
+  '/ielts-test-format',
+  '/ielts-vs-toefl-pte-duolingo',
+  '/ielts-writing-task-2-topics',
   // Reading question-type hub pages (pages/reading/[type].js).
   ...READING_QUESTION_TYPE_SLUGS.map((slug) => `/reading/${slug}`),
 ];
