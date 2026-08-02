@@ -1,0 +1,232 @@
+[
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "The Rise, Fall and Revival of the Allotment",
+    "difficulty": "medium",
+    "topic_tags": ["history", "gardening", "society"],
+    "body_html": "<p><strong>A</strong> An allotment is a small plot of land, usually rented from a local council for a modest annual fee, on which ordinary people grow fruit, vegetables and flowers for their own use. The idea took shape in Britain during the nineteenth century, when industrialisation drew enormous numbers of rural labourers into crowded, smoky towns. Cut off from the countryside and often poorly paid, factory workers had little access to fresh food, and social reformers argued that a patch of ground would improve both their diet and their health. Landowners, churches and charities began to set aside strips of land at the edges of towns, and the movement gained legal force in 1908, when a new Act of Parliament obliged local councils to provide allotments wherever enough residents demanded them.</p><p><strong>B</strong> It was war, however, that turned a modest social experiment into a national institution. During both world wars, Britain's food imports were threatened by blockade, and the government urged civilians to turn every spare scrap of land into a vegetable garden. The 'Dig for Victory' campaign of the Second World War became one of the most successful publicity drives ever run by a British government. Public parks, sports grounds, front lawns and even railway embankments were dug up and planted with potatoes, carrots and cabbages. By 1943 there were roughly 1.4 million allotment plots in cultivation, and it has been estimated that home and allotment growers were producing around a tenth of the nation's food. Growing vegetables had become, quite literally, a patriotic duty.</p><p><strong>C</strong> The decades after 1945 told a very different story. As rationing ended and incomes rose, supermarkets began to offer cheap food all year round, and the effort of digging a plot in all weathers came to seem pointless to many families. Gardening acquired an old-fashioned image, associated with elderly men in flat caps rather than with busy young households, and television, cars and package holidays competed for people's free time. Plot numbers collapsed to a fraction of their wartime peak. Councils, short of money and under pressure to find land, quietly sold off allotment sites for housing, and each site lost was, in practice, lost for ever.</p><p><strong>D</strong> Around the turn of the twenty-first century, the decline suddenly reversed. Food scares and rising prices made shoppers curious about where their meals came from, and many decided that the only way to be sure was to grow the food themselves. Concern about pesticides, packaging and the distance food travels gave the allotment a distinctly modern appeal, and television cookery and gardening programmes made growing vegetables fashionable again for the first time in half a century. Demand soon outstripped supply: in many cities, would-be gardeners now spend years on a waiting list before a plot becomes available, a situation that would have astonished the councils who once struggled to find tenants.</p><p><strong>E</strong> Researchers have become increasingly interested in what allotments do for the people who work them. The physical benefits are obvious enough — digging, weeding and carrying water are steady, moderate exercise — but studies repeatedly point to effects on mental wellbeing that are harder to measure and possibly more important. A plot offers fresh air, contact with nature and a clear sense of progress through the seasons, all of which appear to reduce stress. Just as valuable is the social side: an allotment site throws together people of different ages, occupations and backgrounds who would otherwise never meet, and the swapping of seeds, advice and surplus courgettes builds friendships that spill over into the wider neighbourhood.</p><p><strong>F</strong> Yet the pressure on urban land that destroyed so many sites in the last century has not gone away. A well-placed allotment site may be worth many millions as building land, and cash-strapped councils are still tempted to sell. Campaigners respond that once land is built on it never returns to cultivation, and they are pressing for stronger legal protection for existing sites. At the same time, growers are finding inventive answers of their own: vegetables are now raised in containers on supermarket roofs, in shared community gardens, and on 'meanwhile' plots — patches of cleared ground lent to growers until developers are ready to build. The allotment has survived war, neglect and the supermarket age; its next test will be the price of the very ground it stands on.</p>",
+    "groups": [
+      {
+        "question_type": "matching_headings",
+        "prompt": "Questions 1–6. The passage has six paragraphs, A–F. Choose the correct heading for each paragraph from the list of headings below. Write the correct number, i–viii.",
+        "instructions_html": "<p><strong>List of Headings</strong></p><p>i&nbsp;&nbsp;A wartime explosion in vegetable growing<br>ii&nbsp;&nbsp;Why plot numbers fell<br>iii&nbsp;&nbsp;The health and social value of a plot<br>iv&nbsp;&nbsp;How allotments began<br>v&nbsp;&nbsp;The rules and costs of renting a plot<br>vi&nbsp;&nbsp;A new generation discovers the allotment<br>vii&nbsp;&nbsp;Pressures on land and some inventive answers<br>viii&nbsp;&nbsp;The best crops for a beginner to grow</p>",
+        "options": [
+          { "key": "i", "text": "A wartime explosion in vegetable growing" },
+          { "key": "ii", "text": "Why plot numbers fell" },
+          { "key": "iii", "text": "The health and social value of a plot" },
+          { "key": "iv", "text": "How allotments began" },
+          { "key": "v", "text": "The rules and costs of renting a plot" },
+          { "key": "vi", "text": "A new generation discovers the allotment" },
+          { "key": "vii", "text": "Pressures on land and some inventive answers" },
+          { "key": "viii", "text": "The best crops for a beginner to grow" }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Paragraph A",
+            "correct_option_keys": ["iv"],
+            "evidence": "Paragraph A explains the nineteenth-century origins of allotments and the 1908 Act, so 'How allotments began' fits best."
+          },
+          {
+            "prompt_text": "Paragraph B",
+            "correct_option_keys": ["i"],
+            "evidence": "Paragraph B describes the wartime 'Dig for Victory' campaign and the peak of 1.4 million plots — a wartime explosion in growing."
+          },
+          {
+            "prompt_text": "Paragraph C",
+            "correct_option_keys": ["ii"],
+            "evidence": "Paragraph C explains the post-war decline: cheap supermarket food, changing leisure habits and sites sold off — the reasons plot numbers fell."
+          },
+          {
+            "prompt_text": "Paragraph D",
+            "correct_option_keys": ["vi"],
+            "evidence": "Paragraph D describes the modern revival of interest and years-long waiting lists — a new generation discovering the allotment."
+          },
+          {
+            "prompt_text": "Paragraph E",
+            "correct_option_keys": ["iii"],
+            "evidence": "Paragraph E covers the physical exercise, mental wellbeing and community-building benefits of a plot — its health and social value."
+          },
+          {
+            "prompt_text": "Paragraph F",
+            "correct_option_keys": ["vii"],
+            "evidence": "Paragraph F discusses the threat of land being sold for building and inventive responses such as rooftop and 'meanwhile' plots."
+          }
+        ]
+      },
+      {
+        "question_type": "summary_completion",
+        "prompt": "Questions 7–10. Complete the summary below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p><p>During the Second World War the government urged civilians to grow food, and spaces such as parks, lawns and railway <strong>(7)&nbsp;______</strong> were dug up and planted. After the war, cheap year-round food from <strong>(8)&nbsp;______</strong> made the hard work of a plot seem pointless, and councils sold off many sites for <strong>(9)&nbsp;______</strong>. Interest revived around the year 2000, and in many cities gardeners must now spend years on a <strong>(10)&nbsp;______</strong> before they receive a plot.</p>",
+        "questions": [
+          {
+            "prompt_text": "Gap 7",
+            "accepted": ["embankments", "railway embankments"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph B says public parks, sports grounds, front lawns and even railway embankments were dug up and planted."
+          },
+          {
+            "prompt_text": "Gap 8",
+            "accepted": ["supermarkets"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph C says supermarkets began to offer cheap food all year round, which made cultivating a plot seem pointless to many."
+          },
+          {
+            "prompt_text": "Gap 9",
+            "accepted": ["housing"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph C states that councils quietly sold off allotment sites for housing."
+          },
+          {
+            "prompt_text": "Gap 10",
+            "accepted": ["waiting list"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph D says would-be gardeners in many cities now spend years on a waiting list before a plot becomes available."
+          }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 11–13. Do the following statements agree with the information given in the passage?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, or <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "A law passed in 1908 required councils to provide allotments where enough people wanted them.",
+            "answer": "true",
+            "evidence": "Paragraph A says the 1908 Act obliged local councils to provide allotments wherever enough residents demanded them."
+          },
+          {
+            "prompt_text": "The number of allotment plots reached its highest point during the 1960s.",
+            "answer": "false",
+            "evidence": "Paragraph B places the peak — roughly 1.4 million plots — in 1943, during the Second World War, and paragraph C describes decline after 1945."
+          },
+          {
+            "prompt_text": "Rooftop growing spaces produce as much food as traditional allotments.",
+            "answer": "not given",
+            "evidence": "Paragraph F mentions vegetables being raised on supermarket roofs but makes no comparison between their output and that of traditional plots."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "Ready for the Call: How a Volunteer Lifeboat Service Works",
+    "difficulty": "hard",
+    "topic_tags": ["society", "volunteering", "the sea"],
+    "body_html": "<p><strong>A</strong> On almost any stretch of coast, within a few miles of wherever you happen to be standing, there is a shed by the water containing a boat that exists for one purpose only: to go out when everyone else is coming in. What seems remarkable, at first glance, is that a service on which lives depend should still be run largely by unpaid volunteers, and funded almost entirely by charitable donations rather than by government. Yet that is exactly how the lifeboat service operates, and how it has operated for the better part of two centuries. The crews carry pagers, not contracts; the money that fuels the boats comes from collection boxes, bequests and sponsored swims, not from taxes.</p><p><strong>B</strong> The first organised rescue services appeared around the coast in the early nineteenth century, after a series of well-publicised shipwrecks in which crowds on shore watched sailors drown a few hundred metres away, powerless to help. Local committees began to raise money by public subscription — collecting donations from merchants, churches and ordinary households — to buy a purpose-built boat and pay for its upkeep. In 1824 these scattered local efforts were drawn together under a single national charity, which set common standards for boats and equipment while leaving each station rooted in its own community. That structure, a national body resting on fierce local loyalty, survives to this day.</p><p><strong>C</strong> Who are the volunteers? A century ago, crews were drawn overwhelmingly from fishing families, who knew the local waters because they worked on them every day. Today such people are a small minority. A modern crew list reads like a slice of any high street: teachers, plumbers, accountants, nurses, a chef, a delivery driver. What unites them is not their day job but their commitment. Each carries a pager at all times and must live or work within a few minutes of the station; each gives up one evening a week, every week, for training in navigation, boat handling, radio procedure and casualty care.</p><p><strong>D</strong> The boats themselves fall into two broad families. All-weather lifeboats are large covered vessels designed to operate in any sea conditions; their hulls are self-righting, so that a boat rolled completely over by a wave returns upright within seconds, engines still running. Depending on the layout of the coast, an all-weather boat may be launched down a slipway, towed across a beach on a carriage, or kept permanently afloat at moorings in a harbour. Closer to shore, the workhorse is the inshore inflatable — small, fast and open, usually crewed by three — which deals with swimmers in difficulty, kayakers blown offshore and walkers cut off by the tide.</p><p><strong>E</strong> A launch — crews call it a 'shout' — begins with the pagers sounding, at which point volunteers drop whatever they are doing and run, cycle or drive to the station. An inshore boat can be afloat within ten minutes of the alarm. Once at sea, the crew works under the direction of the coastguard, which coordinates the search and may also task helicopters and shore teams. The popular image of lifeboat work is the sinking ship in a storm, but the majority of launches are for smaller emergencies: pleasure craft with engine failure, sailors who have misjudged the weather, paddleboarders swept out by an offshore breeze. Many end with nothing more dramatic than a tow back to harbour — which is, of course, precisely the point.</p><p><strong>F</strong> Why do they do it? Ask a crew member and you will get a shrug before you get a speech; the honest answer seems to be a mixture of tradition, community pride and the particular satisfaction of being useful when it matters most. Some argue that so critical a service should not have to rattle collection tins, and that the state should simply take it over. In my view, that argument misunderstands what makes the service work: the voluntary ethos is not a weakness to be corrected but the institution's greatest strength, binding each station to the community it protects in a way no salaried agency could match. Still, honesty demands a caveat. Modern all-weather boats cost millions, training grows ever more complex, and it is fair to ask how long donations alone can carry such a load. The lifeboat service has answered hard questions before; that one may prove the hardest yet.</p>",
+    "groups": [
+      {
+        "question_type": "matching_information",
+        "prompt": "Questions 1–5. The passage has six paragraphs, A–F. Which paragraph contains the following information? Write the correct letter, A–F.",
+        "options": [
+          { "key": "A", "text": "Paragraph A" },
+          { "key": "B", "text": "Paragraph B" },
+          { "key": "C", "text": "Paragraph C" },
+          { "key": "D", "text": "Paragraph D" },
+          { "key": "E", "text": "Paragraph E" },
+          { "key": "F", "text": "Paragraph F" }
+        ],
+        "questions": [
+          {
+            "prompt_text": "examples of the everyday jobs done by crew members",
+            "correct_option_keys": ["C"],
+            "evidence": "Paragraph C lists teachers, plumbers, accountants, nurses, a chef and a delivery driver as the day jobs of a modern crew."
+          },
+          {
+            "prompt_text": "a description of two different types of lifeboat",
+            "correct_option_keys": ["D"],
+            "evidence": "Paragraph D contrasts the two broad families of boat: large all-weather lifeboats and small inshore inflatables."
+          },
+          {
+            "prompt_text": "how the earliest rescue services were paid for",
+            "correct_option_keys": ["B"],
+            "evidence": "Paragraph B explains that local committees raised money by public subscription, collecting donations from merchants, churches and households."
+          },
+          {
+            "prompt_text": "the kinds of incident that account for most launches",
+            "correct_option_keys": ["E"],
+            "evidence": "Paragraph E says the majority of launches are for smaller emergencies such as engine failure, misjudged weather and paddleboarders swept out to sea."
+          },
+          {
+            "prompt_text": "the writer's opinion on who should fund the service",
+            "correct_option_keys": ["F"],
+            "evidence": "Paragraph F gives the writer's own view that the voluntary ethos is the service's greatest strength and that state takeover would be a mistake."
+          }
+        ]
+      },
+      {
+        "question_type": "yes_no_notgiven",
+        "prompt": "Questions 6–10. Do the following statements agree with the views of the writer?",
+        "instructions_html": "<p>Write <strong>YES</strong> if the statement agrees with the views of the writer, <strong>NO</strong> if the statement contradicts the views of the writer, or <strong>NOT GIVEN</strong> if it is impossible to say what the writer thinks about this.</p>",
+        "questions": [
+          {
+            "prompt_text": "It is surprising that a life-saving service still depends on volunteers and donations.",
+            "answer": "yes",
+            "evidence": "In paragraph A the writer calls it 'remarkable, at first glance' that a service on which lives depend is run by unpaid volunteers and funded by donations."
+          },
+          {
+            "prompt_text": "Most of today's crew members come from fishing families.",
+            "answer": "no",
+            "evidence": "Paragraph C says fishing families once dominated crews but that today such people are a small minority."
+          },
+          {
+            "prompt_text": "Lifeboat volunteers are braver than paid emergency workers.",
+            "answer": "not given",
+            "evidence": "The writer praises the volunteers' commitment but never compares their courage with that of paid emergency workers."
+          },
+          {
+            "prompt_text": "The voluntary spirit is central to the service's success.",
+            "answer": "yes",
+            "evidence": "In paragraph F the writer states that the voluntary ethos is 'the institution's greatest strength', binding each station to its community."
+          },
+          {
+            "prompt_text": "The government should take over the running of the lifeboat service.",
+            "answer": "no",
+            "evidence": "Paragraph F says the argument for state takeover 'misunderstands what makes the service work', so the writer disagrees with it."
+          }
+        ]
+      },
+      {
+        "question_type": "table_completion",
+        "prompt": "Questions 11–14. Complete the table below.",
+        "instructions_html": "<p>Choose <strong>ONE WORD AND/OR A NUMBER</strong> from the passage for each answer.</p><table><thead><tr><th>Type of boat</th><th>Features</th><th>Typical work</th></tr></thead><tbody><tr><td>All-weather lifeboat</td><td>covered; operates in any conditions; hull is <strong>(11)&nbsp;______</strong></td><td>launched down a <strong>(12)&nbsp;______</strong>, towed on a carriage, or kept afloat at moorings</td></tr><tr><td>Inshore inflatable</td><td>small, fast and open; usually crewed by <strong>(13)&nbsp;______</strong></td><td>helps swimmers, kayakers and <strong>(14)&nbsp;______</strong> cut off by the tide</td></tr></tbody></table>",
+        "questions": [
+          {
+            "prompt_text": "Gap 11",
+            "accepted": ["self-righting", "self righting", "selfrighting"],
+            "word_limit": 1,
+            "spelling_variants": true,
+            "evidence": "Paragraph D says the hulls of all-weather lifeboats are self-righting, so a capsized boat returns upright within seconds."
+          },
+          {
+            "prompt_text": "Gap 12",
+            "accepted": ["slipway"],
+            "word_limit": 1,
+            "spelling_variants": true,
+            "evidence": "Paragraph D says an all-weather boat may be launched down a slipway, towed on a carriage, or kept afloat at moorings."
+          },
+          {
+            "prompt_text": "Gap 13",
+            "accepted": ["three", "3"],
+            "word_limit": 1,
+            "spelling_variants": false,
+            "evidence": "Paragraph D describes the inshore inflatable as 'usually crewed by three'."
+          },
+          {
+            "prompt_text": "Gap 14",
+            "accepted": ["walkers"],
+            "word_limit": 1,
+            "spelling_variants": true,
+            "evidence": "Paragraph D says the inshore inflatable deals with swimmers in difficulty, kayakers blown offshore and walkers cut off by the tide."
+          }
+        ]
+      }
+    ]
+  }
+]

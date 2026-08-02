@@ -182,6 +182,43 @@ async function main() {
   const readingGroups = exactMockGroups(reading, 3, 3);
   const listeningGroups = listeningMockGroups(listening, 2);
 
+  // GT Reading mock: three general-module passages (Section 1 easy everyday
+  // texts -> Section 2 workplace -> Section 3 long discursive), 40 questions.
+  // Skipped until enough GT section content exists.
+  const generalReading = (await publishedCandidates(supabase, 'reading', 'general')).filter(
+    (row) => questionCount(row) >= 12 && questionCount(row) <= 14
+  );
+  // Curated Section 1 -> 2 -> 3 triples (multi-text everyday -> workplace ->
+  // long discursive), each summing to 40 questions. Falls back to a generic
+  // 40-question composition if the curated slugs ever change.
+  const GT_MOCK_SLUGS = [
+    [
+      'hillcrest-leisure-centre-notices-for-members-skh7gi',
+      'working-at-fairfield-foods-conduct-and-overtime-1cbu1z',
+      'the-rise-fall-and-revival-of-the-allotment-9k7nq6',
+    ],
+    [
+      'what-s-on-in-millbrook-three-local-notices-1kp9ab',
+      'joining-brightpath-couriers-job-advert-and-induction-186bkx',
+      'ready-for-the-call-how-a-volunteer-lifeboat-service-works-3z9dfc',
+    ],
+  ];
+  const bySlug = new Map(generalReading.map((row) => [row.slug, row]));
+  let generalGroups = GT_MOCK_SLUGS.map((slugs) => slugs.map((slug) => bySlug.get(slug))).filter(
+    (rows) =>
+      rows.every(Boolean) && rows.reduce((sum, row) => sum + questionCount(row), 0) === 40
+  );
+  if (!generalGroups.length && generalReading.length >= 3) {
+    try {
+      generalGroups = exactMockGroups(generalReading, 1, 3);
+    } catch {
+      /* not enough content yet */
+    }
+  }
+  if (!generalGroups.length) {
+    console.log('[seed-mocks] GT reading: no 40-question composition yet — skipping GT mock.');
+  }
+
   const definitions = [
     ...Array.from({ length: 3 }, (_, index) => ({
       slug: `academic-reading-mock-${index + 1}`,
@@ -191,6 +228,15 @@ async function main() {
       description: 'A full 60-minute IELTS Academic Reading mock with three passages and an estimated band score.',
       sectionSeconds: 20 * 60,
       passages: readingGroups[index],
+    })),
+    ...generalGroups.map((passages, index) => ({
+      slug: `general-reading-mock-${index + 1}`,
+      title: `General Training Reading Mock Test ${index + 1}`,
+      module: 'general',
+      skill: 'reading',
+      description: 'A full 60-minute IELTS General Training Reading mock with three sections and an estimated band score.',
+      sectionSeconds: 20 * 60,
+      passages,
     })),
     ...Array.from({ length: 2 }, (_, index) => ({
       slug: `listening-mock-${index + 1}`,

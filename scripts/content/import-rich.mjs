@@ -39,6 +39,12 @@ const DATA = join(__dirname, 'data');
 
 const argv = process.argv.slice(2);
 const DRY_RUN = argv.includes('--dry-run');
+// Optional: --only <substring> restricts the run to matching filenames. Use
+// this when adding new rich-*.json files so passages already imported (whose
+// answer_keys.explanation may have been enriched in-DB after import) are not
+// delete+reinserted and stripped of those explanations.
+const onlyIdx = argv.indexOf('--only');
+const ONLY = onlyIdx !== -1 ? argv[onlyIdx + 1] : null;
 const log = (...a) => console.log('[import-rich]', ...a);
 
 // ---- slug helpers (same algorithm as import-batch.mjs so slugs are stable) --
@@ -70,6 +76,9 @@ const TEXT_TYPES = new Set([
   'table_completion',
   'flowchart_completion',
   'short_answer',
+  // diagram_label renders as labelled text inputs and grades vs accepted[]
+  // (grade.js: input 'visual', grade 'accepted').
+  'diagram_label',
 ]);
 const BOOL_TYPES = new Set(['true_false_notgiven', 'yes_no_notgiven']);
 const OPTION_TYPES = new Set([
@@ -145,6 +154,9 @@ function transformRich(item) {
         question_type: g.question_type,
         prompt: g.prompt || null,
         instructions_html: g.instructions_html || null,
+        // Optional standalone SVG (flow-chart / diagram / plan) rendered above
+        // the group by QuestionGroup.jsx via sanitizeSvg.
+        image_svg: g.image_svg || null,
       },
       options,
       questions,
@@ -219,7 +231,9 @@ async function main() {
     });
   }
 
-  const files = readdirSync(DATA).filter((f) => f.startsWith('rich-') && f.endsWith('.json'));
+  const files = readdirSync(DATA).filter(
+    (f) => f.startsWith('rich-') && f.endsWith('.json') && (!ONLY || f.includes(ONLY))
+  );
   const summary = { passages: 0, questions: 0, failed: 0 };
   const byType = {};
   const slugs = [];

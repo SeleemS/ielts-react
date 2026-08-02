@@ -1,0 +1,227 @@
+[
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "Working at Fairfield Foods: Conduct and Overtime",
+    "difficulty": "medium",
+    "topic_tags": ["workplace", "employment", "policy"],
+    "body_html": "<h3>Text 1 — Staff Code of Conduct (extract)</h3><p><strong>A</strong> — <em>Uniform and appearance.</em> All production staff are provided with a uniform free of charge, and a name badge must be worn at all times while on site. If you lose your badge, a replacement can be obtained from the Human Resources office for £5. Long hair must be tied back, and for hygiene reasons no jewellery may be worn on the production floor apart from a plain wedding band.</p><p><strong>B</strong> — <em>Mobile phones and breaks.</em> Personal mobile phones must be kept in your locker during working hours. They may be used in the staff canteen during breaks. Staff working a full eight-hour shift are entitled to two paid 15-minute breaks and one unpaid 30-minute meal break.</p><p><strong>C</strong> — <em>Reporting absence.</em> If you are unable to come to work, you must telephone your line manager at least two hours before your shift is due to begin. Text messages and emails are not accepted. A medical certificate is required for any absence of more than three consecutive days.</p><p><strong>D</strong> — <em>Disciplinary procedure.</em> Minor breaches of this code are dealt with by a verbal warning, followed by a written warning if the behaviour continues, and finally dismissal. Gross misconduct — including theft and deliberate breaches of safety rules — may result in instant dismissal.</p><h3>Text 2 — Overtime and Shift-Swap Policy</h3><p><strong>E</strong> — <em>Overtime.</em> Overtime is always voluntary and is offered first to staff within the department where the extra hours are needed. Weekday overtime is paid at one and a half times your normal rate; overtime on a public holiday is paid at double time. All overtime must be approved in advance by the shift supervisor.</p><p><strong>F</strong> — <em>Claiming payment.</em> To claim payment, record your extra hours on your weekly timesheet and have it signed by your supervisor. Timesheets must be submitted by noon on Wednesday to be included in that week's payroll; claims received after this deadline will be paid the following month.</p><p><strong>G</strong> — <em>Swapping shifts.</em> You may exchange a shift with a colleague provided they hold the same training grade as you. Both employees must sign a shift-swap form and hand it in at least 48 hours before the shift begins. Once a swap is approved, the colleague who accepts the shift becomes responsible for attending it.</p><p><strong>H</strong> — <em>Working-hour limits.</em> No employee may work more than 48 hours per week, averaged over 17 weeks, and there must be a rest period of at least 11 hours between one shift and the next. Supervisors will refuse any overtime request that would break these limits.</p>",
+    "groups": [
+      {
+        "question_type": "matching_information",
+        "prompt": "Questions 1–5. The two texts have eight sections, A–H. Which section mentions the following? Write the correct letter, A–H.",
+        "options": [
+          { "key": "A", "text": "Section A" },
+          { "key": "B", "text": "Section B" },
+          { "key": "C", "text": "Section C" },
+          { "key": "D", "text": "Section D" },
+          { "key": "E", "text": "Section E" },
+          { "key": "F", "text": "Section F" },
+          { "key": "G", "text": "Section G" },
+          { "key": "H", "text": "Section H" }
+        ],
+        "questions": [
+          {
+            "prompt_text": "the cost of replacing a lost item",
+            "correct_option_keys": ["A"],
+            "evidence": "Section A says a replacement name badge can be obtained from the Human Resources office for £5."
+          },
+          {
+            "prompt_text": "how much notice must be given before exchanging shifts",
+            "correct_option_keys": ["G"],
+            "evidence": "Section G states that the shift-swap form must be handed in at least 48 hours before the shift begins."
+          },
+          {
+            "prompt_text": "the rate of pay for working on a public holiday",
+            "correct_option_keys": ["E"],
+            "evidence": "Section E says overtime on a public holiday is paid at double time."
+          },
+          {
+            "prompt_text": "the minimum rest period between two shifts",
+            "correct_option_keys": ["H"],
+            "evidence": "Section H requires a rest period of at least 11 hours between one shift and the next."
+          },
+          {
+            "prompt_text": "when a doctor's note becomes necessary",
+            "correct_option_keys": ["C"],
+            "evidence": "Section C says a medical certificate is required for any absence of more than three consecutive days."
+          }
+        ]
+      },
+      {
+        "question_type": "sentence_completion",
+        "prompt": "Questions 6–9. Complete the sentences below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> from the texts for each answer.</p>",
+        "questions": [
+          {
+            "prompt_text": "During working hours, personal mobile phones must be kept in your ______.",
+            "accepted": ["locker"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section B states that personal mobile phones must be kept in your locker during working hours."
+          },
+          {
+            "prompt_text": "To be paid in the same week, timesheets must be handed in by ______ on Wednesday.",
+            "accepted": ["noon", "12 noon", "midday", "12"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section F says timesheets must be submitted by noon on Wednesday to be included in that week's payroll."
+          },
+          {
+            "prompt_text": "Staff may only swap shifts with a colleague who has the same ______.",
+            "accepted": ["training grade", "grade"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section G allows shift exchanges only with a colleague who holds the same training grade."
+          },
+          {
+            "prompt_text": "All overtime must be approved in advance by the ______.",
+            "accepted": ["shift supervisor", "supervisor"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section E states that all overtime must be approved in advance by the shift supervisor."
+          }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 10–13. Do the following statements agree with the information given in the texts?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, or <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "Staff receive their uniform free of charge.",
+            "answer": "true",
+            "evidence": "Section A says all production staff are provided with a uniform free of charge."
+          },
+          {
+            "prompt_text": "Employees may wear any jewellery they like on the production floor.",
+            "answer": "false",
+            "evidence": "Section A says no jewellery may be worn on the production floor apart from a plain wedding band, so employees may not wear any jewellery they like."
+          },
+          {
+            "prompt_text": "Overtime claims received after the deadline are never paid.",
+            "answer": "false",
+            "evidence": "Section F says late claims are paid the following month, so they are still paid — just later."
+          },
+          {
+            "prompt_text": "Most staff at Fairfield Foods accept the overtime they are offered.",
+            "answer": "not given",
+            "evidence": "The texts explain how overtime is offered and paid, but say nothing about how many staff actually accept it."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "Joining Brightpath Couriers: Job Advert and Induction",
+    "difficulty": "medium",
+    "topic_tags": ["workplace", "employment", "training"],
+    "body_html": "<h3>Text 1 — Job advertisement: Delivery drivers wanted</h3><p><strong>A</strong> — <em>The role.</em> Brightpath Couriers is recruiting part-time and full-time delivery drivers. You will deliver parcels across the city in a company van, completing on average 80 drops a day and recording each delivery with a handheld scanner. A smart uniform is provided.</p><p><strong>B</strong> — <em>What we are looking for.</em> Applicants must hold a full, clean driving licence and must have held it for at least two years. For insurance reasons, drivers must be aged 21 or over. You will need a good level of spoken English and a reasonable standard of fitness, as some parcels weigh up to 20 kg. Previous delivery experience is welcome but not essential — full training is given.</p><p><strong>C</strong> — <em>Pay and benefits.</em> Pay starts at £13.20 an hour, rising to £13.80 after six months, and is paid weekly. Benefits include 28 days' holiday (including public holidays), a company pension scheme, and plenty of extra overtime during the November and December peak season.</p><h3>Text 2 — New driver induction checklist</h3><p><strong>D</strong> — <em>Before your first day.</em> Email a photograph of your driving licence to the recruitment team, complete the online safety course (this takes about 90 minutes), and read the driver handbook.</p><p><strong>E</strong> — <em>Day one.</em> Report to the depot at 8.00 a.m. and ask for the duty manager. Bring proof of address and your bank details. You will be fitted for your uniform and issued with a scanner and a fuel card — you must sign for both.</p><p><strong>F</strong> — <em>Your first week.</em> For the first three days you will accompany an experienced driver, known as your 'buddy'. On day five you will take an assessed drive with a trainer, followed by a route-knowledge quiz. You must score at least 80% on the quiz; anyone who does not may retake it once after further training.</p><p><strong>G</strong> — <em>Ongoing requirements.</em> Report any driving penalty, such as points or a fine, to your manager within 48 hours. Complete the monthly vehicle check and record it in the driver app. An eyesight test is required every year and is paid for by the company.</p>",
+    "groups": [
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 1–4. Do the following statements agree with the information given in the texts?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, or <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "Applicants must have held a driving licence for at least two years.",
+            "answer": "true",
+            "evidence": "Section B says applicants must hold a full, clean driving licence and must have held it for at least two years."
+          },
+          {
+            "prompt_text": "Previous delivery experience is essential for the job.",
+            "answer": "false",
+            "evidence": "Section B states that previous delivery experience is welcome but not essential, as full training is given."
+          },
+          {
+            "prompt_text": "The hourly rate of pay increases after six months.",
+            "answer": "true",
+            "evidence": "Section C says pay starts at £13.20 an hour, rising to £13.80 after six months."
+          },
+          {
+            "prompt_text": "Most Brightpath drivers choose to work full-time.",
+            "answer": "not given",
+            "evidence": "The advert says both part-time and full-time drivers are being recruited, but gives no information about which option most drivers choose."
+          }
+        ]
+      },
+      {
+        "question_type": "matching_information",
+        "prompt": "Questions 5–9. The two texts have seven sections, A–G. Which section mentions the following? Write the correct letter, A–G.",
+        "options": [
+          { "key": "A", "text": "Section A" },
+          { "key": "B", "text": "Section B" },
+          { "key": "C", "text": "Section C" },
+          { "key": "D", "text": "Section D" },
+          { "key": "E", "text": "Section E" },
+          { "key": "F", "text": "Section F" },
+          { "key": "G", "text": "Section G" }
+        ],
+        "questions": [
+          {
+            "prompt_text": "a test that must be passed with a minimum score",
+            "correct_option_keys": ["F"],
+            "evidence": "Section F describes the route-knowledge quiz, on which new drivers must score at least 80%."
+          },
+          {
+            "prompt_text": "the maximum weight of the parcels drivers handle",
+            "correct_option_keys": ["B"],
+            "evidence": "Section B says some parcels weigh up to 20 kg, which is why a reasonable standard of fitness is needed."
+          },
+          {
+            "prompt_text": "equipment that new drivers must sign for",
+            "correct_option_keys": ["E"],
+            "evidence": "Section E says new drivers are issued with a scanner and a fuel card and must sign for both."
+          },
+          {
+            "prompt_text": "a time limit for reporting driving offences",
+            "correct_option_keys": ["G"],
+            "evidence": "Section G requires any driving penalty, such as points or a fine, to be reported to a manager within 48 hours."
+          },
+          {
+            "prompt_text": "tasks to complete before starting work",
+            "correct_option_keys": ["D"],
+            "evidence": "Section D lists the things to do before the first day: sending a photo of the licence, completing the online safety course and reading the handbook."
+          }
+        ]
+      },
+      {
+        "question_type": "sentence_completion",
+        "prompt": "Questions 10–13. Complete the sentences below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> from the texts for each answer.</p>",
+        "questions": [
+          {
+            "prompt_text": "The online safety course takes about ______ minutes to complete.",
+            "accepted": ["90", "ninety"],
+            "word_limit": 2,
+            "spelling_variants": false,
+            "evidence": "Section D says the online safety course takes about 90 minutes."
+          },
+          {
+            "prompt_text": "On their first day, new drivers should report to the depot and ask for the ______.",
+            "accepted": ["duty manager"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section E tells new drivers to report to the depot at 8.00 a.m. and ask for the duty manager."
+          },
+          {
+            "prompt_text": "For the first three days, new drivers work alongside an experienced driver known as a ______.",
+            "accepted": ["buddy", "'buddy'"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section F says new drivers accompany an experienced driver, known as their 'buddy', for the first three days."
+          },
+          {
+            "prompt_text": "Every year, the company pays for each driver to have an ______.",
+            "accepted": ["eyesight test", "eye test"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Section G says an eyesight test is required every year and is paid for by the company."
+          }
+        ]
+      }
+    ]
+  }
+]

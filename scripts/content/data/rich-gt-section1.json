@@ -1,0 +1,256 @@
+[
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "Hillcrest Leisure Centre: Notices for Members",
+    "difficulty": "easy",
+    "topic_tags": ["everyday life", "leisure", "notices"],
+    "body_html": "<h3>Text A — Swimming pool: changes to the timetable</h3><p>From Monday 4 November, the main pool will close at 7.00 p.m. instead of 9.00 p.m. every Tuesday so that essential maintenance can be carried out. Lane swimming, which currently takes place on weekday evenings, will move to weekday mornings and will run from 6.30 a.m. to 8.30 a.m. Children's swimming lessons will transfer from Saturday afternoons to Sunday mornings; parents will receive an email confirming their child's new lesson time.</p><p>Please note that the small teaching pool will be closed for two weeks from 11 November for retiling. While it is closed, members may swim free of charge at our partner site, Eastgate Baths, simply by showing their Hillcrest membership card at reception.</p><h3>Text B — New autumn fitness classes</h3><p>This autumn we are delighted to launch three new classes.</p><p><strong>Beginners' Pilates</strong> — Mondays at 7.00 p.m. (45 minutes). £6 per class, or £48 for the full ten-week course.</p><p><strong>Aqua Fitness</strong> — Wednesdays at 9.30 a.m. Free for Gold members; £5 for all other members.</p><p><strong>Teen Circuit Training</strong> — Fridays at 5.00 p.m., for ages 13 to 17. The first session is free.</p><p>Places are limited to 15 per class, so early booking is advised — book online or at reception. Please wear comfortable clothing and bring a water bottle to every class. A class will be cancelled if fewer than six people have booked by the day before.</p><h3>Text C — Lockers, towels and lost property</h3><p>Lockers are available in all changing rooms and require a £1 coin, which is returned when you collect your belongings. The centre cannot accept responsibility for valuables left in the changing rooms, so please leave them at home if possible. Towels may be hired at reception for £2, with a £5 deposit payable at the time of hire.</p><p>Items found in the building are kept in our lost property cupboard for four weeks; anything unclaimed after that time is donated to a local charity shop. Items of obvious value, such as phones, wallets and jewellery, are handed to the duty manager and recorded in a log book.</p>",
+    "groups": [
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 1–5. Do the following statements agree with the information given in Texts A–C?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, or <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "Lane swimming will be available on weekday mornings.",
+            "answer": "true",
+            "evidence": "Text A states that lane swimming will move to weekday mornings and run from 6.30 a.m. to 8.30 a.m., so the statement agrees with the notice."
+          },
+          {
+            "prompt_text": "Children's swimming lessons will move to Saturday mornings.",
+            "answer": "false",
+            "evidence": "Text A says lessons will transfer from Saturday afternoons to Sunday mornings, not Saturday mornings, so the statement contradicts the text."
+          },
+          {
+            "prompt_text": "Members will have to pay to swim at Eastgate Baths while the teaching pool is closed.",
+            "answer": "false",
+            "evidence": "Text A says members may swim free of charge at Eastgate Baths by showing their membership card, so no payment is needed."
+          },
+          {
+            "prompt_text": "Eastgate Baths has a larger pool than Hillcrest Leisure Centre.",
+            "answer": "not given",
+            "evidence": "Eastgate Baths is only mentioned as a partner site where members can swim; nothing is said about the size of its pool."
+          },
+          {
+            "prompt_text": "A class will not run if fewer than six people have booked.",
+            "answer": "true",
+            "evidence": "Text B states that a class will be cancelled if fewer than six people have booked by the day before."
+          }
+        ]
+      },
+      {
+        "question_type": "sentence_completion",
+        "prompt": "Questions 6–10. Complete the sentences below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> from the texts for each answer.</p>",
+        "questions": [
+          {
+            "prompt_text": "The small teaching pool will be closed for two weeks for ______.",
+            "accepted": ["retiling", "re-tiling"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Text A says the small teaching pool will be closed for two weeks from 11 November for retiling."
+          },
+          {
+            "prompt_text": "A place on the full ten-week Pilates course costs £______.",
+            "accepted": ["48", "£48", "48.00"],
+            "word_limit": 2,
+            "spelling_variants": false,
+            "evidence": "Text B gives the price of Beginners' Pilates as £6 per class or £48 for the full ten-week course."
+          },
+          {
+            "prompt_text": "The first session of Teen Circuit Training is ______.",
+            "accepted": ["free"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Text B states that the first session of Teen Circuit Training is free."
+          },
+          {
+            "prompt_text": "No more than ______ people can attend each class.",
+            "accepted": ["15", "fifteen"],
+            "word_limit": 2,
+            "spelling_variants": false,
+            "evidence": "Text B says places are limited to 15 per class, so 15 is the maximum number of people."
+          },
+          {
+            "prompt_text": "Everyone attending a class should wear comfortable clothing and bring a ______.",
+            "accepted": ["water bottle", "bottle of water"],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Text B asks participants to wear comfortable clothing and bring a water bottle to every class."
+          }
+        ]
+      },
+      {
+        "question_type": "short_answer",
+        "prompt": "Questions 11–14. Answer the questions below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN THREE WORDS AND/OR A NUMBER</strong> from the texts for each answer.</p>",
+        "questions": [
+          {
+            "prompt_text": "What coin is needed to use a locker?",
+            "accepted": ["a £1 coin", "£1 coin", "£1", "1 pound coin", "a 1 pound coin", "one pound coin"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text C explains that lockers require a £1 coin, which is returned when you collect your belongings."
+          },
+          {
+            "prompt_text": "How much is the deposit for hiring a towel?",
+            "accepted": ["£5", "5 pounds", "five pounds", "5"],
+            "word_limit": 3,
+            "spelling_variants": false,
+            "evidence": "Text C says towels may be hired for £2 with a £5 deposit payable at the time of hire; the deposit is £5."
+          },
+          {
+            "prompt_text": "How long is lost property kept before it is given to charity?",
+            "accepted": ["four weeks", "4 weeks", "for four weeks"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text C states that found items are kept in the lost property cupboard for four weeks, after which unclaimed items are donated to a charity shop."
+          },
+          {
+            "prompt_text": "Who are valuable found items given to?",
+            "accepted": ["the duty manager", "duty manager", "a duty manager"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text C says items of obvious value are handed to the duty manager and recorded in a log book."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "general",
+    "title": "What's On in Millbrook: Three Local Notices",
+    "difficulty": "easy",
+    "topic_tags": ["everyday life", "community", "transport"],
+    "body_html": "<h3>Text A — Millbrook Lantern Festival</h3><p><em>Saturday 19 October, Riverside Park, 4.00 p.m. – 9.00 p.m.</em></p><p>Join us for the town's favourite autumn event! A lantern-making workshop will be held at the library at 2.00 p.m.; booking is essential, all materials are provided, and the cost is £3 per child (accompanying adults free). The lantern parade leaves the library at 6.30 p.m. and makes its way through the town to the park.</p><p>Hot food and drinks will be on sale — please note that the food stalls accept cash only. There is no parking at Riverside Park; instead, a free shuttle bus runs from the railway station every 15 minutes throughout the evening. Dogs are welcome but must be kept on a lead. The evening ends with a firework display at 8.45 p.m., which will be cancelled in the event of heavy rain.</p><h3>Text B — Millbrook Farmers' Market</h3><p>Because the Town Square is being repaved, the weekly farmers' market is moving to Memorial Gardens from 1 September. As usual, the market runs every Saturday from 8.00 a.m. to 1.00 p.m., with more than forty stalls selling local cheese, bread, vegetables and flowers. On the first Saturday of every month the market also hosts a craft fair.</p><p>Shoppers are asked to bring their own bags, as stallholders no longer provide plastic ones. Are you under 18 and growing your own fruit or vegetables? Our free 'young grower' stall lets you sell your home-grown produce at no charge — apply to the market manager for details.</p><h3>Text C — Changes to bus route 46</h3><p>From Monday 23 September, route 46 buses will no longer stop at Mill Lane, owing to roadworks that are expected to last six weeks. A temporary stop has been set up on Bridge Street, two minutes' walk away. In addition, evening services after 8.00 p.m. will run every hour rather than every thirty minutes. The Sunday timetable is unchanged. Up-to-date departure times can be found on the operator's website and phone app. Ticket prices are not affected by these changes.</p>",
+    "groups": [
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Question 1. Choose the correct letter, A, B, C or D.",
+        "options": [
+          { "key": "A", "text": "in Riverside Park" },
+          { "key": "B", "text": "at the library" },
+          { "key": "C", "text": "at the railway station" },
+          { "key": "D", "text": "in Memorial Gardens" }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Where will the lantern-making workshop take place?",
+            "correct_option_keys": ["B"],
+            "evidence": "Text A says the lantern-making workshop will be held at the library at 2.00 p.m., so B is correct."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Question 2. Choose the correct letter, A, B, C or D.",
+        "options": [
+          { "key": "A", "text": "The Town Square is being repaved." },
+          { "key": "B", "text": "Memorial Gardens has space for more stalls." },
+          { "key": "C", "text": "Parking is easier at Memorial Gardens." },
+          { "key": "D", "text": "Shoppers asked for a new location." }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Why is the farmers' market moving to Memorial Gardens?",
+            "correct_option_keys": ["A"],
+            "evidence": "Text B opens by explaining that the market is moving because the Town Square is being repaved; no other reason is given."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Question 3. Choose the correct letter, A, B, C or D.",
+        "options": [
+          { "key": "A", "text": "They will be cancelled." },
+          { "key": "B", "text": "They will run once an hour." },
+          { "key": "C", "text": "They will stop only at Mill Lane." },
+          { "key": "D", "text": "They will cost more." }
+        ],
+        "questions": [
+          {
+            "prompt_text": "What will happen to route 46 services after 8.00 p.m.?",
+            "correct_option_keys": ["B"],
+            "evidence": "Text C states that evening services after 8.00 p.m. will run every hour rather than every thirty minutes, so B is correct."
+          }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 4–8. Do the following statements agree with the information given in Texts A–C?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, or <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "Children must pay to attend the lantern-making workshop.",
+            "answer": "true",
+            "evidence": "Text A says the workshop costs £3 per child, so children must pay to attend (accompanying adults go free)."
+          },
+          {
+            "prompt_text": "The lantern parade will begin at Riverside Park.",
+            "answer": "false",
+            "evidence": "Text A says the parade leaves the library at 6.30 p.m. and makes its way to the park, so it begins at the library, not the park."
+          },
+          {
+            "prompt_text": "Visitors can pay for food at the festival by credit card.",
+            "answer": "false",
+            "evidence": "Text A states that the food stalls accept cash only, which rules out paying by credit card."
+          },
+          {
+            "prompt_text": "The craft fair is held once a month.",
+            "answer": "true",
+            "evidence": "Text B says the market hosts a craft fair on the first Saturday of every month, i.e. once a month."
+          },
+          {
+            "prompt_text": "The roadworks on Mill Lane started earlier than planned.",
+            "answer": "not given",
+            "evidence": "Text C says the roadworks are expected to last six weeks but says nothing about when they started or whether this was earlier than planned."
+          }
+        ]
+      },
+      {
+        "question_type": "short_answer",
+        "prompt": "Questions 9–13. Answer the questions below.",
+        "instructions_html": "<p>Choose <strong>NO MORE THAN THREE WORDS AND/OR A NUMBER</strong> from the texts for each answer.</p>",
+        "questions": [
+          {
+            "prompt_text": "How often does the free shuttle bus leave the railway station?",
+            "accepted": ["every 15 minutes", "every fifteen minutes", "15 minutes", "every 15 mins"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text A says a free shuttle bus runs from the railway station every 15 minutes throughout the evening."
+          },
+          {
+            "prompt_text": "At what time does the parade leave the library?",
+            "accepted": ["6.30 p.m.", "6.30 pm", "6.30pm", "6:30 pm", "6:30pm", "6.30", "6:30", "half past six", "18.30", "18:30"],
+            "word_limit": 3,
+            "spelling_variants": false,
+            "evidence": "Text A states that the lantern parade leaves the library at 6.30 p.m."
+          },
+          {
+            "prompt_text": "What should shoppers take with them to the farmers' market?",
+            "accepted": ["their own bags", "own bags", "bags", "shopping bags"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text B asks shoppers to bring their own bags because stallholders no longer provide plastic ones."
+          },
+          {
+            "prompt_text": "Who should young people contact about the free 'young grower' stall?",
+            "accepted": ["the market manager", "market manager"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text B tells under-18s to apply to the market manager for details of the free 'young grower' stall."
+          },
+          {
+            "prompt_text": "On which street is the temporary bus stop?",
+            "accepted": ["Bridge Street", "on Bridge Street"],
+            "word_limit": 3,
+            "spelling_variants": true,
+            "evidence": "Text C says a temporary stop has been set up on Bridge Street, two minutes' walk from Mill Lane."
+          }
+        ]
+      }
+    ]
+  }
+]
