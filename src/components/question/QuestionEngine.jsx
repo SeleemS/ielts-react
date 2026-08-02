@@ -20,6 +20,9 @@ import BandDial from '../mock/BandDial';
 import SectionBreakdown from '../mock/SectionBreakdown';
 import { usePlayOnMount, usePrefersReducedMotion } from '../mock/scoreAnimation';
 import ShareRow from '../ShareRow';
+import { Flame } from 'lucide-react';
+import { useStreak } from '../../lib/useStreak';
+import { isStreakMilestone } from '../../lib/streak';
 
 // The stateful heart of the question-taking experience. It is UI-chrome
 // agnostic: Reading and Listening pages supply their own passage/audio layout
@@ -101,6 +104,35 @@ async function persistAttemptToSupabase(userId, skill, storageKey, answers, resu
   }
 }
 
+function StreakLine({ signedIn }) {
+  // The submission that produced this summary counts as today's practice, so
+  // the streak shown is never 0 — worst case it starts at Day 1 right now.
+  const { loading, streak } = useStreak({ assumeToday: true });
+  const celebratedRef = useRef(false);
+
+  useEffect(() => {
+    if (loading || celebratedRef.current || !isStreakMilestone(streak)) return;
+    celebratedRef.current = true;
+    import('canvas-confetti')
+      .then(({ default: confetti }) =>
+        confetti({ spread: 90, particleCount: 160, origin: { y: 0.6 }, zIndex: 3000 })
+      )
+      .catch(() => {});
+  }, [loading, streak]);
+
+  if (loading || streak < 1) return null;
+  return (
+    <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-sm font-bold text-amber-600 dark:text-amber-400">
+      <Flame className="h-4 w-4" aria-hidden="true" />
+      Day {streak} streak
+      {isStreakMilestone(streak) ? ' — milestone!' : ''}
+      {!signedIn ? (
+        <span className="font-medium text-muted-foreground">· sign in to keep it</span>
+      ) : null}
+    </p>
+  );
+}
+
 function ResultsSummary({ score, total, skill, module, showBand, onReset, summaryRef, signedIn, sections, byNumber }) {
   const router = useRouter();
   const pct = total ? Math.round((score / total) * 100) : 0;
@@ -180,6 +212,7 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
           note={weakNote}
         />
       ) : null}
+      <StreakLine signedIn={signedIn} />
       <p className="mt-3 text-sm text-muted-foreground">
         Review your answers below — correct answers are shown in green and each incorrect
         question reveals the right answer.
@@ -189,9 +222,15 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
         source={isMock ? 'mock_result' : `${skill}_result`}
         path={isMock ? '/mock-test' : (router.asPath || '/').split('?')[0]}
         text={
+          // Only frame strong results as a challenge; weak ones share the
+          // practice itself, not a score the user may not want broadcast.
           isMock && band != null
-            ? `I scored Band ${band} on a timed IELTS ${skill} mock at IELTS-Bank — can you beat it?`
-            : `I got ${score}/${total} on an IELTS ${skill} exercise at IELTS-Bank — can you beat it?`
+            ? pct >= 60
+              ? `I scored Band ${band} on a timed IELTS ${skill} mock at IELTS-Bank — can you beat it?`
+              : `I'm sitting timed IELTS ${skill} mocks at IELTS-Bank — free to try`
+            : pct >= 60
+              ? `I got ${score}/${total} on an IELTS ${skill} exercise at IELTS-Bank — can you beat it?`
+              : `I'm practising IELTS ${skill} at IELTS-Bank — free questions with instant marking`
         }
       />
       {(skill === 'reading' || skill === 'listening') && (

@@ -22,6 +22,7 @@ import { cn } from '../lib/utils';
 import { useAuth } from '../lib/auth';
 import SignInDialog from './auth/SignInDialog';
 import StudyingNowBadge from './StudyingNowBadge';
+import StreakBadge from './StreakBadge';
 
 // Pure Tailwind/shadcn Navbar. No Chakra imports — this renders on every page,
 // including pages still built with Chakra, so it must be self-contained.
@@ -171,6 +172,7 @@ export default function Navbar() {
 
         {/* Desktop CTA + account */}
         <div className="hidden items-center gap-2 nav:flex">
+          <StreakBadge />
           {showCreateAccount ? (
             <Button variant="accent" className="shadow-sm" onClick={openSignUp}>
               Create account
@@ -195,14 +197,17 @@ export default function Navbar() {
         </div>
 
         {/* Mobile trigger */}
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary nav:hidden"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
+        <div className="flex items-center gap-1.5 nav:hidden">
+          <StreakBadge />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
       </div>
       <StudyingNowBadge />
 

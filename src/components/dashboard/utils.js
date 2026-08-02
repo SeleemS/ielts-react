@@ -3,6 +3,7 @@
 // so the transforms stay easy to reason about and reuse across dashboard parts.
 
 import { BookOpen, Headphones, PenLine, Mic } from 'lucide-react';
+import { computeStreak } from '../../lib/streak';
 
 // Skill -> display + routing metadata. Reading/Listening come from `attempts`,
 // Writing/Speaking from `scores`.
@@ -206,14 +207,7 @@ export function buildDashboardData(attempts = [], scores = []) {
     .sort((a, b) => a.percentage - b.percentage);
 
   const practiceDays = new Set(items.map((item) => localDateKey(item.date)).filter(Boolean));
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  if (!practiceDays.has(localDateKey(cursor))) cursor.setDate(cursor.getDate() - 1);
-  while (practiceDays.has(localDateKey(cursor))) {
-    streak += 1;
-    cursor.setDate(cursor.getDate() - 1);
-  }
+  const { streak } = computeStreak(items.map((item) => item.date));
 
   const criteria = {};
   for (const score of scores.slice().reverse()) {
