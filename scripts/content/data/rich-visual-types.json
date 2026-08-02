@@ -1,0 +1,420 @@
+[
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "From Bean to Bar: The Making of Chocolate",
+    "difficulty": "medium",
+    "topic_tags": [
+      "food",
+      "agriculture",
+      "manufacturing"
+    ],
+    "body_html": "<p>Chocolate begins its life on a tree that refuses to behave like most crops. <em>Theobroma cacao</em> — the 'food of the gods', as the botanist Linnaeus named it — grows only within about twenty degrees of the equator, and even there it is fussy. It is a delicate understorey tree that prefers the shade of taller neighbours to full, direct sunlight, and it produces its fruit in a way botanists call cauliflory: the flowers, and later the pods, sprout directly from the trunk and the thickest branches rather than from young twigs. A mature pod is about the size of a small rugby ball. It has a thick, ridged husk that turns from green to yellow, orange or crimson as it ripens, and it hangs from the trunk on a short woody stalk. Split one open and you will find thirty to fifty seeds — the cocoa beans — embedded in a layer of sweet white pulp. Ripe pods never fall from the tree of their own accord, and they must be cut by hand, usually with a machete or a curved knife on a pole, because a careless blow from a machine would destroy the cushions of tissue on the trunk from which new flowers, and therefore future harvests, grow.</p><p>A raw cocoa bean is a disappointment: fresh from the pod it is astringent and so bitter as to be inedible, with none of the flavour we associate with chocolate. That flavour has to be created, and the first and most important step is fermentation. On the farm, the beans and their clinging pulp are scooped out of the pods, heaped into wooden boxes or onto mats, covered with banana leaves and left for about six days. Wild yeasts and bacteria feed on the sugary pulp, which liquefies and drains away, and the temperature inside the heap climbs steeply. In this brief, violent chemistry the harshest compounds in the bean begin to break down and the precursors of chocolate flavour are formed. Beans that skip this stage never taste of chocolate, however skilfully they are processed later.</p><p>Fermentation leaves the beans far too wet to store, so they are next spread out in shallow layers on mats or raised tables and dried in the sun for around a week. Workers turn them regularly with wooden rakes so that they dry evenly and do not grow mould, and the moisture content falls from roughly sixty per cent to about seven. Only then are the beans bagged, graded and shipped, most often to factories on the other side of the world.</p><p>At the factory the flavour is coaxed further by roasting, which browns the beans and drives off the sharpest remaining acids. The roasted beans then pass through a winnowing machine: rollers crack them open, and the loose shells, being far lighter than the kernels, are blown away by fans, leaving behind broken fragments of pure bean known as nibs.</p><p>The nibs are then ground between steel rollers or stones. More than half of a nib's weight is fat — cocoa butter — and the heat of grinding melts it, so that what emerges is not a powder but a thick, flowing paste known as cocoa liquor. Sugar, extra cocoa butter and, for milk chocolate, dried milk are blended in, and the mixture then undergoes the strangest stage of all: conching. Invented by Rodolphe Lindt in 1879, the conche kneads and aerates the warm chocolate, in some factories for as long as three days, until the gritty particles are ground too small for the tongue to detect and the last harsh flavours evaporate; the purpose of conching, in short, is to make the chocolate smooth. Finally the liquid chocolate is tempered: it is carefully cooled and then gently reheated so that stable crystals of cocoa butter form throughout it. Well-tempered chocolate sets glossy and hard and breaks with a clean snap; badly tempered chocolate is dull, crumbly and streaked with grey.</p><p>For all the machinery at the factory end, the crop itself remains stubbornly a smallholder's plant. The great majority of the world's cocoa is grown not on large plantations but on family smallholdings of a few hectares, and two West African countries, Côte d'Ivoire and Ghana, together supply well over half of the global harvest. The tree's demands — shade, heat, humidity and endless hand labour — have so far defeated most attempts to mechanise the harvest. The bar that snaps so neatly in a European or American shop is, from the first cut of the machete to the final fold of foil, a product that still begins with a farmer, a knife and a tree that fruits from its trunk.</p>",
+    "groups": [
+      {
+        "question_type": "flowchart_completion",
+        "prompt": "How chocolate is made",
+        "instructions_html": "<p>Complete the flow-chart below. Choose <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> from the passage for each answer.</p>",
+        "image_svg": "<svg viewBox=\"0 0 640 619\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Flow-chart of the chocolate-making process, with five numbered gaps\" style=\"display:block;width:100%;height:auto;max-width:640px;margin:0 auto\"><rect width=\"640\" height=\"619\" fill=\"#ffffff\"/><text x=\"22\" y=\"30\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#0A2540\">How chocolate is made</text><defs><marker id=\"arr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#64748b\"/></marker></defs><rect x=\"85\" y=\"56\" width=\"470\" height=\"48\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"78\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">HARVESTING</text><text x=\"101\" y=\"95\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">Ripe pods are cut from the trunk by hand.</text><line x1=\"320\" y1=\"107\" x2=\"320\" y2=\"131\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"134\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"156\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">FERMENTATION</text><text x=\"101\" y=\"173\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">Beans and pulp are heaped up, covered with banana</text><text x=\"101\" y=\"190\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">leaves and left for about</text><circle cx=\"407\" cy=\"186\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"190\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">1</text><line x1=\"423\" y1=\"192\" x2=\"541\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"206\" x2=\"320\" y2=\"230\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"233\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"255\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">DRYING</text><text x=\"101\" y=\"272\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The beans dry in the sun for around a week, turned</text><text x=\"101\" y=\"289\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">regularly with wooden</text><circle cx=\"407\" cy=\"285\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"289\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">2</text><line x1=\"423\" y1=\"291\" x2=\"541\" y2=\"291\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"305\" x2=\"320\" y2=\"329\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"332\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"354\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">ROASTING AND WINNOWING</text><text x=\"101\" y=\"371\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The beans are roasted, then cracked open; the loose</text><text x=\"101\" y=\"388\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">shells are blown away by</text><circle cx=\"407\" cy=\"384\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"388\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">3</text><line x1=\"423\" y1=\"390\" x2=\"541\" y2=\"390\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"404\" x2=\"320\" y2=\"428\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"431\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"453\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">GRINDING</text><text x=\"101\" y=\"470\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The nibs are crushed into a thick, flowing paste</text><text x=\"101\" y=\"487\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">known as</text><circle cx=\"407\" cy=\"483\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"487\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">4</text><line x1=\"423\" y1=\"489\" x2=\"541\" y2=\"489\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"503\" x2=\"320\" y2=\"527\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"530\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"552\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">CONCHING AND TEMPERING</text><text x=\"101\" y=\"569\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The chocolate is kneaded, then cooled and gently</text><text x=\"101\" y=\"586\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">reheated to form stable</text><circle cx=\"407\" cy=\"582\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"586\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">5</text><line x1=\"423\" y1=\"588\" x2=\"541\" y2=\"588\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/></svg>",
+        "questions": [
+          {
+            "prompt_text": "Flow-chart gap 1 — Fermentation: the beans and pulp are covered with banana leaves and left for about ______",
+            "accepted": [
+              "six days",
+              "6 days"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 2 states the beans and pulp are \"covered with banana leaves and left for about six days\" while yeasts and bacteria work on the pulp."
+          },
+          {
+            "prompt_text": "Flow-chart gap 2 — Drying: the beans are turned regularly with wooden ______ so that they dry evenly",
+            "accepted": [
+              "rakes"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 3 says workers \"turn them regularly with wooden rakes so that they dry evenly and do not grow mould\"."
+          },
+          {
+            "prompt_text": "Flow-chart gap 3 — Winnowing: the roasted beans are cracked open and the loose shells are blown away by ______",
+            "accepted": [
+              "fans"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 4 explains that in the winnowing machine the shells, \"being far lighter than the kernels, are blown away by fans\"."
+          },
+          {
+            "prompt_text": "Flow-chart gap 4 — Grinding: the nibs are crushed into a thick paste known as ______",
+            "accepted": [
+              "cocoa liquor",
+              "liquor"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 5 says the heat of grinding melts the cocoa butter so what emerges is \"a thick, flowing paste known as cocoa liquor\"."
+          },
+          {
+            "prompt_text": "Flow-chart gap 5 — Tempering: the chocolate is cooled and reheated so that stable ______ of cocoa butter form",
+            "accepted": [
+              "crystals"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 5 states the chocolate is \"carefully cooled and then gently reheated so that stable crystals of cocoa butter form throughout it\"."
+          }
+        ]
+      },
+      {
+        "question_type": "diagram_label",
+        "prompt": "Cross-section of a cacao pod",
+        "instructions_html": "<p>Label the diagram below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p>",
+        "image_svg": "<svg viewBox=\"0 0 640 400\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Cross-section of a cacao pod with three numbered labels\" style=\"display:block;width:100%;height:auto;max-width:640px;margin:0 auto\"><rect width=\"640\" height=\"400\" fill=\"#ffffff\"/><text x=\"22\" y=\"30\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#0A2540\">Cross-section of a cacao pod</text><path d=\"M254,96 q2,-22 10,-34 l14,4 q-10,14 -10,32 z\" fill=\"#a16207\" stroke=\"#78500a\" stroke-width=\"1.5\"/><ellipse cx=\"260\" cy=\"222\" rx=\"150\" ry=\"128\" fill=\"#fde68a\" stroke=\"#b45309\" stroke-width=\"4\"/><path d=\"M150,150 q-28,72 0,146\" fill=\"none\" stroke=\"#d97706\" stroke-width=\"2.5\"/><path d=\"M370,150 q28,72 0,146\" fill=\"none\" stroke=\"#d97706\" stroke-width=\"2.5\"/><ellipse cx=\"260\" cy=\"222\" rx=\"104\" ry=\"88\" fill=\"#fefce8\" stroke=\"#eab308\" stroke-width=\"2\"/><ellipse cx=\"260\" cy=\"172\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(0 260 172)\"/><ellipse cx=\"238\" cy=\"200\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(-12 238 200)\"/><ellipse cx=\"282\" cy=\"200\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(12 282 200)\"/><ellipse cx=\"248\" cy=\"232\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(-6 248 232)\"/><ellipse cx=\"276\" cy=\"236\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(8 276 236)\"/><ellipse cx=\"260\" cy=\"268\" rx=\"20\" ry=\"13\" fill=\"#7c2d12\" stroke=\"#57230f\" stroke-width=\"1.5\" transform=\"rotate(0 260 268)\"/><line x1=\"268\" y1=\"72\" x2=\"440\" y2=\"62\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"268\" cy=\"72\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"456\" cy=\"62\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"456\" y=\"66\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">1</text><line x1=\"472\" y1=\"68\" x2=\"592\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"398\" y1=\"160\" x2=\"440\" y2=\"140\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"398\" cy=\"160\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"456\" cy=\"140\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"456\" y=\"144\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">2</text><line x1=\"472\" y1=\"146\" x2=\"592\" y2=\"146\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"282\" y1=\"200\" x2=\"440\" y2=\"220\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"282\" cy=\"200\" r=\"2.5\" fill=\"#64748b\"/><text x=\"452\" y=\"224\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-style=\"italic\" fill=\"#475569\" text-anchor=\"start\">cocoa beans</text><line x1=\"322\" y1=\"268\" x2=\"440\" y2=\"300\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"322\" cy=\"268\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"456\" cy=\"300\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"456\" y=\"304\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">3</text><line x1=\"472\" y1=\"306\" x2=\"592\" y2=\"306\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><text x=\"624\" y=\"390\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"11\" font-style=\"italic\" fill=\"#64748b\" text-anchor=\"end\">Not to scale</text></svg>",
+        "questions": [
+          {
+            "prompt_text": "Diagram label 1 — the short woody part that joins the pod to the trunk: ______",
+            "accepted": [
+              "stalk",
+              "woody stalk"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 1 says the pod \"hangs from the trunk on a short woody stalk\"."
+          },
+          {
+            "prompt_text": "Diagram label 2 — the thick, ridged outer covering of the pod: ______",
+            "accepted": [
+              "husk",
+              "ridged husk"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 1 describes \"a thick, ridged husk that turns from green to yellow, orange or crimson as it ripens\"."
+          },
+          {
+            "prompt_text": "Diagram label 3 — the sweet white material in which the beans are embedded: ______",
+            "accepted": [
+              "pulp",
+              "white pulp"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 1 says the seeds are \"embedded in a layer of sweet white pulp\"."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Choose the correct letter, A, B, C or D.",
+        "options": [
+          {
+            "key": "A",
+            "text": "Ripe pods drop from the tree before they can be collected."
+          },
+          {
+            "key": "B",
+            "text": "Machines would damage the parts of the tree that produce new flowers."
+          },
+          {
+            "key": "C",
+            "text": "The husks are too tough for machines to cut open."
+          },
+          {
+            "key": "D",
+            "text": "Picking by hand improves the flavour of the beans."
+          }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Why are cacao pods harvested by hand?",
+            "correct_option_keys": [
+              "B"
+            ],
+            "evidence": "Paragraph 1 explains pods must be cut by hand because a careless blow from a machine \"would destroy the cushions of tissue on the trunk from which new flowers, and therefore future harvests, grow\"."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Choose the correct letter, A, B, C or D.",
+        "options": [
+          {
+            "key": "A",
+            "text": "to remove the shells from the beans"
+          },
+          {
+            "key": "B",
+            "text": "to melt the cocoa butter inside the nibs"
+          },
+          {
+            "key": "C",
+            "text": "to make the texture of the chocolate smooth"
+          },
+          {
+            "key": "D",
+            "text": "to give the finished bar a glossy surface"
+          }
+        ],
+        "questions": [
+          {
+            "prompt_text": "According to the passage, what is the purpose of conching?",
+            "correct_option_keys": [
+              "C"
+            ],
+            "evidence": "Paragraph 5 states directly that \"the purpose of conching, in short, is to make the chocolate smooth\"; the glossy surface comes from tempering, not conching."
+          }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Do the following statements agree with the information given in the passage?",
+        "instructions_html": "<p>Write <strong>TRUE</strong> if the statement agrees with the information, <strong>FALSE</strong> if the statement contradicts the information, <strong>NOT GIVEN</strong> if there is no information on this.</p>",
+        "questions": [
+          {
+            "prompt_text": "The cacao tree grows best in full, direct sunlight.",
+            "answer": "false",
+            "evidence": "Paragraph 1 says the opposite: it is \"a delicate understorey tree that prefers the shade of taller neighbours to full, direct sunlight\"."
+          },
+          {
+            "prompt_text": "Cocoa beans that have not been fermented are too bitter to eat.",
+            "answer": "true",
+            "evidence": "Paragraph 2 says a raw bean fresh from the pod is \"astringent and so bitter as to be inedible\"."
+          },
+          {
+            "prompt_text": "Most of the world's cocoa is produced on large plantations.",
+            "answer": "false",
+            "evidence": "Paragraph 6 states the great majority of cocoa is grown \"not on large plantations but on family smallholdings of a few hectares\"."
+          },
+          {
+            "prompt_text": "Chocolate was first sold as a solid bar in Europe.",
+            "answer": "not given",
+            "evidence": "The passage mentions Lindt inventing the conche in 1879, but says nothing about where or when chocolate was first sold as a solid bar."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "The Trombe Wall: Heating Buildings with Sunlight",
+    "difficulty": "hard",
+    "topic_tags": [
+      "architecture",
+      "energy",
+      "technology"
+    ],
+    "body_html": "<p>On a hillside at Odeillo, in the French Pyrenees, stands a row of houses whose southern faces are almost entirely dark glass. They were built in the 1960s by the engineer Félix Trombe and the architect Jacques Michel, and they heat themselves, in large part, with nothing more elaborate than a wall. The idea was not strictly new — a patent for a glazed, sun-warmed wall had been granted to the American inventor Edward Morse as early as 1881, and promptly forgotten — but it was Trombe and Michel who turned the curiosity into a working system, and it is Trombe's name the design now bears. The Trombe wall belongs to the family of 'passive' solar designs, which are distinguished from solar panels and heat pumps by having no moving parts, no fluids to circulate and nothing that draws electricity: the building itself is the machine.</p><p>The construction is disarmingly simple. On the side of the building that faces the winter sun — the south side, in the northern hemisphere — a massive wall is built of brick, stone or concrete, materials chosen for their capacity to store large quantities of heat. Its outer face is coated with matt black paint so that it absorbs as much sunlight as possible, and a sheet of glazing, of single or double glass, is fixed a few centimetres in front of it, sealing off a narrow cavity of trapped air. Rows of vents pierce the wall near the ceiling and near the floor, connecting this cavity to the room behind.</p><p>During a winter day the wall works as a slow engine of circulation. Sunlight passes through the glazing and strikes the black surface, which absorbs the radiation; the glass, meanwhile, prevents the resulting warmth from escaping — the same trapping of heat that makes the inside of a parked car so uncomfortable in summer. The air in the cavity can reach sixty degrees Celsius. Being hot, it rises, and streams into the room through the upper vents, while cooler air near the floor of the room is drawn out through the lower vents into the bottom of the cavity to be heated in its turn. The result is a continuous convective loop — engineers call it a thermosiphon — that carries warmth into the building all afternoon without a single fan.</p><p>The wall's second act begins at sunset. Masonry conducts heat slowly: warmth absorbed at the outer face takes several hours to creep through to the inner one, and this time lag is precisely what makes the design valuable. Heat collected at midday reaches the interior surface in the evening, just as the outside temperature is falling and the rooms most need it, and the wall then radiates gently into the room for much of the night. Two precautions are essential. The vents must be closed after dark; otherwise the circulation reverses, and air chilled against the cold glass sinks and pours back into the room. In careful designs an insulated shutter is also lowered over the glazing at night, cutting the heat that would otherwise be lost back through the glass. Summer brings the opposite problem, and the classic remedy is architectural rather than mechanical: a projecting roof overhang above the glazing shades the wall from the high summer sun while leaving it exposed to the low sun of winter, and additional vents at the top of the cavity can be opened to the outside so that unwanted hot air is dumped there rather than indoors.</p><p>How well does it all work? The honest answer is that it depends where you build. In regions where winter skies are reliably clear — mountain plateaux, high deserts, much of the Mediterranean — a well-proportioned Trombe wall can supply a substantial share of a house's winter heating, and studies of the Odeillo houses themselves reported savings of that order. In persistently cloudy regions the case is far weaker, for a wall that receives little sun spends much of the winter as nothing more than a poorly insulated slab of cold masonry. Nor is money the design's real attraction: a Trombe wall is not especially cheap to build, and its appeal lies less in economy than in simplicity and endurance — there is nothing to break down, nothing to service and nothing to replace. It will never match the glamour of the photovoltaic roof, but as a means of letting a building heat itself, quietly and for decades, it has few rivals.</p>",
+    "groups": [
+      {
+        "question_type": "flowchart_completion",
+        "prompt": "How a Trombe wall heats a room during the day",
+        "instructions_html": "<p>Complete the flow-chart below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p>",
+        "image_svg": "<svg viewBox=\"0 0 640 442\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Flow-chart of how a Trombe wall heats a room during the day, with four numbered gaps\" style=\"display:block;width:100%;height:auto;max-width:640px;margin:0 auto\"><rect width=\"640\" height=\"442\" fill=\"#ffffff\"/><text x=\"22\" y=\"30\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#0A2540\">Daytime operation of a Trombe wall</text><defs><marker id=\"arr\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#64748b\"/></marker></defs><rect x=\"85\" y=\"56\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"78\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">STEP 1</text><text x=\"101\" y=\"95\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">Sunlight passes through the outer sheet of</text><text x=\"101\" y=\"112\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">and strikes the wall.</text><circle cx=\"407\" cy=\"108\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"112\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">1</text><line x1=\"423\" y1=\"114\" x2=\"541\" y2=\"114\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"128\" x2=\"320\" y2=\"152\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"155\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"177\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">STEP 2</text><text x=\"101\" y=\"194\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The dark surface absorbs the radiation, heating</text><text x=\"101\" y=\"211\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">the air trapped in the narrow</text><circle cx=\"407\" cy=\"207\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"211\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">2</text><line x1=\"423\" y1=\"213\" x2=\"541\" y2=\"213\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"227\" x2=\"320\" y2=\"251\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"254\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"276\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">STEP 3</text><text x=\"101\" y=\"293\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">The hot air rises and streams into the room</text><text x=\"101\" y=\"310\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">through the</text><circle cx=\"407\" cy=\"306\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"310\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">3</text><line x1=\"423\" y1=\"312\" x2=\"541\" y2=\"312\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"320\" y1=\"326\" x2=\"320\" y2=\"350\" stroke=\"#64748b\" stroke-width=\"2\" marker-end=\"url(#arr)\"/><rect x=\"85\" y=\"353\" width=\"470\" height=\"69\" rx=\"5\" fill=\"#f8fafc\" stroke=\"#94a3b8\" stroke-width=\"2\"/><text x=\"101\" y=\"375\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"13\" font-weight=\"700\" fill=\"#0A2540\">STEP 4</text><text x=\"101\" y=\"392\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">Cooler air near the floor is drawn back to be</text><text x=\"101\" y=\"409\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12.5\" fill=\"#334155\">heated again, forming a continuous</text><circle cx=\"407\" cy=\"405\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"407\" y=\"409\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">4</text><line x1=\"423\" y1=\"411\" x2=\"541\" y2=\"411\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><path d=\"M557,387.5 H589 V90.5 H565\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\" marker-end=\"url(#arr)\"/><text x=\"593\" y=\"239\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"11\" font-style=\"italic\" fill=\"#64748b\" transform=\"rotate(90 593 239)\" text-anchor=\"middle\">cycle repeats</text></svg>",
+        "questions": [
+          {
+            "prompt_text": "Flow-chart gap 1 — Sunlight passes through the outer sheet of ______ and strikes the wall.",
+            "accepted": [
+              "glazing",
+              "glass"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 3 says \"Sunlight passes through the glazing and strikes the black surface\"; paragraph 2 describes the sheet of glazing fixed in front of the wall."
+          },
+          {
+            "prompt_text": "Flow-chart gap 2 — The dark surface absorbs the radiation, heating the air trapped in the narrow ______.",
+            "accepted": [
+              "cavity"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 2 explains the glazing seals off \"a narrow cavity of trapped air\", and paragraph 3 says the air in this cavity can reach sixty degrees."
+          },
+          {
+            "prompt_text": "Flow-chart gap 3 — The hot air rises and streams into the room through the ______.",
+            "accepted": [
+              "upper vents"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 3 states the hot air \"rises, and streams into the room through the upper vents\"."
+          },
+          {
+            "prompt_text": "Flow-chart gap 4 — Cooler air near the floor is drawn back to be heated again, forming a continuous ______.",
+            "accepted": [
+              "convective loop",
+              "loop",
+              "thermosiphon"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 3 calls the result \"a continuous convective loop — engineers call it a thermosiphon\"."
+          }
+        ]
+      },
+      {
+        "question_type": "diagram_label",
+        "prompt": "Cross-section of a Trombe wall",
+        "instructions_html": "<p>Label the diagram below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p>",
+        "image_svg": "<svg viewBox=\"0 0 640 430\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Cross-section of a Trombe wall with four numbered labels\" style=\"display:block;width:100%;height:auto;max-width:640px;margin:0 auto\"><rect width=\"640\" height=\"430\" fill=\"#ffffff\"/><text x=\"22\" y=\"30\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#0A2540\">Cross-section of a Trombe wall (winter day)</text><line x1=\"40\" y1=\"374\" x2=\"600\" y2=\"374\" stroke=\"#78716c\" stroke-width=\"3\"/><rect x=\"344\" y=\"140\" width=\"216\" height=\"234\" fill=\"#f8fafc\" stroke=\"none\"/><line x1=\"560\" y1=\"140\" x2=\"560\" y2=\"374\" stroke=\"#94a3b8\" stroke-width=\"6\"/><text x=\"452\" y=\"262\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-style=\"italic\" fill=\"#475569\" text-anchor=\"middle\">room</text><line x1=\"236\" y1=\"112\" x2=\"576\" y2=\"112\" stroke=\"#78716c\" stroke-width=\"7\"/><rect x=\"304\" y=\"140\" width=\"40\" height=\"234\" fill=\"#d6d3d1\" stroke=\"#78716c\" stroke-width=\"2\"/><rect x=\"302\" y=\"150\" width=\"44\" height=\"16\" fill=\"#f8fafc\" stroke=\"none\"/><rect x=\"302\" y=\"348\" width=\"44\" height=\"16\" fill=\"#f8fafc\" stroke=\"none\"/><text x=\"352\" y=\"146\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"11\" font-style=\"italic\" fill=\"#475569\">upper vent</text><text x=\"352\" y=\"344\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"11\" font-style=\"italic\" fill=\"#475569\">lower vent</text><rect x=\"297\" y=\"140\" width=\"7\" height=\"234\" fill=\"#1f2937\"/><rect x=\"272\" y=\"140\" width=\"6\" height=\"234\" fill=\"#bae6fd\" stroke=\"#38bdf8\" stroke-width=\"1.5\"/><rect x=\"262\" y=\"114\" width=\"26\" height=\"22\" rx=\"4\" fill=\"#e2e8f0\" stroke=\"#64748b\" stroke-width=\"2\"/><line x1=\"266\" y1=\"138\" x2=\"266\" y2=\"360\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4 5\"/><defs><marker id=\"arr2\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#dc2626\"/></marker></defs><line x1=\"288\" y1=\"330\" x2=\"288\" y2=\"180\" stroke=\"#dc2626\" stroke-width=\"2\" marker-end=\"url(#arr2)\"/><line x1=\"292\" y1=\"158\" x2=\"380\" y2=\"158\" stroke=\"#dc2626\" stroke-width=\"2\" marker-end=\"url(#arr2)\"/><line x1=\"390\" y1=\"356\" x2=\"300\" y2=\"356\" stroke=\"#3b82f6\" stroke-width=\"2\" marker-end=\"url(#arr3)\"/><defs><marker id=\"arr3\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#3b82f6\"/></marker></defs><circle cx=\"86\" cy=\"196\" r=\"20\" fill=\"#fbbf24\"/><line x1=\"112\" y1=\"183.2\" x2=\"258\" y2=\"194\" stroke=\"#f59e0b\" stroke-width=\"2\" stroke-dasharray=\"7 5\"/><line x1=\"112\" y1=\"196\" x2=\"258\" y2=\"226\" stroke=\"#f59e0b\" stroke-width=\"2\" stroke-dasharray=\"7 5\"/><line x1=\"112\" y1=\"208.8\" x2=\"258\" y2=\"258\" stroke=\"#f59e0b\" stroke-width=\"2\" stroke-dasharray=\"7 5\"/><text x=\"86\" y=\"236\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-style=\"italic\" fill=\"#475569\" text-anchor=\"middle\">winter sun</text><line x1=\"246\" y1=\"108\" x2=\"196\" y2=\"62\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"246\" cy=\"108\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"184\" cy=\"62\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"184\" y=\"66\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">1</text><line x1=\"200\" y1=\"68\" x2=\"320\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"260\" y1=\"122\" x2=\"168\" y2=\"150\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"260\" cy=\"122\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"156\" cy=\"150\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"156\" y=\"154\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">2</text><line x1=\"140\" y1=\"156\" x2=\"22\" y2=\"156\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"298\" y1=\"292\" x2=\"168\" y2=\"312\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"298\" cy=\"292\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"156\" cy=\"312\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"156\" y=\"316\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">3</text><line x1=\"140\" y1=\"318\" x2=\"22\" y2=\"318\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><line x1=\"324\" y1=\"376\" x2=\"396\" y2=\"406\" stroke=\"#64748b\" stroke-width=\"1.5\"/><circle cx=\"324\" cy=\"376\" r=\"2.5\" fill=\"#64748b\"/><circle cx=\"410\" cy=\"406\" r=\"11\" fill=\"#059669\" stroke=\"#ffffff\" stroke-width=\"2\"/><text x=\"410\" y=\"410\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\" text-anchor=\"middle\">4</text><line x1=\"426\" y1=\"412\" x2=\"546\" y2=\"412\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\"/><text x=\"624\" y=\"420\" font-family=\"system-ui,-apple-system,Segoe UI,Roboto,sans-serif\" font-size=\"11\" font-style=\"italic\" fill=\"#64748b\" text-anchor=\"end\">Not to scale</text></svg>",
+        "questions": [
+          {
+            "prompt_text": "Diagram label 1 — a projecting roof ______ that shades the glass from the high summer sun",
+            "accepted": [
+              "overhang",
+              "roof overhang"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 4 describes \"a projecting roof overhang above the glazing\" that shades the wall from the high summer sun."
+          },
+          {
+            "prompt_text": "Diagram label 2 — an insulated ______ that is lowered over the glass after dark",
+            "accepted": [
+              "shutter",
+              "insulated shutter"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 4 says \"an insulated shutter is also lowered over the glazing at night\" to cut heat losses through the glass."
+          },
+          {
+            "prompt_text": "Diagram label 3 — the coating of matt ______ on the outer face of the wall",
+            "accepted": [
+              "black paint"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 2 says the outer face \"is coated with matt black paint so that it absorbs as much sunlight as possible\"."
+          },
+          {
+            "prompt_text": "Diagram label 4 — a massive wall built of brick, stone or ______",
+            "accepted": [
+              "concrete"
+            ],
+            "word_limit": 2,
+            "spelling_variants": true,
+            "evidence": "Paragraph 2 states the wall is \"built of brick, stone or concrete, materials chosen for their capacity to store large quantities of heat\"."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Choose the correct letter, A, B, C or D.",
+        "options": [
+          {
+            "key": "A",
+            "text": "He was the first person to think of warming a wall behind glass."
+          },
+          {
+            "key": "B",
+            "text": "He turned an earlier, forgotten idea into a practical system."
+          },
+          {
+            "key": "C",
+            "text": "He patented the design in 1881."
+          },
+          {
+            "key": "D",
+            "text": "He discovered how glass traps heat."
+          }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Why does the design bear Félix Trombe's name?",
+            "correct_option_keys": [
+              "B"
+            ],
+            "evidence": "Paragraph 1 notes Edward Morse patented the idea in 1881 but it was \"promptly forgotten\", and that Trombe and Michel \"turned the curiosity into a working system\"."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Choose the correct letter, A, B, C or D.",
+        "options": [
+          {
+            "key": "A",
+            "text": "to stop the air circulation running in reverse"
+          },
+          {
+            "key": "B",
+            "text": "to keep dust out of the cavity"
+          },
+          {
+            "key": "C",
+            "text": "to stop the wall releasing its stored heat too quickly"
+          },
+          {
+            "key": "D",
+            "text": "to protect the glazing from frost damage"
+          }
+        ],
+        "questions": [
+          {
+            "prompt_text": "According to the passage, the vents must be closed at night",
+            "correct_option_keys": [
+              "A"
+            ],
+            "evidence": "Paragraph 4 warns that otherwise \"the circulation reverses, and air chilled against the cold glass sinks and pours back into the room\"."
+          }
+        ]
+      },
+      {
+        "question_type": "multiple_choice",
+        "prompt": "Choose the correct letter, A, B, C or D.",
+        "options": [
+          {
+            "key": "A",
+            "text": "It stores heat from the summer for use in winter."
+          },
+          {
+            "key": "B",
+            "text": "It prevents the cavity from becoming too hot."
+          },
+          {
+            "key": "C",
+            "text": "It delivers warmth indoors in the evening, when it is most needed."
+          },
+          {
+            "key": "D",
+            "text": "It removes the need for an insulated shutter."
+          }
+        ],
+        "questions": [
+          {
+            "prompt_text": "Why is the wall's time lag described as valuable?",
+            "correct_option_keys": [
+              "C"
+            ],
+            "evidence": "Paragraph 4 says heat collected at midday \"reaches the interior surface in the evening, just as the outside temperature is falling and the rooms most need it\"."
+          }
+        ]
+      },
+      {
+        "question_type": "yes_no_notgiven",
+        "prompt": "Do the following statements agree with the claims of the writer?",
+        "instructions_html": "<p>Write <strong>YES</strong> if the statement agrees with the claims of the writer, <strong>NO</strong> if the statement contradicts the claims of the writer, <strong>NOT GIVEN</strong> if it is impossible to say what the writer thinks about this.</p>",
+        "questions": [
+          {
+            "prompt_text": "A Trombe wall is a poor choice in places where winters are consistently cloudy.",
+            "answer": "yes",
+            "evidence": "Paragraph 5 says that in persistently cloudy regions \"the case is far weaker\", the wall becoming little more than a poorly insulated slab of cold masonry."
+          },
+          {
+            "prompt_text": "The main attraction of a Trombe wall is its low construction cost.",
+            "answer": "no",
+            "evidence": "Paragraph 5 states a Trombe wall \"is not especially cheap to build, and its appeal lies less in economy than in simplicity and endurance\"."
+          },
+          {
+            "prompt_text": "Governments ought to encourage passive solar design in new housing.",
+            "answer": "not given",
+            "evidence": "The writer assesses where the design works well but expresses no view about government policy or encouragement."
+          }
+        ]
+      }
+    ]
+  }
+]

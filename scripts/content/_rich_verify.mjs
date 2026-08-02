@@ -32,6 +32,8 @@ const SLUGS = [
   'the-invention-of-the-supermarket-u7ngl4',
   'the-science-of-waiting-in-line-51cqfo',
   'rethinking-the-psychology-of-crowds-cljgwo',
+  'from-bean-to-bar-the-making-of-chocolate-1ywyqt',
+  'the-trombe-wall-heating-buildings-with-sunlight-1bdolv',
 ];
 
 function correctAnswerFor(group, q) {

@@ -1,218 +1,25 @@
 {
   "summary": {
-    "passages": 12,
-    "questions": 122,
+    "passages": 1,
+    "questions": 10,
     "failed": 0,
-    "ttsChars": 35670
+    "ttsChars": 3320
   },
   "report": [
     {
-      "title": "Joining the CityWheels Car-Share Scheme",
-      "slug": "joining-the-citywheels-car-share-scheme-1jj1fj",
-      "partStyle": "Part 1 (everyday 2-speaker dialogue)",
+      "title": "Open Day at the Hillside Animal Rescue Centre",
+      "slug": "open-day-at-the-hillside-animal-rescue-centre-1t5rix",
+      "partStyle": "Part 2 (open-day welcome monologue)",
       "module": "general",
-      "audioPath": "listening/joining-the-citywheels-car-share-scheme-1jj1fj.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/joining-the-citywheels-car-share-scheme-1jj1fj.mp3",
-      "bytes": 2830080,
-      "ttsChars": 2688,
-      "turns": 21,
-      "questionCount": 11,
-      "questionTypes": [
-        "form_completion",
-        "multiple_choice",
-        "note_completion",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Registering at Fernbank Dental Practice",
-      "slug": "registering-at-fernbank-dental-practice-o7y6cy",
-      "partStyle": "Part 1 (everyday 2-speaker dialogue)",
-      "module": "general",
-      "audioPath": "listening/registering-at-fernbank-dental-practice-o7y6cy.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/registering-at-fernbank-dental-practice-o7y6cy.mp3",
-      "bytes": 2392704,
-      "ttsChars": 2313,
-      "turns": 23,
-      "questionCount": 11,
-      "questionTypes": [
-        "form_completion",
-        "multiple_choice",
-        "note_completion",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Arranging a Furniture Delivery",
-      "slug": "arranging-a-furniture-delivery-s9w9vi",
-      "partStyle": "Part 1 (everyday 2-speaker dialogue)",
-      "module": "general",
-      "audioPath": "listening/arranging-a-furniture-delivery-s9w9vi.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/arranging-a-furniture-delivery-s9w9vi.mp3",
-      "bytes": 2391552,
-      "ttsChars": 2355,
-      "turns": 21,
+      "audioPath": "listening/open-day-at-the-hillside-animal-rescue-centre-1t5rix.mp3",
+      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/open-day-at-the-hillside-animal-rescue-centre-1t5rix.mp3",
+      "bytes": 3033600,
+      "ttsChars": 3320,
+      "turns": 5,
       "questionCount": 10,
       "questionTypes": [
-        "form_completion",
-        "note_completion",
-        "multiple_choice",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "The Renovation of the Old Gaumont Theatre",
-      "slug": "the-renovation-of-the-old-gaumont-theatre-k9sos9",
-      "partStyle": "Part 2 (community project monologue)",
-      "module": "general",
-      "audioPath": "listening/the-renovation-of-the-old-gaumont-theatre-k9sos9.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/the-renovation-of-the-old-gaumont-theatre-k9sos9.mp3",
-      "bytes": 2775936,
-      "ttsChars": 2805,
-      "turns": 9,
-      "questionCount": 10,
-      "questionTypes": [
-        "matching_features",
-        "multiple_choice",
-        "note_completion"
-      ]
-    },
-    {
-      "title": "Launch of the Harborough Cycle-Hire Scheme",
-      "slug": "launch-of-the-harborough-cycle-hire-scheme-5q887s",
-      "partStyle": "Part 2 (public information monologue)",
-      "module": "general",
-      "audioPath": "listening/launch-of-the-harborough-cycle-hire-scheme-5q887s.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/launch-of-the-harborough-cycle-hire-scheme-5q887s.mp3",
-      "bytes": 2980608,
-      "ttsChars": 2858,
-      "turns": 9,
-      "questionCount": 11,
-      "questionTypes": [
-        "matching_information",
-        "multiple_choice",
-        "note_completion"
-      ]
-    },
-    {
-      "title": "Induction Talk for New Food Bank Volunteers",
-      "slug": "induction-talk-for-new-food-bank-volunteers-1aoizp",
-      "partStyle": "Part 2 (community induction monologue)",
-      "module": "general",
-      "audioPath": "listening/induction-talk-for-new-food-bank-volunteers-1aoizp.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/induction-talk-for-new-food-bank-volunteers-1aoizp.mp3",
-      "bytes": 2743296,
-      "ttsChars": 2801,
-      "turns": 9,
-      "questionCount": 10,
-      "questionTypes": [
-        "matching_features",
-        "multiple_choice",
-        "note_completion"
-      ]
-    },
-    {
-      "title": "Seminar: A Business Case Study on Brightleaf Tea",
-      "slug": "seminar-a-business-case-study-on-brightleaf-tea-1s3g7t",
-      "partStyle": "Part 3 (academic discussion, 3 speakers)",
-      "module": "academic",
-      "audioPath": "listening/seminar-a-business-case-study-on-brightleaf-tea-1s3g7t.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/seminar-a-business-case-study-on-brightleaf-tea-1s3g7t.mp3",
-      "bytes": 3091968,
-      "ttsChars": 2894,
-      "turns": 16,
-      "questionCount": 9,
-      "questionTypes": [
-        "multiple_choice",
-        "matching_features",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Tutorial: Planning a Geography Field Trip",
-      "slug": "tutorial-planning-a-geography-field-trip-mzr406",
-      "partStyle": "Part 3 (academic discussion, 3 speakers)",
-      "module": "academic",
-      "audioPath": "listening/tutorial-planning-a-geography-field-trip-mzr406.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/tutorial-planning-a-geography-field-trip-mzr406.mp3",
-      "bytes": 2892672,
-      "ttsChars": 2853,
-      "turns": 18,
-      "questionCount": 8,
-      "questionTypes": [
-        "multiple_choice",
-        "matching_features",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Tutorial: Reviewing an Enzyme Experiment's Results",
-      "slug": "tutorial-reviewing-an-enzyme-experiment-s-results-xv22sl",
-      "partStyle": "Part 3 (academic discussion, 2 speakers)",
-      "module": "academic",
-      "audioPath": "listening/tutorial-reviewing-an-enzyme-experiment-s-results-xv22sl.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/tutorial-reviewing-an-enzyme-experiment-s-results-xv22sl.mp3",
-      "bytes": 3035904,
-      "ttsChars": 2973,
-      "turns": 18,
-      "questionCount": 8,
-      "questionTypes": [
-        "multiple_choice",
-        "matching_features",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Lecture: A History of Timekeeping",
-      "slug": "lecture-a-history-of-timekeeping-1huinu",
-      "partStyle": "Part 4 (university lecture monologue)",
-      "module": "academic",
-      "audioPath": "listening/lecture-a-history-of-timekeeping-1huinu.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/lecture-a-history-of-timekeeping-1huinu.mp3",
-      "bytes": 3993216,
-      "ttsChars": 3860,
-      "turns": 9,
-      "questionCount": 12,
-      "questionTypes": [
-        "note_completion",
-        "summary_completion",
-        "sentence_completion",
-        "short_answer"
-      ]
-    },
-    {
-      "title": "Lecture: The Psychology of Habit Formation",
-      "slug": "lecture-the-psychology-of-habit-formation-apxrhd",
-      "partStyle": "Part 4 (university lecture monologue)",
-      "module": "academic",
-      "audioPath": "listening/lecture-the-psychology-of-habit-formation-apxrhd.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/lecture-the-psychology-of-habit-formation-apxrhd.mp3",
-      "bytes": 3847680,
-      "ttsChars": 3718,
-      "turns": 8,
-      "questionCount": 11,
-      "questionTypes": [
-        "note_completion",
-        "summary_completion",
-        "sentence_completion"
-      ]
-    },
-    {
-      "title": "Lecture: Wildlife Corridors in Cities",
-      "slug": "lecture-wildlife-corridors-in-cities-1i34pk",
-      "partStyle": "Part 4 (university lecture monologue)",
-      "module": "academic",
-      "audioPath": "listening/lecture-wildlife-corridors-in-cities-1i34pk.mp3",
-      "publicUrl": "https://nnqbagvknskqyrxkbyct.supabase.co/storage/v1/object/public/listening-audio/listening/lecture-wildlife-corridors-in-cities-1i34pk.mp3",
-      "bytes": 3838464,
-      "ttsChars": 3552,
-      "turns": 9,
-      "questionCount": 11,
-      "questionTypes": [
-        "note_completion",
-        "summary_completion",
-        "sentence_completion",
-        "short_answer"
+        "plan_map_diagram_label",
+        "flowchart_completion"
       ]
     }
   ]

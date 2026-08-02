@@ -120,7 +120,6 @@ const TEXT_TYPES = new Set([
   'flowchart_completion',
   'short_answer',
   'diagram_label',
-  'plan_map_diagram_label',
   'form_completion',
 ]);
 const BOOL_TYPES = new Set(['true_false_notgiven', 'yes_no_notgiven']);
@@ -131,6 +130,9 @@ const OPTION_TYPES = new Set([
   'matching_sentence_endings',
   'multiple_choice',
   'multiple_choice_multi',
+  // plan/map labelling picks a lettered option A-F from the image
+  // (grade.js: input 'select', grade 'optionKeySingle' vs correct_option_keys).
+  'plan_map_diagram_label',
 ]);
 function buildAnswerKey(qtype, q) {
   const ak = {
@@ -139,6 +141,7 @@ function buildAnswerKey(qtype, q) {
     spelling_variants: false,
     word_limit: null,
     normalize: 'lower_trim',
+    explanation: q.evidence || null,
   };
   if (BOOL_TYPES.has(qtype)) {
     ak.accepted = [String(q.answer).trim().toLowerCase()];
@@ -328,6 +331,9 @@ async function upsertPassage(env, item, slug, audioPath) {
         question_type: g.question_type,
         prompt: g.prompt || null,
         instructions_html: g.instructions_html || null,
+        // Optional standalone SVG (plan / map / flow-chart) rendered above the
+        // group by QuestionGroup.jsx via sanitizeSvg.
+        image_svg: g.image_svg || null,
       },
     });
     const groupId = gr[0].id;

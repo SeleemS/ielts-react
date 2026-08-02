@@ -19,7 +19,14 @@ export default function QuestionGroup({
 }) {
   const cfg = typeConfig(group.questionType);
   const showLegend = cfg.input === 'select' && (group.options || []).length > 0;
-  const imageLabel = /\bplan\b/i.test(group.prompt || '') ? 'Plan' : 'Map';
+  const imageLabel =
+    group.questionType === 'flowchart_completion'
+      ? 'Flow-chart'
+      : group.questionType === 'diagram_label'
+        ? 'Diagram'
+        : /\bplan\b/i.test(group.prompt || '')
+          ? 'Plan'
+          : 'Map';
 
   const first = group.questions[0]?.number;
   const last = group.questions[group.questions.length - 1]?.number;
