@@ -15,6 +15,7 @@ function resultQuery(result) {
   const query = {
     eq: () => query,
     gt: () => query,
+    gte: () => query,
     in: () => query,
     is: () => query,
     lt: () => query,
@@ -120,6 +121,10 @@ describe('lifecycle email delivery safety', () => {
                 error: null,
               }),
           };
+        }
+        if (table === 'attempts') {
+          // No recent practice: every subscriber stays on the generic digest.
+          return { select: () => resultQuery({ data: [], error: null }) };
         }
         expect(table).toBe('lifecycle_emails');
         return { upsert };
@@ -230,6 +235,8 @@ describe('lifecycle email delivery safety', () => {
         ],
         userCalls
       ),
+      // No recent practice: everyone stays on the generic digest.
+      attempts: { select: () => resultQuery({ data: [], error: null }) },
       lifecycle_emails: lifecycleSink(batches),
     };
     const admin = { from: (table) => sources[table] };
