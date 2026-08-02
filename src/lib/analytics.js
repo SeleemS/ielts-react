@@ -161,8 +161,13 @@ export function track(event, params = {}, options = {}) {
   // Product-feature counter for the Summer Sale reminder. Intentionally runs
   // BEFORE the analytics-consent gate below: the reminder is not analytics, so
   // a user who declined analytics must still get the offer nudge. No-ops for
-  // non-submit events.
-  recordPracticeActivity(event);
+  // non-submit events. Isolated so a listener/storage failure can never take
+  // the analytics pipeline down with it.
+  try {
+    recordPracticeActivity(event);
+  } catch {
+    /* product nudge failure must not break telemetry */
+  }
   if (!analyticsConsentGranted()) return;
   const currentPath = params.path || window.location.pathname;
   if (isInternalAnalyticsPath(currentPath)) return;
@@ -181,7 +186,19 @@ export function track(event, params = {}, options = {}) {
 
   // firstPartyOnly: meter-style events (e.g. session_heartbeat) that belong in
   // activity_events but would only add noise/volume to GA4.
-  if (!options.firstPartyOnly) ensureGoogleAnalytics()?.('event', event, payload);
+  //
+  // The GA fan-out runs third-party code (gtag/dataLayer can be replaced by
+  // the real GA library, ad-block shims, or extensions). It must never be able
+  // to throw past this point: an exception here would silently sever the
+  // first-party /api/track stream below AND propagate into whatever fired the
+  // event (heartbeat interval, delegated click listener, submit handler).
+  if (!options.firstPartyOnly) {
+    try {
+      ensureGoogleAnalytics()?.('event', event, payload);
+    } catch {
+      /* GA sink failure must not sever first-party telemetry */
+    }
+  }
 
   const anonId = getAnonId();
   if (!anonId || typeof window.fetch !== 'function') return;
@@ -207,12 +224,17 @@ export function track(event, params = {}, options = {}) {
     if (attribution.utm_campaign) extra.utm_campaign = attribution.utm_campaign;
   }
 
-  window.fetch('/api/track', {
-    method: 'POST',
-    headers,
-    keepalive: true,
-    body: JSON.stringify({ event, anon_id: anonId, ...extra, ...payload }),
-  }).catch(() => {});
+  try {
+    window.fetch('/api/track', {
+      method: 'POST',
+      headers,
+      keepalive: true,
+      body: JSON.stringify({ event, anon_id: anonId, ...extra, ...payload }),
+    }).catch(() => {});
+  } catch {
+    // A synchronous fetch failure (keepalive quota, patched fetch, unstringifiable
+    // payload) must not propagate into the caller.
+  }
 }
 
 // GA4 client id from the _ga cookie ("GA1.1.123456.789" → "123456.789").

@@ -130,6 +130,30 @@ describe('dual analytics tracking', () => {
     );
   });
 
+  it('still delivers the first-party event when the GA tag throws', () => {
+    // The GA fan-out executes third-party code (real gtag, ad-block shims,
+    // extension replacements). A throwing tag must neither sever the
+    // /api/track stream nor propagate into the caller (heartbeat interval,
+    // delegated click listener).
+    window.gtag = vi.fn(() => {
+      throw new Error('tag exploded');
+    });
+
+    expect(() => track('ui_interaction', { element_id: 'pricing_cta' })).not.toThrow();
+
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    const body = JSON.parse(window.fetch.mock.calls[0][1].body);
+    expect(body.event).toBe('ui_interaction');
+  });
+
+  it('does not let a synchronous fetch failure escape to the caller', () => {
+    window.fetch = vi.fn(() => {
+      throw new TypeError('keepalive quota exceeded');
+    });
+
+    expect(() => track('ui_interaction', { element_id: 'pricing_cta' })).not.toThrow();
+  });
+
   it('rotates page-view IDs while retaining the session journey', () => {
     trackPageView('/one');
     track('ui_interaction', { element_id: 'first' });
