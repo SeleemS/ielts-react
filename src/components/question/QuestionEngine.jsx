@@ -212,6 +212,30 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
           note={weakNote}
         />
       ) : null}
+      {isMock ? (
+        // Post-mock next steps: the weakest-section note used to be a dead
+        // end — make the diagnosis actionable.
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          <NextLink
+            href={`/${skill}question`}
+            className="rounded-lg border border-border bg-card px-3 py-2 text-center text-sm font-semibold text-foreground no-underline transition-colors hover:border-accent/50"
+          >
+            Drill your weakest section
+          </NextLink>
+          <NextLink
+            href="/review"
+            className="rounded-lg border border-border bg-card px-3 py-2 text-center text-sm font-semibold text-foreground no-underline transition-colors hover:border-accent/50"
+          >
+            Review today&apos;s mistakes
+          </NextLink>
+          <NextLink
+            href="/mock-test"
+            className="rounded-lg border border-border bg-card px-3 py-2 text-center text-sm font-semibold text-foreground no-underline transition-colors hover:border-accent/50"
+          >
+            Book your next mock
+          </NextLink>
+        </div>
+      ) : null}
       <StreakLine signedIn={signedIn} />
       <p className="mt-3 text-sm text-muted-foreground">
         Review your answers below — correct answers are shown in green and each incorrect

@@ -214,6 +214,22 @@ export default function WritingScoreReport({
           text={`My IELTS Writing ${submissionLabel} scored Band ${formatBand(result.overallBand)} with AI examiner feedback — try it free at IELTS-Bank`}
         />
       ) : null}
+      {!sample && !isTeaser ? (
+        // Testimonial collection loop: the pricing page's testimonial section
+        // deliberately ships empty until real quotes exist — this is where
+        // they come from. Routes into the existing rate-limited contact form.
+        <p className="text-center text-xs text-muted-foreground">
+          Did this feedback help?{' '}
+          <NextLink
+            href="/contactus?topic=feedback-story"
+            onClick={() => track('testimonial_prompt_click', { source: analyticsSource })}
+            className="font-semibold text-accent"
+          >
+            Tell us in a sentence
+          </NextLink>{' '}
+          — with your permission we may feature it.
+        </p>
+      ) : null}
     </div>
   );
 }
