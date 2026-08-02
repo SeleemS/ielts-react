@@ -264,34 +264,97 @@ describe('POST /api/score/speaking quota safety', () => {
     expect(state.removedPaths).toEqual([]);
   });
 
-  it('reserves the Premium response for a verified Free account', async () => {
-    state.planRow = { plan: 'free', plan_status: 'inactive' };
+  // Entitlement moved into consume_ai_score (v8, 2026-08-02): the RPC grants
+  // free accounts one lifetime sampled score and returns premium_required
+  // afterwards. RPC error/reject handling is covered by the quota tests below.
+  it('reduces the free-sample response to band + first criterion server-side', async () => {
+    process.env.OPENAI_API_KEY = 'openai-test-key';
+    state.quotaResult = {
+      allowed: true,
+      remaining: 0,
+      plan: 'free',
+      free: true,
+      consumedAt: '2026-07-19T12:00:00.000Z',
+    };
+    vi.spyOn(global, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(new Uint8Array([1, 2, 3]), {
+          status: 200,
+          headers: { 'content-type': 'audio/webm' },
+        })
+      )
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            text:
+              'I enjoy travelling because it teaches me about different people and cultures while helping me become more independent and adaptable.',
+          }),
+          {
+            status: 200,
+            headers: { 'content-type': 'application/json' },
+          }
+        )
+      );
+    chatCompletionWithFallback.mockResolvedValue({
+      ok: true,
+      status: 200,
+      model: 'gpt-5.1',
+      payload: {
+        choices: [
+          {
+            message: {
+              content: JSON.stringify({
+                overallBand: 7,
+                criteria: {
+                  fluencyCoherence: { band: 6.5, feedback: 'Clear progression.' },
+                  lexicalResource: { band: 7, feedback: 'Good range.' },
+                  grammaticalRange: { band: 7.5, feedback: 'Varied structures.' },
+                },
+                summary: 'A capable response.',
+                improvements: ['Develop examples further.'],
+              }),
+            },
+          },
+        ],
+      },
+      detail: '',
+    });
+
     const res = await callRoute();
 
-    expect(res.statusCode).toBe(402);
-    expect(res.jsonBody.reason).toBe('premium_required');
-    expect(state.rpcCalls).toEqual([]);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.free).toBe(true);
+    expect(res.jsonBody.overallBand).toBe(7);
+    // ONLY the first criterion may leave the server on the free sample.
+    expect(Object.keys(res.jsonBody.criteria)).toEqual(['fluencyCoherence']);
+    expect(res.jsonBody.lockedCriteriaCount).toBe(2);
+    expect(res.jsonBody.summary).toBe('');
+    expect(res.jsonBody.improvements).toEqual([]);
+    // The FULL result is still persisted for the user's own history.
+    expect(state.tableCalls.map(({ table }) => table)).toContain('scores');
   });
 
-  it('does not misreport a resolved entitlement error as Premium required', async () => {
-    state.planRow = null;
-    state.planError = new Error('database unavailable');
+  it('refunds the free sample when scoring cannot start', async () => {
+    state.quotaResult = {
+      allowed: true,
+      remaining: 0,
+      plan: 'free',
+      free: true,
+      consumedAt: '2026-07-19T12:00:00.000Z',
+    };
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    const res = await callRoute();
+    const res = await callRoute(); // no OPENAI_API_KEY -> scoring cannot start
 
-    expect(res.statusCode).toBe(503);
-    expect(res.jsonBody.reason).toBeUndefined();
-    expect(state.rpcCalls).toEqual([]);
-  });
-
-  it('recovers when the entitlement query rejects', async () => {
-    state.planReject = new Error('network unavailable');
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-    const res = await callRoute();
-
-    expect(res.statusCode).toBe(503);
-    expect(res.jsonBody.reason).toBeUndefined();
-    expect(state.rpcCalls).toEqual([]);
+    expect(res.statusCode).toBe(502);
+    expect(state.rpcCalls.at(-1)).toMatchObject({
+      name: 'refund_ai_score',
+      args: {
+        p_uid: 'premium-user',
+        p_skill: 'speaking',
+        p_free: true,
+        p_consumed_at: '2026-07-19T12:00:00.000Z',
+      },
+    });
   });
 
   it('fails closed when the global limiter returns an error', async () => {

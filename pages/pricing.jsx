@@ -60,7 +60,7 @@ const PAGE_DESCRIPTION = PRICING_SEO.description;
 const FREE_INCLUDES = [
   'Full Reading & Listening question bank',
   'Instant marking with answer keys',
-  'One lifetime Writing sample score',
+  'One lifetime Writing sample + one Speaking sample score',
 ];
 
 const PRO_INCLUDES = [
@@ -84,7 +84,7 @@ const PERKS = [
 
 const COMPARISON = [
   ['Reading and Listening question bank', true, true],
-  ['One lifetime Writing sample score', true, true],
+  ['One lifetime Writing sample + one Speaking sample score', true, true],
   ['Full Writing report and continued scoring', false, true],
   ['AI Speaking scoring and live examiner', false, true],
   ['Timed full-mock mode', false, true],
@@ -138,7 +138,7 @@ const PRICING_FAQS = [
   },
   {
     q: 'What is free, and what needs Pro?',
-    a: 'The full Reading and Listening question bank stays free with instant marking, and you get one lifetime Writing sample score. Pro adds full AI Writing reports on all four criteria, AI Speaking scoring, live AI examiner minutes, timed full mocks, trend insights, and an ad-free experience.',
+    a: 'The full Reading and Listening question bank stays free with instant marking, and you get one lifetime Writing sample score plus one Speaking sample score. Pro adds full AI Writing reports on all four criteria, AI Speaking scoring, live AI examiner minutes, timed full mocks, trend insights, and an ad-free experience.',
   },
   {
     q: 'What exactly are the fair-use limits on Pro?',
@@ -939,7 +939,7 @@ export default function PricingPage() {
         )}
 
         <p className="mt-6 text-center text-sm font-medium text-muted-foreground">
-          Start with one free Writing sample score. Pro unlocks the full feedback toolkit.
+          Start with a free Writing and a free Speaking sample score. Pro unlocks the full feedback toolkit.
         </p>
 
         {/* Genuine trust signals — every claim maps to real behaviour. */}

@@ -3,8 +3,9 @@
 // audio: the client uploads a recording to the OWNER-ONLY `speaking-uploads`
 // bucket, then POSTs the storage path here. This route (Node runtime, needs the
 // secret OPENAI_API_KEY + Supabase service role):
-//   * REQUIRES sign-in AND an active Premium plan (2026-07-18 product change:
-//     no free scores of any kind — enforced here AND in consume_ai_score);
+//   * REQUIRES sign-in; entitlement via consume_ai_score v8 — Premium plans
+//     get fair-use caps, free accounts get ONE lifetime sampled score whose
+//     response is reduced server-side to band + first criterion (2026-08-02);
 //   * enforces per-user ownership of the audio path (the bucket is per-uid);
 //   * rate-limits per user AND enforces a daily global circuit breaker via the
 //     SAME Supabase check_rate_limit() RPC used by writing (service role);
@@ -31,7 +32,6 @@ import {
   recordAiUsage,
 } from '../../../lib/aiCost';
 import { chatCompletionWithFallback } from '../../../lib/openaiChat';
-import { fetchPremiumStatus } from '../../../lib/premium';
 import {
   buildSpeakingScoreSchema,
   isValidSpeakingBand,
@@ -117,7 +117,8 @@ async function refundQuota(userId, quota) {
     const { error } = await getAdmin().rpc('refund_ai_score', {
       p_uid: userId,
       p_skill: 'speaking',
-      p_free: false,
+      // Restores the lifetime free sample when the sampled score failed.
+      p_free: quota.free === true,
       p_consumed_at: quota.consumedAt,
     });
     if (error) throw error;
@@ -372,23 +373,10 @@ export default async function handler(req, res) {
       .json({ error: 'Please sign in to get your speaking answer scored.' });
   }
 
-  // --- Premium gate BEFORE anything costly (2026-07-18: no free scores) ----
-  // consume_ai_score also refuses free users; this route-level check keeps the
-  // gate airtight regardless of DB migration rollout order.
-  const premium = await fetchPremiumStatus(getAdmin(), userId);
-  if (premium.error) {
-    console.error('speaking entitlement failed:', premium.error.message);
-    return res
-      .status(503)
-      .json({ error: 'Scoring is temporarily unavailable. Please try again later.' });
-  }
-  if (!premium.isPremium) {
-    return res.status(402).json({
-      error: 'AI Speaking scoring is a Premium feature. Upgrade to get your answer scored.',
-      reason: 'premium_required',
-      remaining: 0,
-    });
-  }
+  // Entitlement is enforced by consume_ai_score (v8, 2026-08-02): free users
+  // get ONE lifetime sampled Speaking score (band + first criterion, reduced
+  // below before the response leaves the server); after that the RPC returns
+  // premium_required. The former route-level hard gate predates the sample.
 
   // --- Validate body -------------------------------------------------------
   const body = req.body || {};
@@ -784,15 +772,28 @@ Assess this transcript as an IELTS Speaking examiner on the three transcript-ass
     });
 
     // --- 8. Respond with the exact contract shape --------------------------
+    // Free sample: the full result is persisted above for the user's own
+    // history, but the RESPONSE carries only the overall band + first
+    // criterion (mirrors writing's reduceForFree) — the paid content is
+    // withheld server-side, not hidden client-side.
     scoringCompleted = true;
+    const isFreeScore = quota.free === true;
     return res.status(200).json({
       overallBand,
-      criteria,
+      criteria: isFreeScore
+        ? { fluencyCoherence: criteria.fluencyCoherence }
+        : criteria,
+      ...(isFreeScore ? { lockedCriteriaCount: 2 } : {}),
       pronunciation: { assessed: false, note: PRONUNCIATION_NOTE },
-      summary: typeof result.summary === 'string' ? result.summary : '',
-      improvements: Array.isArray(result.improvements) ? result.improvements : [],
+      summary: isFreeScore ? '' : typeof result.summary === 'string' ? result.summary : '',
+      improvements: isFreeScore
+        ? []
+        : Array.isArray(result.improvements)
+          ? result.improvements
+          : [],
       transcript,
       quotaRemaining: quota.remaining,
+      free: isFreeScore,
     });
   } catch (e) {
     await refundQuota(userId, quota);

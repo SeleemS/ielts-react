@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Head from 'next/head';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
   Mic,
@@ -12,6 +13,7 @@ import {
   ChevronDown,
   AlertTriangle,
   Sparkles,
+  Lock,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -23,6 +25,7 @@ import { Badge } from '../../components/ui/badge';
 import { cn } from '../lib/utils';
 import { useAuth } from '../lib/auth';
 import { usePlan } from '../lib/usePlan';
+import { useFreeSample } from '../lib/useFreeWritingSample';
 import SignInDialog from '../components/auth/SignInDialog';
 import { getSupabase } from '../../lib/supabase';
 import {
@@ -531,10 +534,29 @@ function PrepTimer({ prepSeconds, notes, onNotesChange }) {
 // ---------------------------------------------------------------------------
 // Score report (plain React — NO dangerouslySetInnerHTML of model output).
 // ---------------------------------------------------------------------------
-function ScoreReport({ result }) {
+// A criterion withheld from the free-sample response. The API never sent the
+// real content (reduced server-side), so there is nothing to "unhide" here.
+function LockedCriterion({ label }) {
+  return (
+    <div className="rounded-lg border border-dashed border-border bg-secondary/30 p-4">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-sm font-bold text-muted-foreground">{label}</h3>
+        <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+          <Lock className="h-3 w-3" /> Premium
+        </span>
+      </div>
+      <p className="mt-1.5 text-sm text-muted-foreground">
+        Unlock Premium for this criterion&apos;s band and examiner feedback.
+      </p>
+    </div>
+  );
+}
+
+function ScoreReport({ result, slug = '' }) {
   const criteria = result.criteria || {};
   const improvements = Array.isArray(result.improvements) ? result.improvements : [];
   const pronunciation = result.pronunciation || {};
+  const isTeaser = result.free === true;
   const [transcriptOpen, setTranscriptOpen] = useState(false);
 
   return (
@@ -557,9 +579,13 @@ function ScoreReport({ result }) {
         </span>
       </div>
 
-      {/* Per-criterion cards */}
+      {/* Per-criterion cards. On the free sample only the first criterion
+          arrives from the API; the rest render as locked placeholders. */}
       <div className="space-y-3">
         {SPEAKING_CRITERIA.map(([key, label]) => {
+          if (isTeaser && !criteria[key]) {
+            return <LockedCriterion key={key} label={label} />;
+          }
           const c = criteria[key] || {};
           return (
             <div key={key} className="rounded-lg border border-border bg-card p-4">
@@ -631,6 +657,40 @@ function ScoreReport({ result }) {
               {result.transcript}
             </p>
           )}
+        </div>
+      )}
+
+      {/* Free-sample upgrade handoff (mirrors the writing teaser). */}
+      {isTeaser && (
+        <div className="rounded-xl border border-primary/25 bg-background/95 p-5 text-center shadow-lg">
+          <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Lock className="h-5 w-5" />
+          </span>
+          <h3 className="mt-3 text-base font-bold text-foreground">
+            That was your free Speaking sample
+          </h3>
+          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
+            You&apos;ve seen your overall band and Fluency &amp; Coherence. Premium unlocks the
+            other two criteria, the examiner summary, and improvement advice — for every
+            recording.
+          </p>
+          <Button asChild variant="accent" className="mt-4">
+            <NextLink
+              href="/pricing?upgrade=speaking"
+              onClick={() =>
+                track('paywall_upgrade_click', {
+                  source: 'speaking_sample',
+                  skill: 'speaking',
+                  band: result.overallBand,
+                  slug,
+                })
+              }
+              className="no-underline"
+            >
+              <Sparkles className="h-4 w-4" />
+              Unlock full feedback — Premium
+            </NextLink>
+          </Button>
         </div>
       )}
     </div>
@@ -747,6 +807,7 @@ function CueCard({ cueCard, examiner }) {
 const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
   const { user } = useAuth();
   const { isPremium, loading: planLoading } = usePlan();
+  const { used: sampleUsed } = useFreeSample('speaking');
   const router = useRouter();
   const examiner = useExaminerAudio();
 
@@ -955,9 +1016,12 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
         return;
       }
 
-      // Premium gate BEFORE the scoring call. When the plan is still loading
-      // we let the server decide (the 402 premium_required handler catches it).
-      if (!planLoading && !isPremium) {
+      // Premium gate BEFORE the scoring call — but free users with their
+      // lifetime Speaking sample still available go through to the server
+      // (consume_ai_score v8 grants exactly one sampled score). When the plan
+      // or sample state is still loading we let the server decide (the 402
+      // premium_required handler catches it).
+      if (!planLoading && !isPremium && sampleUsed === true) {
         setIsLoading(false);
         track('premium_gate', { skill: 'speaking', slug: item.slug, stage: 'upgrade' });
         goToPremium(audioPath);
@@ -1174,7 +1238,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
         onClose={() => setFeedbackOpen(false)}
         title="Your AI Feedback & Score"
       >
-        {result && <ScoreReport result={result} />}
+        {result && <ScoreReport result={result} slug={item.slug} />}
         {result ? <div className="mt-5 rounded-lg border border-accent/30 bg-accent/5 p-4"><p className="text-sm font-semibold text-foreground">Try another answer while the feedback is fresh{result.quotaRemaining != null ? ` — ${result.quotaRemaining} score${result.quotaRemaining === 1 ? '' : 's'} left today.` : '.'}</p><Button className="mt-3" variant="outline" onClick={() => { setFeedbackOpen(false); setResult(null); recorder.reset(); }}>Record another answer</Button></div> : null}
         <div className="mt-5 flex justify-end">
           <Button onClick={() => setFeedbackOpen(false)}>Close</Button>

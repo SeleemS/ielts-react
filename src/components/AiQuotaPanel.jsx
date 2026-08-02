@@ -72,7 +72,7 @@ export default function AiQuotaPanel({
             <p className="text-sm leading-6 text-muted-foreground">
               {skill === 'writing'
                 ? 'You’ve used your lifetime free Writing sample. Upgrade to unlock the complete report and continued scoring:'
-                : 'AI Speaking scoring is part of Premium. Upgrade to unlock:'}
+                : 'You’ve used your lifetime free Speaking sample. Upgrade to unlock full scoring on every recording:'}
             </p>
             <ul className="list-disc space-y-2 pl-5 text-sm text-foreground">
               <li>Writing and Speaking AI band scores with clear fair-use limits</li>
