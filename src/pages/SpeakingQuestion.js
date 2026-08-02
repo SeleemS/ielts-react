@@ -40,6 +40,7 @@ import {
   speakingQuestionAudioContext,
 } from '../lib/speakingAudioLabel';
 
+import { sanitizeHtml } from '../../lib/sanitize';
 import { SITE_URL } from '../../lib/site';
 import {
   buildSpeakingQuestionJsonLd,
@@ -802,6 +803,101 @@ function CueCard({ cueCard, examiner }) {
 }
 
 // ---------------------------------------------------------------------------
+// Model answer (Band 8-9) — below the practice area. The answer arrives via
+// getStaticProps (speaking_details.model_answer_html), so the teaser is in the
+// server-rendered HTML for SEO. Free users see roughly the first 120 words
+// behind a fade-out with an unlock card; Premium unlocks the full answer plus
+// the examiner rationale. Display-only gate: usePlan().isPremium is fine here
+// because this is content presentation, not scoring (which is server-gated).
+// ---------------------------------------------------------------------------
+const MODEL_ANSWER_HTML_CLASS =
+  'text-sm leading-7 text-foreground [&_p]:mb-4 [&_h3]:mb-1.5 [&_h3]:mt-5 [&_h3]:text-sm [&_h3]:font-bold [&_h3:first-child]:mt-0 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1';
+
+function ModelAnswerSection({ item }) {
+  const { isPremium } = usePlan();
+  const html = item?.modelAnswerHtml || '';
+  if (!html) return null;
+  const band = item.modelAnswerBand || '8-9';
+
+  return (
+    <section
+      aria-labelledby="model-answer-heading"
+      className="mt-10 rounded-lg border border-border bg-card p-5 shadow-sm"
+    >
+      <div className="mb-1 flex flex-wrap items-center gap-2">
+        <h2
+          id="model-answer-heading"
+          className="text-sm font-bold uppercase tracking-wide text-foreground"
+        >
+          Model answer (Band {band})
+        </h2>
+        <Badge variant="secondary">Part {item.part}</Badge>
+      </div>
+      <p className="mb-4 text-xs text-muted-foreground">
+        Original model answer written by our team for practice — not an official IELTS
+        answer.
+      </p>
+
+      <div className="relative">
+        <div
+          className={cn(MODEL_ANSWER_HTML_CLASS, !isPremium && 'max-h-64 overflow-hidden')}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(html) }}
+        />
+        {!isPremium && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-card to-transparent"
+          />
+        )}
+      </div>
+
+      {isPremium ? (
+        item.modelAnswerRationale ? (
+          <div className="mt-5 rounded-md border border-border bg-secondary/30 p-4">
+            <h3 className="mb-1.5 text-sm font-bold text-foreground">
+              Why this reaches Band {band}
+            </h3>
+            <p className="text-sm leading-6 text-muted-foreground">
+              {item.modelAnswerRationale}
+            </p>
+          </div>
+        ) : null
+      ) : (
+        <div className="mt-4 rounded-xl border border-primary/25 bg-background/95 p-5 text-center">
+          <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Lock className="h-5 w-5" />
+          </span>
+          <h3 className="mt-3 text-base font-bold text-foreground">
+            Unlock the full model answer
+          </h3>
+          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
+            Premium shows the complete Band {band} answer and the examiner&apos;s note on
+            exactly what makes it high-scoring — on every speaking question.
+          </p>
+          <Button asChild variant="accent" className="mt-4">
+            <NextLink
+              href="/pricing?upgrade=speaking"
+              onClick={() =>
+                track('paywall_upgrade_click', {
+                  source: 'speaking_model_answer',
+                  skill: 'speaking',
+                  part: item.part,
+                  slug: item.slug,
+                })
+              }
+              className="no-underline"
+            >
+              <Sparkles className="h-4 w-4" />
+              Unlock model answers — Premium
+            </NextLink>
+          </Button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Main practice page.
 // ---------------------------------------------------------------------------
 const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
@@ -1216,6 +1312,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
               </div>
             </div>
           </div>
+          <ModelAnswerSection item={item} />
           <RelatedPractice skill="speaking" items={related} className="mt-10" />
         </main>
 
