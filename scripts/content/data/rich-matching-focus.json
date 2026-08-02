@@ -1,0 +1,269 @@
+[
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "Seed Banks and the Future of Food",
+    "difficulty": "medium",
+    "topic_tags": ["agriculture", "conservation", "science"],
+    "body_html": "<p><strong>A</strong> Human beings have eaten perhaps six thousand plant species over the course of their history. Today just nine of them supply around two-thirds of the calories consumed worldwide, and wheat, rice and maize alone account for roughly forty per cent. The narrowing happened quickly. Through the twentieth century, farmers in almost every country replaced the local landraces they had inherited, each shaped over generations to suit a particular valley or soil, with a small number of high-yielding varieties bred for uniformity. The gain in productivity was enormous and it fed a growing population. The loss was harder to see: as the landraces vanished from the fields, so did the genetic variation that plant breeders draw on when a new disease, a new pest or a drier decade arrives.</p><p><strong>B</strong> The idea that this variation might be deliberately stored belongs largely to one man. Nikolai Vavilov, a Russian botanist, spent the 1920s and 1930s travelling through five continents, gathering seeds and mapping what he called the centres of origin, the regions where each crop showed the greatest diversity and where, he argued, it had first been domesticated. By the end of his expeditions the collection he had assembled in Leningrad was the largest in the world. Vavilov himself fell foul of Soviet agricultural politics; he was arrested in 1940 and died in prison three years later. During the wartime siege of the city, the researchers who remained in his institute guarded a store of edible seed through a winter of famine, and several of them starved to death rather than eat the collection they were protecting.</p><p><strong>C</strong> A modern seed bank rests on a simple principle: seeds live longer when they are cold and dry. Incoming samples are cleaned, checked for disease and then dried until the moisture inside the seed falls to roughly five per cent. They are sealed into foil packets and moved into a chamber held at minus eighteen degrees Celsius. Decades of trials suggest that every one per cent of moisture removed, and every five degrees of cooling, roughly doubles the time a seed remains alive; well-stored wheat or barley may still sprout after a century. Curators withdraw samples periodically and test them, and once the proportion that germinates falls below a set threshold the sample must be regenerated, grown out into fresh plants in isolation so that it does not cross with neighbouring varieties. Regeneration is the slowest and most expensive job in the building.</p><p><strong>D</strong> Roughly a thousand seed banks now operate around the world, and most are more fragile than they look: war, budget cuts, a failed compressor or a long power cut can undo decades of work. The Svalbard Global Seed Vault, opened in 2008 on a Norwegian island about thirteen hundred kilometres from the North Pole, was built as insurance against exactly that. A tunnel driven into a sandstone mountain leads to chambers surrounded by permafrost, which would hold the temperature down for weeks even if the refrigeration stopped. Svalbard owns nothing it stores; depositors send sealed boxes and may ask for them back at any time. The first withdrawal came in 2015, when a research centre forced out of Aleppo by the Syrian war requested its own material in order to rebuild its collection in Lebanon and Morocco. Replacement boxes were deposited two years later.</p><p><strong>E</strong> Not every seed can be treated this way. The seeds of cocoa, avocado, mango, coconut and a great many tropical forest trees are what botanists call recalcitrant: they are shed with a high water content and are killed, rather than preserved, by drying and freezing. Crops of this kind, along with those such as banana and potato that are propagated from cuttings or tubers, must be kept as living field collections, orchards and plots that have to be weeded, watered and replanted, and that a single hurricane or new disease can destroy. The alternative is cryopreservation: shoot tips or embryos are treated with protective solutions and plunged into liquid nitrogen, where metabolism effectively stops. It works, but a reliable procedure has to be devised species by species, and for most plants nobody has done it yet.</p><p><strong>F</strong> A seed bank is not a museum, and its worth is measured by what leaves it rather than by what it holds. In the early 1970s a virus called grassy stunt swept through the rice fields of Asia; resistance was eventually traced to a single wild population collected in India years earlier and stored in the Philippines, and the gene it carried now sits in varieties grown across millions of hectares. Stories of that kind depend on collections being catalogued, shared and, increasingly, sequenced, and on international rules governing who may take material and how any benefits return to the countries the seeds came from. None of this replaces the older method. Landraces still growing in farmers' fields keep changing as the climate around them changes, which is something no freezer can imitate, and the strongest programmes now do both at once: seeds preserved in the cold, and seeds still at work in the ground.</p>",
+    "groups": [
+      {
+        "question_type": "matching_headings",
+        "prompt": "Questions 1-6. The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below.",
+        "instructions_html": "<p>Write the correct number, <strong>i-ix</strong>, for each paragraph.</p>",
+        "options": [
+          { "key": "i", "text": "A collector whose work outlived him" },
+          { "key": "ii", "text": "The rising cost of running a laboratory" },
+          { "key": "iii", "text": "The seeds that cannot be frozen" },
+          { "key": "iv", "text": "The narrowing of the world's diet" },
+          { "key": "v", "text": "How farmers decide what to sell" },
+          { "key": "vi", "text": "Cold, dry and sealed: the standard method" },
+          { "key": "vii", "text": "Why a collection has to be opened" },
+          { "key": "viii", "text": "A store of last resort in the Arctic" },
+          { "key": "ix", "text": "Predicting the next crop disease" }
+        ],
+        "questions": [
+          { "prompt_text": "Paragraph A", "correct_option_keys": ["iv"], "evidence": "Paragraph A is about how nine crops now supply two-thirds of calories and how landraces were replaced by uniform varieties. That is the narrowing of the world's diet." },
+          { "prompt_text": "Paragraph B", "correct_option_keys": ["i"], "evidence": "Paragraph B describes Vavilov's expeditions and the collection that survived him after his death in prison, so the heading about a collector whose work outlived him fits." },
+          { "prompt_text": "Paragraph C", "correct_option_keys": ["vi"], "evidence": "Paragraph C sets out the standard storage routine: drying to about five per cent moisture, sealing in foil and freezing at minus eighteen degrees." },
+          { "prompt_text": "Paragraph D", "correct_option_keys": ["viii"], "evidence": "Paragraph D describes the Svalbard vault, built inside Arctic permafrost as insurance for other seed banks. It is a store of last resort." },
+          { "prompt_text": "Paragraph E", "correct_option_keys": ["iii"], "evidence": "Paragraph E is entirely about recalcitrant seeds, which are killed by drying and freezing and must be kept alive in other ways." },
+          { "prompt_text": "Paragraph F", "correct_option_keys": ["vii"], "evidence": "Paragraph F argues that a bank's value lies in what leaves it, using the grassy stunt example, so the heading about opening a collection is correct." }
+        ]
+      },
+      {
+        "question_type": "summary_completion",
+        "prompt": "Questions 7-9. Complete the summary below.",
+        "instructions_html": "<p>Complete the summary below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p><p><strong>Storing seeds in a modern bank</strong></p><p>Before they go into storage, seeds are cleaned, checked and then dried until the <strong>(7)&nbsp;______</strong> inside them falls to about five per cent. They are sealed into <strong>(8)&nbsp;______</strong> packets and held at minus eighteen degrees Celsius, where some cereals will still be alive a century later. Samples are tested from time to time, and once the share of seeds that <strong>(9)&nbsp;______</strong> drops below a set level the whole sample has to be grown out again.</p>",
+        "questions": [
+          { "prompt_text": "Gap 7", "accepted": ["moisture", "the moisture", "water"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph C: samples are dried until the moisture inside the seed falls to roughly five per cent." },
+          { "prompt_text": "Gap 8", "accepted": ["foil", "foil packets"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph C states that seeds are sealed into foil packets before being moved into the cold chamber." },
+          { "prompt_text": "Gap 9", "accepted": ["germinate", "germinates", "germinate again"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph C: once the proportion that germinates falls below a set threshold, the sample must be regenerated." }
+        ]
+      },
+      {
+        "question_type": "matching_information",
+        "prompt": "Questions 10 and 11. The reading passage has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F.",
+        "options": [
+          { "key": "A", "text": "Paragraph A" },
+          { "key": "B", "text": "Paragraph B" },
+          { "key": "C", "text": "Paragraph C" },
+          { "key": "D", "text": "Paragraph D" },
+          { "key": "E", "text": "Paragraph E" },
+          { "key": "F", "text": "Paragraph F" }
+        ],
+        "questions": [
+          { "prompt_text": "an example of people who protected seeds at the cost of their own lives", "correct_option_keys": ["B"], "evidence": "Paragraph B says several researchers in Vavilov's institute starved to death during the siege rather than eat the seed store they guarded." },
+          { "prompt_text": "a reference to plants whose seeds are destroyed by being dried", "correct_option_keys": ["E"], "evidence": "Paragraph E explains that recalcitrant seeds such as cocoa and mango are killed, rather than preserved, by drying and freezing." }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 12-14. Do the following statements agree with the information given in the reading passage? Write TRUE, FALSE or NOT GIVEN.",
+        "questions": [
+          { "prompt_text": "Seeds have been taken out of the Svalbard vault and used to rebuild a collection elsewhere.", "answer": "true", "evidence": "Paragraph D describes the 2015 withdrawal by a centre forced out of Aleppo, which used the material to rebuild its collection in Lebanon and Morocco." },
+          { "prompt_text": "Wheat, rice and maize together provide more than half of the calories eaten worldwide.", "answer": "false", "evidence": "Paragraph A puts the figure for those three crops at roughly forty per cent; it is nine crops together that supply about two-thirds." },
+          { "prompt_text": "Seed banks charge plant breeders a fee for each sample they supply.", "answer": "not given", "evidence": "The passage discusses sharing rules and benefit-sharing agreements but says nothing about charges for individual samples." }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "The Rise of the Modern Zoo",
+    "difficulty": "easy",
+    "topic_tags": ["history", "animals", "society"],
+    "body_html": "<p><strong>A</strong> Long before anyone thought of a zoo as a place of study, rulers kept animals to be looked at. Egyptian queens imported baboons and giraffes; Chinese emperors maintained parks stocked with deer and birds; and in Tenochtitlan the Aztec ruler Montezuma kept an enormous collection of birds, cats and reptiles, staffed by hundreds of keepers, which astonished the Spanish soldiers who saw it. The most influential of these menageries was the one Louis XIV built at Versailles in the 1660s. Its enclosures were arranged around a central pavilion so that guests standing in one spot could see every animal at once, an arrangement designed to display the reach of the king rather than the habits of the creatures. Animals were ornaments of rank, and no one expected to learn much from them.</p><p><strong>B</strong> The modern institution began with a different motive. The Zoological Society of London was founded in 1826 by men who wanted a living collection for scientific study, and the gardens it opened in Regent's Park two years later were restricted to fellows of the society and their guests. Money, not principle, changed that: to cover its costs the society admitted the paying public in 1847, and the abbreviation that visitors used for the zoological gardens gave English the word zoo. The animals lived in barred cages with tiled floors, each species alone, in buildings designed above all to be easy to scrub. Hygiene was taken seriously, but the design ignored almost everything else an animal might need, and mortality among the more delicate species was severe.</p><p><strong>C</strong> The break came from a dealer rather than a scientist. Carl Hagenbeck, who supplied animals to zoos across Europe from his yard in Hamburg, patented in 1896 a way of displaying them without bars: a dry ditch, invisible from the visitor's side, kept the public and the animals apart while allowing both to be seen against the same background. At his new park outside Hamburg, opened in 1907, lions appeared to share a rocky panorama with grazing antelope standing safely on the far side of a moat. Hagenbeck also insisted that many species tolerated cold far better than the heated houses of the day assumed, and kept them outdoors year round. Zoos in Rome, Detroit and elsewhere copied both the moats and the argument within two decades.</p><p><strong>D</strong> A further change of purpose came in the twentieth century, as species began disappearing faster than collectors could replace them. Some animals survived only because they were already in captivity: Père David's deer, extinct in China, persisted in an English park and was eventually returned to its own country, and the Arabian oryx, hunted out of the wild by 1972, was bred in captivity and released back into Oman a decade later. Studbooks recording the ancestry of every captive individual, first compiled for the European bison, allowed zoos to plan breeding across national borders instead of competing for specimens. Gerald Durrell, who founded a zoo on Jersey in 1959, argued the case most bluntly: a zoo, he said, should be a reservoir for species in danger, and everything else it did was secondary.</p><p><strong>E</strong> Welfare took longer to enter the conversation. The Swiss biologist Heini Hediger, who ran the zoos of Basel and Zurich, argued in the 1950s that an enclosure had to be judged by how an animal used space rather than by its area alone: every species had a distance at which it would flee an approaching human, and a boundary it defended, and a design that ignored these produced permanent stress in a technically spacious pen. Later observers catalogued the repetitive pacing, rocking and head-swinging that appear in captive carnivores and elephants and rarely in wild ones. The response has been enrichment, giving animals problems to solve and choices to make, together with far larger enclosures, and a number of zoos have concluded that elephants and polar bears cannot be kept acceptably at all and have stopped.</p><p><strong>F</strong> What zoos are now for remains disputed. They claim to educate, though studies of what visitors actually remember an hour after leaving give mixed and sometimes disappointing results. They fund fieldwork, though the share of ticket revenue that reaches wild populations is small. They breed threatened animals, though only a minority of the species they keep are part of any release programme. The honest answer is probably that a zoo does several things unevenly, and that the version most likely to survive public opinion is a smaller one: fewer species, far more room for each, and a greater share of attention given to the frogs, insects and songbirds disappearing within a few kilometres of the gate rather than to the largest animals from the furthest away.</p>",
+    "groups": [
+      {
+        "question_type": "matching_headings",
+        "prompt": "Questions 1-6. The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below.",
+        "instructions_html": "<p>Write the correct number, <strong>i-ix</strong>, for each paragraph.</p>",
+        "options": [
+          { "key": "i", "text": "Removing the bars" },
+          { "key": "ii", "text": "Asking what a zoo is now for" },
+          { "key": "iii", "text": "Animals as ornaments of rank" },
+          { "key": "iv", "text": "The cost of feeding a large collection" },
+          { "key": "v", "text": "Reading the signs of stress" },
+          { "key": "vi", "text": "A society founded for study" },
+          { "key": "vii", "text": "Teaching animals to perform" },
+          { "key": "viii", "text": "From display to rescue" },
+          { "key": "ix", "text": "The first public aquariums" }
+        ],
+        "questions": [
+          { "prompt_text": "Paragraph A", "correct_option_keys": ["iii"], "evidence": "Paragraph A describes menageries kept by emperors, Montezuma and Louis XIV to display the owner's power, not to study the animals." },
+          { "prompt_text": "Paragraph B", "correct_option_keys": ["vi"], "evidence": "Paragraph B is about the Zoological Society of London, founded in 1826 for scientific study and only later opened to the public." },
+          { "prompt_text": "Paragraph C", "correct_option_keys": ["i"], "evidence": "Paragraph C describes Hagenbeck's patented moat, which let animals be displayed without visible bars." },
+          { "prompt_text": "Paragraph D", "correct_option_keys": ["viii"], "evidence": "Paragraph D covers captive breeding, studbooks and reintroductions, the shift from exhibiting animals to saving them." },
+          { "prompt_text": "Paragraph E", "correct_option_keys": ["v"], "evidence": "Paragraph E discusses Hediger's work and the repetitive behaviours that reveal stress in captive animals." },
+          { "prompt_text": "Paragraph F", "correct_option_keys": ["ii"], "evidence": "Paragraph F weighs the education, funding and breeding claims made for zoos and asks what purpose they should now serve." }
+        ]
+      },
+      {
+        "question_type": "matching_information",
+        "prompt": "Questions 7-9. The reading passage has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F.",
+        "options": [
+          { "key": "A", "text": "Paragraph A" },
+          { "key": "B", "text": "Paragraph B" },
+          { "key": "C", "text": "Paragraph C" },
+          { "key": "D", "text": "Paragraph D" },
+          { "key": "E", "text": "Paragraph E" },
+          { "key": "F", "text": "Paragraph F" }
+        ],
+        "questions": [
+          { "prompt_text": "a description of a design that hid the barrier between visitors and animals", "correct_option_keys": ["C"], "evidence": "Paragraph C explains Hagenbeck's dry ditch, invisible from the visitor's side, which separated public and animals without bars." },
+          { "prompt_text": "an example of an animal that survived only because it was already in captivity", "correct_option_keys": ["D"], "evidence": "Paragraph D gives Père David's deer, extinct in China but surviving in an English park, and the Arabian oryx." },
+          { "prompt_text": "a collection laid out so that guests could see everything from one position", "correct_option_keys": ["A"], "evidence": "Paragraph A describes the Versailles menagerie, arranged around a central pavilion so every animal could be seen at once." }
+        ]
+      },
+      {
+        "question_type": "matching_features",
+        "prompt": "Questions 10 and 11. Look at the following statements and the list of people below. Match each statement with the correct person, A-E.",
+        "options": [
+          { "key": "A", "text": "Carl Hagenbeck" },
+          { "key": "B", "text": "the Zoological Society of London" },
+          { "key": "C", "text": "Gerald Durrell" },
+          { "key": "D", "text": "Heini Hediger" },
+          { "key": "E", "text": "Louis XIV" }
+        ],
+        "questions": [
+          { "prompt_text": "He argued that a zoo's main job was to act as a reservoir for endangered species.", "correct_option_keys": ["C"], "evidence": "Paragraph D quotes Durrell's blunt claim that a zoo should be a reservoir for species in danger and that everything else was secondary." },
+          { "prompt_text": "He showed that how an animal uses space matters more than the size of its enclosure.", "correct_option_keys": ["D"], "evidence": "Paragraph E credits Hediger with the argument that flight distance and defended boundaries matter more than floor area." }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 12-14. Do the following statements agree with the information given in the reading passage? Write TRUE, FALSE or NOT GIVEN.",
+        "questions": [
+          { "prompt_text": "The London zoological gardens admitted the general public as soon as they opened.", "answer": "false", "evidence": "Paragraph B says the gardens opened in 1828 for fellows and their guests, and only admitted paying visitors in 1847." },
+          { "prompt_text": "Hagenbeck's method of displaying animals was adopted by zoos in other countries.", "answer": "true", "evidence": "Paragraph C states that zoos in Rome, Detroit and elsewhere copied both the moats and the argument within two decades." },
+          { "prompt_text": "Most zoo visitors say they would rather see local wildlife than animals from distant countries.", "answer": "not given", "evidence": "The writer suggests zoos should give more attention to local species, but no survey of what visitors prefer is mentioned." }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "Why Cities Are Hotter Than the Countryside",
+    "difficulty": "medium",
+    "topic_tags": ["environment", "urban", "climate"],
+    "body_html": "<p><strong>A</strong> The discovery was made by an amateur. Luke Howard, a London chemist better known for giving clouds their names, spent the early years of the nineteenth century comparing thermometer readings taken in the city with readings taken in the fields beyond it. The results, published from 1818 onwards, showed that London was consistently warmer than its surroundings, and that the gap was widest not at noon but in the hours after sunset, when the countryside cooled quickly and the streets did not. Howard had no explanation for it. More than a century later the effect acquired a name, the urban heat island, and it has since been measured in every city where anyone has looked, from tropical capitals to towns inside the Arctic Circle. It is strongest on calm, cloudless nights and can almost vanish in wind and rain.</p><p><strong>B</strong> Three groups of causes are at work. The first is the surfaces themselves. Fresh asphalt reflects only a small percentage of the sunlight that lands on it, so nearly all of that energy is absorbed, and brick, concrete and stone store it in bulk and release it slowly for hours after dark. The second is shape. A narrow street is a canyon whose walls face each other, and the strip of open sky visible from the pavement is small; heat radiated upward by one wall is intercepted by another instead of escaping, a relationship the climatologist Tim Oke set out in detail in the 1970s. The third is what the city itself produces: engines, factories, cooking and, increasingly, air conditioning, which cools interiors by pumping heat into the street, so that the hotter the night the more heat is added to it.</p><p><strong>C</strong> Measuring the effect is harder than it sounds. Satellites see the temperature of surfaces, and a black roof at midday may be forty degrees hotter than the air above it, which makes satellite maps dramatic but misleading if they are read as maps of what a person feels. Air temperature has to be recorded by shielded sensors about two metres above the ground, and permanent weather stations are too widely spaced to show how one street differs from the next. The gap has been filled by sensors mounted on cars and bicycles driven along fixed routes at the same hour, often by volunteers recruited for a single hot afternoon. Campaigns of this kind, run in dozens of cities, routinely find differences of five to eight degrees between neighbourhoods a few kilometres apart.</p><p><strong>D</strong> Those differences are not distributed at random. Tree cover in most cities tracks income closely, and the districts with the least shade are usually the ones with the least money, the oldest housing and the fewest air conditioners. The health consequences follow the same pattern. What kills during a heatwave is less the afternoon peak than the failure of the night to cool: the body recovers from heat load while asleep, and when the overnight minimum stays high for several days in a row, deaths among the elderly, the ill and outdoor workers rise sharply. Heat now causes more deaths in many countries than floods and storms combined, and it does so quietly, in apartments rather than on the news.</p><p><strong>E</strong> The remedies are well known and each has a catch. Coating roofs in reflective paint is cheap and immediately effective for the building beneath, though it does nothing for the pavement. Street trees are the strongest single measure, cooling twice over, by shading surfaces before they heat up and by releasing water vapour from their leaves, but they need watering through exactly the droughts that make them most valuable, and in a very narrow canyon their canopy can trap exhaust fumes at head height. Green roofs cool a little and, usefully, hold back a large share of the rain that would otherwise pour into the drains during a storm. Reflective pavements are the most awkward case: they lower air temperature, but the sunlight they bounce upward strikes pedestrians, who may feel hotter on a cooler street. In my view the evidence still favours trees over every alternative for cost per degree, provided a city is willing to wait fifteen years for the canopy to grow.</p><p><strong>F</strong> Cities have begun to organise. Several have appointed heat officers with budgets and authority across departments, an idea that spread from Athens and Miami. Ahmedabad in India, after a heatwave that overwhelmed its hospitals, built the first heat action plan in South Asia, combining forecasts, text alerts, training for clinic staff and cool rooms in public buildings, and the death rate in later heatwaves fell. Building codes are slowly following, requiring shading, ventilation and lighter roof colours. None of this addresses the cause of the warming that is making each summer worse, and it would be a serious error to treat cool surfaces as a substitute for reducing emissions. It is, however, the part of the problem a mayor can actually solve, and it buys time for the people least able to buy it for themselves.</p>",
+    "groups": [
+      {
+        "question_type": "matching_headings",
+        "prompt": "Questions 1-6. The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below.",
+        "instructions_html": "<p>Write the correct number, <strong>i-ix</strong>, for each paragraph.</p>",
+        "options": [
+          { "key": "i", "text": "Measuring what satellites cannot see" },
+          { "key": "ii", "text": "Cures that come with side effects" },
+          { "key": "iii", "text": "How air conditioners are designed" },
+          { "key": "iv", "text": "The first person to record the difference" },
+          { "key": "v", "text": "Who suffers most, and when" },
+          { "key": "vi", "text": "The rising price of urban land" },
+          { "key": "vii", "text": "Surfaces, shapes and waste heat" },
+          { "key": "viii", "text": "From single buildings to city policy" },
+          { "key": "ix", "text": "How weather forecasts are produced" }
+        ],
+        "questions": [
+          { "prompt_text": "Paragraph A", "correct_option_keys": ["iv"], "evidence": "Paragraph A is about Luke Howard, the amateur who first compared city and country readings and documented the difference." },
+          { "prompt_text": "Paragraph B", "correct_option_keys": ["vii"], "evidence": "Paragraph B lists the three causes: absorbing surfaces, street canyon geometry, and heat produced by engines and air conditioning." },
+          { "prompt_text": "Paragraph C", "correct_option_keys": ["i"], "evidence": "Paragraph C contrasts satellite surface readings with the air temperature measurements taken by sensors on cars and bicycles." },
+          { "prompt_text": "Paragraph D", "correct_option_keys": ["v"], "evidence": "Paragraph D shows that poorer districts are hottest and that deaths rise when night-time temperatures fail to fall." },
+          { "prompt_text": "Paragraph E", "correct_option_keys": ["ii"], "evidence": "Paragraph E reviews cooling measures and the drawback attached to each one, from thirsty trees to glaring pavements." },
+          { "prompt_text": "Paragraph F", "correct_option_keys": ["viii"], "evidence": "Paragraph F moves from individual buildings to heat officers, heat action plans and building codes." }
+        ]
+      },
+      {
+        "question_type": "matching_features",
+        "prompt": "Questions 7-9. Look at the following statements and the list of cooling measures below. Match each statement with the correct measure, A-E.",
+        "options": [
+          { "key": "A", "text": "reflective roof coatings" },
+          { "key": "B", "text": "street trees" },
+          { "key": "C", "text": "green roofs" },
+          { "key": "D", "text": "reflective pavements" },
+          { "key": "E", "text": "cool rooms in public buildings" }
+        ],
+        "questions": [
+          { "prompt_text": "It can lower the air temperature while making people on foot feel hotter.", "correct_option_keys": ["D"], "evidence": "Paragraph E says reflective pavements lower air temperature but bounce sunlight upward onto pedestrians, who may feel hotter." },
+          { "prompt_text": "It reduces the amount of rainwater reaching the drainage system.", "correct_option_keys": ["C"], "evidence": "Paragraph E notes that green roofs hold back a large share of the rain that would otherwise pour into the drains." },
+          { "prompt_text": "It cools both by providing shade and by giving off water vapour.", "correct_option_keys": ["B"], "evidence": "Paragraph E describes street trees as cooling twice over, by shading surfaces and by releasing water vapour from their leaves." }
+        ]
+      },
+      {
+        "question_type": "summary_completion",
+        "prompt": "Questions 10 and 11. Complete the summary below.",
+        "instructions_html": "<p>Complete the summary below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p><p><strong>Why the heat stays in the streets</strong></p><p>Materials such as <strong>(10)&nbsp;______</strong> reflect very little of the sunlight that falls on them, so almost all of that energy is absorbed and then released slowly once the sun has gone down. The shape of a street matters too. Where buildings stand close together, only a narrow strip of <strong>(11)&nbsp;______</strong> can be seen from the pavement, and heat given off by one wall is caught by another instead of escaping upwards.</p>",
+        "questions": [
+          { "prompt_text": "Gap 10", "accepted": ["asphalt", "fresh asphalt", "brick"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph B: fresh asphalt reflects only a small percentage of the sunlight that lands on it, so nearly all the energy is absorbed." },
+          { "prompt_text": "Gap 11", "accepted": ["sky", "open sky"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph B: in a narrow canyon the strip of open sky visible from the pavement is small, so radiated heat is intercepted." }
+        ]
+      },
+      {
+        "question_type": "yes_no_notgiven",
+        "prompt": "Questions 12-14. Do the following statements agree with the claims of the writer in the reading passage? Write YES, NO or NOT GIVEN.",
+        "questions": [
+          { "prompt_text": "Planting trees gives cities more cooling for the money spent than any other measure.", "answer": "yes", "evidence": "In paragraph E the writer states that the evidence still favours trees over every alternative for cost per degree." },
+          { "prompt_text": "Cooling city surfaces removes the need to cut greenhouse gas emissions.", "answer": "no", "evidence": "Paragraph F calls it a serious error to treat cool surfaces as a substitute for reducing emissions." },
+          { "prompt_text": "Every city with more than a million residents should appoint a heat officer.", "answer": "not given", "evidence": "The writer reports that some cities have appointed heat officers but never recommends a population threshold for doing so." }
+        ]
+      }
+    ]
+  },
+  {
+    "skill": "reading",
+    "module": "academic",
+    "title": "The Science of Scent",
+    "difficulty": "hard",
+    "topic_tags": ["science", "psychology", "business"],
+    "body_html": "<p><strong>A</strong> Of the human senses, smell has been the one philosophers were happiest to dismiss. Kant thought it the least rewarding of the senses and doubted it was worth cultivating; Darwin judged it of extremely slight service to modern humans. That verdict hardened into a scientific commonplace, and its origins are more accidental than most people assume. A recent review traced the belief to nineteenth-century comparative anatomy, and in particular to the observation that the olfactory bulb occupies a smaller fraction of the human brain than of a rat's, a claim about proportion that was quietly converted into a claim about ability. Tested directly, people do better than the reputation suggests. In laboratory trials humans outperform dogs on some odours, follow a scent trail across grass when made to crawl, and detect certain compounds at concentrations that instruments struggle to register.</p><p><strong>B</strong> What happens in the nose was obscure until 1991, when Linda Buck and Richard Axel identified the enormous family of genes that codes for odour receptors, work for which they later shared a Nobel Prize. Humans have around four hundred working receptor types, far fewer than a mouse's eleven hundred or so, and the number alone would suggest a modest sense. The arrangement, however, is more powerful than the count implies. Each receptor responds to a range of molecules rather than to one, and each molecule activates a set of receptors rather than a single detector, so an odour is registered as a combinatorial pattern across many channels. A relatively small number of receptors can therefore encode an enormous number of distinct smells, in the way that a limited alphabet supports an unlimited vocabulary.</p><p><strong>C</strong> This is also why the field's central practical problem remains unsolved. A chemist can look at a molecule and calculate its boiling point, its colour and its behaviour in solution, but cannot look at its structure and say with confidence what it will smell like. Molecules that differ by a single atom may smell entirely unrelated, while compounds with nothing structurally in common can be indistinguishable to the nose. The classic demonstration is carvone: its two mirror-image forms, chemically identical in almost every respect, are perceived as caraway and spearmint respectively. Perception also varies between people. A small change in one receptor gene makes coriander taste of soap to a substantial minority; another leaves some people unable to smell a compound in sweat that others find overpowering. There is, in other words, no single objective description of what a substance smells like.</p><p><strong>D</strong> Smell reaches the brain by an unusually direct route. Signals from the olfactory bulb pass to the amygdala and hippocampus, structures central to emotion and memory, without the full relay through the thalamus that vision and hearing undergo. The consequences are familiar to anyone who has been ambushed by a smell from childhood. Memories triggered by odours are, in controlled studies, older than those triggered by words or pictures, more often drawn from the first decade of life, and reported as markedly more emotional, though not in fact more accurate. Almost none of this is innate. Preferences are learned by association, which is why the smell of wintergreen is pleasant to Americans, who meet it in sweets, and unpleasant to older Britons, who met it in medicine.</p><p><strong>E</strong> Perfumery turned these facts into a craft long before anyone understood them. A fragrance is built in layers according to how quickly its components evaporate: light top notes that announce the scent and fade within minutes, heart notes that carry it for hours, and heavy base notes and fixatives that hold the whole structure to the skin for a day. For centuries the fixatives came from animals, and the industry was transformed when synthetic molecules began to replace them. The synthesis of coumarin, with its smell of new-mown hay, produced in 1882 the first commercially successful fragrance built around a laboratory ingredient, and the palette has expanded ever since. Formulas are almost never patented, since a patent would publish them; they are kept as trade secrets inside a handful of firms that supply most of the world's perfumes, soaps and detergents.</p><p><strong>F</strong> The gap between craft and prediction is now closing from an unexpected direction. Machine-learning models trained on thousands of molecules rated by panels of human sniffers have begun to predict odour descriptions from chemical structure with accuracy approaching that of an average person, and the maps they build group molecules by how they smell rather than by how they are built. The medical stakes have risen too. A declining sense of smell is one of the earliest measurable signs of Parkinson's and Alzheimer's disease, often appearing years before diagnosis, and the sudden losses caused by viral infection have made anosmia a public concern rather than a curiosity. The sense that Kant thought expendable is turning out to be both measurable and diagnostic.</p>",
+    "groups": [
+      {
+        "question_type": "matching_headings",
+        "prompt": "Questions 1-6. The reading passage has six paragraphs, A-F. Choose the correct heading for each paragraph from the list of headings below.",
+        "instructions_html": "<p>Write the correct number, <strong>i-ix</strong>, for each paragraph.</p>",
+        "options": [
+          { "key": "i", "text": "A sense wrongly written off" },
+          { "key": "ii", "text": "The chemistry of soaps and detergents" },
+          { "key": "iii", "text": "Why the same molecule divides opinion" },
+          { "key": "iv", "text": "Building a fragrance in layers" },
+          { "key": "v", "text": "How a smell is coded and sent" },
+          { "key": "vi", "text": "Machines that learn to smell" },
+          { "key": "vii", "text": "Growing flowers for the perfume trade" },
+          { "key": "viii", "text": "The shortest route to memory" },
+          { "key": "ix", "text": "How animals mark their territory" }
+        ],
+        "questions": [
+          { "prompt_text": "Paragraph A", "correct_option_keys": ["i"], "evidence": "Paragraph A sets out the low opinion of smell held by Kant and Darwin and the evidence that this reputation is undeserved." },
+          { "prompt_text": "Paragraph B", "correct_option_keys": ["v"], "evidence": "Paragraph B explains the receptor family found by Buck and Axel and the combinatorial pattern by which an odour is encoded." },
+          { "prompt_text": "Paragraph C", "correct_option_keys": ["iii"], "evidence": "Paragraph C covers the unpredictable link between structure and smell and the genetic differences that make coriander taste of soap to some people." },
+          { "prompt_text": "Paragraph D", "correct_option_keys": ["viii"], "evidence": "Paragraph D describes the direct pathway to the amygdala and hippocampus and the age and emotional force of odour-cued memories." },
+          { "prompt_text": "Paragraph E", "correct_option_keys": ["iv"], "evidence": "Paragraph E describes top, heart and base notes and the fixatives that hold a fragrance together." },
+          { "prompt_text": "Paragraph F", "correct_option_keys": ["vi"], "evidence": "Paragraph F is about machine-learning models that predict odour from structure, plus the medical uses of smell testing." }
+        ]
+      },
+      {
+        "question_type": "summary_completion",
+        "prompt": "Questions 7-11. Complete the summary below.",
+        "instructions_html": "<p>Complete the summary below. Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</p><p><strong>How the nose detects an odour</strong></p><p>The human nose carries roughly four hundred working types of <strong>(7)&nbsp;______</strong>, far fewer than a mouse possesses. Buck and Axel showed that each of them answers to a range of molecules, and that each molecule sets off several of them, so a smell is registered as a <strong>(8)&nbsp;______</strong> pattern rather than by one detector on its own. The two researchers were awarded a <strong>(9)&nbsp;______</strong> for this work. Even now, chemists cannot examine a molecule's <strong>(10)&nbsp;______</strong> and predict its smell with confidence: the two mirror-image forms of carvone are perceived as caraway and <strong>(11)&nbsp;______</strong>.</p>",
+        "questions": [
+          { "prompt_text": "Gap 7", "accepted": ["receptor", "receptors", "odour receptors", "odor receptors"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph B: humans have around four hundred working receptor types, far fewer than a mouse's eleven hundred." },
+          { "prompt_text": "Gap 8", "accepted": ["combinatorial", "a combinatorial"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph B states that an odour is registered as a combinatorial pattern across many channels." },
+          { "prompt_text": "Gap 9", "accepted": ["nobel prize", "the nobel prize", "nobel"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph B says Buck and Axel later shared a Nobel Prize for identifying the odour receptor gene family." },
+          { "prompt_text": "Gap 10", "accepted": ["structure", "chemical structure", "its structure"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph C: a chemist cannot look at a molecule's structure and say with confidence what it will smell like." },
+          { "prompt_text": "Gap 11", "accepted": ["spearmint"], "word_limit": 2, "spelling_variants": true, "evidence": "Paragraph C gives carvone as the classic case: its mirror-image forms smell of caraway and spearmint." }
+        ]
+      },
+      {
+        "question_type": "true_false_notgiven",
+        "prompt": "Questions 12-14. Do the following statements agree with the information given in the reading passage? Write TRUE, FALSE or NOT GIVEN.",
+        "questions": [
+          { "prompt_text": "Mice have more working odour receptor types than humans do.", "answer": "true", "evidence": "Paragraph B gives humans about four hundred receptor types against roughly eleven hundred in a mouse." },
+          { "prompt_text": "Perfume houses protect their formulas by taking out patents on them.", "answer": "false", "evidence": "Paragraph E says formulas are almost never patented, because a patent would publish them, and are kept as trade secrets instead." },
+          { "prompt_text": "Most people lose their sense of smell as they grow older.", "answer": "not given", "evidence": "The passage links declining smell to Parkinson's and Alzheimer's disease but makes no claim about ageing in the general population." }
+        ]
+      }
+    ]
+  }
+]
