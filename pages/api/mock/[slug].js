@@ -4,11 +4,14 @@ import { createClient } from '@supabase/supabase-js';
 import { getMockTest } from '../../../lib/supabase';
 import { fetchPremiumStatus } from '../../../lib/premium';
 
+let adminClient = null;
 function getAdmin() {
+  if (adminClient) return adminClient;
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) throw new Error('supabase-admin-not-configured');
-  return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  adminClient = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  return adminClient;
 }
 
 export default async function handler(req, res) {
@@ -31,6 +34,14 @@ export default async function handler(req, res) {
   }
   if (error || !data?.user) return res.status(401).json({ error: 'Sign in first.' });
 
+  const slug = typeof req.query.slug === 'string' ? req.query.slug : '';
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    return res.status(400).json({ error: 'Invalid mock test.' });
+  }
+
+  // Entitlement resolves BEFORE the content fetch starts (protected content is
+  // never even loaded for non-premium callers — tests pin this). The latency
+  // win comes from getMockTest fetching its sections concurrently instead.
   const premium = await fetchPremiumStatus(admin, data.user.id);
   if (premium.error) {
     console.error('protected mock entitlement failed:', premium.error.message);
@@ -38,11 +49,6 @@ export default async function handler(req, res) {
   }
   if (!premium.isPremium) {
     return res.status(402).json({ error: 'Premium is required.', reason: 'premium_required' });
-  }
-
-  const slug = typeof req.query.slug === 'string' ? req.query.slug : '';
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-    return res.status(400).json({ error: 'Invalid mock test.' });
   }
   try {
     const mock = await getMockTest(slug);

@@ -10,13 +10,17 @@ vi.mock('next/server', () => ({
 
 import { middleware } from './middleware';
 
-function request({ country, cookie } = {}) {
+function request({ country, cookie, countryCookie } = {}) {
+  const jar = {
+    ib_consent_default: cookie,
+    ib_country: countryCookie,
+  };
   return {
     headers: {
       get: vi.fn(() => country ?? null),
     },
     cookies: {
-      get: vi.fn(() => (cookie ? { value: cookie } : undefined)),
+      get: vi.fn((name) => (jar[name] ? { value: jar[name] } : undefined)),
     },
   };
 }
@@ -65,11 +69,33 @@ describe('geo-aware consent middleware', () => {
     }
   );
 
-  it('does not rewrite an unchanged consent-default cookie', () => {
-    const response = middleware(request({ country: 'CH', cookie: 'denied' }));
+  it('does not rewrite unchanged consent-default and country cookies', () => {
+    const response = middleware(
+      request({ country: 'CH', cookie: 'denied', countryCookie: 'CH' })
+    );
 
     expect(nextResponse.next).toHaveBeenCalledTimes(1);
     expect(response.cookies.set).not.toHaveBeenCalled();
+  });
+
+  it('sets the ib_country cookie for statically generated pages', () => {
+    const response = middleware(request({ country: 'IN' }));
+
+    expect(response.cookies.set).toHaveBeenCalledWith(
+      'ib_country',
+      'IN',
+      expect.objectContaining({ path: '/', sameSite: 'lax', httpOnly: false })
+    );
+  });
+
+  it('writes an empty ib_country when geo is malformed', () => {
+    const response = middleware(request({ country: 'unknown', countryCookie: 'IN' }));
+
+    expect(response.cookies.set).toHaveBeenCalledWith(
+      'ib_country',
+      '',
+      expect.any(Object)
+    );
   });
 });
 

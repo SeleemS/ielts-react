@@ -11,12 +11,16 @@ import {
 export default ListeningQuestion;
 
 export async function getStaticPaths() {
-  // Pre-render BOTH legacy Firestore ids and new slugs; others on demand.
+  // Canonical URL only per passage (legacy id when present, else slug); the
+  // other variant renders via blocking fallback.
   const [legacyMap, slugs] = await Promise.all([
     getLegacyIdSlugMap(SKILLS.listening),
     getPassageSlugs(SKILLS.listening),
   ]);
-  const ids = Array.from(new Set([...Object.keys(legacyMap), ...slugs]));
+  const slugsWithLegacyId = new Set(Object.values(legacyMap));
+  const ids = Array.from(
+    new Set([...Object.keys(legacyMap), ...slugs.filter((s) => !slugsWithLegacyId.has(s))])
+  );
   return {
     paths: ids.map((id) => ({ params: { id } })),
     fallback: 'blocking',

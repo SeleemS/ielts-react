@@ -12,6 +12,10 @@ import { NextResponse } from 'next/server';
 import { consentDefaultForCountry } from './src/lib/consentRegions';
 
 const COOKIE = 'ib_consent_default';
+// Two-letter country for statically generated pages that need request geo
+// client-side (e.g. /pricing PPP display — the checkout API re-resolves geo
+// server-side, so this cookie is display-only and safe to trust loosely).
+const COUNTRY_COOKIE = 'ib_country';
 
 // AI/search crawler telemetry: one row per page fetch by a known agent, into
 // public.crawler_hits (service-role REST, fire-and-forget via waitUntil so no
@@ -64,16 +68,22 @@ export function middleware(request, event) {
   recordCrawlerHit(request, event);
   const country = request.headers.get('x-vercel-ip-country');
   const value = consentDefaultForCountry(country);
-  // Only write when it changed, so unchanged responses stay CDN-cacheable.
-  if (request.cookies.get(COOKIE)?.value === value) return NextResponse.next();
+  const countryValue = /^[A-Za-z]{2}$/.test(country || '') ? country.toUpperCase() : '';
+  // Only write when something changed, so unchanged responses stay CDN-cacheable.
+  const consentUnchanged = request.cookies.get(COOKIE)?.value === value;
+  const countryUnchanged =
+    (request.cookies.get(COUNTRY_COOKIE)?.value || '') === countryValue;
+  if (consentUnchanged && countryUnchanged) return NextResponse.next();
   const res = NextResponse.next();
-  res.cookies.set(COOKIE, value, {
+  const cookieOpts = {
     path: '/',
-    httpOnly: false, // the pre-tag consent script reads this client-side
+    httpOnly: false, // read client-side (consent pre-tag script / pricing page)
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 180,
-  });
+  };
+  if (!consentUnchanged) res.cookies.set(COOKIE, value, cookieOpts);
+  if (!countryUnchanged) res.cookies.set(COUNTRY_COOKIE, countryValue, cookieOpts);
   return res;
 }
 

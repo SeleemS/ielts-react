@@ -16,5 +16,5 @@ export default function WritingIndex({ items }) {
 
 export async function getStaticProps() {
   const items = await listPassages(SKILLS.writing);
-  return { props: { items }, revalidate: 60 };
+  return { props: { items }, revalidate: 3600 };
 }

@@ -11,13 +11,18 @@ import {
 export default ReadingQuestion;
 
 export async function getStaticPaths() {
-  // Pre-render BOTH the legacy Firestore ids (SEO-indexed URLs) and the new
-  // slugs. Anything not listed is rendered on demand via fallback: 'blocking'.
+  // Pre-render only each passage's CANONICAL URL (the legacy Firestore id when
+  // one exists — matching the canonicalUrl choice in src/pages/ReadingQuestion
+  // — otherwise the slug). The non-canonical variant still renders on demand
+  // via fallback: 'blocking'; building both doubled question-page build time.
   const [legacyMap, slugs] = await Promise.all([
     getLegacyIdSlugMap(SKILLS.reading),
     getPassageSlugs(SKILLS.reading),
   ]);
-  const ids = Array.from(new Set([...Object.keys(legacyMap), ...slugs]));
+  const slugsWithLegacyId = new Set(Object.values(legacyMap));
+  const ids = Array.from(
+    new Set([...Object.keys(legacyMap), ...slugs.filter((s) => !slugsWithLegacyId.has(s))])
+  );
   return {
     paths: ids.map((id) => ({ params: { id } })),
     fallback: 'blocking',

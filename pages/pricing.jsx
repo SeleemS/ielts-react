@@ -380,7 +380,19 @@ function Testimonials({ items }) {
   );
 }
 
-export default function PricingPage({ regionalPricing = false, country = '' }) {
+export default function PricingPage() {
+  // The page is statically generated (it was SSR'd purely to read the geo
+  // header, costing ~500ms TTFB on the top conversion page). Geo now arrives
+  // via the middleware's ib_country cookie, read after hydration; the page
+  // first paints with standard pricing and flips to the regional rate on
+  // mount. Checkout re-resolves geography server-side, so this is display-only.
+  const [country, setCountry] = React.useState('');
+  const regionalPricing = isPppCountry(country);
+
+  React.useEffect(() => {
+    const match = document.cookie.match(/(?:^|;\s*)ib_country=([A-Z]{2})/);
+    if (match) setCountry(match[1]);
+  }, []);
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const {
@@ -1071,12 +1083,9 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
   );
 }
 
-export function getServerSideProps({ req }) {
-  const country = String(req?.headers?.['x-vercel-ip-country'] || '').toUpperCase();
-  return {
-    props: {
-      country,
-      regionalPricing: isPppCountry(country),
-    },
-  };
+export function getStaticProps() {
+  // Static + hourly ISR: the page itself has no per-request data (geo is a
+  // client-side cookie read), so serve it from the CDN like the rest of the
+  // site instead of invoking a lambda per visit.
+  return { props: {}, revalidate: 3600 };
 }

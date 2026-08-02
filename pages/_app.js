@@ -2,6 +2,7 @@ import Script from 'next/script';
 import Head from 'next/head';
 import * as React from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { Analytics } from '@vercel/analytics/react';
 // Tailwind + shadcn design tokens. Chakra has been fully removed; Tailwind
 // Preflight is re-enabled in tailwind.config.js.
@@ -13,9 +14,17 @@ import {
   trackPageView,
 } from '../src/lib/analytics';
 import { startSessionHeartbeat } from '../src/lib/sessionHeartbeat';
-import ConsentManager from '../src/components/ConsentManager';
-import InteractionTelemetry from '../src/components/InteractionTelemetry';
-import OfferReminderModal from '../src/components/OfferReminderModal';
+// Client-only chrome (consent banner, delegated-click telemetry, sale reminder
+// modal): none of it renders meaningful SSR output, so load it as separate
+// async chunks instead of inside the critical _app bundle every page parses
+// before hydration.
+const ConsentManager = dynamic(() => import('../src/components/ConsentManager'), { ssr: false });
+const InteractionTelemetry = dynamic(() => import('../src/components/InteractionTelemetry'), {
+  ssr: false,
+});
+const OfferReminderModal = dynamic(() => import('../src/components/OfferReminderModal'), {
+  ssr: false,
+});
 import {
   adsAllowedForConsent,
   adsAllowedForPath,

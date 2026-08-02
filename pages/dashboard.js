@@ -49,17 +49,22 @@ function useDashboardData(user) {
     (async () => {
       try {
         const supabase = getSupabase();
+        // Bounded: an unbounded fetch grows linearly with lifetime activity
+        // (per_question JSONB is the heavy column). 200 recent rows per table
+        // is far more than any panel renders or the trends window uses.
         const [attemptsRes, scoresRes, profileRes] = await Promise.all([
           supabase
             .from('attempts')
             .select(ATTEMPTS_SELECT)
             .in('skill', ['reading', 'listening'])
-            .order('created_at', { ascending: false }),
+            .order('created_at', { ascending: false })
+            .limit(200),
           supabase
             .from('scores')
             .select(SCORES_SELECT)
             .in('skill', ['writing', 'speaking'])
-            .order('created_at', { ascending: false }),
+            .order('created_at', { ascending: false })
+            .limit(200),
           supabase.from('users').select(PROFILE_SELECT).eq('id', userId).maybeSingle(),
         ]);
 

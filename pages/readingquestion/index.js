@@ -18,5 +18,5 @@ export default function ReadingIndex({ items }) {
 
 export async function getStaticProps() {
   const items = await listPassages(SKILLS.reading, { withQuestionTypes: true });
-  return { props: { items }, revalidate: 60 };
+  return { props: { items }, revalidate: 3600 };
 }

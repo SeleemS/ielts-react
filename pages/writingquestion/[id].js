@@ -11,12 +11,17 @@ import {
 export default WritingQuestion;
 
 export async function getStaticPaths() {
-  // Pre-render BOTH legacy Firestore ids (some contain spaces) and new slugs.
+  // Canonical URL only per passage (legacy Firestore id when present — some
+  // contain spaces — else slug); the other variant renders via blocking
+  // fallback. Building both doubled question-page build time.
   const [legacyMap, slugs] = await Promise.all([
     getLegacyIdSlugMap(SKILLS.writing),
     getPassageSlugs(SKILLS.writing),
   ]);
-  const ids = Array.from(new Set([...Object.keys(legacyMap), ...slugs]));
+  const slugsWithLegacyId = new Set(Object.values(legacyMap));
+  const ids = Array.from(
+    new Set([...Object.keys(legacyMap), ...slugs.filter((s) => !slugsWithLegacyId.has(s))])
+  );
   return {
     paths: ids.map((id) => ({ params: { id } })),
     fallback: 'blocking',

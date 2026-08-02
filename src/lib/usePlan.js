@@ -19,6 +19,27 @@ export function isPremiumActive(plan, planStatus, renewsAt, expiresAt = null, pa
   });
 }
 
+// Several components mount usePlan on the same page (global reminder modal,
+// ad units, page-level gates), and each instance used to run its own identical
+// `users` select — 1-3 duplicate round trips per navigation. Deduping the
+// IN-FLIGHT request lets simultaneous consumers share one fetch while keeping
+// zero staleness: once the request settles, the next mount fetches fresh.
+let inFlight = { userId: null, promise: null };
+
+function fetchPlanRow(userId) {
+  if (inFlight.userId === userId && inFlight.promise) return inFlight.promise;
+  const promise = getSupabase()
+    .from('users')
+    .select('plan, plan_sku, plan_status, plan_renews_at, plan_expires_at, billing_pause_until, billing_pause_used_at, stripe_customer_id')
+    .eq('id', userId)
+    .maybeSingle()
+    .finally(() => {
+      if (inFlight.promise === promise) inFlight = { userId: null, promise: null };
+    });
+  inFlight = { userId, promise };
+  return promise;
+}
+
 export function usePlan() {
   const { user } = useAuth();
   const [state, setState] = React.useState({
@@ -44,11 +65,7 @@ export function usePlan() {
     // loading barrier before querying the newly authenticated owner so billing
     // consumers never render stale Free or previous-account actions.
     setState((current) => ({ ...current, loading: true, error: null }));
-    getSupabase()
-      .from('users')
-      .select('plan, plan_sku, plan_status, plan_renews_at, plan_expires_at, billing_pause_until, billing_pause_used_at, stripe_customer_id')
-      .eq('id', user.id)
-      .maybeSingle()
+    fetchPlanRow(user.id)
       .then(({ data, error }) => {
         if (!active) return;
         if (error) {
