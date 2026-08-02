@@ -282,12 +282,12 @@ describe('pricing authentication handoff', () => {
 
     await renderPage();
 
-    // Single Pro plan; the toggle defaults to the Monthly cadence.
+    // Single Pro plan; the toggle defaults to the 3-month cadence (best value).
     expect(
       [...container.querySelectorAll('main button[aria-label]')].map(
         (button) => button.getAttribute('aria-label')
       )
-    ).toEqual(['Choose Monthly plan']);
+    ).toEqual(['Choose 3 months plan']);
   });
 
   it('stays on pricing and resumes the plan selected before sign-in', async () => {
@@ -326,7 +326,7 @@ describe('pricing authentication handoff', () => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer test-access-token',
       },
-      body: JSON.stringify({ sku: 'monthly', offer: '', ga_cid: null }),
+      body: JSON.stringify({ sku: '3month', offer: '', ga_cid: null }),
     });
   });
 

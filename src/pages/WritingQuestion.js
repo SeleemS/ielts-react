@@ -13,6 +13,7 @@ import Modal from '../components/AccessibleModal';
 import { getAnonId, track } from '../lib/analytics';
 import { useAuth } from '../lib/auth';
 import AiQuotaPanel from '../components/AiQuotaPanel';
+import FreeSampleChip from '../components/question/FreeSampleChip';
 import SignInDialog from '../components/auth/SignInDialog';
 import { ScoringProgress } from '../components/question/ScoreUI';
 import WritingScoreReport from '../components/question/WritingScoreReport';
@@ -63,6 +64,7 @@ const WritingQuestion = ({ id: docId, passage, description, related = [] }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [quotaOpen, setQuotaOpen] = useState(false);
+  const [quotaResetsAt, setQuotaResetsAt] = useState(null);
   const [signInOpen, setSignInOpen] = useState(false);
   // Set when a signed-out visitor hits the sign-up gate — submission resumes
   // automatically once the sign-up dialog closes with a session present.
@@ -205,6 +207,7 @@ const WritingQuestion = ({ id: docId, passage, description, related = [] }) => {
         track('ai_score_result', { skill: 'writing', slug: storageKey, outcome: 'premium_gate', task, signed_in: Boolean(user) });
         await goToPremium();
       } else if (response.status === 402 || response.status === 429) {
+        setQuotaResetsAt(data?.resetsAt || null);
         setQuotaOpen(true);
         track('ai_score_result', { skill: 'writing', slug: storageKey, outcome: 'rate_limited', task, signed_in: Boolean(user) });
         setErrorMsg(
@@ -409,7 +412,8 @@ const WritingQuestion = ({ id: docId, passage, description, related = [] }) => {
               {isLoading ? 'Analyzing…' : 'Get AI Feedback'}
             </Button>
           </div>
-          <div className="mt-2"><AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} skill="writing" /></div>
+          <FreeSampleChip className="mt-3" />
+          <div className="mt-2"><AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} skill="writing" resetsAt={quotaResetsAt} /></div>
           <RelatedPractice skill="writing" items={related} className="mt-10" />
         </main>
       </div>

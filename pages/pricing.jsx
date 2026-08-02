@@ -33,6 +33,7 @@ import {
   trackBeginCheckout,
   trackPurchase,
   trackSelectItem,
+  trackSelectPromotion,
   trackViewItemList,
   trackViewPromotion,
 } from '../src/lib/ecommerce';
@@ -140,6 +141,10 @@ const PRICING_FAQS = [
     a: 'The full Reading and Listening question bank stays free with instant marking, and you get one lifetime Writing sample score. Pro adds full AI Writing reports on all four criteria, AI Speaking scoring, live AI examiner minutes, timed full mocks, trend insights, and an ad-free experience.',
   },
   {
+    q: 'What exactly are the fair-use limits on Pro?',
+    a: 'Pro includes up to 2 AI Writing reports per day and 1 AI Speaking score per day, plus your plan’s live examiner minutes each month. The caps exist to keep scoring fast and sustainable for everyone; if you hit one, it resets the next day and your saved feedback stays available.',
+  },
+  {
     q: 'How accurate are the AI band scores?',
     a: 'Scores are an estimate marked against the public IELTS band descriptors, criterion by criterion. Treat the band as a guide within about half a band, and use the specific per-criterion feedback and corrected sentences to improve.',
   },
@@ -219,7 +224,96 @@ function contextualCopy(upgrade) {
       body: 'Unlock your score and full examiner feedback below.',
     };
   }
+  if (upgrade === 'mock') {
+    return {
+      icon: '⏱️',
+      title: 'Your mock is ready to sit',
+      body: 'Unlock timed full mocks with band scoring below.',
+    };
+  }
   return null;
+}
+
+// Shown when Stripe checkout is abandoned (?checkout=canceled). Restates the
+// guarantee, reminds the user their work is saved, and asks a one-tap
+// "what stopped you?" question whose answer is tracked and gets a tailored
+// response. No dark patterns: canceling stays a fully respected choice.
+const CANCEL_REASONS = [
+  { key: 'price', label: 'The price' },
+  { key: 'unsure', label: 'Not sure it will help' },
+  { key: 'payment', label: 'Payment problem' },
+];
+
+function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
+  const [reason, setReason] = React.useState('');
+  const savedWork =
+    upgrade === 'writing'
+      ? 'Your essay is still saved — nothing was lost.'
+      : upgrade === 'speaking'
+        ? 'Your recording is still saved — nothing was lost.'
+        : upgrade === 'mock'
+          ? 'Your mock is still ready whenever you are.'
+          : '';
+  return (
+    <div className="mx-auto mt-6 max-w-xl rounded-xl border bg-card p-5 text-center shadow-sm">
+      <p className="text-sm font-semibold text-foreground">
+        Checkout canceled — no charge was made.
+      </p>
+      <p className="mt-1 text-sm text-muted-foreground">
+        {savedWork ? `${savedWork} ` : ''}
+        If you change your mind, every plan comes with a 14-day money-back
+        guarantee — no forms, no questions.
+      </p>
+      {reason === '' ? (
+        <div className="mt-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Mind telling us what stopped you?
+          </p>
+          <div className="mt-2 flex flex-wrap justify-center gap-2">
+            {CANCEL_REASONS.map((r) => (
+              <button
+                key={r.key}
+                type="button"
+                onClick={() => {
+                  setReason(r.key);
+                  track('checkout_canceled_reason', { reason: r.key, upgrade: upgrade || 'none' });
+                }}
+                className="rounded-full border border-border bg-muted px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-accent/10"
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-4 rounded-lg bg-muted p-3 text-sm text-muted-foreground">
+          {reason === 'price' ? (
+            <>
+              Fair enough. The 3-month plan works out to{' '}
+              {perMonthText ? <strong>{perMonthText}/month</strong> : 'less per month'} — and
+              prices are already set for your region.{' '}
+              <button type="button" onClick={onSeePlans} className="font-semibold text-accent underline">
+                Compare plans
+              </button>
+            </>
+          ) : reason === 'unsure' ? (
+            <>
+              That&apos;s what the guarantee is for: try Pro for two weeks, and if it doesn&apos;t
+              help, ask for your money back within 14 days and get it — no questions asked.
+            </>
+          ) : (
+            <>
+              Sorry about that. A different card usually fixes it — or{' '}
+              <NextLink href="/contactus" className="font-semibold text-accent underline">
+                tell us what went wrong
+              </NextLink>{' '}
+              and we&apos;ll sort it out.
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 function ActivationChecklist({ upgrade }) {
@@ -228,7 +322,9 @@ function ActivationChecklist({ upgrade }) {
       ? { href: '/ielts-writing-checker', label: 'Score the essay you saved' }
       : upgrade === 'speaking'
         ? { href: '/speakingquestion', label: 'Score the recording you saved' }
-        : { href: '/ielts-writing-checker', label: 'Score your first essay' };
+        : upgrade === 'mock'
+          ? { href: '/mock-test', label: 'Sit the mock you opened' }
+          : { href: '/ielts-writing-checker', label: 'Score your first essay' };
   return (
     <div className="mx-auto mt-6 max-w-2xl rounded-xl border border-emerald-300 bg-emerald-50 p-5 text-emerald-950">
       <div className="flex items-start gap-3">
@@ -304,8 +400,9 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
   const [examDate, setExamDate] = React.useState(null);
   const [activation, setActivation] = React.useState('idle');
   const [answeredCount, setAnsweredCount] = React.useState(0);
-  // Pro billing cadence selected by the toggle; defaults to Monthly.
-  const [cadence, setCadence] = React.useState('monthly');
+  // Pro billing cadence selected by the toggle; defaults to 3 months (best
+  // value) so the higher-ARPU plan leads, with Monthly one tap away.
+  const [cadence, setCadence] = React.useState('3month');
   // Whether the Summer Sale chrome renders. Defaults to SALE.active for a
   // matching SSR/first paint, then refined on the client (and flipped off by
   // the countdown's onExpire) to avoid any Date-based hydration mismatch.
@@ -314,7 +411,9 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
 
   const checkoutStatus = typeof router.query.checkout === 'string' ? router.query.checkout : '';
   const upgrade =
-    router.query.upgrade === 'writing' || router.query.upgrade === 'speaking'
+    router.query.upgrade === 'writing' ||
+    router.query.upgrade === 'speaking' ||
+    router.query.upgrade === 'mock'
       ? router.query.upgrade
       : '';
   const sessionId = typeof router.query.session_id === 'string' ? router.query.session_id : '';
@@ -587,9 +686,13 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
           </div>
         ) : null}
         {checkoutStatus === 'canceled' ? (
-          <div className="mx-auto mt-6 max-w-xl rounded-lg border bg-muted p-4 text-center text-sm text-muted-foreground">
-            Checkout canceled — no charge was made.
-          </div>
+          <CanceledRecovery
+            upgrade={upgrade}
+            perMonthText={threeMonthPricing?.perMonth ? money(threeMonthPricing.perMonth) : ''}
+            onSeePlans={() => {
+              document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
         ) : null}
         {error ? (
           <div role="alert" className="mx-auto mt-6 max-w-xl rounded-lg border border-red-300 bg-red-50 p-4 text-center text-sm text-red-900">
@@ -637,7 +740,23 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
             {/* Summer Sale banner + live countdown. Hidden once the sale ends
                 (the sale price then simply becomes the plain Pro price). */}
             {saleLive ? (
-              <div className="mx-auto mb-9 max-w-4xl overflow-hidden rounded-2xl border border-amber-300 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 shadow-sm dark:border-amber-500/30 dark:from-amber-500/10 dark:via-orange-500/10 dark:to-amber-500/10">
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label="See sale prices"
+                onClick={() => {
+                  trackSelectPromotion('pricing_banner');
+                  document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    trackSelectPromotion('pricing_banner');
+                    document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="mx-auto mb-9 max-w-4xl cursor-pointer overflow-hidden rounded-2xl border border-amber-300 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 shadow-sm transition-shadow hover:shadow-md dark:border-amber-500/30 dark:from-amber-500/10 dark:via-orange-500/10 dark:to-amber-500/10"
+              >
                 <div className="flex flex-col items-center gap-4 p-5 text-center sm:flex-row sm:justify-between sm:p-6 sm:text-left">
                   <div>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
@@ -704,7 +823,7 @@ export default function PricingPage({ regionalPricing = false, country = '' }) {
             </div>
 
             {/* Free vs Pro — the core comparison. */}
-            <div className="mx-auto mt-8 grid max-w-4xl items-stretch gap-5 md:grid-cols-2">
+            <div id="plans" className="mx-auto mt-8 grid max-w-4xl items-stretch gap-5 md:grid-cols-2">
               <Card className="flex flex-col border-border shadow-sm">
                 <CardContent className="flex h-full flex-col p-6">
                   <h2 className="text-base font-bold text-foreground">Free</h2>

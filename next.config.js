@@ -138,6 +138,14 @@ const nextConfig = {
         source: '/:path*',
         headers: securityHeaders,
       },
+      {
+        // Static brand assets change only when the files themselves are
+        // replaced in a deploy, so let browsers keep them for a year.
+        source: '/:asset(favicon.ico|image.png|logo192.png|logo512.png)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
     ];
   },
   async rewrites() {

@@ -82,7 +82,7 @@ function PremiumGate({ mock, signedIn, onSignIn }) {
       </ul>
       <Button asChild variant="accent" size="lg" className="mt-7 w-full sm:w-auto sm:px-10">
         <NextLink
-          href="/pricing"
+          href="/pricing?upgrade=mock"
           onClick={() => track('paywall_upgrade_click', { source: 'mock', slug: mock.slug })}
           className="no-underline"
         >

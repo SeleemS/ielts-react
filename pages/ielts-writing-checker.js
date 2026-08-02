@@ -27,6 +27,7 @@ import { Progress } from '../components/ui/progress';
 import { cn } from '../src/lib/utils';
 import { getAnonId, track } from '../src/lib/analytics';
 import AiQuotaPanel from '../src/components/AiQuotaPanel';
+import FreeSampleChip from '../src/components/question/FreeSampleChip';
 import { ScoringProgress } from '../src/components/question/ScoreUI';
 import WritingScoreReport from '../src/components/question/WritingScoreReport';
 import { getSessionAccess } from '../src/lib/sessionAccess';
@@ -126,6 +127,7 @@ export default function WritingCheckerPage() {
   const [errorMsg, setErrorMsg] = useState('');
   const [signInOpen, setSignInOpen] = useState(false);
   const [quotaOpen, setQuotaOpen] = useState(false);
+  const [quotaResetsAt, setQuotaResetsAt] = useState(null);
   // True once the user has pressed submit while signed-out — after they sign in
   // the submission resumes automatically (score if premium, billing if not).
   const pendingSubmitRef = useRef(false);
@@ -264,6 +266,7 @@ export default function WritingCheckerPage() {
         track('ai_score_result', { skill: 'writing', slug: 'writing-checker', outcome: 'premium_gate', task: apiTask, signed_in: Boolean(user) });
         await goToPremium();
       } else if (response.status === 402 || response.status === 429) {
+        setQuotaResetsAt(data?.resetsAt || null);
         setQuotaOpen(true);
         track('ai_score_result', { skill: 'writing', slug: 'writing-checker', outcome: 'rate_limited', task: apiTask, signed_in: Boolean(user) });
         setErrorMsg(
@@ -459,12 +462,14 @@ export default function WritingCheckerPage() {
                     ? 'Sign in & check my writing'
                     : 'Check my writing'}
                 </Button>
-                <AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} skill="writing" />
-                {!loading && !user && (
+                <AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} skill="writing" resetsAt={quotaResetsAt} />
+                {!loading && !user ? (
                   <p className="text-center text-xs text-muted-foreground">
                     Create a free account to get your first AI score. Your draft stays safe
                     while you sign up.
                   </p>
+                ) : (
+                  <FreeSampleChip />
                 )}
               </form>
             </div>

@@ -764,6 +764,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [quotaOpen, setQuotaOpen] = useState(false);
+  const [quotaResetsAt, setQuotaResetsAt] = useState(null);
   // A recording saved to the user's account at the premium gate, waiting to
   // be scored (survives the round trip to the billing page).
   const [pendingRecording, setPendingRecording] = useState(null);
@@ -889,7 +890,10 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
         clearPendingRecording();
         setErrorMsg('Your saved recording is no longer available. Please record your answer again.');
       } else {
-        if (response.status === 402 || response.status === 429) setQuotaOpen(true);
+        if (response.status === 402 || response.status === 429) {
+          setQuotaResetsAt(data?.resetsAt || null);
+          setQuotaOpen(true);
+        }
         track('ai_score_result', { skill: 'speaking', slug: item.slug, outcome: response.status === 402 || response.status === 429 ? 'rate_limited' : 'error', http_status: response.status, part, signed_in: true });
         setErrorMsg(errorForStatus(response.status, data));
       }
@@ -1144,7 +1148,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
                     your recording is saved to your account so it’s never lost.
                   </p>
                 )}
-                <AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} />
+                <AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} resetsAt={quotaResetsAt} />
               </div>
             </div>
           </div>

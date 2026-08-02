@@ -13,7 +13,27 @@ import { money, planPricing } from '../lib/saleConfig';
 //   * a non-premium user hit a limit response we didn't route to /pricing —
 //     show the premium pitch.
 // The userId / remaining props are kept for call-site compatibility.
-export default function AiQuotaPanel({ open = false, onClose = () => {}, skill = 'speaking' }) {
+
+// "in about 6 hours" / "tomorrow" style phrasing for a quota reset timestamp,
+// so capped users know when to come back instead of guessing.
+export function resetPhrase(resetsAt, nowMs = Date.now()) {
+  if (!resetsAt) return '';
+  const ms = new Date(resetsAt).getTime() - nowMs;
+  if (!Number.isFinite(ms) || ms <= 0) return '';
+  const hours = Math.ceil(ms / 3600000);
+  if (hours <= 1) return 'in under an hour';
+  if (hours < 24) return `in about ${hours} hours`;
+  const days = Math.ceil(hours / 24);
+  if (days === 1) return 'tomorrow';
+  return `in ${days} days`;
+}
+
+export default function AiQuotaPanel({
+  open = false,
+  onClose = () => {},
+  skill = 'speaking',
+  resetsAt = null,
+}) {
   const { isPremium, loading } = usePlan();
   const impressionRef = React.useRef(false);
 
@@ -44,8 +64,8 @@ export default function AiQuotaPanel({ open = false, onClose = () => {}, skill =
         {isPremium ? (
           <p className="text-sm leading-6 text-muted-foreground">
             You’ve used your included AI {skillLabel} scores for this period. Your
-            allowance resets automatically — review your saved feedback on the dashboard
-            in the meantime.
+            allowance resets {resetPhrase(resetsAt) || 'automatically'} — review your
+            saved feedback on the dashboard in the meantime.
           </p>
         ) : (
           <>
