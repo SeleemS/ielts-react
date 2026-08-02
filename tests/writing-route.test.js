@@ -328,6 +328,7 @@ describe('POST /api/score/writing account and quota safety', () => {
       p_skill: 'writing',
       p_free: true,
       p_consumed_at: '2026-07-19T12:00:00.000Z',
+      p_referral: false,
     });
   });
 

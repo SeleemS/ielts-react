@@ -102,6 +102,7 @@ async function refundQuota(userId, quota) {
       p_skill: 'writing',
       p_free: quota.free === true,
       p_consumed_at: quota.consumedAt,
+      p_referral: quota.referral === true,
     });
     if (error) throw error;
   } catch (error) {

@@ -117,9 +117,11 @@ async function refundQuota(userId, quota) {
     const { error } = await getAdmin().rpc('refund_ai_score', {
       p_uid: userId,
       p_skill: 'speaking',
-      // Restores the lifetime free sample when the sampled score failed.
+      // Restores the lifetime free sample / referral credit when the score
+      // it paid for failed.
       p_free: quota.free === true,
       p_consumed_at: quota.consumedAt,
+      p_referral: quota.referral === true,
     });
     if (error) throw error;
   } catch (error) {

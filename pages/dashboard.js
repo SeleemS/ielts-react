@@ -14,6 +14,7 @@ import AccountSettings from '../src/components/dashboard/AccountSettings';
 import { LoadingState, SignedOutState, ErrorState } from '../src/components/dashboard/States';
 import { buildDashboardData, formatBand, getInitials, SKILL_META } from '../src/components/dashboard/utils';
 import LearningInsights from '../src/components/dashboard/LearningInsights';
+import InviteCard from '../src/components/dashboard/InviteCard';
 import { isPremiumActive } from '../src/lib/usePlan';
 import BaselineCard from '../src/components/estimator/BaselineCard';
 
@@ -258,6 +259,7 @@ function DashboardBody({ user, signOut }) {
             <StatsOverview data={data} weeklyGoal={weeklyGoal} />
             <BandTrend skills={data.skills} targetBand={targetBand} isPremium={isPremium} />
             <LearningInsights data={data} targetBand={targetBand} />
+            <InviteCard />
             <RecentActivity items={data.items} onViewAll={() => changeTab('submissions')} />
           </>
         )}

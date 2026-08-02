@@ -26,6 +26,7 @@ import { getSupabase } from '../../lib/supabase';
 import { setAnalyticsUser, track } from './analytics';
 import { buildAuthCallbackUrl } from './authPaths';
 import { syncLocalAttempts } from './progress';
+import { redeemStoredReferral } from './referral';
 
 // Backfill any practice a user completed while logged out (localStorage) into
 // their account the moment a session is available — on fresh sign-in AND on a
@@ -104,6 +105,10 @@ export function AuthProvider({ children }) {
         setAnalyticsUser(data?.session?.user?.id || null, data?.session?.access_token || null);
         setLoading(false);
         backfillLocalAttempts(data?.session?.user?.id);
+        // One-shot referral redemption for a stored ?ref= code (fail-soft).
+        if (data?.session?.access_token) {
+          redeemStoredReferral(data.session.access_token).catch(() => {});
+        }
       })
       .catch(() => {
         if (!active) return;
@@ -132,6 +137,9 @@ export function AuthProvider({ children }) {
           track('login', { method: 'email', signed_in: true }, { accessToken: session?.access_token });
         }
         backfillLocalAttempts(session?.user?.id);
+        if (session?.access_token) {
+          redeemStoredReferral(session.access_token).catch(() => {});
+        }
       }
       if (event === 'SIGNED_OUT') {
         try {

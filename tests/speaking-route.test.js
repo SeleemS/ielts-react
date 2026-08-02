@@ -567,6 +567,7 @@ describe('POST /api/score/speaking quota safety', () => {
       p_skill: 'speaking',
       p_free: false,
       p_consumed_at: '2026-07-19T12:00:00.000Z',
+      p_referral: false,
     });
     expect(state.removedPaths).toEqual(['premium-user/recording.webm']);
   });

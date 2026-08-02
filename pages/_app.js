@@ -34,6 +34,7 @@ import {
   consentAwareVercelEvent,
   readOptionalConsent,
 } from '../src/lib/consent';
+import { captureReferralCode } from '../src/lib/referral';
 
 function AdSenseScript({ enabled }) {
   React.useEffect(() => {
@@ -74,6 +75,9 @@ function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
     setAdsOnPublicHost(/(^|\.)ielts-bank\.com$/i.test(window.location.hostname));
     setOptionalConsent(readOptionalConsent());
+    // Stash a ?ref= referral code from any landing URL (redeemed after
+    // sign-in via /api/referral/redeem, validated server-side).
+    captureReferralCode();
   }, []);
   const analyticsEnabled = optionalConsent === 'granted';
   const advertisingEnabled = adsAllowedForConsent(optionalConsent);
