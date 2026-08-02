@@ -304,6 +304,8 @@ async function upsertPassage(env, item, slug, audioPath) {
       audio_path: audioPath,
       transcript_html: buildTranscriptHtml(item),
       voices: buildVoices(item),
+      // IELTS part 1-4; accepts item.part = 2 or partStyle strings like "Part 2".
+      part: Number(item.part) || Number(String(item.partStyle || '').match(/[1-4]/)?.[0]) || null,
     },
   });
 
