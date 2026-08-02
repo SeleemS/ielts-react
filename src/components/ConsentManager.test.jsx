@@ -35,8 +35,10 @@ async function renderManager(onConsentChange = vi.fn()) {
 }
 
 function clickButton(label) {
-  const button = [...container.querySelectorAll('button')].find(
-    (item) => item.textContent.trim() === label
+  // Labels render as a short mobile span + a full sm+ span, so textContent is
+  // e.g. "AcceptAccept optional cookies" — match on inclusion.
+  const button = [...container.querySelectorAll('button')].find((item) =>
+    item.textContent.includes(label)
   );
   expect(button).toBeTruthy();
   act(() => {

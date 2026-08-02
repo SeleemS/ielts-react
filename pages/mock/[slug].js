@@ -211,7 +211,7 @@ export default function MockTestPage({ mock }) {
               We could not load the protected mock content. Refresh the page and try again.
             </div>
           ) : (
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div className="space-y-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:self-start lg:pr-2">
                 {resolvedMock.sections.map((section, index) => (
                   <article key={section.id} className="rounded-lg border border-border bg-card shadow-sm">

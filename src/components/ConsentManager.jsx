@@ -59,6 +59,15 @@ export default function ConsentManager({ onConsentChange }) {
     if (open) guardRef.current.bannerShownAt = Date.now();
   }, [open]);
 
+  // The footer's "Privacy choices" button (the only reopen affordance on
+  // phones, where the floating pill would cover sticky submit bars) reopens
+  // the banner via this event.
+  useEffect(() => {
+    const reopen = () => setOpen(true);
+    window.addEventListener('ib:open-consent', reopen);
+    return () => window.removeEventListener('ib:open-consent', reopen);
+  }, []);
+
   // Track whether an app modal is (or just was) covering the page, so a tap
   // aimed at a closing modal can never register as a privacy decision.
   useEffect(() => {
@@ -110,41 +119,43 @@ export default function ConsentManager({ onConsentChange }) {
     <>
       {open && (
         <aside
-          className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-2xl rounded-2xl border border-border bg-background p-5 shadow-2xl"
+          className="fixed inset-x-3 bottom-3 z-[100] mx-auto max-w-2xl rounded-2xl border border-border bg-background p-4 shadow-2xl sm:p-5"
           aria-label="Cookie consent"
           data-nosnippet
           data-analytics-popup="cookie_consent"
           data-analytics-label="Cookie consent"
         >
-          <h2 className="font-bold text-foreground">Your privacy choices</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h2 className="text-sm font-bold text-foreground sm:text-base">Your privacy choices</h2>
+          <p className="mt-1 text-xs leading-snug text-muted-foreground sm:text-sm sm:leading-normal">
             {optionalDefaultsOn()
-              ? 'We use analytics and advertising to improve the site and keep practice free — these are on by default. You can opt out of optional analytics and personalized-ad storage anytime. Essential storage always stays on.'
-              : 'We’d like to use optional analytics and advertising to improve the site and keep practice free. They stay off until you accept — you can accept or reject below. Essential storage always stays on.'}
+              ? 'We use analytics and advertising to improve the site and keep practice free — these are on by default. You can opt out of optional analytics and personalized-ad storage anytime. Essential storage always stays on. '
+              : 'We’d like to use optional analytics and advertising to improve the site and keep practice free. They stay off until you accept — you can accept or reject below. Essential storage always stays on. '}
+            <NextLink href="/privacypolicy" className="font-medium text-primary underline">
+              Privacy policy
+            </NextLink>
           </p>
-          <div className="mt-4 flex flex-wrap items-center gap-3">
+          <div className="mt-3 flex items-center gap-2 sm:mt-4 sm:gap-3">
             <button
               onClick={() => choose('granted')}
-              className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+              className="flex-1 rounded-lg bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground sm:flex-none sm:px-5"
             >
-              Accept optional cookies
+              <span className="sm:hidden">Accept</span>
+              <span className="hidden sm:inline">Accept optional cookies</span>
             </button>
             <button
               onClick={() => choose('denied')}
-              className="rounded-lg border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground"
+              className="flex-1 rounded-lg border border-border bg-background px-3 py-2.5 text-sm font-semibold text-foreground sm:flex-none sm:px-5"
             >
-              Reject optional cookies
+              <span className="sm:hidden">Reject</span>
+              <span className="hidden sm:inline">Reject optional cookies</span>
             </button>
-            <NextLink href="/privacypolicy" className="px-2 py-2.5 text-sm font-medium text-primary underline">
-              Privacy policy
-            </NextLink>
           </div>
         </aside>
       )}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-3 left-3 z-40 rounded-full border border-border bg-background px-3 py-2 text-xs text-muted-foreground shadow"
+          className="fixed bottom-3 left-3 z-40 hidden rounded-full border border-border bg-background px-3 py-2 text-xs text-muted-foreground shadow sm:block"
           data-nosnippet
           data-analytics-id="privacy_choices_open"
         >

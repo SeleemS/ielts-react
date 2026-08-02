@@ -147,7 +147,7 @@ const ReadingQuestion = ({ id, passage, description, related = [] }) => {
           </div>
 
           {/* Two-column: passage left, questions right */}
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-lg border border-border bg-card shadow-sm">
               <div className="border-b border-border px-5 py-3">
                 <h2 className="text-sm font-bold uppercase tracking-wide text-foreground">

@@ -58,7 +58,7 @@ export default function QuestionGroup({
             {imageLabel}
           </figcaption>
           <div
-            className="[&_svg]:h-auto [&_svg]:max-w-full"
+            className="[&_svg]:h-auto [&_svg]:max-w-full [&_svg]:min-w-[480px] sm:[&_svg]:min-w-0"
             dangerouslySetInnerHTML={{ __html: sanitizeSvg(group.imageSvg) }}
           />
         </figure>

@@ -1071,7 +1071,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* Left: the prompt / cue card / questions */}
             <div className="space-y-6">
               {isPart2 && item.cueCard && (

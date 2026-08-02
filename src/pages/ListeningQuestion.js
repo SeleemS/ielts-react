@@ -167,7 +167,7 @@ const ListeningQuestion = ({ id, passage, description, related = [] }) => {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
             {/* Audio column (sticky on desktop) */}
             <div className="lg:sticky lg:top-20 lg:self-start">
               <div className="rounded-xl border border-border bg-card p-6 shadow-sm">

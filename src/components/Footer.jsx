@@ -32,21 +32,23 @@ const LEGAL_LINKS = [
   { label: 'Terms of Service', href: '/termsofservice' },
 ];
 
-function FooterColumn({ title, links }) {
+function FooterColumn({ title, links, children }) {
   return (
     <div>
       <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">{title}</h2>
-      <ul className="mt-4 space-y-3">
+      {/* py-1 keeps each row a comfortable tap target on touch screens. */}
+      <ul className="mt-3 space-y-1.5">
         {links.map((link) => (
           <li key={link.label}>
             <NextLink
               href={link.href}
-              className="text-sm text-slate-300 no-underline transition-colors hover:text-white"
+              className="inline-block py-1 text-sm text-slate-300 no-underline transition-colors hover:text-white"
             >
               {link.label}
             </NextLink>
           </li>
         ))}
+        {children}
       </ul>
     </div>
   );
@@ -85,7 +87,18 @@ export default function Footer() {
           <FooterColumn title="Practice" links={PRACTICE_LINKS} />
           <FooterColumn title="Tools" links={TOOLS_LINKS} />
           <FooterColumn title="Resources" links={RESOURCE_LINKS} />
-          <FooterColumn title="Legal" links={LEGAL_LINKS} />
+          <FooterColumn title="Legal" links={LEGAL_LINKS}>
+            <li>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event('ib:open-consent'))}
+                className="inline-block py-1 text-sm text-slate-300 transition-colors hover:text-white"
+                data-analytics-id="privacy_choices_footer"
+              >
+                Privacy choices
+              </button>
+            </li>
+          </FooterColumn>
         </div>
 
         <Separator className="my-10 bg-white/10" />
