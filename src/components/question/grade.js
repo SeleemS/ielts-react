@@ -29,9 +29,10 @@ export const TYPE_CONFIG = {
   table_completion: { input: 'text', grade: 'accepted' },
   flowchart_completion: { input: 'text', grade: 'accepted' },
   short_answer: { input: 'text', grade: 'accepted' },
-  // Image-dependent types degrade gracefully to labelled text inputs.
+  // Plan/map labelling supplies lettered options: pick A-H from the image.
+  plan_map_diagram_label: { input: 'select', grade: 'optionKeySingle' },
+  // Image-dependent completion types degrade gracefully to labelled text inputs.
   diagram_label: { input: 'visual', grade: 'accepted' },
-  plan_map_diagram_label: { input: 'visual', grade: 'accepted' },
   form_completion: { input: 'visual', grade: 'accepted' },
 };
 
