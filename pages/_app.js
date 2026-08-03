@@ -35,6 +35,7 @@ import {
   readOptionalConsent,
 } from '../src/lib/consent';
 import { captureReferralCode } from '../src/lib/referral';
+import { installClientErrorHandlers } from '../src/lib/clientErrors';
 
 function AdSenseScript({ enabled }) {
   React.useEffect(() => {
@@ -79,6 +80,10 @@ function MyApp({ Component, pageProps }) {
     // sign-in via /api/referral/redeem, validated server-side).
     captureReferralCode();
   }, []);
+  // Stale-chunk auto-recovery + rate-limited client_error telemetry: a tab
+  // open across a deploy crashes on its next navigation without this (the
+  // "Application error" screen GA was recording).
+  React.useEffect(() => installClientErrorHandlers(router), [router]);
   const analyticsEnabled = optionalConsent === 'granted';
   const advertisingEnabled = adsAllowedForConsent(optionalConsent);
   return (
