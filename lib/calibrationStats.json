@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "status": "pending",
+  "reviewedAt": "2026-09-02",
+  "generatedAt": null,
+  "promptVersion": null,
+  "corpus": null,
+  "primary": null,
+  "comparison": [],
+  "pendingReason": "No scoring runs found in scripts/calibration/results/."
+}

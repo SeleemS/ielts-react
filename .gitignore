@@ -31,3 +31,10 @@ yarn-error.log*
 .audio-cache/
 supabase/.temp
 scripts/content/speaking/out/
+
+# Calibration corpus + raw scoring results. Corpora may forbid redistribution
+# and results are large; scripts/calibration/data/manifest.json (ids, labels,
+# hashes) and lib/calibrationStats.json are committed instead.
+scripts/calibration/data/*
+!scripts/calibration/data/manifest.json
+scripts/calibration/results/
