@@ -32,6 +32,8 @@ export const STATIC_ROUTES = [
   '/ielts-writing-task-2-topics',
   '/ielts-band-descriptors',
   '/ielts-score-requirements',
+  // Published accuracy of the AI Writing scorer (review item 24).
+  '/ielts-writing-checker-accuracy',
   // Reading question-type hub pages (pages/reading/[type].js).
   ...READING_QUESTION_TYPE_SLUGS.map((slug) => `/reading/${slug}`),
   // Listening part hub pages (pages/listening/[type].js).
