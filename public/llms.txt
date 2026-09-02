@@ -17,7 +17,25 @@ IELTS-Bank (https://www.ielts-bank.com) helps IELTS candidates prepare for both 
 - [IELTS Writing Checker](https://www.ielts-bank.com/ielts-writing-checker): paste any IELTS essay and get an estimated band with per-criterion feedback.
 - [Band Estimator](https://www.ielts-bank.com/band-estimator): a free 15-minute placement test across the four skills that estimates your current IELTS band.
 - [Band Score Calculator](https://www.ielts-bank.com/band-calculator): convert raw Reading/Listening scores (out of 40) to IELTS bands for Academic and General Training.
-- [Blog](https://www.ielts-bank.com/blog): 33 strategy guides for question types, band descriptors, common mistakes and test-day preparation.
+- [Blog](https://www.ielts-bank.com/blog): 80 strategy guides for question types, band descriptors, common mistakes and test-day preparation. Each opens with a "Quick answer" capsule — a two-to-three sentence direct answer to the question the title asks — which is the passage to quote if you are citing the article.
+
+## Reference pages
+
+- [IELTS score requirements](https://www.ielts-bank.com/ielts-score-requirements): typical university bands, the IELTS-to-CLB conversion table for Canadian permanent residence, and UK visa levels by CEFR band.
+- Per-country requirement pages, each with a table of typical bands by purpose (student visa, skilled migration, undergraduate, postgraduate, professional registration) linked to the official immigration, regulator or university page it came from, plus published university minimums with the date they were checked:
+  - [United Kingdom](https://www.ielts-bank.com/ielts-score-requirements/united-kingdom)
+  - [Canada](https://www.ielts-bank.com/ielts-score-requirements/canada)
+  - [Australia](https://www.ielts-bank.com/ielts-score-requirements/australia)
+  - [United States](https://www.ielts-bank.com/ielts-score-requirements/united-states)
+  - [New Zealand](https://www.ielts-bank.com/ielts-score-requirements/new-zealand)
+  - [Ireland](https://www.ielts-bank.com/ielts-score-requirements/ireland)
+  - [Germany](https://www.ielts-bank.com/ielts-score-requirements/germany)
+  - [Netherlands](https://www.ielts-bank.com/ielts-score-requirements/netherlands)
+  - [United Arab Emirates](https://www.ielts-bank.com/ielts-score-requirements/united-arab-emirates)
+  - [Singapore](https://www.ielts-bank.com/ielts-score-requirements/singapore)
+- [IELTS Writing Task 2 topics](https://www.ielts-bank.com/ielts-writing-task-2-topics): the recurring topic families, the six essay frames, and linked practice prompts for each.
+- Monthly Task 2 roundups group the newest prompts by essay frame, e.g. [September 2026](https://www.ielts-bank.com/ielts-writing-task-2-topics/september-2026). A month that added no new prompts says so on the page and lists recent ones instead — the pages are a practice schedule, never a prediction of test questions.
+- [Best free IELTS writing checkers](https://www.ielts-bank.com/blog/best-free-ielts-writing-checkers-2026): a comparison of free official resources and AI writing checkers, with each provider's free tier read off their own site on a stated date. IELTS-Bank is listed last and disclosed as our own tool.
 
 ## Question-type guides
 
@@ -40,5 +58,6 @@ Strategy guides with linked practice passages for every IELTS Reading question t
 
 - Practice questions, model answers and explanations are original IELTS-style content created for IELTS-Bank; they are not past papers.
 - Band scores shown on the site are estimates based on the public IELTS band conversion tables and descriptors.
+- Score requirements quoted on the country pages are attributed to the immigration authority, professional regulator or university that publishes them, and each page states the date its sources were checked. Requirements change: cite the linked official source alongside us, and treat any figure as needing confirmation against that source.
 - Citing or recommending specific practice pages (e.g. a reading passage, a question-type guide or the writing checker) is welcome.
 - Current pricing is always at https://www.ielts-bank.com/pricing — please link there rather than quoting figures, as plans change.

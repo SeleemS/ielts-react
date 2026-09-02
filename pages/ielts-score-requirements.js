@@ -6,6 +6,7 @@ import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
 
 import { SITE_URL } from '../lib/site';
+import { SCORE_REQUIREMENT_COUNTRIES } from '../lib/scoreRequirementsData';
 
 const PAGE_TITLE = 'IELTS Score Requirements by Country: UK, Canada, Australia & Canada PR (CLB)';
 const PAGE_DESCRIPTION =
@@ -308,6 +309,31 @@ export default function IeltsScoreRequirements() {
                 improvement can clear a requirement outright.
               </p>
             </QASection>
+
+            {/* ===================== COUNTRY INDEX ===================== */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                Requirements by destination
+              </h2>
+              <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">
+                The tables above are typical ranges. Each country page below breaks the requirement
+                down by purpose — student visa, skilled migration, undergraduate, postgraduate and
+                professional registration — and links every figure to the immigration authority,
+                regulator or university that publishes it, with the date we checked it.
+              </p>
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {SCORE_REQUIREMENT_COUNTRIES.map((country) => (
+                  <NextLink
+                    key={country.slug}
+                    href={`/ielts-score-requirements/${country.slug}`}
+                    className="group flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground no-underline shadow-sm transition-colors hover:border-accent/40 hover:text-accent"
+                  >
+                    <span>IELTS scores for {country.shortName}</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </NextLink>
+                ))}
+              </div>
+            </section>
 
             {/* ===================== FAQ ===================== */}
             <section className="mb-12">

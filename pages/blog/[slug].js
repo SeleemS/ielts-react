@@ -4,7 +4,11 @@ import { ArrowLeft, ArrowRight, CalendarCheck, PenLine } from "lucide-react";
 import Navbar from "../../src/components/Navbar";
 import Footer from "../../src/components/Footer";
 import NewsletterSignup from "../../src/components/NewsletterSignup";
-import { posts, formatMonthYear, toIsoDate } from "../../lib/posts";
+// `posts` is referenced ONLY inside getStaticPaths/getStaticProps so Next
+// strips it — and its filesystem read — from the client bundle. The date
+// helpers are used in the component, so they come from a browser-safe module.
+import { posts } from "../../lib/posts";
+import { formatMonthYear, toIsoDate } from "../../lib/postDates";
 import { sanitizeHtml } from "../../lib/sanitize";
 import AdUnit from "../../src/components/AdUnit";
 import ShareRow from "../../src/components/ShareRow";

@@ -3,6 +3,7 @@ import { SKILLS, listMockTests, listPassages } from '../lib/supabase';
 import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
 import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
 import { listRoundupMonths } from '../lib/task2Roundup';
+import { SCORE_REQUIREMENT_COUNTRY_SLUGS } from '../lib/scoreRequirementsData';
 
 import { SITE_URL } from '../lib/site';
 
@@ -33,6 +34,8 @@ export const STATIC_ROUTES = [
   ...READING_QUESTION_TYPE_SLUGS.map((slug) => `/reading/${slug}`),
   // Listening part hub pages (pages/listening/[type].js).
   ...LISTENING_PART_SLUGS.map((slug) => `/listening/${slug}`),
+  // Per-country score requirement pages (pages/ielts-score-requirements/[country].js).
+  ...SCORE_REQUIREMENT_COUNTRY_SLUGS.map((slug) => `/ielts-score-requirements/${slug}`),
 ];
 
 // Build an ISO date (YYYY-MM-DD) or null. Accepts human-readable strings like
