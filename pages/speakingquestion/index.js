@@ -8,6 +8,8 @@ import { Card, CardContent } from '../../components/ui/card';
 import { cn } from '../../src/lib/utils';
 import { listSpeakingItems } from '../../lib/supabase';
 import { SECTION_FAQS, FaqSection, faqJsonLdFor } from '../../src/components/SectionLanding';
+import { SPEAKING_PART_LINKS } from '../../lib/speakingParts';
+import { SPEAKING_FAMILY_LINKS } from '../../lib/speakingTopicFamilies';
 
 import { SITE_URL } from '../../lib/site';
 const PAGE_TITLE = 'IELTS Speaking Practice with AI Feedback | IELTS-Bank';
@@ -193,6 +195,43 @@ export default function SpeakingIndex({ items = [] }) {
                 to begin.
               </p>
             </header>
+
+            {/* Hubs: part guides, topic families and the freshness page. These are
+                the SSR/SSG landers AI crawlers and search engines index. */}
+            <nav aria-label="Speaking guides" className="mb-10 rounded-2xl border border-border bg-secondary/40 p-5 sm:p-6">
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Guides and cue cards by topic
+              </h2>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {SPEAKING_PART_LINKS.map((part) => (
+                  <NextLink
+                    key={part.slug}
+                    href={`/speaking/${part.slug}`}
+                    className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground no-underline shadow-sm transition-colors hover:border-accent/40 hover:text-accent"
+                  >
+                    Speaking {part.label} guide
+                  </NextLink>
+                ))}
+                <NextLink
+                  href="/speaking/new-cue-cards"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent no-underline transition-colors hover:bg-accent/20"
+                >
+                  New cue cards
+                  <ArrowRight className="h-4 w-4" />
+                </NextLink>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {SPEAKING_FAMILY_LINKS.map((family) => (
+                  <NextLink
+                    key={family.slug}
+                    href={`/speaking/topics/${family.slug}`}
+                    className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground no-underline transition-colors hover:text-accent"
+                  >
+                    {family.label}
+                  </NextLink>
+                ))}
+              </div>
+            </nav>
 
             <NextLink
               href="/speaking-examiner"
