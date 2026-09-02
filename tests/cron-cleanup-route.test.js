@@ -24,6 +24,10 @@ const state = {
   cleanupRpcError: null,
   cleanupRpcReject: null,
   cleanupRpcCount: 0,
+  rollupResult: { days: 3, rows: {} },
+  rollupError: null,
+  rollupReject: null,
+  rollupArgs: null,
   rpcCalls: [],
   listResponses: {},
   listRejects: {},
@@ -38,8 +42,13 @@ vi.mock('@supabase/supabase-js', () => ({
     state.clientCreations += 1;
     if (state.clientError) throw state.clientError;
     return {
-      async rpc(name) {
+      async rpc(name, args) {
         state.rpcCalls.push(name);
+        if (name === 'refresh_activity_daily') {
+          state.rollupArgs = args;
+          if (state.rollupReject) throw state.rollupReject;
+          return { data: state.rollupResult, error: state.rollupError };
+        }
         if (name !== 'cleanup_realtime_score_requests') {
           throw new Error(`unexpected-rpc:${name}`);
         }
@@ -165,6 +174,10 @@ describe('GET /api/cron/cleanup', () => {
     state.cleanupRpcError = null;
     state.cleanupRpcReject = null;
     state.cleanupRpcCount = 0;
+    state.rollupResult = { days: 3, rows: {} };
+    state.rollupError = null;
+    state.rollupReject = null;
+    state.rollupArgs = null;
     state.rpcCalls = [];
     state.listResponses = {};
     state.listRejects = {};
@@ -269,6 +282,7 @@ describe('GET /api/cron/cleanup', () => {
       recordingsRemoved: 0,
       estimatorResultsRemoved: 3,
       realtimeScoreRequestsRemoved: 4,
+      activityRollup: { days: 3, rows: {} },
     });
     expect(state.estimatorDeletes).toHaveLength(1);
     expect(state.estimatorDeletes[0].options).toEqual({ count: 'exact' });
@@ -297,6 +311,35 @@ describe('GET /api/cron/cleanup', () => {
     expect(res.statusCode).toBe(503);
     expect(res.jsonBody).toEqual({ error: 'Realtime score request cleanup failed.' });
     expect(state.listCalls).toEqual([]);
+  });
+
+  it('refreshes the activity_daily rollups the /data dashboard reads', async () => {
+    const res = await callRoute();
+
+    expect(res.statusCode).toBe(200);
+    expect(state.rpcCalls).toContain('refresh_activity_daily');
+    // null p_from lets the RPC use its own 3-day lookback default.
+    expect(state.rollupArgs).toEqual({ p_from: null });
+    expect(res.jsonBody.activityRollup).toEqual({ days: 3, rows: {} });
+  });
+
+  it('finishes the cleanup even when the rollup refresh fails', async () => {
+    state.rollupError = { message: 'deadlock detected' };
+
+    const res = await callRoute();
+
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.ok).toBe(true);
+    expect(res.jsonBody.activityRollup).toEqual({ error: 'refresh-failed' });
+  });
+
+  it('finishes the cleanup even when the rollup refresh rejects', async () => {
+    state.rollupReject = new Error('connection reset');
+
+    const res = await callRoute();
+
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.activityRollup).toEqual({ error: 'refresh-failed' });
   });
 
   it('fails the run when a storage listing fails', async () => {
@@ -402,6 +445,7 @@ describe('GET /api/cron/cleanup', () => {
       recordingsRemoved: 2,
       estimatorResultsRemoved: 0,
       realtimeScoreRequestsRemoved: 0,
+      activityRollup: { days: 3, rows: {} },
     });
     expect(state.rateDeletes).toHaveLength(1);
     expect(state.rateDeletes[0].column).toBe('window_start');
@@ -464,6 +508,7 @@ describe('GET /api/cron/cleanup', () => {
       recordingsRemoved: 1,
       estimatorResultsRemoved: 0,
       realtimeScoreRequestsRemoved: 0,
+      activityRollup: { days: 3, rows: {} },
     });
     expect(state.fromCalls).toEqual(['rate_limits', 'estimator_writing_scores']);
     expect(state.listCalls.filter(({ prefix }) => prefix === '')).toEqual([
@@ -534,6 +579,7 @@ describe('GET /api/cron/cleanup', () => {
       recordingsRemoved: 2,
       estimatorResultsRemoved: 0,
       realtimeScoreRequestsRemoved: 0,
+      activityRollup: { days: 3, rows: {} },
     });
     expect(state.listCalls.map(({ prefix }) => prefix)).toEqual([
       '',
@@ -574,6 +620,7 @@ describe('GET /api/cron/cleanup', () => {
       recordingsRemoved: 1002,
       estimatorResultsRemoved: 0,
       realtimeScoreRequestsRemoved: 0,
+      activityRollup: { days: 3, rows: {} },
     });
     expect(state.listCalls).toEqual([
       {

@@ -14,6 +14,8 @@ import Funnel from '../src/components/datadash/Funnel';
 import HourHeatmap from '../src/components/datadash/HourHeatmap';
 import LiveFeed from '../src/components/datadash/LiveFeed';
 import GlobeView from '../src/components/datadash/GlobeView';
+import Scorecard from '../src/components/datadash/Scorecard';
+import RetentionCard from '../src/components/datadash/RetentionCard';
 
 // Private analytics dashboard. Mission-control layout (all first-build data
 // points) in the DataFast aesthetic: near-black canvas, DM Sans, blue data
@@ -42,6 +44,8 @@ function useDashboard() {
   const [range, setRange] = React.useState('7');
   const [overview, setOverview] = React.useState(null);
   const [realtime, setRealtime] = React.useState(null);
+  const [scorecard, setScorecard] = React.useState(null);
+  const [retention, setRetention] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const loadOverview = React.useCallback(async (r = range) => {
@@ -65,6 +69,17 @@ function useDashboard() {
     setAuthed(true);
   }, []);
 
+  // Both are range-independent (fixed 7-day / weekly-cohort windows) and both
+  // are additive: a failure leaves the rest of the dashboard alone.
+  const loadWeekly = React.useCallback(async () => {
+    const [scoreRes, retentionRes] = await Promise.all([
+      fetch('/api/data/scorecard').catch(() => null),
+      fetch('/api/data/retention?weeks=8').catch(() => null),
+    ]);
+    if (scoreRes?.ok) setScorecard(await scoreRes.json());
+    if (retentionRes?.ok) setRetention(await retentionRes.json());
+  }, []);
+
   React.useEffect(() => {
     loadOverview();
   }, [loadOverview]);
@@ -72,15 +87,22 @@ function useDashboard() {
   React.useEffect(() => {
     if (authed === false) return undefined;
     loadRealtime();
+    loadWeekly();
     const live = setInterval(loadRealtime, 15000);
     const hist = setInterval(() => loadOverview(), 60000);
+    // Weekly windows move slowly; refreshing them every 10 minutes is plenty.
+    const weekly = setInterval(loadWeekly, 600000);
     return () => {
       clearInterval(live);
       clearInterval(hist);
+      clearInterval(weekly);
     };
-  }, [authed, loadOverview, loadRealtime]);
+  }, [authed, loadOverview, loadRealtime, loadWeekly]);
 
-  return { authed, setAuthed, range, setRange, overview, realtime, refreshing, loadOverview, loadRealtime };
+  return {
+    authed, setAuthed, range, setRange, overview, realtime, scorecard, retention,
+    refreshing, loadOverview, loadRealtime, loadWeekly,
+  };
 }
 
 function LoginGate({ onSuccess }) {
@@ -147,6 +169,8 @@ export default function DataDashboard() {
   const prev = data?.prev_totals || {};
   const breakdowns = data?.breakdowns || {};
   const ai = overview?.ai;
+  const scorecardData = dash.scorecard?.data || null;
+  const retentionData = dash.retention?.data || null;
   const [showGlobe, setShowGlobe] = React.useState(false);
 
   // Size the embedded globe to the space left of the happening-now panel.
@@ -237,6 +261,23 @@ export default function DataDashboard() {
               Sign out
             </button>
           </div>
+
+          {/* Monday scorecard — fixed 7-day windows, so it sits above (and
+              outside) the range filter that scopes everything below it. */}
+          <Card
+            title="Monday scorecard"
+            subtitle="Last 7 days vs the 7 before · targets are the 90-day distribution plan"
+            className="mb-3"
+            right={
+              scorecardData?.context?.paywall_views != null ? (
+                <span className="text-[11px]" style={{ color: T.faint }}>
+                  {fmtNum(scorecardData.context.paywall_views)} paywall views this week
+                </span>
+              ) : null
+            }
+          >
+            <Scorecard scorecard={scorecardData} />
+          </Card>
 
           <div style={{ opacity: refreshing && data ? 0.55 : 1, transition: 'opacity 200ms' }}>
             {/* KPI row */}
@@ -486,6 +527,23 @@ export default function DataDashboard() {
                 />
               </Card>
             </div>
+
+            {/* Week-2 return: weekly sign-up cohorts, independent of the range
+                filter (a cohort needs its own 14 days, not the selected one). */}
+            <Card
+              title="Week-2 return"
+              subtitle="Verified sign-ups active again on days 8–14 · by sign-up week · UTC"
+              className="mb-3"
+              right={
+                retentionData?.current ? (
+                  <span className="text-[11px]" style={{ color: T.faint }}>
+                    newest complete cohort
+                  </span>
+                ) : null
+              }
+            >
+              <RetentionCard retention={retentionData} />
+            </Card>
 
             {/* Top content */}
             <Card title="Top content" subtitle="Page views in range">
