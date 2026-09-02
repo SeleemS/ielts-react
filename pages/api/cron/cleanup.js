@@ -60,6 +60,20 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'Realtime score request cleanup failed.' });
   }
 
+  // Roll up yesterday (plus a 3-day lookback, so a missed run self-heals) into
+  // activity_daily*. dashboard_overview reads those rollups for closed days;
+  // a failure here only costs the dashboard speed, never accuracy, so it must
+  // not abort the rest of the cleanup.
+  let activityRollup = null;
+  try {
+    const { data, error } = await admin.rpc('refresh_activity_daily', { p_from: null });
+    if (error) throw error;
+    activityRollup = data;
+  } catch (error) {
+    console.error('activity rollup refresh failed:', error.message);
+    activityRollup = { error: 'refresh-failed' };
+  }
+
   let removed = 0;
   try {
     const bucket = admin.storage.from('speaking-uploads');
@@ -108,5 +122,6 @@ export default async function handler(req, res) {
     recordingsRemoved: removed,
     estimatorResultsRemoved,
     realtimeScoreRequestsRemoved,
+    activityRollup,
   });
 }
