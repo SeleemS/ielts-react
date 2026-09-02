@@ -2,6 +2,7 @@
 title: IELTS Writing Task 2 Structure That Scores Band 7 and Above
 date: July 9, 2026
 excerpt: A clear, repeatable four-paragraph structure for IELTS Writing Task 2, with guidance on introductions, body paragraphs, and how the four marking criteria are actually assessed.
+answer: "One four-paragraph shape works for almost every Task 2 question: an introduction that paraphrases the prompt and states your position, two body paragraphs each built on a single idea using point, explain, example and link, and a two-sentence conclusion that adds nothing new. Two fully developed ideas score higher than five thin ones. Task 2 is worth roughly twice Task 1, so give it about 40 of your 60 minutes."
 ---
 
   <p>Most candidates lose marks in <strong>IELTS Writing Task 2</strong> not because their English is weak, but because their essay has no clear shape. Examiners reward answers that are easy to follow, fully developed, and directly focused on the question. The good news is that a single, flexible structure works for almost every task type, and once you internalise it you can stop worrying about organisation and put your energy into ideas and language.</p>

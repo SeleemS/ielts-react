@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 1: How to Write the Overview Paragraph (Academic)"
 date: August 18, 2026
 excerpt: "The overview is the single most important paragraph in Academic Task 1 — and the one examiners look for first. Here is exactly what to put in it, with model sentences."
+answer: "The overview is two sentences naming the biggest, most general features of the visual with no figures at all, placed immediately after your one-sentence introduction. Signal it with Overall or In general, name the highest and lowest values or the single clearest change, and use comparison language such as whereas. A Task 1 report without an overview is capped at Band 5 for Task Achievement."
 ---
 
   <p>If there is one paragraph that decides whether your Academic <strong>Writing Task 1</strong> answer reaches Band 6 or Band 7, it is the overview. The band descriptors for <strong>Task Achievement</strong> — one of the four equally weighted criteria alongside Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy — explicitly reward a response that "clearly presents an overview of main trends, differences or stages." Examiners are trained to look for it, and a report without one is capped at Band 5 for Task Achievement no matter how good your sentences are. This guide shows you exactly what an overview is, where it goes, and how to write one in two sentences.</p>

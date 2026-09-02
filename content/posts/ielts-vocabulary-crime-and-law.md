@@ -2,6 +2,7 @@
 title: "IELTS Vocabulary for Crime and Law: Collocations for Band 7+"
 date: August 28, 2026
 excerpt: Crime, punishment and justice are among the most predictable IELTS topics. Learn the accurate collocations for offences, sentencing and prevention that lift your Lexical Resource in Speaking and Writing.
+answer: "Crime and law answers score on accurate legal collocation, not dramatic adjectives: you commit an offence rather than do a crime, a judge hands down a sentence, offenders serve time, reoffend or are rehabilitated, and Task 2 arguments turn on tackling the root causes of crime. Keep suspect, defendant, offender and convict distinct, hold an academic register rather than words like cops, and practise one sub-topic at a time."
 ---
 
   <p>Crime and the law is one of the most reliable topics in the whole <strong>IELTS</strong> exam. It surfaces in Speaking Part 1 ("Is your neighbourhood safe?"), in Part 3 discussions about prisons and youth crime, and in Writing Task 2 essays about punishment, rehabilitation and prevention. Because the theme is so predictable, examiners have heard the same recycled phrases thousands of times. What actually lifts your band is not a longer word list but accurate, natural <strong>collocations</strong> used in the right place. This guide gives you the crime and law vocabulary that moves your score, and shows you how to deploy it.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Reading Matching Headings: A Reliable Method to Match Every Paragraph"
 date: July 14, 2026
 excerpt: "A step-by-step method for IELTS Reading Matching Headings questions: how to find each paragraph's main idea, eliminate distractor headings, handle the extra options, and avoid the traps that cost marks."
+answer: "Read each paragraph first and summarise its main idea in your own words before you look at the heading list, because reading the headings first pushes you into keyword-matching and detail traps. There are always more headings than paragraphs and the answers do not follow passage order, so match the paragraphs you find easiest first and cross off each heading as you use it."
 ---
 
   <p><strong>Matching Headings</strong> is one of the most disliked question types in IELTS Reading, and for good reason: there are always more headings than paragraphs, the wording never matches the text directly, and one wrong choice can trigger a chain of further mistakes. Yet the skill it tests, identifying the main idea of a paragraph, is completely learnable. This guide gives you a repeatable method so you can match every paragraph with confidence instead of second-guessing yourself.</p>

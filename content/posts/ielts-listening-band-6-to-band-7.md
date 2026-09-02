@@ -2,6 +2,7 @@
 title: "IELTS Listening: How to Go from Band 6 to Band 7"
 date: August 25, 2026
 excerpt: "The exact habits that move IELTS Listening from Band 6 to Band 7 — prediction, spotting distractors, spelling and word-limit discipline, and a section-by-section plan."
+answer: "Band 6 is roughly 23 correct out of 40 and Band 7 roughly 30, so the gap is about seven answers — usually ones lost to spelling, word limits, distractors, or one missed gap that unravels the next three. Before each section predict the word type and fix the word limit in mind, wait for the corrected version, write in capitals, and never leave a blank."
 ---
 
   <p>Plenty of candidates understand almost everything they hear in <strong>IELTS Listening</strong> and still land on Band 6. The problem is rarely comprehension — it is losing a mark here and there to a spelling slip, a distractor, a missed word limit, or one gap that throws off the next three answers. This guide shows you exactly what separates a Band 6 from a Band 7 and the habits that close the gap.</p>

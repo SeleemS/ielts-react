@@ -2,6 +2,7 @@
 title: "IELTS Score Requirements for Canadian Universities: What You Actually Need"
 date: August 2, 2026
 excerpt: "Most Canadian universities ask for IELTS Academic 6.5 overall with no band below 6.0 — but the details vary by institution and program. Here is how the requirements really work and how to plan your prep around them."
+answer: "Canadian universities set their own requirements, but the common pattern for direct undergraduate entry is IELTS Academic 6.5 overall with no band below 6.0; colleges often accept 6.0, while competitive and graduate courses frequently ask for 7.0. Treat these as planning ranges, verify the figure on the admissions page of your specific course and intake year, and book Academic — General Training is used for immigration, not admission."
 ---
 
   <p>If you are applying to study in Canada, the IELTS question usually comes down to one number: what score do I need? The honest answer is that there is no single national requirement — each university sets its own, and programs within a university can set higher ones. But the patterns are consistent enough that you can plan your preparation with confidence. This guide explains the typical requirements, how they are structured, the traps in how they are worded, and how to close the gap between your current level and your target.</p>

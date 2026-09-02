@@ -2,6 +2,7 @@
 title: How to Estimate Your IELTS Band Before Booking the Test
 date: July 19, 2026
 excerpt: "Use a short diagnostic honestly: measure Reading and Listening, treat Writing and Speaking as ranges, then turn the result into a focused study plan."
+answer: "Sample what can be measured objectively: answer ten Reading and ten Listening questions under realistic test discipline and scale each raw score to an approximate band, then treat Writing and Speaking as self-assessed ranges rather than exact points. Compare the result with the exact requirement you need, including any per-skill minimum, find the largest gap, and confirm the direction with a full mock test before you pay to book."
 ---
 
   <p>You do not need to book an official test just to discover that your current level is a band away from the score you need. A short diagnostic can give you a useful starting direction, provided it measures what can be measured and stays honest about what cannot.</p>

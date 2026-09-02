@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Answer a Two-Part (Direct) Question Essay"
 date: August 3, 2026
 excerpt: The two-part question asks you two things, and answering only one caps your Task Response at Band 5. Here is how to spot both parts, structure the essay, and cover each one fully.
+answer: "A two-part prompt asks two distinct questions, typically reasons plus solutions, effects, or your view, and answering only one caps Task Response at Band 5. Underline every question word, note a one-line answer to each before you start, and give each question its own body paragraph. If the second half asks whether a trend is positive or negative, commit to a view there instead of weighing both sides."
 ---
 
   <p>The <strong>two-part question</strong> — also called the <strong>direct question</strong> or <strong>double question</strong> essay — is one of the four most common Task 2 types, and the one candidates most often half-answer. The prompt asks you two separate questions, and if you answer only one, your <strong>Task Response</strong> mark is capped no matter how good your English is. This guide shows you how to recognise the type, split the prompt correctly, and build an essay that covers both parts in full.</p>

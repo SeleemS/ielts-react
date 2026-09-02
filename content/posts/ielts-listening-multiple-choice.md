@@ -2,6 +2,7 @@
 title: "IELTS Listening Multiple Choice: How to Beat the Distractors"
 date: July 26, 2026
 excerpt: Multiple choice is where careful listeners lose marks to deliberate distractors. Here is how to read the options in time, track the whole conversation, and pick the answer the speaker actually confirms.
+answer: "Every wrong option is built from something a speaker genuinely says, so match the whole meaning rather than the vocabulary and wait until the speaker settles before choosing. The real bottleneck is reading speed: use the preparation time to read the stems first, reduce each option to two or three words, and notice how the options differ. Answers run in recording order, so a miss shows you where to rejoin."
 ---
 
   <p>Multiple choice sounds like the friendliest question type in IELTS Listening — the answer is right there on the page, so how hard can it be? Harder than it looks. This is the type most engineered around <strong>distractors</strong>: every wrong option is deliberately made to sound correct at some point in the recording. The audio plays once, and by the time you realise a speaker has changed their mind, the next question has already started. This guide gives you a method built specifically for that pressure.</p>

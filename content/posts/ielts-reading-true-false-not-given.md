@@ -2,6 +2,7 @@
 title: "IELTS Reading True/False/Not Given: A Step-by-Step Method to Stop Guessing"
 date: July 13, 2026
 excerpt: "The complete method for IELTS Reading True/False/Not Given questions: the exact difference between False and Not Given, a repeatable four-step process, and the traps that cost candidates easy marks."
+answer: "False means the passage actively contradicts the statement; Not Given means the passage is simply silent on it, and that one distinction decides most of your marks. Read the statement and underline its keywords first, locate the matching text in passage order, then compare meaning rather than words, watching qualifiers such as all, some, always and the comparatives. Answer only from the passage, never from outside knowledge, and never leave a blank."
 ---
 
   <p><strong>True/False/Not Given</strong> is the question type that frustrates IELTS candidates more than any other. The reading itself feels manageable, yet the marks slip away because one category, <strong>Not Given</strong>, forces you to prove a negative. Most people lose points here not through weak English but through a flawed decision process. This guide gives you a reliable, repeatable method so you stop guessing and start choosing the correct answer on purpose.</p>

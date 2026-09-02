@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Pie Chart (Proportion Language for Band 7)"
 date: August 30, 2026
 excerpt: Pie charts test proportion language, not trends. Learn the fractions, percentages and comparison phrases that score Band 7, with a four-paragraph structure and a model answer.
+answer: "A pie chart shows parts of a whole, so it tests proportion language rather than trends: lean on accounted for, made up, constituted and the largest share, and convert percentages into approximate fractions such as just under a quarter or roughly a third. With a single chart nothing rises or falls. Name the biggest and smallest slices in the overview, because leaving it out caps Task Achievement at Band 5."
 ---
 
   <p>The pie chart looks like the friendliest visual in Academic <strong>Writing Task 1</strong> &mdash; a few colourful slices and some percentages &mdash; yet it is where many candidates quietly lose marks. The reason is that a pie chart does not test trend language at all. It tests your ability to describe <strong>proportions</strong>: which slice is biggest, how the shares compare, and, when there are two or more charts, how those shares change. Get the proportion vocabulary right and a pie chart becomes one of the easiest Task 1 questions to score well on. This guide gives you the structure, the language, and a full model answer.</p>

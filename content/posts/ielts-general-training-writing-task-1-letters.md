@@ -2,6 +2,7 @@
 title: "IELTS General Training Writing Task 1: How to Write Letters for Band 7+"
 date: July 11, 2026
 excerpt: "A complete method for IELTS General Training Writing Task 1 letters: how to spot formal, semi-formal, and informal tone, structure your letter, cover all three bullet points, and hit the right register."
+answer: "Identify the register first — formal, semi-formal or informal — because the wrong tone is the commonest reason letters lose marks. Match the greeting and sign-off: Dear Sir or Madam with Yours faithfully, a named recipient with Yours sincerely, a friend with Best wishes. Then give each of the three bullet points its own developed paragraph, write roughly 160 to 190 words, and finish within 20 minutes."
 ---
 
   <p>In the <strong>General Training version of IELTS</strong>, Writing Task 1 is not a chart or graph, it is a <strong>letter</strong>. You are given a situation and three bullet points, and you must write at least 150 words in about 20 minutes. This is one of the most learnable parts of the whole exam, because letters follow predictable conventions. Once you can identify the tone and lock in a structure, Task 1 becomes a reliable source of marks rather than a guessing game.</p>

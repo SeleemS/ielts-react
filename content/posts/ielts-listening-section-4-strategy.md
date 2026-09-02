@@ -2,6 +2,7 @@
 title: "IELTS Listening Section 4: How to Keep Up With the Academic Lecture"
 date: August 17, 2026
 excerpt: Section 4 is the only part that plays straight through with no pause to catch up. Here is how to read ahead, predict answers, and stop losing marks on the hardest ten questions.
+answer: "Part 4 is a single academic monologue that runs straight through from question 31 to question 40 with no mid-section break, so the catch-up pause you get in earlier parts does not exist. Use your one reading window on all ten questions and their headings, predict the type of word each gap needs, follow signposts such as moving on to and however, and abandon instantly anything you miss."
 ---
 
   <p>Most candidates who lose marks in <strong>IELTS Listening</strong> lose them in the last ten questions. The test has <strong>four parts, 40 questions and about 30 minutes of audio</strong> (plus 10 minutes to transfer answers in the paper test, or two minutes to check them on the computer-delivered version), and the difficulty climbs steadily. Part 4 is a single-speaker <strong>academic monologue</strong> — usually a short university-style lecture on a subject like migration patterns, urban design or the history of a material. There is no conversation to give you thinking gaps, the vocabulary is denser, and the recording, like every part of IELTS Listening, plays <strong>once only</strong>. This guide is about how to survive it.</p>

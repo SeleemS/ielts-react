@@ -2,6 +2,7 @@
 title: "How the IELTS Band Score Is Calculated (Reading and Listening Conversion Explained)"
 date: July 4, 2026
 excerpt: "Understand exactly how IELTS band scores work: how raw Reading and Listening marks convert to bands, how the overall score is rounded, and what Academic versus General Training means for your target."
+answer: "Your overall band is the average of the four skill bands rounded to the nearest half band: an average ending in .25 rounds up to the next half band, and one ending in .75 rounds up to the next whole band. Listening and Reading are marked out of 40 and converted using indicative tables — around 30 correct is typically Band 7 in Listening — while Writing and Speaking are averaged from four examiner-judged criteria."
 ---
 
   <p>One of the most common questions from IELTS candidates is a simple one: <strong>how is my band score actually calculated?</strong> Understanding the scoring system helps you set realistic targets, know how many questions you need to get right, and avoid nasty surprises on results day.</p>

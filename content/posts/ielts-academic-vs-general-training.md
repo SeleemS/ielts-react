@@ -2,6 +2,7 @@
 title: "IELTS Academic vs General Training: Every Difference That Actually Matters"
 date: July 17, 2026
 excerpt: Academic and General Training IELTS share the same Listening and Speaking tests but differ in Reading and Writing. Here is exactly what changes, and how to choose.
+answer: "Listening and Speaking are the same test in both versions, and Task 2 is an essay either way; what differs is the Reading texts and Writing Task 1, where Academic describes a chart or diagram and General Training writes a letter of at least 150 words. General Training is not the easier option, because its Reading conversion is stricter and needs more correct answers for the same band. Choose by what the receiving organisation requires."
 ---
 
   <p>Choosing between IELTS Academic and IELTS General Training is usually a candidate's first decision, and it is often made on a rumour: that General Training is "the easy one". It isn't. The two versions are marked on the same 9-band scale and share half their content exactly. What changes is the <em>type of text</em> you read and the <em>type of writing</em> you produce — plus one quiet scoring difference that catches people out.</p>

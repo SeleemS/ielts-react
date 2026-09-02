@@ -2,6 +2,7 @@
 title: "IELTS Cue Card Model Answer: Describe an Important Goal"
 date: August 2, 2026
 excerpt: "'Describe a goal you want to achieve' rewards structure and honest detail. Here is a full original model answer for this Part 2 cue card, with the preparation method and Part 3 follow-ups."
+answer: "Goal cards turn vague unless you tell the goal as a story, so build the talk from what the goal is, the specific moment it started, the unglamorous routine you follow now, one honest obstacle, and what achieving it would really mean. That frame produces past, present and future tenses naturally. Note about five trigger words in the preparation minute and pick a real goal at a human scale, because real goals bring real detail."
 ---
 
   <p>"Describe a goal you would like to achieve" — sometimes phrased as "an ambition you have," "a goal you set for yourself," or "something you hope to do in the future" — is a staple of IELTS Speaking Part 2. It looks easy because everyone has goals, but it trips more candidates than the average card for one reason: goals are abstract, and abstract topics produce vague, repetitive talk. The fix is to treat the goal as a story with a past, a present and a future. This guide shows you how, with a complete original model answer and the Part 3 discussion that follows.</p>

@@ -2,6 +2,7 @@ import { posts } from '../lib/posts';
 import { SKILLS, listMockTests, listPassages } from '../lib/supabase';
 import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
 import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
+import { listRoundupMonths } from '../lib/task2Roundup';
 
 import { SITE_URL } from '../lib/site';
 
@@ -55,6 +56,14 @@ export async function getServerSideProps({ res }) {
 
   STATIC_ROUTES.forEach((route) =>
     entries.push({ loc: `${SITE_URL}${route}`, lastmod: today })
+  );
+
+  // Monthly Task 2 roundups (pages/ielts-writing-task-2-topics/[month].js).
+  // Resolved per REQUEST rather than at module load, so the sitemap starts
+  // listing the new month the day the calendar turns over — matching the
+  // route's own daily revalidate window.
+  listRoundupMonths(new Date(), 6).forEach((month) =>
+    entries.push({ loc: `${SITE_URL}/ielts-writing-task-2-topics/${month}`, lastmod: today })
   );
 
   posts.forEach((post) =>

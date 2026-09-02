@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Bar Chart (Band 7 Comparison Language)"
 date: August 31, 2026
 excerpt: Bar charts are the most common Task 1 question. Learn how to group data, write the overview, and choose comparison language for Band 7, with a full model answer.
+answer: "Decide first whether your bar chart is static, plotted over time, or grouped, because a static chart takes comparison language while a time axis takes trend verbs such as rose and fell. Then group bars that behave alike instead of reading them left to right, and rotate comparatives, multiples, superlatives and approximation so the comparing itself varies. A report with no overview is capped at Band 5 for Task Achievement."
 ---
 
   <p>The bar chart is the single most common visual in Academic <strong>Writing Task 1</strong>, and that is exactly why it is worth mastering. A bar chart can compare categories at one moment, track them across several years, or show two variables side by side &mdash; and the language you need shifts with each. Candidates lose marks not because bar charts are hard to read, but because they list every bar mechanically instead of grouping and comparing. This guide gives you a structure that works for any bar chart, the comparison language examiners reward, and a full model answer.</p>

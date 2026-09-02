@@ -2,6 +2,7 @@
 title: "IELTS Test Day: What to Bring, What to Expect, and How to Avoid Losing Easy Marks"
 date: August 11, 2026
 excerpt: Exactly what to take to your IELTS test, the ID rules that can turn you away at the door, the running order of the four papers, and the small logistical mistakes that cost candidates marks before they even start writing.
+answer: "Bring the exact identification document you registered with, usually a valid passport, because a mismatch at the door means you cannot sit the test. Leave watches behind, switch phones off, and arrive around 30 minutes early for registration, the photo and security checks. Listening, Reading and Writing then run back to back with no break, about two hours 45 minutes; Speaking may fall on a different day."
 ---
 
   <p>Most candidates spend months on grammar and vocabulary and then lose easy marks on test day to something completely avoidable — the wrong ID, a watch left on the wrist, or a misunderstanding about how the Listening transfer time works. This guide walks you through exactly what to bring, what happens from the moment you arrive, and the logistical traps that quietly drag scores down. Get these right and you free up all your attention for the parts that actually test your English.</p>

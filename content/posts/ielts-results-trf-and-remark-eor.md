@@ -2,6 +2,7 @@
 title: "IELTS Results: When They Arrive, How to Read Your TRF, and When a Remark Is Worth It"
 date: August 20, 2026
 excerpt: "How long IELTS results take, how to read every number on your Test Report Form, and how the remark (Enquiry on Results) process actually works."
+answer: "Computer-delivered results are typically available three to five days after the test, and paper-based results 13 days after the test date; the Test Report Form shows four skill bands plus an overall average rounded to the nearest half band. An Enquiry on Results is normally applied for within six weeks, is re-marked by a senior examiner, and the fee is refunded if any band rises — usually worth considering only for Writing or Speaking."
 ---
 
   <p>The test is done, and now you are refreshing your inbox. This guide answers the three questions every candidate has after the exam: <strong>when</strong> your results arrive, <strong>how to read</strong> the Test Report Form, and whether it is worth paying for a <strong>remark</strong> if a score comes back lower than you expected. Everything here applies to both Academic and General Training.</p>

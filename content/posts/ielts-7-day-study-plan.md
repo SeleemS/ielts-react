@@ -2,6 +2,7 @@
 title: "The 7-Day IELTS Study Plan: A Last-Minute Schedule to Maximise Your Band"
 date: August 5, 2026
 excerpt: "One week to go and no time to learn new English? This day-by-day IELTS plan focuses on exam technique, format familiarity, and protecting the marks you can already earn."
+answer: "With a week left, protect the marks you can already earn rather than learn new English. Take a timed baseline on day one and target your single lowest skill, then give a day each to Reading technique, Listening recovery, one reliable Task 2 structure of at least 250 words, Task 1 of at least 150 words plus a rewrite, and Speaking rehearsed out loud. Day seven is one light section and rest."
 ---
 
   <p>Seven days is not enough time to raise your level of English — but it is more than enough time to stop throwing away marks you should already be earning. With a test date this close, the goal is not to learn new grammar or memorise word lists. It is to master the format, fix the handful of technique errors that cost most candidates a whole band, and walk in rehearsed rather than surprised. This <strong>7-day IELTS study plan</strong> assumes roughly two focused hours a day and no prior structured revision. If you have longer, follow the fuller <a href="/blog/ielts-30-day-study-plan">30-day study plan</a> instead; if the test really is next week, start here today.</p>

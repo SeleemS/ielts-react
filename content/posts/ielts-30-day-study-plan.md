@@ -2,6 +2,7 @@
 title: "The 30-Day IELTS Study Plan: A Week-by-Week Schedule for a Higher Band"
 date: July 24, 2026
 excerpt: A realistic four-week IELTS study plan that builds skills, then speed, then exam stamina. Includes a daily time budget and how to know if you are ready.
+answer: "Give each week one job. Take a timed baseline first, then spend week one fixing technique untimed, week two doing one timed section a day and reviewing it for twice as long as it took, week three building stamina with two or three full mock papers, and week four on one full simulation followed by a taper. About 90 minutes a day works: 30 on your weakest skill, 30 timed, 30 on review."
 ---
 
   <p>Most people who "study for a month" and score below their target did not study badly — they studied without a plan. They did a bit of everything every day, never finished a full timed section, and walked into the exam having never rehearsed the actual conditions. A <strong>30-day IELTS study plan</strong> fixes that by giving each week a single job: build the skills, then build speed, then build exam stamina, then peak. This is a schedule you can start today with roughly one to two focused hours a day.</p>

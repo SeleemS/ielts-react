@@ -3,6 +3,7 @@ title: "How to Make the Most of an IELTS Writing Bank: A Practice System for Bot
 date: July 3, 2025
 updated: August 2, 2026
 excerpt: "A writing bank — original practice prompts plus model answers for Task 1 and Task 2 — only raises your band if you use it as a training system. Here is the full method, task by task."
+answer: "Use a writing bank as a training system rather than a reading list: write your own timed answer first — 20 minutes for Task 1, 40 for Task 2 — and only then compare it with the model. Audit the overview, data selection and grouping in Task 1, and Task Response, structure and development in Task 2, harvesting a few collocations rather than whole paragraphs, and log the trend across fresh prompts."
 ---
 
   <p>A <strong>writing bank</strong> is a collection of practice prompts and model answers covering both IELTS Writing tasks: Task 1 charts, processes and letters, and Task 2 essays. Worth saying plainly: everything in a legitimate writing bank — including everything on this site — is <strong>original material written for practice</strong>. Real exam papers are confidential and never published, and a writing bank's value has nothing to do with predicting your test question. Its value is that Writing is the skill where structured comparison against a standard produces the fastest measurable gains — <em>if</em> you use the bank as a training system rather than a reading list. This guide is that system, task by task.</p>

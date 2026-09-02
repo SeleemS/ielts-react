@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Write an Introduction That Sets Up a Band 7+ Essay"
 date: August 22, 2026
 excerpt: "A simple two-sentence formula for a clear, high-scoring IELTS Task 2 introduction — how to paraphrase the question, write a thesis, and avoid the memorised openers examiners penalise."
+answer: "A Task 2 introduction needs only two moves across two or three sentences: paraphrase the prompt in your own words, then state a thesis that answers the question directly, previewing your two reasons where the question invites it. Wording copied from the prompt is not counted towards your total and shows no lexical range. Keep the length for your body paragraphs, since a five-sentence opening only eats writing time."
 ---
 
   <p>The introduction is the first thing the examiner reads, and in the space of two or three sentences it tells them whether you have understood the question and know where your essay is going. Get it right and the rest of the essay has a clear road to follow. Get it wrong — copy the prompt word-for-word, or ramble for five sentences before saying anything — and you start on the back foot. The good news is that a strong Task 2 introduction follows a short, repeatable formula. This guide shows you exactly how to build one.</p>

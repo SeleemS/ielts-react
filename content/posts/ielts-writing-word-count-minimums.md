@@ -2,6 +2,7 @@
 title: "IELTS Writing Word Count: The 150 and 250 Minimums, and the Real Penalty for Going Under"
 date: August 10, 2026
 excerpt: "How many words do you actually need for IELTS Writing Task 1 and Task 2? Here are the exact minimums, what happens if you write too few, whether writing more helps, and how to check your length without wasting time counting."
+answer: "Task 1 needs at least 150 words and Task 2 at least 250, and there is no upper limit. Going under is not a fixed deduction; it costs you under Task Achievement or Task Response, because a short answer cannot be a fully developed one. Aim for roughly 160 to 190 words on Task 1 and 260 to 290 on Task 2, as very long answers add errors and eat your checking time."
 ---
 
   <p>"How many words does IELTS Writing need?" is one of the first things candidates search for — and one of the most misunderstood. The rules are simple, but the <em>consequences</em> of breaking them are often exaggerated or misreported. This guide gives you the exact minimums, explains what the penalty for going under really is, whether writing more earns you a higher band, and how to check your length in seconds without stopping to count every word.</p>

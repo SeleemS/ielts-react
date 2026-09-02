@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe Charts and Graphs for Band 7+"
 date: July 9, 2026
 excerpt: A step-by-step method for IELTS Academic Writing Task 1, with a four-paragraph structure, model sentences for trends, and the overview that examiners look for first.
+answer: "Describe any Academic Task 1 visual in four paragraphs: a one-sentence paraphrased introduction, a two-sentence overview that begins with Overall and gives no figures, then two body paragraphs that group the data and quote only selected figures. A missing or vague overview is the usual reason reports stall at Band 5 or 6. Drill trend language, vary verb and noun forms, and never explain why a trend happened."
 ---
 
   <p>In <strong>IELTS Academic Writing Task 1</strong> you are given a visual, a line graph, bar chart, pie chart, table, map, or process diagram, and 20 minutes to describe it in at least 150 words. Many candidates treat it as a warm-up and rush it, but Task 1 counts toward your Writing band, and a weak report can drag down an otherwise strong Task 2. The good news is that Task 1 is highly formulaic: once you learn a reliable structure and a bank of trend language, you can score well on almost any chart you are given.</p>

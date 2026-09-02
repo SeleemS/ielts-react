@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Table (Band 7 Method)"
 date: August 27, 2026
 excerpt: Tables are the Task 1 visual most candidates fear. Learn how to select the key data, group it logically, and write an accurate overview and body paragraphs that reach Band 7.
+answer: "A table gives you no ready-made story, so spend the first two minutes reading it: work out what the rows and columns represent, whether there is a time dimension, and where the extremes and pattern-breakers sit. Then group by ranking or by time period rather than working cell by cell, and compare the figures instead of merely stating them. No overview caps Task Achievement at Band 5."
 ---
 
   <p>Of all the visuals you can be given in <strong>IELTS Academic Writing Task 1</strong>, the table is the one candidates dread most. A line graph or bar chart tells you what to say — it goes up, it goes down. A table is just a grid of numbers with no built-in story, and it is your job to find one. The good news is that tables reward exactly the same skills as every other Task 1: selecting key features, writing a clear overview, and grouping data logically. Once you know how to read a table strategically, it becomes one of the easier visuals to score well on.</p>

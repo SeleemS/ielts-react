@@ -2,6 +2,7 @@
 title: "IELTS Listening Form, Note and Table Completion: How to Predict the Answer and Beat the Word Limit"
 date: August 1, 2026
 excerpt: "Gap-fill completion is the most common IELTS Listening question type, and the marks are lost on prediction, word limits, and spelling — not on hearing. Here is the method, with formatting rules and a checklist."
+answer: "Completion tasks are decided by prediction and accuracy, not by hearing. Before the audio, work out what type of word each gap needs — noun, number, date, singular or plural — and fix the stated word limit in your mind, because exceeding it scores zero even when the content is right. Write numbers as figures, drop unnecessary articles, and spell every answer correctly, since a misspelt answer is wrong."
 ---
 
   <p>Of all the question types in IELTS Listening, <strong>completion tasks</strong> — filling gaps in a form, a set of notes, a table, or a flow chart — are the ones you will meet most often, especially in Section 1 and Section 4. They feel simple: you just write the missing word. Yet they are where careful listeners quietly leak marks, because the answer is scored on more than whether you heard it. Spell it wrong, write one word too many, or miss a plural, and a correct answer becomes a zero. This guide gives you a method built around the two things that actually decide the mark: <strong>prediction before you listen</strong> and <strong>accuracy when you write</strong>.</p>

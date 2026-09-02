@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Process Diagram for Band 7+"
 date: July 31, 2026
 excerpt: "A process diagram needs no numbers and no trend language — it needs the passive voice, sequencers, and a stage count. Here is the structure, the grammar, and a model answer."
+answer: "A process diagram carries no figures and no trend language. It needs the passive voice for man-made processes, the present simple active for natural cycles, and varied sequencers such as initially, subsequently and finally. Your overview states how many stages there are and whether the process is linear or a continuous cycle; skip it and Task Achievement is capped. Paraphrase the labels and follow the arrows in order."
 ---
 
   <p>Most IELTS Academic Task 1 preparation is built around charts and graphs, so when a <strong>process diagram</strong> appears on test day, candidates who have only practised describing numbers freeze. The good news is that a process is often <em>easier</em> to score well on than a bar chart, because there are no figures to read, no trends to compare, and no risk of misreporting data. What it demands instead is a different toolkit: the passive voice, sequencing language, and the discipline to describe stages in the right order. This guide gives you a reliable structure and a model answer you can adapt to any process you are shown.</p>

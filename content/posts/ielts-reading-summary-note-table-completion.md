@@ -2,6 +2,7 @@
 title: "IELTS Reading Summary, Note and Table Completion: One Strategy for All Three"
 date: August 2, 2026
 excerpt: "Summary, note and table completion are the same skill wearing three outfits: rebuild a condensed version of the passage using exact words from the text. Here is the single method that handles all of them."
+answer: "All three formats use one method: skim the summary for its topic and logic, predict each gap's grammar and meaning, locate the single passage section using unparaphrasable anchors such as names and figures, then extract the exact words and re-read the completed phrase to check it. The word limit is absolute — over-length answers score zero — and the option-box variation instead rewards elimination between engineered near-synonyms."
 ---
 
   <p>Summary completion, note completion and table completion look different on the page — a paragraph with gaps, a bulleted outline, a grid — but they test one identical skill: matching a condensed, heavily paraphrased version of the passage against the original, and lifting the exact missing words. Candidates who treat them as three separate types waste preparation; candidates who learn the shared method get three question types for the price of one. This guide covers the common strategy, the one major variation (the box of options), and the traps specific to each format.</p>

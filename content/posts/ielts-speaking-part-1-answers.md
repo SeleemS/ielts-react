@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 1: How Long Should Your Answers Be?"
 date: July 20, 2026
 excerpt: Part 1 answers that are too short or too long both cost marks. Here is the two-to-three sentence formula, worked examples, and the mistakes that flatten your Fluency score.
+answer: "Aim for two to three sentences, roughly 15 to 30 seconds: answer directly in the first few words, give a reason, add one detail, then stop. One-word replies leave the examiner almost nothing to assess, while ninety-second speeches get interrupted and cost you questions. You are scored on language rather than truth, so a plausible invented detail is fine, but a flat 'I don't know' gives the examiner nothing."
 ---
 
   <p>IELTS Speaking Part 1 lasts four to five minutes and covers familiar topics: your home, your work or studies, and two or three everyday subjects such as food, weather, music or transport. It feels like small talk, so candidates treat it like small talk — and lose marks before the harder parts even begin. The single most common problem is answer length. This guide fixes that with a formula you can apply to any question.</p>

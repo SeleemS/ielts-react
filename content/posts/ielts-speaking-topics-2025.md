@@ -3,6 +3,7 @@ title: "IELTS Speaking Topics: The Evergreen Guide to What the Test Asks"
 date: July 16, 2026
 updated: August 2, 2026
 excerpt: "IELTS Speaking draws on a stable pool of everyday topic families that barely changes from year to year. Here is the full map — Part by Part — and a preparation method that works whatever variation you meet."
+answer: "IELTS Speaking draws on a stable pool of everyday topic families rather than a fresh set each year, so nobody can tell you your test-day questions and you do not need them. Prepare the two near-certain Part 1 openers, one detailed story for each of the five cue-card types, and the recurring Part 3 question shapes, then rotate one theme a week through all three parts. Prepare ideas and phrases, never scripts."
 ---
 
   <p>Every year, candidates hunt for "this year's Speaking topics" as if the test reinvents itself each January. It does not. IELTS Speaking has drawn on the same stable pool of everyday themes for decades — your home, your habits, people, places, objects, experiences, and the societal questions that grow out of them — because the test measures how well you communicate, not what you know. Nobody can tell you your exact test-day questions; anyone claiming to sell "this month's real questions" is selling unreliable recall at best. The good news is that you do not need predictions. The topic pool is stable enough to prepare systematically, and this guide maps it, Part by Part, with a method that transfers to any variation the examiner asks.</p>

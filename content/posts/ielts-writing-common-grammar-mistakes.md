@@ -2,6 +2,7 @@
 title: "The Most Common Grammar Mistakes in IELTS Writing (and How to Fix Them)"
 date: July 27, 2026
 excerpt: Grammatical Range and Accuracy is a full quarter of your Writing band, and the same handful of errors quietly caps candidates at Band 6. Here are the mistakes examiners see most, with fixes and examples.
+answer: "Grammatical Range and Accuracy is worth a quarter of your Writing band, and most Band 6 essays are competent writing undermined by the same few repeated errors: articles, subject-verb agreement, comma splices, prepositions, tense drift, uncountable nouns and word-form mix-ups. Fix the ones you personally repeat, and reserve the last three minutes of each task to check articles and plurals, then verbs, then sentence boundaries, one category at a time."
 ---
 
   <p>Of the four Writing criteria, <strong>Grammatical Range and Accuracy</strong> is the one most candidates lose marks on without ever knowing why. It is worth 25% of your Writing band, and the descriptors are blunt: to reach Band 7 you need "frequent error-free sentences" and only occasional slips. Most Band 6 essays are not badly written — they are competent essays undermined by the same small set of repeated errors. This guide lists the mistakes examiners see most often, why each one costs you, and exactly how to fix it.</p>

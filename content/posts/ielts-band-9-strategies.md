@@ -3,6 +3,7 @@ title: "How to Get a Band 9 in IELTS: What It Actually Takes, Section by Section
 date: July 3, 2025
 updated: August 2, 2026
 excerpt: "Band 9 means 'expert user' — near-perfect accuracy in Listening and Reading, and language that examiners can barely fault in Writing and Speaking. Here is an honest, section-by-section account of what it takes."
+answer: "Band 9 means expert user: roughly 39 or 40 of the 40 questions correct in Listening and Reading, and Writing and Speaking judged against the top descriptors — fully developed responses, natural precise language, and errors rare enough to read as slips. It does not require a native accent or rare vocabulary. Getting there is subtraction and evidence: full-length timed practice, an autopsy of every error, and criterion-level feedback rather than more new material."
 ---
 
   <p>Band 9 is the ceiling of the IELTS scale: "expert user." It is genuinely rare — even highly educated native speakers regularly miss it, usually in Writing — and no honest resource will promise it to you. What can be said honestly is what Band 9 consists of, section by section, and what kind of preparation moves someone from very good to essentially faultless. That is what this guide does. Even if your actual target is 7.5 or 8.0, training against the Band 9 standard is the most reliable way to build in the margin that guarantees your real goal.</p>

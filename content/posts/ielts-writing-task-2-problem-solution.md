@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Write a Problem and Solution Essay"
 date: July 21, 2026
 excerpt: Problem and solution essays look easy and quietly cap thousands of candidates at Band 6. Here is the paragraph structure, model text, and the matching rule that lifts you to Band 7.
+answer: "The move that lifts this essay is matching: whatever problem your first body paragraph develops, the second must solve that exact problem rather than a neighbouring one. Check whether the prompt asks for causes or for problems, because answering the wrong half costs Task Response marks. Develop one problem and one measure through a chain of state, explain, effect and example, and name who would actually implement the solution."
 ---
 
   <p>Problem and solution questions are one of the most common Writing Task 2 essay types, and one of the easiest to write badly. The topic is usually familiar — traffic, obesity, pollution, youth crime — so candidates start writing immediately and produce a list of vaguely related ideas. The examiner reads a competent, empty essay and marks it Band 6. This guide shows you the structure that fixes it.</p>

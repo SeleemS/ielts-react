@@ -2,6 +2,7 @@
 title: "IELTS Reading Sentence Completion: Strategy, Traps and a Worked Example"
 date: August 2, 2026
 excerpt: "Sentence completion looks like the friendliest Reading question type — the answers come in order and straight from the text. Here is the method that stops it quietly costing you marks anyway."
+answer: "Sentence completion answers are copied from the passage word for word, they come in passage order, and the stated word limit is absolute — a three-word answer scores zero where two words were allowed. Predict the grammar the gap needs, locate it using the keywords least likely to be paraphrased, then let meaning, not grammar, choose between the several nouns in the sentence you land on."
 ---
 
   <p>Sentence completion should be the question type you bank marks on. The answers appear in passage order, they must be words copied exactly from the text, and grammar narrows down what can possibly fit each gap. Yet candidates lose marks on it constantly — through word-limit slips, through copying the wrong word from the right sentence, and through paraphrase blindness. This guide gives you a reliable method, a worked example, and the specific traps to train against.</p>

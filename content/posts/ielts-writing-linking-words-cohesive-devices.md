@@ -2,6 +2,7 @@
 title: "IELTS Linking Words: How to Use Cohesive Devices Without Overdoing It"
 date: August 9, 2026
 excerpt: Linking words can lift your IELTS Writing band or sink it. Here is which cohesive devices actually score, how to use them naturally, and the overuse trap that caps Coherence and Cohesion.
+answer: "Linking words are marked under Coherence and Cohesion, where the descriptors reward the logical progression of your ideas first and connectors second, and Band 7 warns against over-use as much as under-use. Use a small, ordinary set — however, for example, as a result — roughly one per idea rather than one per sentence, and carry the rest of the linking through referencing words, varied wording and clear topic sentences."
 ---
 
   <p><strong>Linking words</strong> — also called cohesive devices or connectors — are one of the most misunderstood parts of IELTS Writing. Candidates memorise long lists of "advanced" connectors, then stuff them into every sentence believing this signals a higher band. In reality, examiners are trained to spot the <em>mechanical, overused</em> linking that actually lowers your score. This guide explains what cohesion really means, which devices to use, and how to make your writing flow without sounding like a template.</p>

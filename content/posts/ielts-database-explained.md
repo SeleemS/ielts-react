@@ -3,6 +3,7 @@ title: "What Is an 'IELTS Database'? The Honest Answer, and What Actually Works"
 date: July 3, 2025
 updated: August 2, 2026
 excerpt: "Many learners search for an 'IELTS database' hoping to find real exam questions. Those don't exist publicly — and chasing them wastes prep time. Here is what a legitimate question bank is, and how to use one properly."
+answer: "There is no public database of genuine IELTS exam questions: the boards keep live material confidential, and anything sold as authentic is fabricated, half-remembered or stolen. What actually works is a large bank of original practice questions organised by type — sit one timed test to find your weakest question types, drill those, name every error rather than just counting it, then retest on unseen material."
 ---
 
   <p>Search for "IELTS database" and you will find two very different things wearing the same name. The first is what many searchers are secretly hoping for: a collection of real, leaked or "recalled" exam questions. The second is what actually exists and actually helps: a large, organised bank of <strong>original practice questions</strong> built to match the exam's format, difficulty and topic range. This article is honest about the first and practical about the second — including exactly how to use a question bank so it raises your band rather than your confidence alone.</p>

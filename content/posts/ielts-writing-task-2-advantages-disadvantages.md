@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Write an Advantages and Disadvantages Essay"
 date: July 28, 2026
 excerpt: The advantages and disadvantages essay has two versions, and answering the wrong one caps your Task Response. Here is how to tell them apart, plus structure, model paragraphs, and a mistakes checklist.
+answer: "Read the final line of the prompt first. If it simply asks what the advantages and disadvantages are, explain both sides and force in no opinion; if it asks whether the advantages outweigh the disadvantages, you must reach a verdict, and giving none caps Task Response at Band 6. Either way use four paragraphs, developing one advantage and one drawback in depth rather than listing several."
 ---
 
   <p>The <strong>advantages and disadvantages</strong> essay is one of the most common tasks in IELTS Writing Task 2, and one of the most misread. It comes in two versions that look almost identical but demand different answers, and choosing the wrong one caps your Task Response mark before you have written a single body paragraph. This guide shows you how to spot which version you have, how to structure each one, and the language that keeps your essay clear.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Map for Band 7+"
 date: August 4, 2026
 excerpt: "A map in Task 1 needs no numbers and no trend words — it needs prepositions of place, past-and-present tenses, and clear directions. Here is the structure, the language, and a model answer."
+answer: "A map is described with prepositions of place and the passive voice, never with trend words: say exactly where each change happened and what was built, demolished or converted. Use one sentence to paraphrase the prompt, one or two for an overview of how the area changed overall, then two body paragraphs that move across the map in a consistent order. A missing overview caps Task Achievement at Band 5."
 ---
 
   <p>Most IELTS Academic Task 1 practice is built around line graphs and bar charts, so when a <strong>map</strong> appears on test day, candidates who have only drilled numbers often panic. In reality a map is one of the more predictable Task 1 questions to score well on, because there are no figures to misread and no trends to compare. What it demands instead is a different toolkit: prepositions of place, the right tenses, and the discipline to guide your reader across the map in a logical order. This guide gives you a reliable structure and a model answer you can adapt to almost any map you are shown.</p>

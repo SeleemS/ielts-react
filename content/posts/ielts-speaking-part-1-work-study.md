@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 1 Sample Answers: Work and Study"
 date: August 2, 2026
 excerpt: "'Do you work or are you a student?' starts almost every IELTS Speaking test. These original model answers show how to talk about your job or studies naturally — and how to avoid the memorised-speech trap."
+answer: "Answer in two to four sentences: name your job or course directly, add one developed reason or example, then stop. Mind the tense split this topic tests, using present simple for routines, present perfect for how long, past simple for why you chose it and hedged forms for plans. Prepare five or six specific terms from your own field, and avoid reciting your CV in formal written English."
 ---
 
   <p>After your hometown, the topic you are most likely to meet in IELTS Speaking Part 1 is what you do all day: your job or your studies. The examiner's opening question — "Do you work, or are you a student?" — routes you into one of two question sets, and because everyone can predict this topic, everyone prepares it. That cuts both ways. Prepared candidates sound fluent; over-prepared candidates sound like they are reading an invisible script, and examiners are trained to hear the difference. This guide gives you original model answers for both routes and, more importantly, the technique that keeps them sounding like speech rather than recitation.</p>

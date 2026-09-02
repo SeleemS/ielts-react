@@ -2,6 +2,7 @@
 title: "IELTS Vocabulary for Technology Topics: Natural Collocations That Score"
 date: August 2, 2026
 excerpt: "Technology is arguably the most frequent IELTS topic of all. These are the natural collocations that lift Writing and Speaking answers — organised by sub-topic, with examples of accurate, non-memorised use."
+answer: "Technology answers score on ordinary words in fluent pairings rather than press-release vocabulary: you rely on your phone, look something up, cut down your screen time, spread misinformation, automate routine tasks, or argue that benefits outweigh drawbacks. Aim for four or five such collocations per essay, placed where the argument needs them, with at most one idiom properly developed, because ten in a paragraph reads as memorisation."
 ---
 
   <p>If you sit IELTS this year, you will almost certainly meet technology somewhere: a Task 2 essay on children and screens, a Speaking Part 1 set about your phone, a Part 3 discussion on artificial intelligence and jobs, or a Reading passage about the history of some invention. It is arguably the most frequent topic family in the test. Yet most candidates prepare for it with a strange, formal word list — "ubiquitous," "cutting-edge," "technological advancement" — that produces essays sounding like press releases. What the Lexical Resource criterion actually rewards is <strong>natural collocation</strong>: ordinary words in the pairings fluent English really uses. This guide gives you those pairings, organised by sub-topic, with notes on using them accurately.</p>

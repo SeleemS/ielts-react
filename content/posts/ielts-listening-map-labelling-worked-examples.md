@@ -2,6 +2,7 @@
 title: "IELTS Listening Map Labelling: Two Worked Examples, Step by Step"
 date: August 2, 2026
 excerpt: "Map labelling is best learned by walking through real examples slowly. Here are two worked map tasks — a campus tour and a town redevelopment — showing exactly how the audio, the map and the traps interact."
+answer: "When a speaker stacks locators — second along, just past the café, directly opposite the library — the answer must satisfy all of them, so confirm on the last locator instead of committing to the first. Left and right belong to the walker's direction of travel; north and south belong to the map. On redevelopment tasks the old site is described first, so match the tense the question asks for."
 ---
 
   <p>Map labelling, which usually appears in Part 2 of IELTS Listening, is the question type least like anything else on the test: you follow a spoken tour of a place while matching letters on a plan to a list of locations. Strategy articles can list the principles, but this type is genuinely best learned by slow-motion example — seeing exactly how a sentence of audio turns into a correct label, and exactly where the wrong-but-tempting letter comes from. This guide walks through two worked examples at reading speed. For the general method and preparation routine, pair it with our main <a href="/blog/ielts-listening-map-labelling">map labelling strategy guide</a>.</p>

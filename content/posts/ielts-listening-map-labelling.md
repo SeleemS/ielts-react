@@ -2,6 +2,7 @@
 title: "IELTS Listening Map and Plan Labelling: How to Stop Losing Easy Marks"
 date: July 19, 2026
 excerpt: Map, plan and diagram labelling questions are lost through orientation, not vocabulary. Here is a step-by-step method plus the direction language you must know.
+answer: "Map and plan labelling is lost through orientation, not vocabulary. In the preparation time find the entrance or compass, say the fixed landmarks to yourself, and note which gaps sit close together; then track the speaker's route with your pen rather than your memory. Answers arrive in recording order, so if you miss one, let it go and re-anchor on the next landmark."
 ---
 
   <p>Map and plan labelling is the question type candidates fear most in IELTS Listening, and the fear is misplaced. The vocabulary is simple. The recording is not fast. What defeats people is orientation: they lose track of where the speaker is on the page, miss one label, and then miss the three that follow. This guide fixes that.</p>

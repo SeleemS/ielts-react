@@ -2,6 +2,7 @@
 title: "IELTS Reading Matching Information: How to Find the Right Paragraph Fast"
 date: July 22, 2026
 excerpt: "\"Which paragraph contains the following information?\" is the most time-consuming question type in IELTS Reading. Here is a search method that keeps you on the clock."
+answer: "Matching Information asks which paragraph contains a specific detail, not what a paragraph is mainly about, and the answers are not in passage order — which is why it drains the clock. Do the set last within its passage, then scan for the statement's hardest-to-paraphrase anchor word and read the two sentences around each hit. Unless the instructions say otherwise, one paragraph can answer several statements."
 ---
 
   <p>Matching Information is the question type most likely to wreck your IELTS Reading timing. You are given a passage split into lettered paragraphs (A, B, C...) and a list of statements, and you must decide which paragraph contains each piece of information. The instruction usually reads: <em>"Which paragraph contains the following information? Write the correct letter A-H in boxes 1-6."</em> Often there is a note saying you may use any letter more than once.</p>

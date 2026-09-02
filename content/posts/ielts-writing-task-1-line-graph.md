@@ -2,6 +2,7 @@
 title: "IELTS Academic Writing Task 1: How to Describe a Line Graph (Band 7 Trend Language)"
 date: August 29, 2026
 excerpt: Line graphs are the most common Academic Task 1 visual. Learn the exact trend vocabulary, tenses and structure to describe changes over time and reach Band 7.
+answer: "Describe the shape of the lines rather than every data point: one sentence paraphrasing the prompt, a two-sentence overview of the main trends with no figures, then two body paragraphs giving the movements with a few supporting numbers. Let the dates on the axis fix your tense, and vary your movement words - rose steadily, plunged, levelled off - instead of repeating increase and decrease."
 ---
 
   <p>The line graph is the most frequent visual in Academic <strong>Writing Task 1</strong>, and it is also the one where candidates lose the most easy marks. The task is always the same: you are given a graph showing how one or more figures change over a period of time, and you have 20 minutes to write at least 150 words describing it. What separates a Band 5 answer from a Band 7 is not fancy vocabulary — it is accurate <strong>trend language</strong>, the right tense, and a clear structure. This guide gives you all three.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Reading: Skimming and Scanning — The Two Reading Speeds That Save You Time"
 date: August 16, 2026
 excerpt: You have 60 minutes for 40 questions and roughly 2,700 words of dense text. You cannot read it all carefully. Here is exactly when to skim, when to scan, and when to read closely.
+answer: "Use three reading speeds rather than one. Skim a passage for two to three minutes to map its structure, scan for the words a question hands you that are least likely to be paraphrased — names, dates, numbers, technical terms — then read closely only the one or two sentences that decide the answer. Matching a keyword without that final confirm step is what produces fast wrong answers."
 ---
 
   <p>The single biggest reason candidates run out of time in <strong>IELTS Reading</strong> is that they read every passage the way they read a novel: word by word, front to back, once. The Reading test gives you <strong>60 minutes to answer 40 questions</strong> across three passages, and in Academic Reading those passages together run to roughly 2,000–2,700 words of dense, unfamiliar text. There is no separate transfer time in the paper test — your answers must be on the answer sheet inside that hour. Careful reading of every line simply does not fit. The candidates who finish comfortably are not faster readers; they are <em>strategic</em> readers who switch between three speeds on purpose.</p>

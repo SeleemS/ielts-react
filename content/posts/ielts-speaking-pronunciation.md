@@ -2,6 +2,7 @@
 title: "IELTS Speaking Pronunciation: How to Score Band 7+ on the Criterion Most Candidates Ignore"
 date: August 19, 2026
 excerpt: "Pronunciation is a full quarter of your Speaking score, but it isn't about losing your accent. Here is what the examiner actually rewards, and how to train it."
+answer: "Pronunciation is marked on how easily an examiner can follow you, not on having a British or American accent. The marks come from clear individual sounds, sensible word and sentence stress, and chunking your speech into meaningful groups rather than word-by-word delivery, so recording yourself and listening for where a listener would stumble is the fastest way to improve."
 ---
 
   <p>Of the four things an examiner marks you on in <strong>IELTS Speaking</strong>, pronunciation is the one candidates worry about most and train least. Many assume it means "sounding British or American," panic that their accent will hold them back, and then do nothing about it. That is a mistake worth avoiding, because pronunciation is one of <strong>four equally weighted criteria</strong> — alongside Fluency and Coherence, Lexical Resource, and Grammatical Range and Accuracy — so it accounts for a full <strong>25%</strong> of your Speaking band. The good news: the examiner is not listening for a native accent at all. This guide explains what pronunciation actually measures and gives you concrete features to practise.</p>

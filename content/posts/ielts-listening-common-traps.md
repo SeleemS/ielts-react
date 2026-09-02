@@ -2,6 +2,7 @@
 title: "IELTS Listening: The 7 Most Common Traps and How to Beat Them"
 date: July 6, 2026
 excerpt: The IELTS Listening test is full of deliberate distractors. Learn the seven traps that cost candidates easy marks, from spelling errors to corrected answers, and how to avoid each one.
+answer: "Seven traps account for most lost Listening marks: the corrected answer, misspelling, exceeding the word limit, distractor numbers and dates, unrecognised paraphrase, losing your place after a miss, and singular versus plural. The recording plays once, so use the reading time before each section to underline keywords and predict answer types, and always take the version a speaker gives after actually, sorry or instead."
 ---
 
   <p>The <strong>IELTS Listening test</strong> lasts about 30 minutes and contains 40 questions across four recordings, and you hear each recording only once. Unlike Reading, you cannot go back and re-listen, so a moment of lost focus can cost you several marks. The test is deliberately designed with distractors, and knowing the common traps in advance is the single best defence.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Listening Multiple Choice: Previewing and Beating the Distractors"
 date: August 2, 2026
 excerpt: "In Listening multiple choice, every wrong option is mentioned in the audio — that is the whole design. Master the preview and learn the four distractor patterns, and the trickiest Listening type becomes manageable."
+answer: "Every option is mentioned in the audio by design, so commit at the moment of resolution, never at the moment of mention. Four distractor patterns recur: the idea raised then rejected, the figure corrected a moment later, the view belonging to the wrong speaker, and the option that echoes a striking word the speaker never used that way. Preview stems before options, and never leave a blank."
 ---
 
   <p>Multiple choice is widely rated the hardest question type in IELTS Listening, and the reason is structural: unlike a form gap, where wrong answers simply fail to appear, a Listening multiple choice question is built so that <strong>every option is mentioned in the audio</strong>. You will hear words connected to A, B and C — the recording guarantees it. The skill is not hearing the options; it is tracking what the speaker actually <em>means</em> while all three flash past. That skill rests on two pillars: a disciplined preview before the audio starts, and pattern-recognition of the four ways distractors are built. This guide drills both; for the type's general method, see our main <a href="/blog/ielts-listening-multiple-choice">Listening multiple choice guide</a>.</p>

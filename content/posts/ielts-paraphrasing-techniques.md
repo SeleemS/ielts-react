@@ -2,6 +2,7 @@
 title: "IELTS Paraphrasing: 5 Techniques to Reword Anything Without Changing the Meaning"
 date: August 12, 2026
 excerpt: Paraphrasing is the one skill that quietly raises your band in Reading, Listening, Writing and Speaking. Here are five concrete techniques, worked examples, and the three mistakes that make paraphrasing backfire.
+answer: "Strong paraphrasing stacks techniques rather than swapping synonyms: change the word form, switch between active and passive, reorder the sentence, and describe the idea with a relative clause or a negated opposite when no synonym fits. Keep proper nouns, numbers and technical terms exactly as they are, never let the meaning shift, and use only words you genuinely know, since an unnatural choice lowers Lexical Resource."
 ---
 
   <p>Paraphrasing — saying the same thing in different words — is the single most transferable skill in IELTS. It is how you rewrite the question in your Writing introduction, how you spot the answer in Reading when the passage never uses the words from the question, how you decode a Listening distractor, and how you avoid repeating yourself in Speaking. Yet most candidates paraphrase badly: they swap a couple of words for thesaurus synonyms and hope for the best. This guide gives you five reliable techniques, worked examples for each, and the mistakes that turn a good paraphrase into a bad one.</p>

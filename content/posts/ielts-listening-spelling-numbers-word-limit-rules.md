@@ -2,6 +2,7 @@
 title: "IELTS Listening: The Spelling, Number and Word-Limit Rules That Quietly Cost You Marks"
 date: August 13, 2026
 excerpt: "You can hear every answer correctly and still lose the mark. Here are the spelling, number-formatting and word-limit rules in IELTS Listening — with the traps that turn a right answer into a wrong one."
+answer: "Every question is marked right or wrong with no partial credit, so a misspelling, a stray plural or one extra word costs the whole mark. Both British and American spellings are accepted, figures and words are both fine for numbers, and a hyphenated word counts as one. Write in block capitals, cut words already printed in the sentence, and re-read the word limit on every task."
 ---
 
   <p>Here is the cruel thing about IELTS Listening: the marking is not "did you understand?" — it is "did you write the exact answer, spelled correctly, within the word limit?" You can hear the word perfectly and still score zero because you added an "s," misspelled it, or wrote three words when the instruction said two. These are not comprehension failures; they are avoidable clerical errors, and they are the easiest marks on the whole test to throw away. This guide covers every mechanical rule that governs whether your answer is accepted, plus the specific traps that catch strong listeners.</p>

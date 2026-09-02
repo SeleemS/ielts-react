@@ -2,6 +2,7 @@
 title: IELTS Speaking Band Descriptors Explained, Criterion by Criterion
 date: August 2, 2026
 excerpt: "IELTS Speaking is marked on four equal criteria: Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, and Pronunciation. Here is what examiners actually listen for at each band."
+answer: "Speaking is marked on four equally weighted criteria, Fluency and Coherence, Lexical Resource, Grammatical Range and Accuracy, and Pronunciation, each rated across the whole test and then averaged, so balanced competence beats one spectacular strength. Pausing to think about ideas is largely forgiven while pausing to hunt for words is penalised, planted idioms hurt rather than help, and accent by itself is not marked at all."
 ---
 
   <p>Candidates walk out of the Speaking test with theories about their performance — "I hesitated too much," "I used good idioms," "my accent is a problem." Examiners, meanwhile, mark against four published criteria, each worth exactly a quarter of the score. Most of the folk theories map onto the descriptors poorly: hesitation matters, but only a specific kind; idioms help, but only used naturally; accent, by itself, is not marked at all. This guide goes through the four criteria in plain language, so you know what is actually being assessed during those eleven to fourteen minutes.</p>

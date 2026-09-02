@@ -2,6 +2,7 @@
 title: "IELTS Score Requirements for UK Universities: A Realistic Guide"
 date: August 2, 2026
 excerpt: UK university IELTS requirements range from 6.0 to 7.5 depending on the institution and course. Here is how the requirements are structured, what UKVI means for you, and how to prepare for the score you actually need.
+answer: "UK requirements are set course by course, but the realistic target for most applicants is 6.5 overall with no component below 6.0; undergraduate degrees commonly sit at 6.0–6.5, and selective or communication-heavy courses typically ask 7.0 or above. The per-component minimums are where applications usually fail. Check the university's own admissions page for your intake year, and ask which test version to book before you pay."
 ---
 
   <p>The United Kingdom remains one of the most popular IELTS destinations, and the first practical question for any applicant is the score. UK requirements are less uniform than you might expect: the same degree subject can require 6.0 at one university and 7.0 at another, and the wording of the requirement — overall score versus per-skill minimums — matters as much as the headline number. This guide lays out the typical ranges, explains the UKVI question that confuses almost everyone, and shows how to plan preparation backwards from your offer.</p>

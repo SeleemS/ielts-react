@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 1 Sample Answers: Home and Hometown"
 date: August 2, 2026
 excerpt: Home and hometown questions open thousands of IELTS Speaking tests. Study these original model answers, understand exactly why they score well, and learn how to adapt the technique to your own life.
+answer: "Answer a hometown question in two to four sentences using one repeating shape: a direct answer, then a reason or concrete detail, then stop. The topic hands you grammatical range for free, since past habits, present description, recent changes and future plans all arise naturally, so let the question pull the tenses out of you. Prefer everyday precision such as walkable or low-rise over formal words you may misuse."
 ---
 
   <p>The first topic most candidates meet in IELTS Speaking Part 1 is where they live. After checking your identity, the examiner almost always begins with your home, your hometown, or the area you live in — familiar ground chosen deliberately, because Part 1 is designed to let you warm up on subjects you can discuss without thinking hard. That makes this topic family the best possible place to rehearse your Part 1 technique: if you can answer these questions fluently, you start every test with momentum.</p>

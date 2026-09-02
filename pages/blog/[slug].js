@@ -1,10 +1,10 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import { ArrowLeft, ArrowRight, PenLine } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarCheck, PenLine } from "lucide-react";
 import Navbar from "../../src/components/Navbar";
 import Footer from "../../src/components/Footer";
 import NewsletterSignup from "../../src/components/NewsletterSignup";
-import { posts } from "../../lib/posts";
+import { posts, formatMonthYear, toIsoDate } from "../../lib/posts";
 import { sanitizeHtml } from "../../lib/sanitize";
 import AdUnit from "../../src/components/AdUnit";
 import ShareRow from "../../src/components/ShareRow";
@@ -40,9 +40,14 @@ export default function BlogPost({ post }) {
     headline: post.title,
     description: post.excerpt,
     image: [ogImage],
-    datePublished: new Date(post.date).toISOString(),
-    // Honest freshness signal: posts carry `updated` only when actually revised.
-    dateModified: new Date(post.updated || post.date).toISOString(),
+    datePublished: toIsoDate(post.date),
+    // Honest freshness signal: posts carry `updated` only when actually revised,
+    // so dateModified falls back to the publish date rather than "today".
+    dateModified: toIsoDate(post.updated || post.date),
+    // The Quick answer capsule is the article's own summary of its answer, so
+    // it is the correct `abstract` — assistants quoting the page get the
+    // reviewed sentence rather than a scrape of the opening paragraph.
+    ...(post.answer ? { abstract: post.answer } : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": canonical,
@@ -109,12 +114,40 @@ export default function BlogPost({ post }) {
 
             <article className="mt-6 rounded-xl border border-border bg-card p-6 shadow-sm sm:p-10">
               <header className="mb-8 border-b border-border pb-8">
-                <time className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {post.updated ? `Updated ${post.updated} · Published ${post.date}` : post.date}
+                <time
+                  dateTime={toIsoDate(post.date) || undefined}
+                  className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                >
+                  {post.date}
                 </time>
                 <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
                   {post.title}
                 </h1>
+
+                {/* Visible freshness line, shown only for genuinely revised
+                    articles. It mirrors the JSON-LD dateModified above, so a
+                    reader and a crawler never see different claims. */}
+                {post.updated ? (
+                  <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <CalendarCheck className="h-4 w-4" />
+                    Updated{' '}
+                    <time dateTime={toIsoDate(post.updated) || undefined}>
+                      {formatMonthYear(post.updated)}
+                    </time>
+                  </p>
+                ) : null}
+
+                {/* Quick answer capsule: the direct answer to the question the
+                    title implies, before the article, so a reader (or an
+                    assistant citing the page) gets it without scrolling. */}
+                {post.answer ? (
+                  <div className="mt-6 rounded-xl border border-accent/30 bg-accent/10 p-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-accent">
+                      Quick answer
+                    </p>
+                    <p className="mt-2 leading-relaxed text-foreground">{post.answer}</p>
+                  </div>
+                ) : null}
               </header>
 
               <div

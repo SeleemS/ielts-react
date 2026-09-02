@@ -2,6 +2,7 @@
 title: "IELTS Speaking Fluency and Coherence: How to Score Band 7+ Without Speaking Fast"
 date: August 23, 2026
 excerpt: "Fluency and Coherence is a quarter of your IELTS Speaking score, and it rewards a smooth, well-organised answer — not a fast one. Here is what examiners listen for and how to build it."
+answer: "Fluency and Coherence is a quarter of your Speaking band and rewards a steady, well-organised answer rather than a fast one, because rushing produces the mispronunciation, abandoned sentences and backtracking this criterion penalises. Extend answers with a reason and an example, signpost with natural spoken connectives instead of essay linkers, correct a slip once and move on, and use the Part 2 preparation minute for keywords."
 ---
 
   <p>Many candidates believe that fluency means speaking quickly, so they rush, trip over words, and lose their thread. That is the opposite of what the examiner wants. <strong>Fluency and Coherence</strong> is one of the four equally weighted criteria in IELTS Speaking, worth <strong>25% of your Speaking band</strong>, and it rewards a steady, connected answer that is easy to follow — regardless of speed. This guide explains exactly what examiners listen for and gives you concrete habits to raise this score.</p>

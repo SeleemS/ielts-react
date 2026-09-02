@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 2: How to Master the Cue Card and Speak for 2 Minutes"
 date: July 10, 2026
 excerpt: "A practical method for the IELTS Speaking Part 2 long turn: how to use your one minute of prep, structure your talk, keep going for two full minutes, and avoid the mistakes that stall candidates."
+answer: "Spend the preparation minute jotting keywords beside each bullet point, covering who, what, when, where, why and how you felt, never full sentences, then speak for one to two minutes following the bullets in order and closing with a reflection. There are no marks for original ideas or for telling the truth, so keep extending each point with a reason, example or contrast rather than drying up early."
 ---
 
   <p>For many candidates, <strong>Part 2 of the IELTS Speaking test</strong>, often called the "long turn" or the cue card, is the most intimidating moment of the whole exam. You are handed a card with a topic, given one minute to prepare, and then expected to talk on your own for up to two minutes with no help from the examiner. The silence feels enormous. The good news is that Part 2 is the most predictable part of the Speaking test, and with a reliable method you can turn it from a source of panic into your strongest section.</p>

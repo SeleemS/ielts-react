@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Answer a 'Positive or Negative Development' Essay"
 date: August 8, 2026
 excerpt: "The 'positive or negative development' question is one of the trickiest Task 2 prompts because it looks like an agree/disagree essay but isn't. Here is how to read it correctly and structure a Band 7+ answer."
+answer: "This prompt names a trend and asks you to judge it, so your body paragraphs must be built around the consequences of the change rather than around whether a claim is true, which is what separates it from an agree or disagree essay. Argue mostly positive, mostly negative, or mixed with one side winning on balance, but never refuse to decide: a verdict-free answer caps Task Response. Hold that judgement to the conclusion."
 ---
 
   <p>The <strong>"positive or negative development"</strong> question is one of the most misread prompts in IELTS Writing Task 2. It describes a change happening in the world and asks whether you regard that change as a good thing or a bad thing. Candidates lose marks not because their English is weak, but because they treat it like an agree/disagree essay, forget to evaluate the <em>development</em> itself, or sit on the fence when the question demands a clear judgement. This guide shows you how to recognise the type, take a defensible position, and structure an answer that satisfies all four marking criteria.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Reading Matching Sentence Endings: Strategy and Worked Example"
 date: August 2, 2026
 excerpt: "Matching sentence endings gives you sentence beginnings and a box of possible endings — more endings than you need. Here is how to use grammar, order and meaning to beat a deceptively tricky type."
+answer: "You are given sentence beginnings and a box holding more endings than you need, and the beginnings follow passage order while the endings do not. Each ending is used once at most. Use grammar only to shortlist two or three candidates, then let the located passage sentence decide, because the decoys are built from the passage's own memorable words attached to a claim it denies."
 ---
 
   <p>Matching sentence endings is one of the less common Reading question types, which is exactly why it catches candidates unprepared. You get a list of sentence beginnings, a box of endings labelled A, B, C and so on — always more endings than beginnings — and the job of pairing them so that each completed sentence matches what the passage says. It looks like a puzzle you could solve without the passage at all. That is the trap: several endings will fit each beginning grammatically and plausibly. Only the passage decides.</p>

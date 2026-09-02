@@ -2,6 +2,7 @@
 title: "IELTS Cue Card Model Answer: Describe a Useful Website"
 date: August 2, 2026
 excerpt: "'Describe a website you find useful' is one of the most adaptable IELTS Part 2 cue cards. Here is a full original model answer, a one-minute preparation method, and the Part 3 questions that follow it."
+answer: "Choose a website you can describe in real detail rather than one that sounds impressive, and spend the preparation minute writing four or five trigger words, one of them for a story. Then follow the frame: what the site is and how often you use it, two or three uses listed in order, one specific incident told in past tenses, and a closing evaluation of why it matters, so you finish rather than fade out."
 ---
 
   <p>"Describe a website you often use" — or its close cousins "a useful website," "a website that helped you learn something," "an app or website you would recommend" — is a Part 2 topic almost every candidate can expect to be ready for. It is also one of the most forgiving cue cards on the circuit, because everyone genuinely uses websites, so nobody needs to invent material. The challenge is not ideas; it is filling two minutes with organised, connected speech. This guide walks through the preparation minute, gives a complete original model answer, and covers the Part 3 discussion that typically follows.</p>

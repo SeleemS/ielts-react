@@ -2,6 +2,7 @@
 title: "IELTS Vocabulary for Health and Fitness: Collocations for Band 7+"
 date: August 26, 2026
 excerpt: Health is one of the most common IELTS topics. Learn the natural collocations for diet, exercise, mental wellbeing and healthcare that lift your Lexical Resource score in Speaking and Writing.
+answer: "Health answers score on everyday collocation rather than long words: you follow a balanced diet, cut back on fizzy drinks, take up a sport, lead an active rather than a sedentary lifestyle, cope with stress, and argue for preventive healthcare that eases the strain on health systems. Watch the health and healthy word forms, vary the adjective, and skip proverbs such as an apple a day, which sound forced."
 ---
 
   <p>Health, fitness and lifestyle come up constantly in <strong>IELTS</strong> — in Speaking Part 1 ("Do you have a healthy lifestyle?"), in Part 3 discussions about healthcare, and in Writing Task 2 essays on government spending, junk food or exercise. Because the topic is so predictable, examiners have heard every memorised phrase a hundred times. The candidates who score well are not the ones with the longest word lists; they are the ones who use accurate, natural <strong>collocations</strong> in the right place. This guide gives you the health vocabulary that actually moves your band, and shows you how to use it.</p>

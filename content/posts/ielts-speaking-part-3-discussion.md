@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 3: How to Give Extended, Band 7+ Answers"
 date: July 16, 2026
 excerpt: IELTS Speaking Part 3 rewards developed, abstract answers. Learn the PEEL method, question types, useful language, and the mistakes that cap candidates at Band 6.
+answer: "Aim for roughly 30 to 45 seconds per answer, about four to six sentences, built on PEEL: point, explain, example, link. That closing link, a consequence, contrast or qualification, is what separates Band 6 from Band 7, because it shows you can qualify a view rather than merely assert it. Keep the answer general rather than personal, and hedge instead of inventing statistics."
 ---
 
   <p>Part 3 is where the IELTS Speaking test stops being about you and starts being about ideas. After the two-minute long turn in <a href="/blog/ielts-speaking-part-2-cue-card">Part 2</a>, the examiner spends roughly four to five minutes asking broader, more abstract questions linked to that topic. Many candidates cruise through Parts 1 and 2 and then lose half a band here, because they answer a discussion question the way they would answer a personal one: briefly.</p>

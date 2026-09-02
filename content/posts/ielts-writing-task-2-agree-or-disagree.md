@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Answer 'Agree or Disagree' Essays"
 date: July 15, 2026
 excerpt: "A complete method for IELTS Writing Task 2 agree or disagree (opinion) essays: how to decode the prompt, choose a clear position, structure your argument, and avoid the sitting-on-the-fence trap."
+answer: "You are given one statement and asked to defend a single view, so choose full agreement, full disagreement, or partial agreement with a stated condition, and hold it from the introduction to the conclusion. Unlike a discussion essay you are not obliged to argue the other side; listing points for and against with no verdict caps Task Response. Develop two reasons in depth rather than four thin ones."
 ---
 
   <p>The <strong>"to what extent do you agree or disagree"</strong> essay is the single most common task in IELTS Writing Task 2, and it is also where candidates most often lose easy marks. The problem is rarely weak English. It is a fuzzy position: examiners cannot reward an opinion they cannot find. This guide gives you a reliable way to decode the prompt, commit to a clear stance, and build an essay that scores Band 7 or above on Task Response.</p>

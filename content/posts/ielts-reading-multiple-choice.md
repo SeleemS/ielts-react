@@ -2,6 +2,7 @@
 title: "IELTS Reading Multiple Choice: How to Read the Options and Avoid the Traps"
 date: August 2, 2026
 excerpt: Reading multiple choice looks easy because the answer is on the page, but every wrong option is built to tempt you. Here is a method to scan efficiently, match on meaning, and beat the distractors.
+answer: "The correct option paraphrases the passage while the tempting wrong ones reuse its exact words, so read the stem first, find the matching part of the text, and only then compare the options. Single-answer questions follow passage order, whereas a choose-two question draws on one region, and marking more options than asked scores zero for the whole question. Watch for extreme wording and half-right options."
 ---
 
   <p>Multiple choice in IELTS Reading feels reassuring — the answer is printed right in front of you, so surely you just recognise it. In practice it is one of the slower, trap-heavy question types on the paper, because every wrong option is written to look plausible and the passages are dense enough that reading the options carelessly eats the clock you need elsewhere. This guide gives you a repeatable method built around the two things that actually decide the mark: reading the options efficiently, and matching on <strong>meaning</strong> rather than on words that happen to appear in the text.</p>

@@ -2,6 +2,7 @@
 title: "How to Go From Band 6 to Band 7 in IELTS Writing: The Four Gaps That Hold You Back"
 date: August 15, 2026
 excerpt: "A Band 6 essay is competent; a Band 7 essay is controlled. Here is exactly what changes across all four Writing criteria — and the concrete habits that close the half-band gap."
+answer: "Band 7 is Band 6 with more control across the four averaged Writing criteria, not longer or fancier writing. Answer every part of the task and hold one clear position throughout, organise around clear topic sentences and reference words instead of a chain of Firstly and Moreover, fix collocation rather than reaching for rare vocabulary, and protect accuracy by mastering a few complex structures and proofreading for your two repeat errors."
 ---
 
   <p>The jump from Band 6 to Band 7 in IELTS Writing frustrates more candidates than any other, partly because a Band 6 script does not feel broken. Your ideas are clear, your grammar mostly works, and you finished on time — yet the score stalls. The reason is that Band 7 is not "Band 6 but longer" or "Band 6 with fancier words." It is a different <em>quality of control</em>, and it shows up in four specific places. Your Writing score is the average of four equally weighted criteria: <strong>Task Response</strong>, <strong>Coherence and Cohesion</strong>, <strong>Lexical Resource</strong>, and <strong>Grammatical Range and Accuracy</strong>. This guide walks through the gap between 6 and 7 in each, with the exact habit that closes it.</p>

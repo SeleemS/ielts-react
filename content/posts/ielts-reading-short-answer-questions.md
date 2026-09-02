@@ -2,6 +2,7 @@
 title: "IELTS Reading Short-Answer Questions: Word Limits, Strategy and a Worked Example"
 date: August 7, 2026
 excerpt: "Short-answer questions are among the most predictable marks in IELTS Reading — the answers are in order and copied straight from the text. Here is the method that stops word-limit slips quietly costing you the marks."
+answer: "Short-answer questions ask a direct question, and the answer is copied exactly from the passage, in passage order, within an absolute word limit — a full sentence or one unnecessary modifier scores zero. Let the question word set the target: Who wants a person, Where a place, How many a number, What usually a noun. Copy carefully, because a misspelling from a visible text is an unforced zero."
 ---
 
   <p>Short-answer questions are one of the most bankable question types in IELTS Reading. You are asked a direct question, the answer is copied word-for-word from the passage, and the questions follow the order of the text. That combination should make them easy marks — yet candidates lose them constantly by breaking the word limit, answering with their own words, or writing a full sentence when a single noun was wanted. This guide gives you a reliable method, a worked example, and the specific traps to train against so the type becomes a strength rather than a leak.</p>

@@ -2,6 +2,7 @@
 title: IELTS Writing Band Descriptors Explained, Criterion by Criterion
 date: August 2, 2026
 excerpt: "Your Writing band is the average of four public criteria: Task Achievement, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy. Here is what each one actually rewards — and what quietly caps your score."
+answer: "Writing is marked on four public criteria — Task Achievement or Task Response, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy — each worth exactly a quarter of a task band, with Task 2 counting twice as much as Task 1. The usual caps are answering the topic rather than the exact question, mechanical linkers, memorised showpiece phrases, and complex sentences you cannot control."
 ---
 
   <p>Most candidates prepare for IELTS Writing by collecting vocabulary and reading sample essays. Examiners, meanwhile, mark against four published criteria, each worth exactly a quarter of your score. The gap between those two facts explains most disappointing Writing results. If you understand what each criterion rewards — and, just as importantly, what caps a script at a given band — you can direct your practice at the marks themselves. This guide walks through all four criteria in plain language, based on the public band descriptors.</p>

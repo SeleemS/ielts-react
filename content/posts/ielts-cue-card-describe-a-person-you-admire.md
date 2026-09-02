@@ -2,6 +2,7 @@
 title: "IELTS Speaking Part 2: How to Describe a Person You Admire (Model Answer & Method)"
 date: August 24, 2026
 excerpt: "A reliable method for the 'describe a person' cue card in IELTS Speaking Part 2, with a full band 7+ model answer, useful phrases, and the follow-up questions examiners ask in Part 3."
+answer: "Use the one preparation minute for a single keyword per bullet rather than sentences, then speak for the full two minutes in four chunks: who the person is and how you know them, what they are like, one specific story that shows that quality, and why you admire them. Focus on personality and evidence instead of appearance or a list of adjectives, and learn the structure rather than a memorised script."
 ---
 
   <p>The "describe a person" cue card is one of the most common tasks in <strong>IELTS Speaking Part 2</strong>, and versions like <em>describe a person you admire</em>, <em>a person who influenced you</em>, or <em>a family member you are close to</em> appear again and again. The good news is that a single flexible method covers all of them. This guide gives you that method, a full model answer, and the language to hit <strong>band 7 and above</strong>.</p>

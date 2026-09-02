@@ -2,6 +2,7 @@
 title: "IELTS Reading Yes/No/Not Given: How to Handle the Writer's Opinions"
 date: July 25, 2026
 excerpt: "Yes/No/Not Given tests the writer's opinions and claims, not facts — which is exactly why it trips people up. Here is the decision method, the opinion signals to watch, and worked examples."
+answer: "Yes/No/Not Given tests the writer's opinions and claims rather than the passage's facts, and that is the only real difference from True/False/Not Given. Answer No only when you can point to words where the writer takes the opposite view, and Not Given when the writer never reveals a view at all — a reported opinion such as critics say is not the writer's own. Answers come in passage order."
 ---
 
   <p><strong>Yes/No/Not Given</strong> is the question type candidates most often get wrong without realising why. It looks almost identical to True/False/Not Given, so people apply the same instinct — and lose marks, because the two types are hunting for different things. True/False/Not Given asks whether a statement matches the <em>facts</em> in the passage. Yes/No/Not Given asks whether a statement matches the <em>writer's opinions, claims, or beliefs</em>. Miss that shift and the whole set becomes a guessing game. This guide gives you a decision process built specifically for opinion-based questions.</p>

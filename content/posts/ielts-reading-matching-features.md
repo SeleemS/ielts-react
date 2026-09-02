@@ -2,6 +2,7 @@
 title: "IELTS Reading Matching Features: How to Match Statements to the Right Option"
 date: July 30, 2026
 excerpt: "Matching Features asks you to link statements to a list of people, dates, or categories — and the answers are not in passage order. Here is a search method that keeps you on the clock."
+answer: "Matching Features attaches a detail to its source — a researcher, study, category or period — so the question is who, not where, and the answers do not follow passage order. Work from the options box: skim once marking where each name appears, then read only those places and match on meaning rather than wording. Letters may repeat or go unused, and proximity is not attribution."
 ---
 
   <p>Matching Features is one of the trickiest question types in IELTS Reading, and one candidates rarely practise in isolation. You are given a list of statements and a separate box of options — often researchers, theories, countries, time periods, or categories labelled with letters — and you must decide which option each statement belongs to. A typical instruction reads: <em>"Match each statement with the correct researcher, A-E. Write the correct letter in boxes 1-6. NB You may use any letter more than once."</em> That last line changes everything, and skimming past it costs marks.</p>

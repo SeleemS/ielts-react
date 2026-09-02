@@ -2,6 +2,7 @@
 title: "IELTS Reading Time Management: How to Finish All 40 Questions in 60 Minutes"
 date: July 8, 2026
 excerpt: Practical pacing strategies for IELTS Reading, including how to split your 60 minutes across three passages, when to skim versus scan, and how to avoid the traps that eat your time.
+answer: "Split the hour at roughly 20 minutes per passage, or 17, 20 and 23 minutes since the passages get harder, and move on the moment a passage's time is up — a question you skip and one you agonise over are both worth a single mark. Skim for one to two minutes, underline the keywords in each question, scan for those words or their synonyms, and guess every remaining answer in the final minute."
 ---
 
   <p>The <strong>IELTS Reading test</strong> gives you 60 minutes to answer 40 questions across three passages, and there is no extra time to transfer your answers. Candidates rarely fail because the texts are too hard; they fail because they run out of time on passage three. Managing the clock is a skill you can train, and it is often worth a full band on its own.</p>

@@ -2,6 +2,7 @@
 title: "IELTS Listening Form Completion: The Traps That Cost Easy Marks"
 date: August 2, 2026
 excerpt: "Form completion opens the Listening test and should be your easiest ten marks — yet corrections, spelled-out names and number traps take a steady toll. Here is a trap-by-trap defence."
+answer: "Part 1 form completion is lost to five engineered traps: the correction, the name spelled out letter by letter, number pairs such as thirteen and thirty, the plausible decoy offered before the real detail, and the paraphrased label. Treat every early answer as provisional until the speakers change topic, read the words around each gap precisely, and drill dictated names and postcodes until the alphabet is automatic."
 ---
 
   <p>Form completion is almost always the first thing you meet in IELTS Listening: a booking form, a membership application, an insurance claim, filled in during a phone call between two speakers. The vocabulary is everyday, the pace is gentle, and every mark counts exactly as much as a mark from the hardest academic section — which makes this the best value real estate on the test. It is also where well-prepared candidates leak marks with strange reliability, because Part 1's difficulty is not the language: it is a set of engineered traps that recur test after test. This guide is a field manual for those traps.</p>

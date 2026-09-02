@@ -2,6 +2,7 @@
 title: "IELTS Writing Task 2: How to Answer 'Discuss Both Views and Give Your Opinion'"
 date: July 23, 2026
 excerpt: The discussion essay asks for two sides AND your own view, and most candidates forget one of them. Here is the paragraph plan, model text, and the rule that protects your Task Response mark.
+answer: "This prompt carries two instructions and you must satisfy both: discuss each view properly, including the one you reject, which needs a fair paragraph rather than two dismissive lines, and state your own opinion. Leave the opinion out and Task Response cannot reach Band 7. The safest plan declares your position in the introduction, gives the less convincing view Body 1, and argues your own view more fully in Body 2."
 ---
 
   <p>The <strong>"discuss both views and give your opinion"</strong> essay is one of the most common tasks in IELTS Writing Task 2, and it has a built-in trap. It contains two separate instructions, discuss both sides <em>and</em> give your own opinion, and answering only one of them caps your Task Response mark no matter how good your English is. This guide gives you a structure that covers every part of the question.</p>
