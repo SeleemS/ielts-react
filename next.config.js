@@ -132,6 +132,15 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
+  // lib/posts.js reads content/posts/*.md with fs.readdirSync. Next's tracer
+  // cannot follow a dynamic directory read, so the two routes that load posts
+  // at REQUEST time (rather than only at build time) would ship without the
+  // markdown files and throw ENOENT on Vercel. The blog pages are SSG and bake
+  // their content in at build, so they need no entry here.
+  outputFileTracingIncludes: {
+    '/sitemap.xml': ['./content/posts/**'],
+    '/api/cron/lifecycle-emails': ['./content/posts/**'],
+  },
   async headers() {
     return [
       {
