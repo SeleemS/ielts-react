@@ -1,0 +1,5890 @@
+[
+  {
+    "slug": "neighbour-you-get-on-well-with",
+    "family": "people",
+    "difficulty": "easy",
+    "title": "Describe a neighbour you get on well with",
+    "bullets": [
+      "who this neighbour is",
+      "how long you have known them",
+      "what you usually do or talk about together"
+    ],
+    "explain": "and explain why you get on so well with this person.",
+    "part1": [
+      "Do you know your neighbours well?",
+      "Is it important to have good neighbours?",
+      "Have you ever asked a neighbour for help?"
+    ],
+    "part3": [
+      "Why do some people never speak to their neighbours?",
+      "How has neighbourhood life changed in the last thirty years?",
+      "Should local governments do more to bring neighbours together?",
+      "Are relationships between neighbours different in cities and villages?"
+    ]
+  },
+  {
+    "slug": "family-member-you-spend-most-time-with",
+    "family": "people",
+    "difficulty": "easy",
+    "title": "Describe the family member you spend the most time with",
+    "bullets": [
+      "who this person is",
+      "what you usually do together",
+      "how often you see each other"
+    ],
+    "explain": "and explain why you spend so much time with this person.",
+    "part1": [
+      "Do you spend a lot of time with your family?",
+      "What do families in your country usually do at the weekend?",
+      "Are you more like your mother or your father?"
+    ],
+    "part3": [
+      "Why do some families spend less time together than they used to?",
+      "How does living far from relatives affect family relationships?",
+      "Should adult children be responsible for their parents?",
+      "Is family more important than friendship in your culture?"
+    ]
+  },
+  {
+    "slug": "person-who-is-good-at-their-job",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a person who is very good at their job",
+    "bullets": [
+      "who this person is",
+      "what their job involves",
+      "how you know about their work"
+    ],
+    "explain": "and explain what makes them so good at what they do.",
+    "part1": [
+      "What job would you like to do?",
+      "Do you know anyone who loves their job?",
+      "Is it easy to find a good job where you live?"
+    ],
+    "part3": [
+      "What qualities make someone excellent at their job?",
+      "Is talent or hard work more important at work?",
+      "Should companies reward experience or results?",
+      "How will the skills employers want change in the next twenty years?"
+    ]
+  },
+  {
+    "slug": "friend-who-is-very-different-from-you",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a friend who is very different from you",
+    "bullets": [
+      "who this friend is",
+      "how you met",
+      "in what ways you are different"
+    ],
+    "explain": "and explain why your friendship works despite these differences.",
+    "part1": [
+      "Do you have many close friends?",
+      "Do you prefer spending time with one friend or a group?",
+      "How do people usually make friends in your country?"
+    ],
+    "part3": [
+      "Why are some people attracted to friends unlike themselves?",
+      "Can people stay friends when their opinions differ strongly?",
+      "Does social media make friendships more or less varied?",
+      "How do friendships change as people get older?"
+    ]
+  },
+  {
+    "slug": "person-who-made-you-laugh-recently",
+    "family": "people",
+    "difficulty": "easy",
+    "title": "Describe someone who made you laugh recently",
+    "bullets": [
+      "who this person is",
+      "what happened",
+      "where you were at the time"
+    ],
+    "explain": "and explain why you found it so funny.",
+    "part1": [
+      "Do you laugh a lot?",
+      "Do you like watching comedy?",
+      "Who is the funniest person you know?"
+    ],
+    "part3": [
+      "Why do people in different countries find different things funny?",
+      "Is a sense of humour something you can learn?",
+      "How useful is humour in the workplace?",
+      "Can humour ever cause problems between people?"
+    ]
+  },
+  {
+    "slug": "older-person-you-enjoy-talking-to",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe an older person you enjoy talking to",
+    "bullets": [
+      "who this person is",
+      "how often you talk",
+      "what you usually talk about"
+    ],
+    "explain": "and explain why you enjoy their company.",
+    "part1": [
+      "Do you spend time with older people?",
+      "What can young people learn from older generations?",
+      "Do old and young people live together in your country?"
+    ],
+    "part3": [
+      "Why do some societies respect older people more than others?",
+      "What can governments do to reduce loneliness among the elderly?",
+      "Should older people keep working if they want to?",
+      "How is the experience of ageing changing?"
+    ]
+  },
+  {
+    "slug": "person-good-at-solving-problems",
+    "family": "people",
+    "difficulty": "hard",
+    "title": "Describe a person who is good at solving problems",
+    "bullets": [
+      "who this person is",
+      "what kind of problems they solve",
+      "an example you remember"
+    ],
+    "explain": "and explain how they approach difficulties differently from other people.",
+    "part1": [
+      "Are you good at solving problems?",
+      "Who do you ask for help when something goes wrong?",
+      "Do you plan carefully or decide quickly?"
+    ],
+    "part3": [
+      "Can problem-solving be taught in schools?",
+      "Do groups solve problems better than individuals?",
+      "How has technology changed the way we solve everyday problems?",
+      "Why do some people panic under pressure while others stay calm?"
+    ]
+  },
+  {
+    "slug": "stranger-who-helped-you",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a stranger who helped you",
+    "bullets": [
+      "when and where this happened",
+      "what you needed help with",
+      "what the person did"
+    ],
+    "explain": "and explain how you felt about their help.",
+    "part1": [
+      "Do people help strangers in your country?",
+      "Have you ever helped a tourist?",
+      "Is it easy to ask strangers for directions?"
+    ],
+    "part3": [
+      "Why are some people reluctant to help strangers?",
+      "Are people in small towns more helpful than people in cities?",
+      "Should schools teach children to volunteer?",
+      "Has technology made it easier or harder to help each other?"
+    ]
+  },
+  {
+    "slug": "person-you-would-like-to-work-with",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a person you would like to work with",
+    "bullets": [
+      "who this person is",
+      "what they do",
+      "how you know about them"
+    ],
+    "explain": "and explain why you would like to work with them.",
+    "part1": [
+      "Do you prefer working alone or in a team?",
+      "What makes a good colleague?",
+      "Have you ever worked on a group project?"
+    ],
+    "part3": [
+      "What makes teams work well together?",
+      "Is it a problem to work with close friends?",
+      "How has remote work changed workplace relationships?",
+      "Should companies choose staff for personality or skills?"
+    ]
+  },
+  {
+    "slug": "couple-with-a-happy-relationship",
+    "family": "people",
+    "difficulty": "hard",
+    "title": "Describe a couple you know who have a happy relationship",
+    "bullets": [
+      "who they are",
+      "how long they have been together",
+      "how they treat each other"
+    ],
+    "explain": "and explain what other people could learn from them.",
+    "part1": [
+      "At what age do people usually marry in your country?",
+      "Do you think weddings should be large or small?",
+      "Do couples in your country live with their parents?"
+    ],
+    "part3": [
+      "Why do some long relationships succeed while others fail?",
+      "Has the idea of marriage changed in your country?",
+      "Should couples share housework equally?",
+      "How does financial stress affect relationships?"
+    ]
+  },
+  {
+    "slug": "child-you-know-well",
+    "family": "people",
+    "difficulty": "easy",
+    "title": "Describe a child you know well",
+    "bullets": [
+      "who this child is",
+      "how old they are",
+      "what they like doing"
+    ],
+    "explain": "and explain what you enjoy about spending time with them.",
+    "part1": [
+      "Do you enjoy spending time with children?",
+      "What games did you play as a child?",
+      "Are children in your country busy after school?"
+    ],
+    "part3": [
+      "How has childhood changed compared with the past?",
+      "Do children today have too many organised activities?",
+      "Should children have their own mobile phones?",
+      "How much freedom should parents give young children?"
+    ]
+  },
+  {
+    "slug": "person-who-speaks-several-languages",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a person you know who speaks several languages",
+    "bullets": [
+      "who this person is",
+      "which languages they speak",
+      "how they learned them"
+    ],
+    "explain": "and explain how speaking several languages has helped them.",
+    "part1": [
+      "How many languages do you speak?",
+      "Is English taught in primary school in your country?",
+      "Would you like to learn another language?"
+    ],
+    "part3": [
+      "Why do some people learn languages faster than others?",
+      "Should children start learning foreign languages very young?",
+      "Will translation technology reduce the need to learn languages?",
+      "What is lost when a minority language disappears?"
+    ]
+  },
+  {
+    "slug": "classmate-or-colleague-you-remember",
+    "family": "people",
+    "difficulty": "easy",
+    "title": "Describe a classmate or colleague you remember well",
+    "bullets": [
+      "who this person was",
+      "when you met them",
+      "what they were like"
+    ],
+    "explain": "and explain why you still remember them.",
+    "part1": [
+      "Do you keep in touch with people from school?",
+      "What was your favourite class at school?",
+      "Do you prefer big or small classes?"
+    ],
+    "part3": [
+      "Why do we remember some people and forget others?",
+      "How important are school friendships later in life?",
+      "Do class sizes affect how much students learn?",
+      "Should schools group students by ability?"
+    ]
+  },
+  {
+    "slug": "person-who-helps-the-community",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a person who often helps people in your community",
+    "bullets": [
+      "who this person is",
+      "what kind of help they give",
+      "who benefits from it"
+    ],
+    "explain": "and explain why their work matters to your community.",
+    "part1": [
+      "Do you know your local community well?",
+      "Have you ever done voluntary work?",
+      "Are there community events where you live?"
+    ],
+    "part3": [
+      "Why do people volunteer their time for free?",
+      "Should volunteering be part of the school curriculum?",
+      "Is charity work better done by governments or individuals?",
+      "How can communities support people who are struggling?"
+    ]
+  },
+  {
+    "slug": "person-whose-job-you-would-not-like",
+    "family": "people",
+    "difficulty": "hard",
+    "title": "Describe someone whose job you would not like to do",
+    "bullets": [
+      "who this person is",
+      "what their job involves",
+      "why the job is difficult"
+    ],
+    "explain": "and explain why you would not want to do it yourself.",
+    "part1": [
+      "What jobs are popular in your country?",
+      "Would you like to work outdoors?",
+      "Is your job or study stressful?"
+    ],
+    "part3": [
+      "Why are some difficult jobs badly paid?",
+      "Should dangerous work be done by machines?",
+      "How should society value jobs that nobody wants to do?",
+      "Do people expect too much satisfaction from work?"
+    ]
+  },
+  {
+    "slug": "famous-person-from-your-country-you-respect",
+    "family": "people",
+    "difficulty": "medium",
+    "title": "Describe a famous person from your country you respect",
+    "bullets": [
+      "who this person is",
+      "what they are known for",
+      "how you learned about them"
+    ],
+    "explain": "and explain why you respect this person.",
+    "part1": [
+      "Do you follow news about famous people?",
+      "Who is famous in your country at the moment?",
+      "Would you like to be famous?"
+    ],
+    "part3": [
+      "Why do societies need public role models?",
+      "Do famous people have a duty to behave well?",
+      "Has social media changed what it means to be famous?",
+      "Are athletes and singers admired more than scientists? Why?"
+    ]
+  },
+  {
+    "slug": "cafe-you-like-going-to",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a café you like going to",
+    "bullets": [
+      "where it is",
+      "what it looks like inside",
+      "what you usually order"
+    ],
+    "explain": "and explain why you like going there.",
+    "part1": [
+      "Do you often go to cafés?",
+      "Do you prefer tea or coffee?",
+      "Where do you usually meet your friends?"
+    ],
+    "part3": [
+      "Why have cafés become places to work and study?",
+      "Do small independent shops survive against large chains?",
+      "How do public meeting places affect a neighbourhood?",
+      "Are people spending less time in social spaces than before?"
+    ]
+  },
+  {
+    "slug": "quiet-place-where-you-concentrate",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a quiet place where you can concentrate",
+    "bullets": [
+      "where this place is",
+      "when you go there",
+      "what you do there"
+    ],
+    "explain": "and explain why you can concentrate well in this place.",
+    "part1": [
+      "Do you like quiet places?",
+      "Is your home noisy?",
+      "Where do you study or work best?"
+    ],
+    "part3": [
+      "Why is noise a growing problem in cities?",
+      "How does the environment affect concentration?",
+      "Should employers provide quiet areas at work?",
+      "Are people losing the ability to focus for long periods?"
+    ]
+  },
+  {
+    "slug": "market-you-have-visited",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a market you have visited",
+    "bullets": [
+      "where the market was",
+      "what was sold there",
+      "who you went with"
+    ],
+    "explain": "and explain what you found interesting about it.",
+    "part1": [
+      "Do you like shopping at markets?",
+      "Where do people buy food in your country?",
+      "Do you prefer shopping online or in person?"
+    ],
+    "part3": [
+      "Why do traditional markets still exist alongside supermarkets?",
+      "How do markets support local producers?",
+      "Should city centres protect small traders?",
+      "What do markets tell visitors about a culture?"
+    ]
+  },
+  {
+    "slug": "park-or-garden-near-your-home",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a park or garden near your home",
+    "bullets": [
+      "where it is",
+      "what you can do there",
+      "how often you go"
+    ],
+    "explain": "and explain why this place is important to local people.",
+    "part1": [
+      "Are there many parks where you live?",
+      "Do you spend much time outdoors?",
+      "Did you play outside as a child?"
+    ],
+    "part3": [
+      "Why do cities need green spaces?",
+      "Who should pay for maintaining public parks?",
+      "How do parks affect people's health?",
+      "Should new housing developments include green space by law?"
+    ]
+  },
+  {
+    "slug": "library-you-have-used",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a library you have used",
+    "bullets": [
+      "where it is",
+      "what facilities it has",
+      "what you used it for"
+    ],
+    "explain": "and explain how useful it was to you.",
+    "part1": [
+      "Do you use libraries?",
+      "Do you prefer paper books or e-books?",
+      "Where do you go to study?"
+    ],
+    "part3": [
+      "Do libraries still have a role in the internet age?",
+      "How can libraries attract young people?",
+      "Should libraries lend more than books?",
+      "Is free access to information a right?"
+    ]
+  },
+  {
+    "slug": "city-that-is-well-organised",
+    "family": "places",
+    "difficulty": "hard",
+    "title": "Describe a city you think is well organised",
+    "bullets": [
+      "which city it is",
+      "how you know about it",
+      "what makes it well organised"
+    ],
+    "explain": "and explain what other cities could learn from it.",
+    "part1": [
+      "Do you live in a city or a small town?",
+      "What do you like about your city?",
+      "Would you like to live in a bigger city?"
+    ],
+    "part3": [
+      "What makes a city easy to live in?",
+      "How should cities cope with growing populations?",
+      "Do modern cities have too many cars?",
+      "Should governments limit the size of cities?"
+    ]
+  },
+  {
+    "slug": "room-in-your-home-you-like-most",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe the room in your home you like most",
+    "bullets": [
+      "which room it is",
+      "what it contains",
+      "what you do there"
+    ],
+    "explain": "and explain why you like this room more than the others.",
+    "part1": [
+      "Do you live in a house or an apartment?",
+      "Which room do you use most?",
+      "Would you like to change anything about your home?"
+    ],
+    "part3": [
+      "How have homes changed in your country in recent decades?",
+      "Does the design of a home affect how people feel?",
+      "Should homes be built smaller to save land?",
+      "How has working from home changed what people want in a house?"
+    ]
+  },
+  {
+    "slug": "place-where-you-meet-friends",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a place where you often meet your friends",
+    "bullets": [
+      "where this place is",
+      "how often you go there",
+      "what you do when you meet"
+    ],
+    "explain": "and explain why you always choose this place.",
+    "part1": [
+      "How often do you see your friends?",
+      "Do you prefer meeting indoors or outdoors?",
+      "Do you make plans in advance?"
+    ],
+    "part3": [
+      "Why do people need places to meet outside the home?",
+      "Has online contact replaced meeting face to face?",
+      "Are cities designed well for social life?",
+      "How do meeting habits differ between generations?"
+    ]
+  },
+  {
+    "slug": "sports-centre-in-your-area",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a sports centre or gym in your area",
+    "bullets": [
+      "where it is",
+      "what facilities it offers",
+      "who uses it"
+    ],
+    "explain": "and explain how it benefits people living nearby.",
+    "part1": [
+      "Do you go to a gym?",
+      "What sports are popular in your country?",
+      "Did you play sport at school?"
+    ],
+    "part3": [
+      "Should sports facilities be free to use?",
+      "Why do many adults stop playing sport?",
+      "How can governments encourage people to exercise?",
+      "Do professional sports get too much funding?"
+    ]
+  },
+  {
+    "slug": "place-you-walk-past-but-never-enter",
+    "family": "places",
+    "difficulty": "hard",
+    "title": "Describe a place you often walk past but have never gone into",
+    "bullets": [
+      "what this place is",
+      "where it is",
+      "how often you pass it"
+    ],
+    "explain": "and explain why you have never gone inside.",
+    "part1": [
+      "Do you walk around your neighbourhood?",
+      "Do you notice new shops opening?",
+      "Do you like exploring new places?"
+    ],
+    "part3": [
+      "Why do people ignore places they see every day?",
+      "How do first impressions affect the places we choose?",
+      "Should businesses do more to attract passers-by?",
+      "How does familiarity change the way we see our surroundings?"
+    ]
+  },
+  {
+    "slug": "village-or-small-town-you-have-been-to",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a village or small town you have been to",
+    "bullets": [
+      "where it was",
+      "when you went there",
+      "what it was like"
+    ],
+    "explain": "and explain what impression it left on you.",
+    "part1": [
+      "Have you visited the countryside?",
+      "Would you like to live in a small town?",
+      "Is life slower outside cities?"
+    ],
+    "part3": [
+      "Why are young people leaving rural areas?",
+      "What can be done to keep villages alive?",
+      "Do rural and urban people have different values?",
+      "How does tourism change small communities?"
+    ]
+  },
+  {
+    "slug": "place-where-you-spent-time-as-a-child",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a place where you spent much time as a child",
+    "bullets": [
+      "where this place was",
+      "who you went there with",
+      "what you did there"
+    ],
+    "explain": "and explain how you feel when you think about it now.",
+    "part1": [
+      "Where did you grow up?",
+      "Has your hometown changed much?",
+      "Do you visit your childhood home?"
+    ],
+    "part3": [
+      "Why are childhood places so memorable?",
+      "Should old buildings be preserved for future generations?",
+      "How does moving often affect children?",
+      "Do adults idealise the past?"
+    ]
+  },
+  {
+    "slug": "shop-that-recently-opened",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a shop that recently opened in your area",
+    "bullets": [
+      "what kind of shop it is",
+      "where it is",
+      "what it sells"
+    ],
+    "explain": "and explain what local people think about it.",
+    "part1": [
+      "Do you like shopping?",
+      "Are there many shops near your home?",
+      "Do you shop at the same places regularly?"
+    ],
+    "part3": [
+      "Why do some new businesses fail quickly?",
+      "How has online shopping changed high streets?",
+      "Should local governments support small shops?",
+      "What kinds of shops will disappear in future?"
+    ]
+  },
+  {
+    "slug": "place-famous-in-your-hometown",
+    "family": "places",
+    "difficulty": "medium",
+    "title": "Describe a place that is famous in your hometown",
+    "bullets": [
+      "what this place is",
+      "why it is well known",
+      "what visitors do there"
+    ],
+    "explain": "and explain whether you think it deserves its reputation.",
+    "part1": [
+      "Do many tourists visit your hometown?",
+      "What is your hometown known for?",
+      "Do you enjoy showing visitors around?"
+    ],
+    "part3": [
+      "How does tourism affect local residents?",
+      "Should famous sites limit visitor numbers?",
+      "Who should pay to maintain landmarks?",
+      "Does social media change which places become popular?"
+    ]
+  },
+  {
+    "slug": "street-you-like-walking-along",
+    "family": "places",
+    "difficulty": "easy",
+    "title": "Describe a street you like walking along",
+    "bullets": [
+      "where this street is",
+      "what you can see there",
+      "when you usually walk there"
+    ],
+    "explain": "and explain why you enjoy walking along it.",
+    "part1": [
+      "Do you walk a lot?",
+      "Is your city good for walking?",
+      "Do you listen to anything while walking?"
+    ],
+    "part3": [
+      "What makes a street pleasant for pedestrians?",
+      "Should city centres ban cars?",
+      "How does walking affect physical and mental health?",
+      "Do modern cities design enough for people on foot?"
+    ]
+  },
+  {
+    "slug": "place-in-your-town-that-has-changed",
+    "family": "places",
+    "difficulty": "hard",
+    "title": "Describe a place in your town that has changed a lot",
+    "bullets": [
+      "what the place is",
+      "what it used to be like",
+      "how it has changed"
+    ],
+    "explain": "and explain whether you think the change was positive.",
+    "part1": [
+      "Has your town changed recently?",
+      "Do you like new buildings?",
+      "What would you change about where you live?"
+    ],
+    "part3": [
+      "Why do some communities resist change?",
+      "How should cities balance development and heritage?",
+      "Who benefits most from urban redevelopment?",
+      "Will neighbourhoods look very different in fifty years?"
+    ]
+  },
+  {
+    "slug": "item-of-clothing-you-wear-often",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe an item of clothing you wear often",
+    "bullets": [
+      "what it is",
+      "where you got it",
+      "when you wear it"
+    ],
+    "explain": "and explain why you wear it so often.",
+    "part1": [
+      "Do you enjoy buying clothes?",
+      "Do you prefer comfortable or fashionable clothes?",
+      "Do people in your country dress formally for work?"
+    ],
+    "part3": [
+      "Why do clothing fashions change so quickly?",
+      "Is fast fashion a problem for the environment?",
+      "Do clothes affect how others judge us?",
+      "Should schools and offices require uniforms?"
+    ]
+  },
+  {
+    "slug": "piece-of-furniture-you-like",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a piece of furniture you like",
+    "bullets": [
+      "what it is",
+      "where it is in your home",
+      "how you got it"
+    ],
+    "explain": "and explain why you like it.",
+    "part1": [
+      "Do you like decorating your home?",
+      "Where do people buy furniture in your country?",
+      "Do you prefer new or second-hand furniture?"
+    ],
+    "part3": [
+      "Why do people spend so much on furnishing their homes?",
+      "Is it better to buy furniture that lasts or that follows fashion?",
+      "How has furniture design changed?",
+      "Should more furniture be made from recycled materials?"
+    ]
+  },
+  {
+    "slug": "something-you-own-but-rarely-use",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something you own but rarely use",
+    "bullets": [
+      "what it is",
+      "when you got it",
+      "why you bought or received it"
+    ],
+    "explain": "and explain why you keep it even though you rarely use it.",
+    "part1": [
+      "Do you keep things you no longer need?",
+      "Is your home tidy?",
+      "Do you give away things you don't use?"
+    ],
+    "part3": [
+      "Why do people buy things they never use?",
+      "How can consumers avoid unnecessary purchases?",
+      "Is minimalism becoming more popular? Why?",
+      "What should happen to unwanted goods?"
+    ]
+  },
+  {
+    "slug": "bag-you-use-regularly",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a bag you use regularly",
+    "bullets": [
+      "what it looks like",
+      "what you keep in it",
+      "when you use it"
+    ],
+    "explain": "and explain why this bag suits you.",
+    "part1": [
+      "Do you carry a bag every day?",
+      "What do you always take with you?",
+      "Do you often lose things?"
+    ],
+    "part3": [
+      "Why do people carry so many things with them?",
+      "Have smartphones reduced what we need to carry?",
+      "Should shops charge for plastic bags?",
+      "How do everyday objects reflect the way we live?"
+    ]
+  },
+  {
+    "slug": "something-handmade",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something handmade that you have seen or owned",
+    "bullets": [
+      "what it was",
+      "who made it",
+      "what it was made from"
+    ],
+    "explain": "and explain why handmade objects appeal to people.",
+    "part1": [
+      "Have you ever made something by hand?",
+      "Are handmade goods popular in your country?",
+      "Did you do craft activities at school?"
+    ],
+    "part3": [
+      "Why are handmade goods more expensive than factory products?",
+      "Are traditional crafts disappearing?",
+      "Should schools teach practical crafts?",
+      "Does mass production reduce the value we place on objects?"
+    ]
+  },
+  {
+    "slug": "object-that-reminds-you-of-someone",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe an object that reminds you of someone",
+    "bullets": [
+      "what the object is",
+      "who it reminds you of",
+      "how you got it"
+    ],
+    "explain": "and explain why it brings that person to mind.",
+    "part1": [
+      "Do you keep souvenirs?",
+      "Do you have anything from your grandparents?",
+      "Do you take photos to remember things?"
+    ],
+    "part3": [
+      "Why do objects carry such strong memories?",
+      "Are physical keepsakes being replaced by digital ones?",
+      "Should families pass possessions down through generations?",
+      "Do we value old objects more as we age?"
+    ]
+  },
+  {
+    "slug": "small-object-you-always-carry",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a small object you always carry with you",
+    "bullets": [
+      "what it is",
+      "how long you have had it",
+      "where you keep it"
+    ],
+    "explain": "and explain why you never leave home without it.",
+    "part1": [
+      "Do you check your pockets before leaving home?",
+      "Have you ever forgotten your keys?",
+      "Do you use a wallet or a phone to pay?"
+    ],
+    "part3": [
+      "Why do people feel anxious without certain objects?",
+      "Will phones replace wallets and keys completely?",
+      "How do habits around small objects form?",
+      "Do we depend too much on our devices?"
+    ]
+  },
+  {
+    "slug": "something-you-borrowed",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something you borrowed from someone",
+    "bullets": [
+      "what you borrowed",
+      "who you borrowed it from",
+      "why you needed it"
+    ],
+    "explain": "and explain what happened when you returned it.",
+    "part1": [
+      "Do you lend things to friends?",
+      "Have you ever borrowed a book?",
+      "Do you find it easy to ask for help?"
+    ],
+    "part3": [
+      "Why are some people reluctant to lend possessions?",
+      "Is a sharing economy better than everyone owning everything?",
+      "Could renting replace buying for expensive items?",
+      "How does trust work between neighbours and friends?"
+    ]
+  },
+  {
+    "slug": "toy-or-game-you-had-as-a-child",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a toy or game you had as a child",
+    "bullets": [
+      "what it was",
+      "who gave it to you",
+      "how you played with it"
+    ],
+    "explain": "and explain why you liked it so much.",
+    "part1": [
+      "What games did you play as a child?",
+      "Do children in your country play outdoors?",
+      "Did you share toys with others?"
+    ],
+    "part3": [
+      "How have children's toys changed?",
+      "Do digital games teach children useful skills?",
+      "Should toys be designed differently for boys and girls?",
+      "How does play affect a child's development?"
+    ]
+  },
+  {
+    "slug": "something-you-have-kept-for-years",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something you have kept for many years",
+    "bullets": [
+      "what it is",
+      "how you got it",
+      "where you keep it"
+    ],
+    "explain": "and explain why you have never got rid of it.",
+    "part1": [
+      "Do you keep old things?",
+      "Do you tidy your home often?",
+      "Do you have anything from your school days?"
+    ],
+    "part3": [
+      "Why do people find it hard to throw things away?",
+      "Is it healthy to hold on to the past?",
+      "Should museums collect ordinary everyday objects?",
+      "What do our possessions say about us?"
+    ]
+  },
+  {
+    "slug": "tool-you-find-useful-at-home",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a tool you find useful at home",
+    "bullets": [
+      "what the tool is",
+      "what you use it for",
+      "how often you use it"
+    ],
+    "explain": "and explain why it is so useful.",
+    "part1": [
+      "Do you repair things yourself?",
+      "Are you good at fixing things?",
+      "Who does repairs in your home?"
+    ],
+    "part3": [
+      "Why do fewer people repair their own possessions now?",
+      "Should products be designed to be repaired?",
+      "How does throwing away broken goods affect the environment?",
+      "Are practical skills valued less than academic ones?"
+    ]
+  },
+  {
+    "slug": "piece-of-art-you-like",
+    "family": "objects",
+    "difficulty": "hard",
+    "title": "Describe a piece of art you like",
+    "bullets": [
+      "what it is",
+      "where you saw it",
+      "what it shows"
+    ],
+    "explain": "and explain why it appeals to you.",
+    "part1": [
+      "Do you like visiting art galleries?",
+      "Did you enjoy art at school?",
+      "Do you have pictures on your walls?"
+    ],
+    "part3": [
+      "Why do people value art so highly?",
+      "Should governments fund artists?",
+      "Can art created by computers be considered real art?",
+      "How does art reflect the society that produces it?"
+    ]
+  },
+  {
+    "slug": "something-made-in-another-country",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something you own that was made in another country",
+    "bullets": [
+      "what it is",
+      "where it came from",
+      "how you got it"
+    ],
+    "explain": "and explain what you like about it.",
+    "part1": [
+      "Do you check where products are made?",
+      "Are imported goods popular in your country?",
+      "Do you buy things from abroad online?"
+    ],
+    "part3": [
+      "Why do consumers prefer products from certain countries?",
+      "Does international trade benefit everyone equally?",
+      "Should people buy local products when they can?",
+      "How has global shipping changed what we own?"
+    ]
+  },
+  {
+    "slug": "gift-you-received-that-you-liked",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a gift you received that you really liked",
+    "bullets": [
+      "what it was",
+      "who gave it to you",
+      "when you received it"
+    ],
+    "explain": "and explain why it was such a good gift.",
+    "part1": [
+      "Do you like receiving presents?",
+      "When do people give gifts in your country?",
+      "Is it hard to choose a gift?"
+    ],
+    "part3": [
+      "Why do people find gift-giving stressful?",
+      "Is money an acceptable present?",
+      "Do children receive too many presents today?",
+      "How do gift customs differ between cultures?"
+    ]
+  },
+  {
+    "slug": "machine-you-use-every-day-at-home",
+    "family": "objects",
+    "difficulty": "easy",
+    "title": "Describe a machine you use every day at home",
+    "bullets": [
+      "what the machine is",
+      "what it does",
+      "how often you use it"
+    ],
+    "explain": "and explain how life would be different without it.",
+    "part1": [
+      "What appliances do you use most?",
+      "Do you enjoy housework?",
+      "Who does the cooking in your home?"
+    ],
+    "part3": [
+      "How have household machines changed family life?",
+      "Have appliances given people more free time?",
+      "Should appliances be built to last longer?",
+      "What household tasks will machines take over next?"
+    ]
+  },
+  {
+    "slug": "something-you-lost-and-found-again",
+    "family": "objects",
+    "difficulty": "medium",
+    "title": "Describe something you lost and found again",
+    "bullets": [
+      "what it was",
+      "how you lost it",
+      "how you found it"
+    ],
+    "explain": "and explain how you felt when you got it back.",
+    "part1": [
+      "Do you often lose things?",
+      "Have you ever lost something important?",
+      "Are you an organised person?"
+    ],
+    "part3": [
+      "Why do people become attached to certain possessions?",
+      "Should there be more lost-property services?",
+      "Can technology stop us losing things?",
+      "Do people take better care of expensive items?"
+    ]
+  },
+  {
+    "slug": "wedding-you-attended",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a wedding you attended",
+    "bullets": [
+      "whose wedding it was",
+      "where it took place",
+      "what happened during the day"
+    ],
+    "explain": "and explain what you enjoyed most about it.",
+    "part1": [
+      "Have you been to many weddings?",
+      "Do people have big weddings in your country?",
+      "Do you enjoy formal occasions?"
+    ],
+    "part3": [
+      "Why do weddings cost so much in many countries?",
+      "How have wedding traditions changed?",
+      "Should couples spend money on a wedding or a home?",
+      "What role do ceremonies play in society?"
+    ]
+  },
+  {
+    "slug": "birthday-party-you-enjoyed",
+    "family": "events",
+    "difficulty": "easy",
+    "title": "Describe a birthday party you enjoyed",
+    "bullets": [
+      "whose birthday it was",
+      "where it was held",
+      "who was there"
+    ],
+    "explain": "and explain why you enjoyed it.",
+    "part1": [
+      "How do you usually celebrate your birthday?",
+      "Do adults celebrate birthdays in your country?",
+      "Do you like parties?"
+    ],
+    "part3": [
+      "Why are birthdays important to people?",
+      "Do parents spend too much on children's parties?",
+      "How do celebrations differ between generations?",
+      "Is it better to celebrate with family or friends?"
+    ]
+  },
+  {
+    "slug": "sports-event-you-watched",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a sports event you watched",
+    "bullets": [
+      "what the event was",
+      "where you watched it",
+      "who you watched it with"
+    ],
+    "explain": "and explain what made it exciting.",
+    "part1": [
+      "Do you watch sport on television?",
+      "What is the most popular sport in your country?",
+      "Have you been to a stadium?"
+    ],
+    "part3": [
+      "Why do people support particular teams so strongly?",
+      "Should cities spend public money hosting big sporting events?",
+      "How has broadcasting changed professional sport?",
+      "Do sports stars earn too much?"
+    ]
+  },
+  {
+    "slug": "concert-or-live-performance",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a concert or live performance you attended",
+    "bullets": [
+      "what kind of performance it was",
+      "where and when it took place",
+      "who you went with"
+    ],
+    "explain": "and explain how it compared with watching a recording.",
+    "part1": [
+      "Do you like live music?",
+      "What kind of music do you listen to?",
+      "Have you ever performed in public?"
+    ],
+    "part3": [
+      "Why do people pay a lot to see live performances?",
+      "How has streaming changed the music industry?",
+      "Should governments support live arts venues?",
+      "Do live events build a sense of community?"
+    ]
+  },
+  {
+    "slug": "event-that-was-cancelled",
+    "family": "events",
+    "difficulty": "hard",
+    "title": "Describe an event that was cancelled or postponed",
+    "bullets": [
+      "what the event was",
+      "when it was supposed to happen",
+      "why it was cancelled"
+    ],
+    "explain": "and explain how people reacted to the cancellation.",
+    "part1": [
+      "Do you plan things far in advance?",
+      "Have your plans ever changed suddenly?",
+      "Do you mind waiting?"
+    ],
+    "part3": [
+      "How do people cope with disappointment?",
+      "Should organisers refund customers automatically?",
+      "How did large-scale disruption change event planning?",
+      "Is flexibility a skill that can be learned?"
+    ]
+  },
+  {
+    "slug": "family-gathering-you-remember",
+    "family": "events",
+    "difficulty": "easy",
+    "title": "Describe a family gathering you remember",
+    "bullets": [
+      "what the occasion was",
+      "who came",
+      "what you did together"
+    ],
+    "explain": "and explain why it stayed in your memory.",
+    "part1": [
+      "Does your family meet often?",
+      "Do you have a large family?",
+      "Who organises family events in your home?"
+    ],
+    "part3": [
+      "Why are family gatherings less frequent than before?",
+      "How does distance affect extended families?",
+      "Should employers give leave for family occasions?",
+      "What holds large families together?"
+    ]
+  },
+  {
+    "slug": "school-or-university-event",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a school or university event you took part in",
+    "bullets": [
+      "what the event was",
+      "what you had to do",
+      "how you prepared"
+    ],
+    "explain": "and explain what you gained from taking part.",
+    "part1": [
+      "Did your school hold special events?",
+      "Did you take part in school activities?",
+      "What was your favourite school memory?"
+    ],
+    "part3": [
+      "How useful are extracurricular activities?",
+      "Should schools focus on exams or wider experience?",
+      "Do school events build confidence?",
+      "How can schools include students who are shy?"
+    ]
+  },
+  {
+    "slug": "competition-you-entered",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a competition you entered",
+    "bullets": [
+      "what the competition was",
+      "when you entered it",
+      "how you prepared"
+    ],
+    "explain": "and explain how you felt about the result.",
+    "part1": [
+      "Are you a competitive person?",
+      "Did you take part in competitions at school?",
+      "Do you play games to win?"
+    ],
+    "part3": [
+      "Is competition healthy for children?",
+      "Do competitions bring out the best in people?",
+      "Should schools give prizes to everyone?",
+      "How does competition drive progress in society?"
+    ]
+  },
+  {
+    "slug": "public-event-with-many-people",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a public event that attracted a lot of people",
+    "bullets": [
+      "what the event was",
+      "where it was held",
+      "why so many people came"
+    ],
+    "explain": "and explain what the atmosphere was like.",
+    "part1": [
+      "Do you like crowded places?",
+      "Are there festivals in your city?",
+      "Do you prefer big or small events?"
+    ],
+    "part3": [
+      "Why do people enjoy being part of a crowd?",
+      "How should organisers keep large crowds safe?",
+      "Do big public events benefit local businesses?",
+      "Should cities limit the number of large events?"
+    ]
+  },
+  {
+    "slug": "exhibition-you-visited",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe an exhibition you visited",
+    "bullets": [
+      "what the exhibition was about",
+      "where it was",
+      "who you went with"
+    ],
+    "explain": "and explain what you learned from it.",
+    "part1": [
+      "Do you visit museums or exhibitions?",
+      "Did you go on school trips?",
+      "Do you prefer learning by reading or by seeing?"
+    ],
+    "part3": [
+      "How do exhibitions help people learn?",
+      "Should museums charge for entry?",
+      "Can online exhibitions replace real ones?",
+      "How should exhibitions present difficult history?"
+    ]
+  },
+  {
+    "slug": "graduation-or-award-ceremony",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a graduation or award ceremony you attended",
+    "bullets": [
+      "whose ceremony it was",
+      "where it took place",
+      "what happened"
+    ],
+    "explain": "and explain why such ceremonies matter to people.",
+    "part1": [
+      "Have you attended a graduation?",
+      "Do you like formal ceremonies?",
+      "Do you take photos at special events?"
+    ],
+    "part3": [
+      "Why do societies mark achievements with ceremonies?",
+      "Are traditional ceremonies still relevant?",
+      "Should schools reward effort as well as results?",
+      "How do public rituals affect motivation?"
+    ]
+  },
+  {
+    "slug": "party-you-helped-organise",
+    "family": "events",
+    "difficulty": "hard",
+    "title": "Describe a party you helped to organise",
+    "bullets": [
+      "what the party was for",
+      "what you had to do",
+      "who helped you"
+    ],
+    "explain": "and explain how well it went in the end.",
+    "part1": [
+      "Are you good at organising things?",
+      "Do you like planning events?",
+      "Do you make lists?"
+    ],
+    "part3": [
+      "What skills does organising an event require?",
+      "Is it better to plan carefully or improvise?",
+      "Why do some people avoid taking responsibility?",
+      "How do people work together under time pressure?"
+    ]
+  },
+  {
+    "slug": "meeting-that-was-important-to-you",
+    "family": "events",
+    "difficulty": "hard",
+    "title": "Describe a meeting that was important to you",
+    "bullets": [
+      "who the meeting was with",
+      "what it was about",
+      "where it took place"
+    ],
+    "explain": "and explain why it mattered so much.",
+    "part1": [
+      "Do you attend many meetings?",
+      "Do you prefer talking in person or online?",
+      "Are you punctual?"
+    ],
+    "part3": [
+      "Are most workplace meetings necessary?",
+      "How can meetings be made more productive?",
+      "Has video calling changed professional communication?",
+      "Why is body language important in discussions?"
+    ]
+  },
+  {
+    "slug": "performance-you-took-part-in",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe a performance you took part in",
+    "bullets": [
+      "what the performance was",
+      "what your role was",
+      "how you prepared"
+    ],
+    "explain": "and explain how you felt on the day.",
+    "part1": [
+      "Have you ever been on a stage?",
+      "Do you get nervous in front of people?",
+      "Did you do drama or music at school?"
+    ],
+    "part3": [
+      "Why does performing frighten so many people?",
+      "Should performing be part of every child's education?",
+      "How do performers cope with pressure?",
+      "Does confidence in public transfer to other areas of life?"
+    ]
+  },
+  {
+    "slug": "event-you-attended-online",
+    "family": "events",
+    "difficulty": "medium",
+    "title": "Describe an event you attended online",
+    "bullets": [
+      "what the event was",
+      "why it was held online",
+      "what you did during it"
+    ],
+    "explain": "and explain how it compared to attending in person.",
+    "part1": [
+      "Do you join online classes or meetings?",
+      "Is your internet connection good?",
+      "Do you prefer online or face-to-face events?"
+    ],
+    "part3": [
+      "What are the advantages of online events?",
+      "Will online events replace physical ones?",
+      "Do online events include more people or fewer?",
+      "How does screen fatigue affect participation?"
+    ]
+  },
+  {
+    "slug": "occasion-when-you-dressed-formally",
+    "family": "events",
+    "difficulty": "easy",
+    "title": "Describe an occasion when you dressed formally",
+    "bullets": [
+      "what the occasion was",
+      "what you wore",
+      "who else was there"
+    ],
+    "explain": "and explain how you felt wearing formal clothes.",
+    "part1": [
+      "Do you often wear formal clothes?",
+      "Do people dress up in your country?",
+      "Do you enjoy shopping for special clothes?"
+    ],
+    "part3": [
+      "Why do some occasions require formal dress?",
+      "Are workplaces becoming less formal?",
+      "Does what we wear change how we behave?",
+      "Will formal clothing disappear in the future?"
+    ]
+  },
+  {
+    "slug": "time-you-were-late-for-something",
+    "family": "experiences",
+    "difficulty": "easy",
+    "title": "Describe a time you were late for something important",
+    "bullets": [
+      "what you were late for",
+      "why you were late",
+      "what happened as a result"
+    ],
+    "explain": "and explain what you learned from the experience.",
+    "part1": [
+      "Are you usually on time?",
+      "How do you avoid being late?",
+      "Is punctuality important in your country?"
+    ],
+    "part3": [
+      "Why are some people always late?",
+      "How important is punctuality at work?",
+      "Do attitudes to time differ between cultures?",
+      "Has technology made people better or worse at timekeeping?"
+    ]
+  },
+  {
+    "slug": "time-you-had-to-wait-a-long-time",
+    "family": "experiences",
+    "difficulty": "easy",
+    "title": "Describe a time you had to wait a long time for something",
+    "bullets": [
+      "what you were waiting for",
+      "how long you waited",
+      "where you were"
+    ],
+    "explain": "and explain how you felt while you were waiting.",
+    "part1": [
+      "Do you mind waiting?",
+      "What do you do while queueing?",
+      "Are you a patient person?"
+    ],
+    "part3": [
+      "Why do people dislike waiting so much?",
+      "How can organisations reduce waiting times?",
+      "Has instant service made people less patient?",
+      "Is patience still a useful quality today?"
+    ]
+  },
+  {
+    "slug": "time-you-tried-something-first-time",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you tried something for the first time",
+    "bullets": [
+      "what you tried",
+      "when and where you tried it",
+      "who was with you"
+    ],
+    "explain": "and explain how you felt about the experience.",
+    "part1": [
+      "Do you like trying new things?",
+      "When did you last do something new?",
+      "Are you adventurous?"
+    ],
+    "part3": [
+      "Why are some people afraid of new experiences?",
+      "Do people become less open to change as they age?",
+      "How do new experiences shape personality?",
+      "Should schools encourage students to take risks?"
+    ]
+  },
+  {
+    "slug": "time-you-made-a-mistake-and-learned",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you made a mistake and learned from it",
+    "bullets": [
+      "what the mistake was",
+      "when it happened",
+      "what the consequences were"
+    ],
+    "explain": "and explain what you would do differently now.",
+    "part1": [
+      "Do you worry about making mistakes?",
+      "How do you react when things go wrong?",
+      "Do you ask for help easily?"
+    ],
+    "part3": [
+      "Why is it hard for people to admit mistakes?",
+      "Should workplaces treat mistakes as learning opportunities?",
+      "How do children learn from failure?",
+      "Does fear of failure hold people back?"
+    ]
+  },
+  {
+    "slug": "time-you-changed-your-mind",
+    "family": "experiences",
+    "difficulty": "hard",
+    "title": "Describe a time you changed your mind about something",
+    "bullets": [
+      "what you originally thought",
+      "what made you change your mind",
+      "how long it took"
+    ],
+    "explain": "and explain how you feel about it now.",
+    "part1": [
+      "Do you change your plans often?",
+      "Do you ask others for their opinion?",
+      "Are you a flexible person?"
+    ],
+    "part3": [
+      "Why do people find it difficult to change their opinions?",
+      "How does evidence change public attitudes?",
+      "Do social networks make opinions more fixed?",
+      "Should politicians be allowed to change their views?"
+    ]
+  },
+  {
+    "slug": "time-you-worked-well-in-a-team",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you worked well as part of a team",
+    "bullets": [
+      "what the task was",
+      "who was in the team",
+      "what your role was"
+    ],
+    "explain": "and explain why the team worked well together.",
+    "part1": [
+      "Do you like working in groups?",
+      "Have you played team sports?",
+      "Are you a good listener?"
+    ],
+    "part3": [
+      "What makes a team successful?",
+      "Should teams always have a leader?",
+      "How do you deal with someone who does not contribute?",
+      "Are teams better than individuals at creative tasks?"
+    ]
+  },
+  {
+    "slug": "time-you-were-nervous-before-speaking",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you were nervous before speaking to a group",
+    "bullets": [
+      "what the occasion was",
+      "who your audience was",
+      "how you prepared"
+    ],
+    "explain": "and explain how you managed your nerves.",
+    "part1": [
+      "Do you enjoy speaking in front of people?",
+      "Did you give presentations at school?",
+      "How do you calm yourself down?"
+    ],
+    "part3": [
+      "Why is public speaking such a common fear?",
+      "Can confidence be trained?",
+      "How important are communication skills at work?",
+      "Should speaking skills be tested in exams?"
+    ]
+  },
+  {
+    "slug": "time-you-had-to-be-patient",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time when you had to be patient",
+    "bullets": [
+      "what the situation was",
+      "why patience was needed",
+      "how long it lasted"
+    ],
+    "explain": "and explain what the outcome was.",
+    "part1": [
+      "Are you patient with other people?",
+      "What makes you lose patience?",
+      "Do you get annoyed in traffic?"
+    ],
+    "part3": [
+      "Is patience valued less in modern life?",
+      "How does impatience affect decision-making?",
+      "Can parents teach children to be patient?",
+      "Do fast services make people expect too much?"
+    ]
+  },
+  {
+    "slug": "time-you-got-lost",
+    "family": "experiences",
+    "difficulty": "easy",
+    "title": "Describe a time you got lost somewhere",
+    "bullets": [
+      "where you were",
+      "why you got lost",
+      "what you did about it"
+    ],
+    "explain": "and explain how you felt at the time.",
+    "part1": [
+      "Do you use maps on your phone?",
+      "Do you have a good sense of direction?",
+      "Do you ask strangers for directions?"
+    ],
+    "part3": [
+      "Has navigation technology made people worse at finding their way?",
+      "Why do some people navigate better than others?",
+      "Should children learn to read paper maps?",
+      "How do people behave when they feel lost or confused?"
+    ]
+  },
+  {
+    "slug": "first-day-at-school-or-work",
+    "family": "experiences",
+    "difficulty": "easy",
+    "title": "Describe your first day at a new school or job",
+    "bullets": [
+      "when it was",
+      "where you went",
+      "who you met"
+    ],
+    "explain": "and explain how you felt at the end of the day.",
+    "part1": [
+      "Do you remember your first day at school?",
+      "Do you find it easy to meet new people?",
+      "Do you like changes in your routine?"
+    ],
+    "part3": [
+      "Why are first impressions so powerful?",
+      "How can organisations welcome newcomers better?",
+      "Is starting again harder as you get older?",
+      "How do people build confidence in a new environment?"
+    ]
+  },
+  {
+    "slug": "time-you-solved-a-difficult-problem",
+    "family": "experiences",
+    "difficulty": "hard",
+    "title": "Describe a time you solved a difficult problem",
+    "bullets": [
+      "what the problem was",
+      "how you approached it",
+      "who helped you"
+    ],
+    "explain": "and explain why the solution worked.",
+    "part1": [
+      "Do you enjoy puzzles?",
+      "Do you ask for advice when stuck?",
+      "Are you good at making decisions?"
+    ],
+    "part3": [
+      "Are practical or theoretical problem-solving skills more useful?",
+      "How do people make decisions with too little information?",
+      "Can artificial intelligence solve human problems?",
+      "Why do some solutions create new problems?"
+    ]
+  },
+  {
+    "slug": "day-you-spent-outdoors",
+    "family": "experiences",
+    "difficulty": "easy",
+    "title": "Describe a day you spent entirely outdoors",
+    "bullets": [
+      "where you were",
+      "who you were with",
+      "what you did"
+    ],
+    "explain": "and explain why you remember that day.",
+    "part1": [
+      "Do you spend much time outside?",
+      "What do you do in good weather?",
+      "Do you enjoy walking?"
+    ],
+    "part3": [
+      "Why do people spend less time outdoors than before?",
+      "How does time outdoors affect wellbeing?",
+      "Should schools hold more lessons outside?",
+      "Are cities designed to encourage outdoor life?"
+    ]
+  },
+  {
+    "slug": "time-you-apologised-to-someone",
+    "family": "experiences",
+    "difficulty": "hard",
+    "title": "Describe a time you apologised to someone",
+    "bullets": [
+      "who you apologised to",
+      "what had happened",
+      "how you apologised"
+    ],
+    "explain": "and explain how the person reacted.",
+    "part1": [
+      "Do you find it easy to say sorry?",
+      "Do people apologise often in your country?",
+      "How do you make up after an argument?"
+    ],
+    "part3": [
+      "Why is apologising so difficult for some people?",
+      "Should organisations apologise publicly for mistakes?",
+      "How do apology customs differ between cultures?",
+      "Does an apology always repair a relationship?"
+    ]
+  },
+  {
+    "slug": "time-you-spoke-a-foreign-language",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you had to speak in a foreign language",
+    "bullets": [
+      "where you were",
+      "who you were speaking to",
+      "what you talked about"
+    ],
+    "explain": "and explain how well you think you communicated.",
+    "part1": [
+      "How long have you studied English?",
+      "Do you speak English outside class?",
+      "Which language skill is hardest for you?"
+    ],
+    "part3": [
+      "Why do learners find speaking harder than reading?",
+      "What is the best way to practise a foreign language?",
+      "Should accents matter when speaking English?",
+      "Will English remain the main international language?"
+    ]
+  },
+  {
+    "slug": "time-you-felt-proud-of-someone",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you felt proud of a friend or relative",
+    "bullets": [
+      "who the person was",
+      "what they achieved",
+      "how you found out"
+    ],
+    "explain": "and explain why you felt so proud of them.",
+    "part1": [
+      "Do you celebrate other people's success?",
+      "Who supports you the most?",
+      "Do you tell people when they do well?"
+    ],
+    "part3": [
+      "Why do people feel proud of others' achievements?",
+      "Should success be celebrated publicly or privately?",
+      "How does encouragement affect performance?",
+      "Can pride in others become competitive?"
+    ]
+  },
+  {
+    "slug": "time-you-changed-your-routine",
+    "family": "experiences",
+    "difficulty": "medium",
+    "title": "Describe a time you changed your daily routine",
+    "bullets": [
+      "what your routine was before",
+      "what you changed",
+      "why you changed it"
+    ],
+    "explain": "and explain whether the change lasted.",
+    "part1": [
+      "What is your daily routine?",
+      "Are you a morning person?",
+      "Do you like having a fixed schedule?"
+    ],
+    "part3": [
+      "Why is it hard to break old habits?",
+      "How long does it take to form a new habit?",
+      "Do routines make people more or less creative?",
+      "How has flexible working changed daily life?"
+    ]
+  },
+  {
+    "slug": "activity-you-do-to-relax",
+    "family": "activities",
+    "difficulty": "easy",
+    "title": "Describe an activity you do to relax after work or study",
+    "bullets": [
+      "what the activity is",
+      "when you do it",
+      "how long it takes"
+    ],
+    "explain": "and explain why it helps you relax.",
+    "part1": [
+      "How do you relax?",
+      "Do you have much free time?",
+      "Do you prefer relaxing alone or with others?"
+    ],
+    "part3": [
+      "Why do people struggle to switch off from work?",
+      "Is free time distributed fairly in modern societies?",
+      "Do screens help people relax or not?",
+      "Should employers protect workers' free time?"
+    ]
+  },
+  {
+    "slug": "sport-you-enjoy-watching-or-playing",
+    "family": "activities",
+    "difficulty": "easy",
+    "title": "Describe a sport you enjoy watching or playing",
+    "bullets": [
+      "what the sport is",
+      "how you started",
+      "how often you take part"
+    ],
+    "explain": "and explain what you enjoy about it.",
+    "part1": [
+      "Do you play any sport?",
+      "Was sport important at your school?",
+      "Do you prefer team or individual sports?"
+    ],
+    "part3": [
+      "Why do some sports become popular in certain countries?",
+      "Should sport be compulsory at school?",
+      "Do sponsors have too much influence in sport?",
+      "How does sport bring communities together?"
+    ]
+  },
+  {
+    "slug": "something-you-do-at-weekends",
+    "family": "activities",
+    "difficulty": "easy",
+    "title": "Describe something you do regularly at the weekend",
+    "bullets": [
+      "what you do",
+      "who you do it with",
+      "how long you have been doing it"
+    ],
+    "explain": "and explain why you keep doing it.",
+    "part1": [
+      "What do you usually do at weekends?",
+      "Do you work at weekends?",
+      "Do you prefer staying in or going out?"
+    ],
+    "part3": [
+      "Are weekends long enough for most people?",
+      "Should the working week be shorter?",
+      "How do weekend habits differ between generations?",
+      "Does leisure time affect productivity at work?"
+    ]
+  },
+  {
+    "slug": "activity-you-used-to-do-but-stopped",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe an activity you used to do but have stopped",
+    "bullets": [
+      "what the activity was",
+      "when you did it",
+      "why you stopped"
+    ],
+    "explain": "and explain whether you would like to start again.",
+    "part1": [
+      "Have your hobbies changed?",
+      "Did you have more free time as a child?",
+      "Would you like to take up a new hobby?"
+    ],
+    "part3": [
+      "Why do adults give up hobbies they loved?",
+      "How does work affect people's interests?",
+      "Should employers encourage hobbies outside work?",
+      "Is it easier to learn hobbies when young?"
+    ]
+  },
+  {
+    "slug": "game-you-like-playing-with-others",
+    "family": "activities",
+    "difficulty": "easy",
+    "title": "Describe a game you like playing with friends or family",
+    "bullets": [
+      "what the game is",
+      "how it is played",
+      "who you play with"
+    ],
+    "explain": "and explain why you enjoy playing it.",
+    "part1": [
+      "Do you play board games?",
+      "Did your family play games together?",
+      "Do you like competitive games?"
+    ],
+    "part3": [
+      "Why do traditional games survive alongside video games?",
+      "What do games teach children?",
+      "Do online games bring people together or isolate them?",
+      "Should adults play more?"
+    ]
+  },
+  {
+    "slug": "outdoor-activity-you-would-try-more",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe an outdoor activity you would like to do more often",
+    "bullets": [
+      "what the activity is",
+      "where you would do it",
+      "what equipment you need"
+    ],
+    "explain": "and explain why you cannot do it as often as you would like.",
+    "part1": [
+      "Do you like outdoor activities?",
+      "Is the weather good where you live?",
+      "Do you prefer the mountains or the sea?"
+    ],
+    "part3": [
+      "Why is access to outdoor activities unequal?",
+      "Should local councils provide more outdoor facilities?",
+      "How does outdoor exercise compare with the gym?",
+      "Can outdoor tourism damage nature?"
+    ]
+  },
+  {
+    "slug": "something-creative-you-have-made",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe something creative you have made",
+    "bullets": [
+      "what you made",
+      "what materials or tools you used",
+      "how long it took"
+    ],
+    "explain": "and explain how you felt when you finished it.",
+    "part1": [
+      "Are you a creative person?",
+      "Do you like drawing or making things?",
+      "Did you do art at school?"
+    ],
+    "part3": [
+      "Can creativity be taught?",
+      "Why do schools spend less time on creative subjects?",
+      "How does creativity help in business?",
+      "Will machines ever be genuinely creative?"
+    ]
+  },
+  {
+    "slug": "activity-you-enjoy-doing-alone",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe an activity you enjoy doing alone",
+    "bullets": [
+      "what the activity is",
+      "when you do it",
+      "where you do it"
+    ],
+    "explain": "and explain why you prefer doing it by yourself.",
+    "part1": [
+      "Do you like spending time alone?",
+      "Do you live alone or with others?",
+      "What do you do when you are by yourself?"
+    ],
+    "part3": [
+      "Why do some people need more time alone than others?",
+      "Is solitude different from loneliness?",
+      "Does modern life leave enough space for quiet time?",
+      "How do cultures differ in valuing privacy?"
+    ]
+  },
+  {
+    "slug": "class-or-course-you-took-for-fun",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe a class or course you took just for fun",
+    "bullets": [
+      "what the course was",
+      "where you took it",
+      "who else was in the class"
+    ],
+    "explain": "and explain what you got out of it.",
+    "part1": [
+      "Do you like learning new skills?",
+      "Have you taken any evening classes?",
+      "Do you learn better alone or in a group?"
+    ],
+    "part3": [
+      "Why do adults return to study later in life?",
+      "Should governments subsidise adult education?",
+      "Do online courses work as well as classroom ones?",
+      "How does lifelong learning affect employment?"
+    ]
+  },
+  {
+    "slug": "something-that-keeps-your-mind-active",
+    "family": "activities",
+    "difficulty": "hard",
+    "title": "Describe something you do to keep your mind active",
+    "bullets": [
+      "what you do",
+      "how often you do it",
+      "when you started"
+    ],
+    "explain": "and explain how it helps you.",
+    "part1": [
+      "Do you like puzzles or quizzes?",
+      "Do you read every day?",
+      "Do you have a good memory?"
+    ],
+    "part3": [
+      "Can mental exercise slow ageing?",
+      "Are people's attention spans shortening?",
+      "Should schools teach memory techniques?",
+      "How does constant information affect thinking?"
+    ]
+  },
+  {
+    "slug": "group-or-club-you-belong-to",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe a group or club you belong to",
+    "bullets": [
+      "what the group does",
+      "how you joined",
+      "how often you meet"
+    ],
+    "explain": "and explain what you enjoy about belonging to it.",
+    "part1": [
+      "Are you a member of any club?",
+      "Do you like group activities?",
+      "Do you meet new people easily?"
+    ],
+    "part3": [
+      "Why do people join clubs and societies?",
+      "Are community groups declining? Why?",
+      "How do shared interests create friendships?",
+      "Should clubs receive public funding?"
+    ]
+  },
+  {
+    "slug": "activity-popular-with-young-people",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe an activity that is popular with young people in your country",
+    "bullets": [
+      "what the activity is",
+      "who takes part",
+      "where it happens"
+    ],
+    "explain": "and explain why it is so popular.",
+    "part1": [
+      "What do young people do for fun where you live?",
+      "Are there activities for teenagers in your area?",
+      "Did you have hobbies as a teenager?"
+    ],
+    "part3": [
+      "Why do youth trends change so quickly?",
+      "Should councils provide free activities for teenagers?",
+      "How does peer pressure shape leisure choices?",
+      "Are young people less active than previous generations?"
+    ]
+  },
+  {
+    "slug": "something-you-enjoy-doing-with-family",
+    "family": "activities",
+    "difficulty": "easy",
+    "title": "Describe something you enjoy doing with your family",
+    "bullets": [
+      "what you do",
+      "how often you do it",
+      "who takes part"
+    ],
+    "explain": "and explain why you enjoy doing it together.",
+    "part1": [
+      "Do you spend weekends with your family?",
+      "Do you eat meals together?",
+      "Do you go on trips as a family?"
+    ],
+    "part3": [
+      "Why is shared time important for families?",
+      "How do busy schedules affect family life?",
+      "Do families spend time together differently now?",
+      "Should there be public holidays for families?"
+    ]
+  },
+  {
+    "slug": "hobby-that-is-expensive",
+    "family": "activities",
+    "difficulty": "hard",
+    "title": "Describe a hobby that is expensive",
+    "bullets": [
+      "what the hobby is",
+      "who does it",
+      "why it costs so much"
+    ],
+    "explain": "and explain whether you think it is worth the money.",
+    "part1": [
+      "Are hobbies expensive in your country?",
+      "Do you save money for your interests?",
+      "Is there a hobby you would like to try?"
+    ],
+    "part3": [
+      "Should everyone have access to expensive activities?",
+      "How does income affect leisure choices?",
+      "Do people spend too much on hobbies?",
+      "Can cheap hobbies be just as satisfying?"
+    ]
+  },
+  {
+    "slug": "activity-that-takes-patience",
+    "family": "activities",
+    "difficulty": "hard",
+    "title": "Describe an activity you do that takes a lot of patience",
+    "bullets": [
+      "what the activity is",
+      "why it takes so long",
+      "how you learned it"
+    ],
+    "explain": "and explain what you gain from doing it.",
+    "part1": [
+      "Do you finish what you start?",
+      "Do you like slow activities?",
+      "What makes you give up on something?"
+    ],
+    "part3": [
+      "Why do slow hobbies appeal to people in a fast world?",
+      "Does persistence matter more than talent?",
+      "How can young people learn perseverance?",
+      "Are instant results making people less determined?"
+    ]
+  },
+  {
+    "slug": "something-you-learned-from-online-videos",
+    "family": "activities",
+    "difficulty": "medium",
+    "title": "Describe something you learned to do by watching videos online",
+    "bullets": [
+      "what you learned",
+      "which videos you used",
+      "how long it took"
+    ],
+    "explain": "and explain how well this way of learning worked for you.",
+    "part1": [
+      "Do you watch videos to learn things?",
+      "How much time do you spend online?",
+      "Do you prefer reading or watching?"
+    ],
+    "part3": [
+      "Can online videos replace formal teaching?",
+      "How can learners judge whether online information is reliable?",
+      "Does free online learning reduce inequality?",
+      "What skills are hard to learn from a screen?"
+    ]
+  },
+  {
+    "slug": "tv-series-you-watched-recently",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe a TV series you watched recently",
+    "bullets": [
+      "what the series was about",
+      "when you watched it",
+      "who you watched it with"
+    ],
+    "explain": "and explain what you thought of it.",
+    "part1": [
+      "Do you watch much television?",
+      "What kind of programmes do you like?",
+      "Do you watch television with your family?"
+    ],
+    "part3": [
+      "How has streaming changed viewing habits?",
+      "Do people watch too much television?",
+      "Should television programmes be educational?",
+      "How do foreign series affect local culture?"
+    ]
+  },
+  {
+    "slug": "podcast-or-radio-programme",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a podcast or radio programme you like",
+    "bullets": [
+      "what it is about",
+      "when you listen to it",
+      "how you found it"
+    ],
+    "explain": "and explain why you enjoy listening to it.",
+    "part1": [
+      "Do you listen to the radio?",
+      "What do you listen to while travelling?",
+      "Do you prefer listening or reading?"
+    ],
+    "part3": [
+      "Why has audio content become popular again?",
+      "Do people learn well by listening?",
+      "Should podcasts be regulated like broadcasters?",
+      "How does audio media differ from video?"
+    ]
+  },
+  {
+    "slug": "news-story-that-interested-you",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a news story that interested you",
+    "bullets": [
+      "what the story was about",
+      "where you saw or heard it",
+      "when it happened"
+    ],
+    "explain": "and explain why it caught your attention.",
+    "part1": [
+      "Do you follow the news?",
+      "Where do you get your news?",
+      "Do you discuss the news with friends?"
+    ],
+    "part3": [
+      "Why do people trust some news sources more than others?",
+      "How can readers identify unreliable information?",
+      "Should news be free to access?",
+      "Does negative news affect how people see the world?"
+    ]
+  },
+  {
+    "slug": "magazine-or-newspaper-you-read",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe a magazine or newspaper you read",
+    "bullets": [
+      "what it is called",
+      "what kind of content it has",
+      "how often you read it"
+    ],
+    "explain": "and explain why you read this one rather than others.",
+    "part1": [
+      "Do you read newspapers?",
+      "Do you prefer print or digital?",
+      "What topics interest you most?"
+    ],
+    "part3": [
+      "Will printed publications survive?",
+      "How has advertising shaped the media?",
+      "Should journalists be trained and licensed?",
+      "Do people read less deeply online?"
+    ]
+  },
+  {
+    "slug": "character-from-a-book-or-film",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a character from a book or film you like",
+    "bullets": [
+      "who the character is",
+      "what story they appear in",
+      "what they are like"
+    ],
+    "explain": "and explain why you find this character interesting.",
+    "part1": [
+      "Do you read stories?",
+      "Do you prefer films or books?",
+      "Did you have a favourite story as a child?"
+    ],
+    "part3": [
+      "Why do audiences identify with fictional characters?",
+      "Do films influence how people behave?",
+      "Should stories always have a moral message?",
+      "How do characters reflect the values of their time?"
+    ]
+  },
+  {
+    "slug": "documentary-you-found-interesting",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a documentary you found interesting",
+    "bullets": [
+      "what it was about",
+      "where you watched it",
+      "what you learned"
+    ],
+    "explain": "and explain why it was worth watching.",
+    "part1": [
+      "Do you watch documentaries?",
+      "Do you like learning about history or nature?",
+      "How do you choose what to watch?"
+    ],
+    "part3": [
+      "Can documentaries change public opinion?",
+      "Should documentaries be shown in schools?",
+      "How objective are documentary makers?",
+      "Do entertaining formats make facts easier to remember?"
+    ]
+  },
+  {
+    "slug": "advertisement-you-remember",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe an advertisement you remember well",
+    "bullets": [
+      "what it was advertising",
+      "where you saw it",
+      "what happened in it"
+    ],
+    "explain": "and explain why you still remember it.",
+    "part1": [
+      "Do you notice advertisements?",
+      "Where do you see most adverts?",
+      "Have you ever bought something because of an advert?"
+    ],
+    "part3": [
+      "Why are some adverts more memorable than others?",
+      "Should advertising to children be restricted?",
+      "How has online targeting changed advertising?",
+      "Does advertising create needs or reflect them?"
+    ]
+  },
+  {
+    "slug": "music-you-listen-to-while-working",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe music you like listening to while working or studying",
+    "bullets": [
+      "what kind of music it is",
+      "when you listen to it",
+      "how you discovered it"
+    ],
+    "explain": "and explain how it affects your concentration.",
+    "part1": [
+      "Do you listen to music every day?",
+      "What music is popular in your country?",
+      "Do you play an instrument?"
+    ],
+    "part3": [
+      "Does background music help or harm concentration?",
+      "Why do musical tastes change with age?",
+      "How has streaming changed what people listen to?",
+      "Should music education be compulsory?"
+    ]
+  },
+  {
+    "slug": "book-you-would-like-to-read",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a book you would like to read",
+    "bullets": [
+      "what the book is",
+      "how you heard about it",
+      "what it is about"
+    ],
+    "explain": "and explain why you want to read it.",
+    "part1": [
+      "Do you read for pleasure?",
+      "Where do you get books?",
+      "Do you read before sleeping?"
+    ],
+    "part3": [
+      "Why do people read less than in the past?",
+      "How can reading be encouraged among young people?",
+      "Do e-books change how we read?",
+      "Is reading fiction as valuable as reading non-fiction?"
+    ]
+  },
+  {
+    "slug": "film-you-did-not-enjoy",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a film you did not enjoy",
+    "bullets": [
+      "what the film was",
+      "why you watched it",
+      "what it was about"
+    ],
+    "explain": "and explain why you did not like it.",
+    "part1": [
+      "How often do you watch films?",
+      "Do you go to the cinema?",
+      "Who do you watch films with?"
+    ],
+    "part3": [
+      "Why do people disagree so strongly about films?",
+      "How much influence do critics have?",
+      "Are film ratings useful?",
+      "Do cinemas have a future?"
+    ]
+  },
+  {
+    "slug": "video-that-made-you-laugh",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe a video you watched that made you laugh",
+    "bullets": [
+      "what the video showed",
+      "where you saw it",
+      "who shared it with you"
+    ],
+    "explain": "and explain why it was so funny.",
+    "part1": [
+      "Do you watch short videos online?",
+      "Do you share videos with friends?",
+      "How long do you spend watching them?"
+    ],
+    "part3": [
+      "Why do certain videos spread so quickly?",
+      "Are short videos shortening attention spans?",
+      "Should platforms control what becomes popular?",
+      "How does humour travel between cultures online?"
+    ]
+  },
+  {
+    "slug": "story-your-family-often-tells",
+    "family": "media",
+    "difficulty": "hard",
+    "title": "Describe a story your family often tells",
+    "bullets": [
+      "what the story is about",
+      "who usually tells it",
+      "when you first heard it"
+    ],
+    "explain": "and explain why your family enjoys retelling it.",
+    "part1": [
+      "Do you like listening to stories?",
+      "Did anyone tell you stories as a child?",
+      "Do you remember family stories?"
+    ],
+    "part3": [
+      "Why is storytelling important to families?",
+      "How do stories change each time they are told?",
+      "Are oral traditions disappearing?",
+      "What role do stories play in preserving history?"
+    ]
+  },
+  {
+    "slug": "actor-or-performer-you-like",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe an actor or performer you like",
+    "bullets": [
+      "who they are",
+      "what they are known for",
+      "how you first saw them"
+    ],
+    "explain": "and explain why you admire their work.",
+    "part1": [
+      "Do you have a favourite actor?",
+      "Do you follow entertainment news?",
+      "Would you like to act?"
+    ],
+    "part3": [
+      "Why do audiences form attachments to performers?",
+      "Are actors paid fairly compared with other professions?",
+      "Should public figures speak about politics?",
+      "How has social media changed celebrity?"
+    ]
+  },
+  {
+    "slug": "cartoon-or-animation-you-enjoyed",
+    "family": "media",
+    "difficulty": "easy",
+    "title": "Describe a cartoon or animation you enjoyed",
+    "bullets": [
+      "what it was",
+      "when you watched it",
+      "what the story was"
+    ],
+    "explain": "and explain why you liked it.",
+    "part1": [
+      "Did you watch cartoons as a child?",
+      "Do adults watch animation in your country?",
+      "Do you prefer animation or live action?"
+    ],
+    "part3": [
+      "Why does animation appeal to adults as well as children?",
+      "How have animation techniques changed?",
+      "Can cartoons teach children values?",
+      "Should children's screen time be limited?"
+    ]
+  },
+  {
+    "slug": "story-set-in-an-unusual-place",
+    "family": "media",
+    "difficulty": "hard",
+    "title": "Describe a book or film that was set in an unusual place",
+    "bullets": [
+      "what the story was",
+      "where it was set",
+      "how the place was shown"
+    ],
+    "explain": "and explain how the setting affected the story.",
+    "part1": [
+      "Do you like science fiction?",
+      "Do stories make you want to travel?",
+      "What kind of stories do you avoid?"
+    ],
+    "part3": [
+      "How do stories shape our image of foreign places?",
+      "Can fiction teach people about real cultures?",
+      "Why are imaginary worlds so popular?",
+      "Should films be filmed where the story is set?"
+    ]
+  },
+  {
+    "slug": "live-show-you-watched-on-television",
+    "family": "media",
+    "difficulty": "medium",
+    "title": "Describe a live show you watched on television",
+    "bullets": [
+      "what the show was",
+      "when it was broadcast",
+      "who you watched it with"
+    ],
+    "explain": "and explain what made watching it live different.",
+    "part1": [
+      "Do you watch live programmes?",
+      "Do you follow any competitions on TV?",
+      "Do you use social media while watching?"
+    ],
+    "part3": [
+      "Why do people still watch television live?",
+      "How do live broadcasts create shared experiences?",
+      "Should live events be free to view?",
+      "Will on-demand viewing replace scheduled television?"
+    ]
+  },
+  {
+    "slug": "subject-you-enjoyed-at-school",
+    "family": "work-study",
+    "difficulty": "easy",
+    "title": "Describe a subject you enjoyed at school",
+    "bullets": [
+      "what the subject was",
+      "who taught it",
+      "what you did in the lessons"
+    ],
+    "explain": "and explain why you enjoyed it.",
+    "part1": [
+      "What was your favourite subject?",
+      "Were you a good student?",
+      "Do you still study anything?"
+    ],
+    "part3": [
+      "Why do students prefer some subjects to others?",
+      "Should students choose their own subjects earlier?",
+      "How much does the teacher affect interest in a subject?",
+      "Are practical subjects valued enough?"
+    ]
+  },
+  {
+    "slug": "job-you-would-like-to-do",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a job you would like to do in the future",
+    "bullets": [
+      "what the job is",
+      "what qualifications it needs",
+      "where you would work"
+    ],
+    "explain": "and explain why this job appeals to you.",
+    "part1": [
+      "Do you work or study?",
+      "What job did you want as a child?",
+      "Is it easy to change careers in your country?"
+    ],
+    "part3": [
+      "Should people follow their interests or job security?",
+      "How do families influence career choices?",
+      "Which industries will grow in the next decade?",
+      "Is it realistic to have one career for life?"
+    ]
+  },
+  {
+    "slug": "project-you-worked-on-with-others",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a project you worked on with other people",
+    "bullets": [
+      "what the project was",
+      "who you worked with",
+      "what you were responsible for"
+    ],
+    "explain": "and explain how successful the project was.",
+    "part1": [
+      "Do you like group work?",
+      "Have you done a long project?",
+      "Do you prefer planning or doing?"
+    ],
+    "part3": [
+      "Why do group projects sometimes fail?",
+      "How should credit be shared in a team?",
+      "Are collaborative skills taught well at school?",
+      "Do remote teams work as effectively as office teams?"
+    ]
+  },
+  {
+    "slug": "piece-of-work-you-were-proud-of",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a piece of work you were proud of",
+    "bullets": [
+      "what the work was",
+      "when you did it",
+      "how long it took"
+    ],
+    "explain": "and explain why you were proud of it.",
+    "part1": [
+      "Do you work hard?",
+      "Do you like receiving praise?",
+      "What motivates you?"
+    ],
+    "part3": [
+      "Why is recognition important at work?",
+      "Should employees be rewarded individually or as teams?",
+      "Does pride in work improve quality?",
+      "How do organisations measure good work?"
+    ]
+  },
+  {
+    "slug": "difficult-exam-you-prepared-for",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a difficult exam you prepared for",
+    "bullets": [
+      "what the exam was",
+      "how you prepared",
+      "how long you studied"
+    ],
+    "explain": "and explain how you felt afterwards.",
+    "part1": [
+      "Do you get nervous before exams?",
+      "How do you revise?",
+      "Are exams common in your country?"
+    ],
+    "part3": [
+      "Are exams a fair way to measure ability?",
+      "What are the alternatives to written exams?",
+      "How does exam pressure affect students' health?",
+      "Should students be tested less often?"
+    ]
+  },
+  {
+    "slug": "course-you-would-recommend",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a course you would recommend to others",
+    "bullets": [
+      "what the course was",
+      "who it is suitable for",
+      "what it covered"
+    ],
+    "explain": "and explain why you would recommend it.",
+    "part1": [
+      "Have you taken any courses recently?",
+      "Do you like studying online?",
+      "How do you choose what to study?"
+    ],
+    "part3": [
+      "How can students judge the quality of a course?",
+      "Should employers pay for staff training?",
+      "Are university degrees still worth the cost?",
+      "How will education change in the next twenty years?"
+    ]
+  },
+  {
+    "slug": "workplace-or-study-space-you-like",
+    "family": "work-study",
+    "difficulty": "easy",
+    "title": "Describe a workplace or study space that you like",
+    "bullets": [
+      "where it is",
+      "what it looks like",
+      "when you use it"
+    ],
+    "explain": "and explain why you work well there.",
+    "part1": [
+      "Where do you usually study?",
+      "Do you need silence to work?",
+      "Do you work better in the morning or evening?"
+    ],
+    "part3": [
+      "How does workplace design affect productivity?",
+      "Are open-plan offices a good idea?",
+      "Should companies let staff work from anywhere?",
+      "What will offices look like in the future?"
+    ]
+  },
+  {
+    "slug": "rule-at-school-or-work-you-agree-with",
+    "family": "work-study",
+    "difficulty": "hard",
+    "title": "Describe a rule at school or work that you agree with",
+    "bullets": [
+      "what the rule is",
+      "who made it",
+      "why it exists"
+    ],
+    "explain": "and explain why you think it is a good rule.",
+    "part1": [
+      "Were the rules strict at your school?",
+      "Do you follow rules easily?",
+      "Are there rules you dislike?"
+    ],
+    "part3": [
+      "Why do institutions need rules?",
+      "Should students help make school rules?",
+      "What happens when rules are not enforced?",
+      "How do rules differ between cultures?"
+    ]
+  },
+  {
+    "slug": "presentation-you-gave",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a presentation you gave",
+    "bullets": [
+      "what it was about",
+      "who the audience was",
+      "how you prepared"
+    ],
+    "explain": "and explain how it went.",
+    "part1": [
+      "Have you given a presentation?",
+      "Do you use slides?",
+      "Do you enjoy explaining things?"
+    ],
+    "part3": [
+      "What makes a presentation effective?",
+      "Do visual aids help or distract?",
+      "Should presenting be taught at school?",
+      "How has online presenting changed communication?"
+    ]
+  },
+  {
+    "slug": "time-you-had-to-meet-a-deadline",
+    "family": "work-study",
+    "difficulty": "hard",
+    "title": "Describe a time you had to meet a difficult deadline",
+    "bullets": [
+      "what the task was",
+      "how much time you had",
+      "how you organised yourself"
+    ],
+    "explain": "and explain whether you would work the same way again.",
+    "part1": [
+      "Do you plan your time carefully?",
+      "Do you leave things until the last minute?",
+      "Do you use a calendar?"
+    ],
+    "part3": [
+      "Do deadlines improve or damage the quality of work?",
+      "How can people manage their time better?",
+      "Why do people procrastinate?",
+      "Should workplaces set flexible deadlines?"
+    ]
+  },
+  {
+    "slug": "skill-useful-for-your-job-or-studies",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe a skill that is useful for your job or studies",
+    "bullets": [
+      "what the skill is",
+      "how you learned it",
+      "how you use it"
+    ],
+    "explain": "and explain why this skill matters so much.",
+    "part1": [
+      "What are you good at?",
+      "Do you learn quickly?",
+      "Have you learned anything new this year?"
+    ],
+    "part3": [
+      "Which skills will be most valuable in future?",
+      "Should schools teach practical workplace skills?",
+      "How do people keep their skills up to date?",
+      "Is experience more valuable than qualifications?"
+    ]
+  },
+  {
+    "slug": "career-respected-in-your-country",
+    "family": "work-study",
+    "difficulty": "hard",
+    "title": "Describe a career that is highly respected in your country",
+    "bullets": [
+      "what the career is",
+      "what people in it do",
+      "why it is respected"
+    ],
+    "explain": "and explain whether you think the respect is deserved.",
+    "part1": [
+      "What jobs do parents want for their children?",
+      "Are some jobs more respected than others?",
+      "Would you choose a job for status or enjoyment?"
+    ],
+    "part3": [
+      "Why does social status attach to certain professions?",
+      "Should salaries reflect a job's value to society?",
+      "How do attitudes to work differ between generations?",
+      "Can public opinion about a profession change quickly?"
+    ]
+  },
+  {
+    "slug": "interview-you-had-or-would-like",
+    "family": "work-study",
+    "difficulty": "medium",
+    "title": "Describe an interview you had or would like to have",
+    "bullets": [
+      "what the interview was for",
+      "how you prepared or would prepare",
+      "who interviewed you"
+    ],
+    "explain": "and explain what makes a good interview performance.",
+    "part1": [
+      "Have you had a job interview?",
+      "Do you get nervous in formal situations?",
+      "How do you make a good impression?"
+    ],
+    "part3": [
+      "Are interviews a reliable way to select staff?",
+      "What alternatives to interviews could employers use?",
+      "How can bias in hiring be reduced?",
+      "Should candidates be interviewed by machines?"
+    ]
+  },
+  {
+    "slug": "change-you-would-make-to-your-workplace",
+    "family": "work-study",
+    "difficulty": "hard",
+    "title": "Describe a change you would make to your school or workplace",
+    "bullets": [
+      "what you would change",
+      "why it needs changing",
+      "who it would affect"
+    ],
+    "explain": "and explain how you would make the change happen.",
+    "part1": [
+      "Is your school or workplace comfortable?",
+      "Would you change your working hours?",
+      "Do you give feedback to managers or teachers?"
+    ],
+    "part3": [
+      "Why do institutions change slowly?",
+      "Should employees have a say in company decisions?",
+      "How can leaders introduce change successfully?",
+      "Do young workers expect different things from employers?"
+    ]
+  },
+  {
+    "slug": "tool-that-helps-you-study",
+    "family": "work-study",
+    "difficulty": "easy",
+    "title": "Describe a book, app or tool that helps you study",
+    "bullets": [
+      "what it is",
+      "how you found it",
+      "how you use it"
+    ],
+    "explain": "and explain why it makes studying easier.",
+    "part1": [
+      "Do you use apps for studying?",
+      "Do you take notes by hand?",
+      "How long can you study without a break?"
+    ],
+    "part3": [
+      "Has technology made studying more effective?",
+      "Do digital notes work as well as handwritten ones?",
+      "Should schools provide devices for every student?",
+      "How can students avoid distraction while studying?"
+    ]
+  },
+  {
+    "slug": "job-that-will-disappear",
+    "family": "work-study",
+    "difficulty": "hard",
+    "title": "Describe a job you think will disappear in the future",
+    "bullets": [
+      "what the job is",
+      "what the work involves",
+      "why it may disappear"
+    ],
+    "explain": "and explain what those workers could do instead.",
+    "part1": [
+      "Do you use self-service machines?",
+      "Has technology changed your work or study?",
+      "Do you worry about the future of work?"
+    ],
+    "part3": [
+      "Which industries will automation change most?",
+      "Whose responsibility is retraining workers?",
+      "Will new technology create as many jobs as it removes?",
+      "How should societies prepare for these changes?"
+    ]
+  },
+  {
+    "slug": "app-you-use-every-day",
+    "family": "technology",
+    "difficulty": "easy",
+    "title": "Describe an app you use every day",
+    "bullets": [
+      "what the app is",
+      "what you use it for",
+      "how you found it"
+    ],
+    "explain": "and explain why it has become part of your routine.",
+    "part1": [
+      "How many apps do you have on your phone?",
+      "Which app do you use most?",
+      "Do you pay for apps?"
+    ],
+    "part3": [
+      "Why do a few apps dominate people's time?",
+      "Should app designers limit how addictive apps are?",
+      "How do apps change everyday habits?",
+      "Do people rely too heavily on their phones?"
+    ]
+  },
+  {
+    "slug": "device-you-would-like-to-replace",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a device you would like to replace",
+    "bullets": [
+      "what the device is",
+      "how long you have had it",
+      "what is wrong with it"
+    ],
+    "explain": "and explain what you would like to buy instead.",
+    "part1": [
+      "Do you buy new devices often?",
+      "What do you do with old electronics?",
+      "Do you repair broken devices?"
+    ],
+    "part3": [
+      "Why do electronic devices have such short lives?",
+      "Should manufacturers be responsible for recycling?",
+      "How serious is electronic waste?",
+      "Do people upgrade for need or for status?"
+    ]
+  },
+  {
+    "slug": "time-technology-stopped-working",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a time technology stopped working when you needed it",
+    "bullets": [
+      "what the technology was",
+      "what you needed it for",
+      "what went wrong"
+    ],
+    "explain": "and explain how you dealt with the situation.",
+    "part1": [
+      "Has your phone ever broken?",
+      "Do you back up your files?",
+      "Do you get frustrated with technology?"
+    ],
+    "part3": [
+      "How dependent are societies on technology working?",
+      "Should important services have non-digital alternatives?",
+      "Who should be responsible when systems fail?",
+      "How can people prepare for technology failures?"
+    ]
+  },
+  {
+    "slug": "online-service-that-saved-you-time",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe an online service that saved you time",
+    "bullets": [
+      "what the service is",
+      "what you used it for",
+      "how much time it saved"
+    ],
+    "explain": "and explain how you managed before it existed.",
+    "part1": [
+      "Do you do things online that you used to do in person?",
+      "Do you shop online?",
+      "Do you use online banking?"
+    ],
+    "part3": [
+      "Which services should stay available offline?",
+      "How has digital access changed public services?",
+      "Are older people excluded by online-only services?",
+      "Does saving time online create more free time?"
+    ]
+  },
+  {
+    "slug": "technology-older-people-find-difficult",
+    "family": "technology",
+    "difficulty": "hard",
+    "title": "Describe a piece of technology that older people find difficult to use",
+    "bullets": [
+      "what the technology is",
+      "who has difficulty with it",
+      "why it is difficult"
+    ],
+    "explain": "and explain how it could be made easier to use.",
+    "part1": [
+      "Do you help family members with technology?",
+      "Did you learn about computers at school?",
+      "Is technology easy for you to learn?"
+    ],
+    "part3": [
+      "How can technology be designed for all ages?",
+      "Should companies be required to offer simple alternatives?",
+      "Does the digital divide increase inequality?",
+      "How can older people be supported to learn new tools?"
+    ]
+  },
+  {
+    "slug": "video-call-that-was-important",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a video call that was important to you",
+    "bullets": [
+      "who you spoke to",
+      "when the call happened",
+      "what you talked about"
+    ],
+    "explain": "and explain why the call mattered.",
+    "part1": [
+      "Do you make video calls?",
+      "Who do you call most often?",
+      "Do you prefer calling or messaging?"
+    ],
+    "part3": [
+      "How has video calling changed relationships across distances?",
+      "Is online communication as meaningful as meeting in person?",
+      "Should families use technology to stay in contact more?",
+      "What is lost in a conversation on a screen?"
+    ]
+  },
+  {
+    "slug": "social-media-account-you-follow",
+    "family": "technology",
+    "difficulty": "easy",
+    "title": "Describe a social media account you follow",
+    "bullets": [
+      "whose account it is",
+      "what kind of content it posts",
+      "how often you look at it"
+    ],
+    "explain": "and explain why you follow it.",
+    "part1": [
+      "Do you use social media?",
+      "How much time do you spend on it?",
+      "Do you post your own content?"
+    ],
+    "part3": [
+      "Why do people follow strangers online?",
+      "Does social media affect self-image?",
+      "Should platforms be responsible for what is posted?",
+      "How has social media changed the news?"
+    ]
+  },
+  {
+    "slug": "computer-or-phone-problem-you-solved",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a computer or phone problem you solved yourself",
+    "bullets": [
+      "what the problem was",
+      "how you worked out the solution",
+      "how long it took"
+    ],
+    "explain": "and explain how you felt after solving it.",
+    "part1": [
+      "Are you good with technology?",
+      "Who helps you when your computer breaks?",
+      "Do you search online for solutions?"
+    ],
+    "part3": [
+      "Should basic technical skills be taught in schools?",
+      "Why do some people avoid trying to fix things themselves?",
+      "How useful are online communities for solving problems?",
+      "Are devices becoming harder to repair?"
+    ]
+  },
+  {
+    "slug": "technology-that-will-change-daily-life",
+    "family": "technology",
+    "difficulty": "hard",
+    "title": "Describe a technology you think will change daily life",
+    "bullets": [
+      "what the technology is",
+      "how it works",
+      "who will use it"
+    ],
+    "explain": "and explain how it might change the way people live.",
+    "part1": [
+      "Are you interested in new technology?",
+      "Do you read about science?",
+      "Do you like trying new gadgets?"
+    ],
+    "part3": [
+      "Do new technologies always improve life?",
+      "Who decides which technologies get developed?",
+      "How should governments regulate emerging technology?",
+      "Are people right to be cautious about rapid change?"
+    ]
+  },
+  {
+    "slug": "robot-or-automatic-machine",
+    "family": "technology",
+    "difficulty": "hard",
+    "title": "Describe a robot or automatic machine you have seen",
+    "bullets": [
+      "what it was",
+      "where you saw it",
+      "what it could do"
+    ],
+    "explain": "and explain what you thought of it.",
+    "part1": [
+      "Have you used a self-service checkout?",
+      "Would you like a robot at home?",
+      "Do machines make life easier?"
+    ],
+    "part3": [
+      "Which tasks should never be automated?",
+      "How will automation change employment?",
+      "Do people trust machines to make decisions?",
+      "Should robots be used in healthcare?"
+    ]
+  },
+  {
+    "slug": "online-class-or-meeting-you-joined",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe an online class or meeting you joined",
+    "bullets": [
+      "what it was for",
+      "how many people took part",
+      "what platform you used"
+    ],
+    "explain": "and explain how well it worked.",
+    "part1": [
+      "Have you studied online?",
+      "Is your internet fast enough?",
+      "Do you turn your camera on?"
+    ],
+    "part3": [
+      "What makes online learning effective?",
+      "Do students participate less online?",
+      "Will universities move most teaching online?",
+      "How can online groups build trust?"
+    ]
+  },
+  {
+    "slug": "app-or-game-popular-in-your-country",
+    "family": "technology",
+    "difficulty": "easy",
+    "title": "Describe an app or game that many people in your country use",
+    "bullets": [
+      "what it is",
+      "who uses it",
+      "what people do with it"
+    ],
+    "explain": "and explain why it became so popular.",
+    "part1": [
+      "Do you play games on your phone?",
+      "What is popular among your friends?",
+      "Do you follow technology trends?"
+    ],
+    "part3": [
+      "Why do certain apps spread so fast?",
+      "Do popular apps shape a country's culture?",
+      "Should governments regulate foreign apps?",
+      "How long do digital trends usually last?"
+    ]
+  },
+  {
+    "slug": "way-you-protect-your-information-online",
+    "family": "technology",
+    "difficulty": "hard",
+    "title": "Describe something you do to protect your personal information online",
+    "bullets": [
+      "what you do",
+      "why you started doing it",
+      "how difficult it is"
+    ],
+    "explain": "and explain how well you think it protects you.",
+    "part1": [
+      "Do you worry about privacy online?",
+      "Do you use different passwords?",
+      "Do you read terms and conditions?"
+    ],
+    "part3": [
+      "Do people care enough about online privacy?",
+      "Should companies be allowed to sell personal data?",
+      "How can governments protect citizens online?",
+      "Is total privacy possible in a connected world?"
+    ]
+  },
+  {
+    "slug": "equipment-you-use-for-a-hobby",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a piece of equipment you use for a hobby",
+    "bullets": [
+      "what the equipment is",
+      "how you got it",
+      "how often you use it"
+    ],
+    "explain": "and explain how it improves what you do.",
+    "part1": [
+      "Do your hobbies need special equipment?",
+      "Do you look after your things carefully?",
+      "Do you buy new or used equipment?"
+    ],
+    "part3": [
+      "Does better equipment make people better at an activity?",
+      "Why do some hobbies require expensive gear?",
+      "Should equipment be shared or rented?",
+      "How does technology change traditional pastimes?"
+    ]
+  },
+  {
+    "slug": "invention-you-think-is-important",
+    "family": "technology",
+    "difficulty": "hard",
+    "title": "Describe an invention you think is important",
+    "bullets": [
+      "what the invention is",
+      "when it was invented",
+      "what problem it solved"
+    ],
+    "explain": "and explain why you consider it so important.",
+    "part1": [
+      "Are you interested in how things work?",
+      "Did you like science at school?",
+      "What machine could you not live without?"
+    ],
+    "part3": [
+      "What makes an invention truly important?",
+      "Should inventors be able to own their ideas for a long time?",
+      "Do inventions come from individuals or teams?",
+      "How do inventions change society unexpectedly?"
+    ]
+  },
+  {
+    "slug": "time-you-spent-too-long-on-your-phone",
+    "family": "technology",
+    "difficulty": "medium",
+    "title": "Describe a time you spent too long on your phone",
+    "bullets": [
+      "when it happened",
+      "what you were doing",
+      "how long it lasted"
+    ],
+    "explain": "and explain how you felt about it afterwards.",
+    "part1": [
+      "How often do you check your phone?",
+      "Do you use your phone before bed?",
+      "Have you tried using it less?"
+    ],
+    "part3": [
+      "Why are phones so difficult to put down?",
+      "Should schools ban phones?",
+      "How does screen time affect sleep and mood?",
+      "Can people realistically disconnect today?"
+    ]
+  },
+  {
+    "slug": "tree-or-plant-common-in-your-country",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe a tree or plant that is common in your country",
+    "bullets": [
+      "what it is",
+      "where it grows",
+      "what it looks like"
+    ],
+    "explain": "and explain why it is important to people there.",
+    "part1": [
+      "Do you have plants at home?",
+      "Are there many trees where you live?",
+      "Do you enjoy gardening?"
+    ],
+    "part3": [
+      "Why should cities plant more trees?",
+      "How do plants affect people's mood?",
+      "Should there be laws protecting old trees?",
+      "What happens when native plants disappear?"
+    ]
+  },
+  {
+    "slug": "animal-you-find-interesting",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe an animal you find interesting",
+    "bullets": [
+      "what the animal is",
+      "where it lives",
+      "what it does"
+    ],
+    "explain": "and explain why you find it interesting.",
+    "part1": [
+      "Do you like animals?",
+      "Do you have a pet?",
+      "Are pets popular in your country?"
+    ],
+    "part3": [
+      "Why do people keep pets?",
+      "Should zoos continue to exist?",
+      "How can endangered species be protected?",
+      "Do humans have a duty to protect wildlife?"
+    ]
+  },
+  {
+    "slug": "green-space-you-like",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe a green space you like in your city",
+    "bullets": [
+      "where it is",
+      "what it looks like",
+      "who uses it"
+    ],
+    "explain": "and explain why it matters to the people who live nearby.",
+    "part1": [
+      "Do you spend time in nature?",
+      "Is your city green?",
+      "Where do children play near your home?"
+    ],
+    "part3": [
+      "How much green space should cities provide?",
+      "Do green areas increase property prices unfairly?",
+      "How does nature affect mental health?",
+      "Should new buildings include gardens or roofs with plants?"
+    ]
+  },
+  {
+    "slug": "day-when-weather-was-unusual",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe a day when the weather was unusual",
+    "bullets": [
+      "what the weather was like",
+      "when it happened",
+      "where you were"
+    ],
+    "explain": "and explain how it affected what people did.",
+    "part1": [
+      "What is the weather like in your country?",
+      "Do you check the forecast?",
+      "What is your favourite kind of weather?"
+    ],
+    "part3": [
+      "How does weather affect people's behaviour?",
+      "Are extreme weather events becoming more common?",
+      "How should cities prepare for extreme weather?",
+      "Can forecasting reduce the damage from storms?"
+    ]
+  },
+  {
+    "slug": "environmental-problem-in-your-area",
+    "family": "nature",
+    "difficulty": "hard",
+    "title": "Describe an environmental problem in your area",
+    "bullets": [
+      "what the problem is",
+      "what causes it",
+      "who is affected"
+    ],
+    "explain": "and explain what could be done about it.",
+    "part1": [
+      "Do you recycle?",
+      "Is pollution a problem where you live?",
+      "Do you use public transport?"
+    ],
+    "part3": [
+      "Should individuals or governments lead on environmental action?",
+      "Do environmental taxes work?",
+      "How can businesses be persuaded to pollute less?",
+      "Is economic growth compatible with protecting nature?"
+    ]
+  },
+  {
+    "slug": "place-to-see-wild-animals-or-birds",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe a place where you can see wild animals or birds",
+    "bullets": [
+      "where the place is",
+      "what animals live there",
+      "when you visited or would visit"
+    ],
+    "explain": "and explain why places like this should be protected.",
+    "part1": [
+      "Do you watch birds?",
+      "Have you seen wild animals?",
+      "Do you like nature programmes?"
+    ],
+    "part3": [
+      "How does tourism affect wildlife areas?",
+      "Should some natural areas be closed to visitors?",
+      "Who should pay to protect wild habitats?",
+      "Can people and wildlife share the same spaces?"
+    ]
+  },
+  {
+    "slug": "mountain-or-hill-you-have-seen",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe a mountain or hill you have seen or climbed",
+    "bullets": [
+      "where it is",
+      "what it looks like",
+      "when you saw it"
+    ],
+    "explain": "and explain what impression it made on you.",
+    "part1": [
+      "Do you like walking in the countryside?",
+      "Are there mountains in your country?",
+      "Do you prefer the mountains or the coast?"
+    ],
+    "part3": [
+      "Why are people drawn to challenging landscapes?",
+      "Should dangerous climbing routes be restricted?",
+      "How does mountain tourism affect local communities?",
+      "Can natural landscapes be protected from development?"
+    ]
+  },
+  {
+    "slug": "beach-you-have-visited",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe a beach you have visited",
+    "bullets": [
+      "where the beach was",
+      "who you went with",
+      "what you did there"
+    ],
+    "explain": "and explain what you remember most about it.",
+    "part1": [
+      "Do you like the sea?",
+      "Can you swim?",
+      "Do people take beach holidays in your country?"
+    ],
+    "part3": [
+      "How does tourism damage coastlines?",
+      "Should beaches be free for everyone to use?",
+      "What can be done about plastic in the oceans?",
+      "How do rising sea levels affect coastal towns?"
+    ]
+  },
+  {
+    "slug": "something-you-do-to-protect-environment",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe something you do to protect the environment",
+    "bullets": [
+      "what you do",
+      "when you started",
+      "how difficult it is"
+    ],
+    "explain": "and explain whether you think it makes a real difference.",
+    "part1": [
+      "Do you separate your rubbish?",
+      "Do you save water or electricity?",
+      "Do you use reusable bags?"
+    ],
+    "part3": [
+      "Do small individual actions matter?",
+      "How can people be encouraged to change habits?",
+      "Should environmental education start in primary school?",
+      "Who is most responsible for climate change?"
+    ]
+  },
+  {
+    "slug": "season-you-enjoy-most",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe the season you enjoy most",
+    "bullets": [
+      "which season it is",
+      "what the weather is like",
+      "what you do during it"
+    ],
+    "explain": "and explain why you prefer this season.",
+    "part1": [
+      "How many seasons are there in your country?",
+      "Do you prefer hot or cold weather?",
+      "Does the weather affect your mood?"
+    ],
+    "part3": [
+      "How do seasons shape culture and traditions?",
+      "Are seasons becoming less predictable?",
+      "How does climate affect what people eat?",
+      "Do people in hot and cold countries live differently?"
+    ]
+  },
+  {
+    "slug": "nature-reserve-you-would-like-to-visit",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe a nature reserve you would like to visit",
+    "bullets": [
+      "where it is",
+      "what you know about it",
+      "what you would do there"
+    ],
+    "explain": "and explain why you would like to go.",
+    "part1": [
+      "Have you visited a national park?",
+      "Do you like camping?",
+      "Do you take photos of nature?"
+    ],
+    "part3": [
+      "Should visitor numbers to natural areas be limited?",
+      "How can protected areas fund themselves?",
+      "Do people value nature more after visiting it?",
+      "Should wild areas be left completely untouched?"
+    ]
+  },
+  {
+    "slug": "bird-or-insect-common-where-you-live",
+    "family": "nature",
+    "difficulty": "medium",
+    "title": "Describe a bird or insect that is common where you live",
+    "bullets": [
+      "what it is",
+      "where you usually see it",
+      "what it does"
+    ],
+    "explain": "and explain why it matters to the local environment.",
+    "part1": [
+      "Do you notice wildlife in your city?",
+      "Are there many birds where you live?",
+      "Do you like insects?"
+    ],
+    "part3": [
+      "Why are insect populations falling?",
+      "How do small species affect whole ecosystems?",
+      "Should cities be designed for wildlife too?",
+      "How can ordinary people help scientists record nature?"
+    ]
+  },
+  {
+    "slug": "walk-in-the-countryside",
+    "family": "nature",
+    "difficulty": "easy",
+    "title": "Describe a walk in the countryside you remember",
+    "bullets": [
+      "where you walked",
+      "who you were with",
+      "what you saw"
+    ],
+    "explain": "and explain why you remember it.",
+    "part1": [
+      "Do you walk for exercise?",
+      "Do you live near the countryside?",
+      "How often do you leave the city?"
+    ],
+    "part3": [
+      "Why do people find walking in nature restorative?",
+      "Should there be a public right to walk on private land?",
+      "How can rural paths be maintained?",
+      "Does countryside access differ by income?"
+    ]
+  },
+  {
+    "slug": "natural-material-used-in-your-country",
+    "family": "nature",
+    "difficulty": "hard",
+    "title": "Describe a natural material that is widely used in your country",
+    "bullets": [
+      "what the material is",
+      "where it comes from",
+      "what it is used for"
+    ],
+    "explain": "and explain why it is used so widely.",
+    "part1": [
+      "Are things made locally where you live?",
+      "Do you prefer wooden or plastic furniture?",
+      "Do you buy local products?"
+    ],
+    "part3": [
+      "Should natural materials replace synthetic ones?",
+      "How can resources be used sustainably?",
+      "Do traditional building materials suit modern life?",
+      "What happens when a country depends on one resource?"
+    ]
+  },
+  {
+    "slug": "environmental-rule-you-agree-with",
+    "family": "nature",
+    "difficulty": "hard",
+    "title": "Describe an environmental rule or law you agree with",
+    "bullets": [
+      "what the rule is",
+      "who it applies to",
+      "why it was introduced"
+    ],
+    "explain": "and explain why you think it is a good rule.",
+    "part1": [
+      "Are there recycling rules where you live?",
+      "Do people follow them?",
+      "Do you think rules change behaviour?"
+    ],
+    "part3": [
+      "Are laws or education more effective for the environment?",
+      "Should polluters pay higher taxes?",
+      "How can international environmental rules be enforced?",
+      "Do restrictions limit personal freedom too much?"
+    ]
+  },
+  {
+    "slug": "change-in-the-environment-you-noticed",
+    "family": "nature",
+    "difficulty": "hard",
+    "title": "Describe a change in the environment you have noticed",
+    "bullets": [
+      "what the change is",
+      "when you first noticed it",
+      "what caused it"
+    ],
+    "explain": "and explain how it has affected people around you.",
+    "part1": [
+      "Has the weather changed in your lifetime?",
+      "Is your city cleaner than before?",
+      "Do you talk about the environment with friends?"
+    ],
+    "part3": [
+      "Why do people underestimate slow environmental change?",
+      "How can scientists communicate risk clearly?",
+      "Should schools teach climate science?",
+      "What responsibilities do rich countries have?"
+    ]
+  },
+  {
+    "slug": "meal-you-cooked-for-others",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a meal you cooked for other people",
+    "bullets": [
+      "what you cooked",
+      "who you cooked it for",
+      "how you prepared it"
+    ],
+    "explain": "and explain how the meal turned out.",
+    "part1": [
+      "Do you like cooking?",
+      "Who cooks in your home?",
+      "Did you learn to cook from your family?"
+    ],
+    "part3": [
+      "Why do fewer people cook from scratch today?",
+      "Should cooking be taught in schools?",
+      "How do shared meals affect relationships?",
+      "Is convenience food a serious health problem?"
+    ]
+  },
+  {
+    "slug": "restaurant-meal-that-disappointed-you",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a restaurant meal that disappointed you",
+    "bullets": [
+      "where you ate",
+      "what you ordered",
+      "what went wrong"
+    ],
+    "explain": "and explain what you did about it.",
+    "part1": [
+      "Do you eat out often?",
+      "How do you choose a restaurant?",
+      "Do you read reviews?"
+    ],
+    "part3": [
+      "How much do online reviews affect restaurants?",
+      "Should customers complain more or less?",
+      "Why do standards vary so widely?",
+      "Are people too quick to criticise online?"
+    ]
+  },
+  {
+    "slug": "snack-you-often-eat",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a snack you often eat",
+    "bullets": [
+      "what it is",
+      "when you eat it",
+      "where you buy it"
+    ],
+    "explain": "and explain why you like it.",
+    "part1": [
+      "Do you eat between meals?",
+      "Are snacks popular in your country?",
+      "Do you check food labels?"
+    ],
+    "part3": [
+      "Why has snacking increased in recent decades?",
+      "Should unhealthy snacks be taxed?",
+      "How does advertising affect what children eat?",
+      "Can eating habits be changed at a national level?"
+    ]
+  },
+  {
+    "slug": "drink-you-enjoy",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a drink you enjoy",
+    "bullets": [
+      "what the drink is",
+      "when you drink it",
+      "how it is made"
+    ],
+    "explain": "and explain why you like it.",
+    "part1": [
+      "What do you drink with meals?",
+      "Do you drink tea or coffee?",
+      "Do you drink enough water?"
+    ],
+    "part3": [
+      "Why do hot drinks matter socially in many cultures?",
+      "Should sugary drinks be restricted?",
+      "How do drinking customs differ between countries?",
+      "Has the coffee industry changed local habits?"
+    ]
+  },
+  {
+    "slug": "food-you-disliked-as-a-child",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a food you disliked as a child but like now",
+    "bullets": [
+      "what the food is",
+      "why you disliked it",
+      "when your opinion changed"
+    ],
+    "explain": "and explain why your taste changed.",
+    "part1": [
+      "Were you a fussy eater?",
+      "Do your tastes change often?",
+      "What food do you refuse to eat?"
+    ],
+    "part3": [
+      "Why do tastes change as people grow older?",
+      "How should parents introduce new foods to children?",
+      "Are food preferences cultural or personal?",
+      "Do people become more adventurous with age?"
+    ]
+  },
+  {
+    "slug": "traditional-food-from-your-region",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a traditional food from your region",
+    "bullets": [
+      "what the dish is",
+      "what ingredients it uses",
+      "when people eat it"
+    ],
+    "explain": "and explain what it says about your region.",
+    "part1": [
+      "What food is your country known for?",
+      "Do you eat traditional food often?",
+      "Do you cook traditional dishes?"
+    ],
+    "part3": [
+      "Why is traditional food important to identity?",
+      "Is global food culture replacing local cooking?",
+      "Should traditional recipes be recorded and protected?",
+      "How does migration change a country's cuisine?"
+    ]
+  },
+  {
+    "slug": "place-where-you-buy-fresh-food",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a place where you buy fresh food",
+    "bullets": [
+      "where it is",
+      "what it sells",
+      "how often you go"
+    ],
+    "explain": "and explain why you shop there.",
+    "part1": [
+      "Who does the food shopping in your home?",
+      "Do you plan meals in advance?",
+      "Do you buy fresh or frozen food?"
+    ],
+    "part3": [
+      "Should food be sourced locally?",
+      "How do supermarkets affect small food producers?",
+      "Is fresh food affordable for everyone?",
+      "How can food waste be reduced?"
+    ]
+  },
+  {
+    "slug": "recipe-you-would-like-to-learn",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a recipe you would like to learn",
+    "bullets": [
+      "what the dish is",
+      "where it comes from",
+      "who could teach you"
+    ],
+    "explain": "and explain why you want to learn to make it.",
+    "part1": [
+      "Do you follow recipes?",
+      "Do you watch cooking videos?",
+      "Would you like to cook better?"
+    ],
+    "part3": [
+      "Why are cooking programmes so popular?",
+      "Are recipes passed down less than before?",
+      "Does cooking well save money?",
+      "Should everyone learn basic cooking skills?"
+    ]
+  },
+  {
+    "slug": "meal-you-eat-with-your-family",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a meal you often eat with your family",
+    "bullets": [
+      "what you eat",
+      "when you eat it",
+      "who is usually there"
+    ],
+    "explain": "and explain why this meal is important to your family.",
+    "part1": [
+      "Do you eat together as a family?",
+      "What time do people eat dinner in your country?",
+      "Do you watch TV while eating?"
+    ],
+    "part3": [
+      "Why are family mealtimes declining?",
+      "How do shared meals affect children?",
+      "Should workplaces give longer lunch breaks?",
+      "How do eating times differ between cultures?"
+    ]
+  },
+  {
+    "slug": "food-that-is-healthy-and-popular",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a food that is both healthy and popular in your country",
+    "bullets": [
+      "what the food is",
+      "how it is eaten",
+      "who eats it"
+    ],
+    "explain": "and explain why it is good for people.",
+    "part1": [
+      "Do you eat healthily?",
+      "Do you eat fruit and vegetables every day?",
+      "Has your diet changed recently?"
+    ],
+    "part3": [
+      "Why is healthy food sometimes more expensive?",
+      "Should governments promote particular diets?",
+      "How reliable is nutrition advice in the media?",
+      "Can national eating habits be changed?"
+    ]
+  },
+  {
+    "slug": "unusual-food-you-have-tried",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe an unusual food you have tried",
+    "bullets": [
+      "what it was",
+      "where you tried it",
+      "what it tasted like"
+    ],
+    "explain": "and explain whether you would eat it again.",
+    "part1": [
+      "Do you like trying new foods?",
+      "Have you eaten food from other countries?",
+      "Are you a picky eater?"
+    ],
+    "part3": [
+      "Why are some foods considered strange in one culture and normal in another?",
+      "Should people try foods from other cultures?",
+      "How do travel and migration change diets?",
+      "Will people eat different protein sources in future?"
+    ]
+  },
+  {
+    "slug": "time-you-ate-outdoors",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a time you ate a meal outdoors",
+    "bullets": [
+      "where you were",
+      "who you were with",
+      "what you ate"
+    ],
+    "explain": "and explain why you enjoyed it.",
+    "part1": [
+      "Do you have picnics?",
+      "Do you like eating outside?",
+      "Is street food common in your country?"
+    ],
+    "part3": [
+      "Why do people enjoy eating outdoors?",
+      "How does street food shape city life?",
+      "Should outdoor food stalls be regulated?",
+      "Do outdoor meals bring communities together?"
+    ]
+  },
+  {
+    "slug": "fruit-or-vegetable-grown-in-your-country",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a fruit or vegetable that grows in your country",
+    "bullets": [
+      "what it is",
+      "when it is harvested",
+      "how people eat it"
+    ],
+    "explain": "and explain why it is important locally.",
+    "part1": [
+      "Do you eat much fruit?",
+      "Do you grow anything at home?",
+      "Do you buy seasonal produce?"
+    ],
+    "part3": [
+      "Should people eat food that is in season?",
+      "How does importing food affect the environment?",
+      "Can countries grow enough food for themselves?",
+      "What role should farmers have in food policy?"
+    ]
+  },
+  {
+    "slug": "dessert-people-enjoy-in-your-country",
+    "family": "food",
+    "difficulty": "easy",
+    "title": "Describe a dessert people enjoy in your country",
+    "bullets": [
+      "what the dessert is",
+      "when people eat it",
+      "what it is made from"
+    ],
+    "explain": "and explain why it is so popular.",
+    "part1": [
+      "Do you like sweet food?",
+      "Do you eat dessert after meals?",
+      "Can you bake?"
+    ],
+    "part3": [
+      "Why do sweet foods play a role in celebrations?",
+      "Should sugar be limited in processed food?",
+      "How do dessert traditions differ around the world?",
+      "Are traditional sweets losing popularity?"
+    ]
+  },
+  {
+    "slug": "cooking-method-you-use-often",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a cooking method you use often",
+    "bullets": [
+      "what the method is",
+      "what you cook with it",
+      "how you learned it"
+    ],
+    "explain": "and explain why you prefer this method.",
+    "part1": [
+      "Do you cook every day?",
+      "Do you use a lot of kitchen equipment?",
+      "Do you prefer quick or slow cooking?"
+    ],
+    "part3": [
+      "How has kitchen technology changed cooking?",
+      "Do people have less time to cook now?",
+      "Does the way food is cooked affect health?",
+      "Are traditional cooking methods worth preserving?"
+    ]
+  },
+  {
+    "slug": "time-you-tried-food-from-another-country",
+    "family": "food",
+    "difficulty": "medium",
+    "title": "Describe a time you tried food from another country",
+    "bullets": [
+      "what the food was",
+      "where you tried it",
+      "who you were with"
+    ],
+    "explain": "and explain what you thought of it.",
+    "part1": [
+      "Are foreign restaurants common where you live?",
+      "What foreign food do you like?",
+      "Do you cook food from other countries?"
+    ],
+    "part3": [
+      "Why do some cuisines travel better than others?",
+      "Does international food replace local dishes?",
+      "How does food help people understand other cultures?",
+      "Should restaurants adapt dishes to local tastes?"
+    ]
+  },
+  {
+    "slug": "trip-you-took-by-train",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a trip you took by train",
+    "bullets": [
+      "where you went",
+      "who you travelled with",
+      "what the journey was like"
+    ],
+    "explain": "and explain what you liked or disliked about travelling this way.",
+    "part1": [
+      "Do you travel by train?",
+      "Is public transport good where you live?",
+      "Do you enjoy long journeys?"
+    ],
+    "part3": [
+      "Should governments invest more in rail?",
+      "Why do people choose planes over trains?",
+      "How can public transport reduce pollution?",
+      "Will high-speed rail change how people live and work?"
+    ]
+  },
+  {
+    "slug": "public-transport-you-use-often",
+    "family": "travel",
+    "difficulty": "easy",
+    "title": "Describe a form of public transport you use often",
+    "bullets": [
+      "what it is",
+      "where you go on it",
+      "how much it costs"
+    ],
+    "explain": "and explain what could be improved about it.",
+    "part1": [
+      "How do you get to work or school?",
+      "Do you have a driving licence?",
+      "Is traffic bad in your city?"
+    ],
+    "part3": [
+      "Should public transport be free?",
+      "How can cities reduce car use?",
+      "Why do some people avoid public transport?",
+      "What will urban transport look like in twenty years?"
+    ]
+  },
+  {
+    "slug": "airport-or-station-you-have-been-to",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe an airport or station you have been to",
+    "bullets": [
+      "where it was",
+      "why you were there",
+      "what it was like"
+    ],
+    "explain": "and explain what impression it gave you of the place.",
+    "part1": [
+      "Do you like flying?",
+      "How do you spend time while waiting to travel?",
+      "Do you travel with much luggage?"
+    ],
+    "part3": [
+      "Why do transport hubs matter to a city's image?",
+      "How can waiting time be made more pleasant?",
+      "Should air travel be more expensive to reduce emissions?",
+      "How has security changed the experience of travel?"
+    ]
+  },
+  {
+    "slug": "holiday-that-did-not-go-as-planned",
+    "family": "travel",
+    "difficulty": "hard",
+    "title": "Describe a holiday that did not go as planned",
+    "bullets": [
+      "where you went",
+      "what you had planned",
+      "what went wrong"
+    ],
+    "explain": "and explain how you dealt with the situation.",
+    "part1": [
+      "Do you plan holidays carefully?",
+      "Do you prefer package tours or independent travel?",
+      "Where did you last travel?"
+    ],
+    "part3": [
+      "Why do people remember difficult trips so vividly?",
+      "Should travellers buy insurance?",
+      "How do unexpected problems affect future travel choices?",
+      "Is planning or flexibility more important when travelling?"
+    ]
+  },
+  {
+    "slug": "short-trip-near-your-home",
+    "family": "travel",
+    "difficulty": "easy",
+    "title": "Describe a short trip you took near your home",
+    "bullets": [
+      "where you went",
+      "how you got there",
+      "who went with you"
+    ],
+    "explain": "and explain why you enjoyed it.",
+    "part1": [
+      "Do you take day trips?",
+      "Do you explore your own region?",
+      "Do you prefer short or long holidays?"
+    ],
+    "part3": [
+      "Why is local tourism becoming more popular?",
+      "Do people appreciate places close to home enough?",
+      "How can regions attract domestic visitors?",
+      "Are short breaks better than long holidays?"
+    ]
+  },
+  {
+    "slug": "place-you-have-visited-more-than-once",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a place you have visited more than once",
+    "bullets": [
+      "where it is",
+      "how many times you have been",
+      "what you do there"
+    ],
+    "explain": "and explain why you keep going back.",
+    "part1": [
+      "Do you return to the same holiday places?",
+      "Do you like surprises when travelling?",
+      "Who do you travel with?"
+    ],
+    "part3": [
+      "Why do people return to familiar destinations?",
+      "Does repeat tourism help local economies?",
+      "How does a place change between visits?",
+      "Is travelling to new places always better?"
+    ]
+  },
+  {
+    "slug": "hotel-or-place-you-stayed-in",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a hotel or other place you stayed in",
+    "bullets": [
+      "where it was",
+      "what the room was like",
+      "how long you stayed"
+    ],
+    "explain": "and explain what made the stay good or bad.",
+    "part1": [
+      "Have you stayed in a hotel?",
+      "What do you look for in accommodation?",
+      "Do you book online?"
+    ],
+    "part3": [
+      "How has home-sharing changed the accommodation industry?",
+      "Should tourist accommodation be limited in busy cities?",
+      "What makes travellers loyal to a hotel?",
+      "How does tourism affect housing for residents?"
+    ]
+  },
+  {
+    "slug": "something-you-always-pack",
+    "family": "travel",
+    "difficulty": "easy",
+    "title": "Describe something you always pack when you travel",
+    "bullets": [
+      "what it is",
+      "why you take it",
+      "how long you have taken it with you"
+    ],
+    "explain": "and explain what would happen if you forgot it.",
+    "part1": [
+      "Do you pack in advance?",
+      "Do you travel light?",
+      "Have you ever lost luggage?"
+    ],
+    "part3": [
+      "Why do people over-pack for trips?",
+      "How have airline rules changed how people travel?",
+      "Do travellers need less than they think?",
+      "How does packing reflect personality?"
+    ]
+  },
+  {
+    "slug": "journey-you-make-regularly",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a journey you make regularly",
+    "bullets": [
+      "where you travel to",
+      "how long it takes",
+      "how you travel"
+    ],
+    "explain": "and explain how you feel about making it so often.",
+    "part1": [
+      "How long is your daily journey?",
+      "Do you listen to anything while travelling?",
+      "Would you like to live closer to work?"
+    ],
+    "part3": [
+      "How does commuting affect quality of life?",
+      "Should employers reduce the need to commute?",
+      "Why do people accept long journeys to work?",
+      "How could cities shorten daily travel?"
+    ]
+  },
+  {
+    "slug": "traffic-problem-in-your-city",
+    "family": "travel",
+    "difficulty": "hard",
+    "title": "Describe a traffic problem in your city",
+    "bullets": [
+      "what the problem is",
+      "where it happens",
+      "who it affects"
+    ],
+    "explain": "and explain what could be done to solve it.",
+    "part1": [
+      "Is there a lot of traffic where you live?",
+      "Do you drive?",
+      "How could transport improve in your city?"
+    ],
+    "part3": [
+      "Should city centres charge drivers?",
+      "Why do road improvements often fail to reduce congestion?",
+      "How do cycling networks change city travel?",
+      "Will self-driving vehicles reduce traffic?"
+    ]
+  },
+  {
+    "slug": "cycling-or-walking-route-you-like",
+    "family": "travel",
+    "difficulty": "easy",
+    "title": "Describe a cycling or walking route you like",
+    "bullets": [
+      "where the route goes",
+      "how long it takes",
+      "when you use it"
+    ],
+    "explain": "and explain why you prefer this route.",
+    "part1": [
+      "Do you cycle?",
+      "Is cycling safe where you live?",
+      "Do you walk to nearby places?"
+    ],
+    "part3": [
+      "How can cities encourage cycling?",
+      "Should roads be redesigned for bicycles?",
+      "Why is cycling more common in some countries?",
+      "What stops people from walking short distances?"
+    ]
+  },
+  {
+    "slug": "foreign-city-you-would-like-to-live-in",
+    "family": "travel",
+    "difficulty": "hard",
+    "title": "Describe a foreign city you would like to live in",
+    "bullets": [
+      "which city it is",
+      "what you know about it",
+      "how you learned about it"
+    ],
+    "explain": "and explain why you would like to live there.",
+    "part1": [
+      "Would you like to live abroad?",
+      "Have you travelled to other countries?",
+      "Do you know people living overseas?"
+    ],
+    "part3": [
+      "Why do people move to other countries?",
+      "What difficulties do newcomers face?",
+      "How does migration benefit cities?",
+      "Should countries make it easier for workers to move?"
+    ]
+  },
+  {
+    "slug": "trip-with-your-family-as-a-child",
+    "family": "travel",
+    "difficulty": "easy",
+    "title": "Describe a trip you took with your family as a child",
+    "bullets": [
+      "where you went",
+      "who went with you",
+      "what you did"
+    ],
+    "explain": "and explain why you still remember it.",
+    "part1": [
+      "Did your family travel when you were young?",
+      "Where did you go on holiday as a child?",
+      "Do you take photos when travelling?"
+    ],
+    "part3": [
+      "Why do childhood holidays stay in the memory?",
+      "Do family trips help children learn?",
+      "How has family travel changed?",
+      "Should schools organise trips abroad?"
+    ]
+  },
+  {
+    "slug": "travel-plan-you-had-to-cancel",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a travel plan you had to cancel",
+    "bullets": [
+      "where you were going",
+      "when you planned to go",
+      "why you cancelled"
+    ],
+    "explain": "and explain how you felt about it.",
+    "part1": [
+      "Do your plans change often?",
+      "Do you book trips far in advance?",
+      "How do you deal with disappointment?"
+    ],
+    "part3": [
+      "How should companies handle cancellations?",
+      "Has travel become less predictable?",
+      "Do people plan differently after a cancelled trip?",
+      "Should travel insurance be compulsory?"
+    ]
+  },
+  {
+    "slug": "guide-or-map-that-helped-you",
+    "family": "travel",
+    "difficulty": "medium",
+    "title": "Describe a guide or map that helped you",
+    "bullets": [
+      "what it was",
+      "when you used it",
+      "where you were"
+    ],
+    "explain": "and explain how useful it was.",
+    "part1": [
+      "Do you use paper maps?",
+      "Do you like guided tours?",
+      "How do you find your way in a new city?"
+    ],
+    "part3": [
+      "Are guidebooks still useful?",
+      "How has technology changed the way tourists explore?",
+      "Do human guides offer something apps cannot?",
+      "Should tourists be guided away from crowded sites?"
+    ]
+  },
+  {
+    "slug": "road-or-bridge-important-in-your-area",
+    "family": "travel",
+    "difficulty": "hard",
+    "title": "Describe a road or bridge that is important in your area",
+    "bullets": [
+      "what it is",
+      "where it goes",
+      "when it was built"
+    ],
+    "explain": "and explain why it matters to local people.",
+    "part1": [
+      "Is it easy to travel around your area?",
+      "Are there new roads being built?",
+      "Do you travel between cities often?"
+    ],
+    "part3": [
+      "How does transport infrastructure change a region?",
+      "Who should pay for major transport projects?",
+      "Do new roads encourage more traffic?",
+      "How should countries choose between road and rail?"
+    ]
+  },
+  {
+    "slug": "way-you-keep-fit",
+    "family": "health",
+    "difficulty": "easy",
+    "title": "Describe a way you keep fit",
+    "bullets": [
+      "what you do",
+      "how often you do it",
+      "where you do it"
+    ],
+    "explain": "and explain why this suits you better than other kinds of exercise.",
+    "part1": [
+      "Do you exercise regularly?",
+      "What sport did you do at school?",
+      "Do you prefer exercising indoors or outdoors?"
+    ],
+    "part3": [
+      "Why do many adults stop exercising?",
+      "Should employers give staff time to exercise?",
+      "How can governments encourage active lifestyles?",
+      "Is organised sport better than informal exercise?"
+    ]
+  },
+  {
+    "slug": "healthy-habit-you-would-like-to-start",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a healthy habit you would like to start",
+    "bullets": [
+      "what the habit is",
+      "why you want to start it",
+      "when you would do it"
+    ],
+    "explain": "and explain what has stopped you so far.",
+    "part1": [
+      "Do you have a healthy lifestyle?",
+      "Do you sleep well?",
+      "Have you changed any habits this year?"
+    ],
+    "part3": [
+      "Why is it hard to keep new habits?",
+      "Do health campaigns actually change behaviour?",
+      "Should schools teach students about health?",
+      "How much responsibility should individuals take for their own health?"
+    ]
+  },
+  {
+    "slug": "time-you-were-ill-and-had-to-rest",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a time you were ill and had to rest",
+    "bullets": [
+      "when it happened",
+      "what was wrong",
+      "how long you rested"
+    ],
+    "explain": "and explain what you learned about looking after yourself.",
+    "part1": [
+      "Do you take days off when you are ill?",
+      "Do you visit the doctor often?",
+      "How do you look after yourself in winter?"
+    ],
+    "part3": [
+      "Do people work when they should rest? Why?",
+      "Should employers offer more sick leave?",
+      "How has attitude to illness at work changed?",
+      "How can healthcare systems reduce pressure on hospitals?"
+    ]
+  },
+  {
+    "slug": "sport-that-is-good-for-health",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a sport that is good for health",
+    "bullets": [
+      "what the sport is",
+      "who can do it",
+      "what equipment it needs"
+    ],
+    "explain": "and explain why it is particularly good for people.",
+    "part1": [
+      "Do you watch sport?",
+      "Is swimming popular in your country?",
+      "Did you learn a sport as a child?"
+    ],
+    "part3": [
+      "Should sport facilities be free for young people?",
+      "Why do participation rates fall after school?",
+      "Is competitive sport good for health?",
+      "How can communities make exercise accessible?"
+    ]
+  },
+  {
+    "slug": "change-you-made-to-your-diet",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a change you made to your diet",
+    "bullets": [
+      "what you changed",
+      "when you changed it",
+      "why you decided to change"
+    ],
+    "explain": "and explain what difference it made.",
+    "part1": [
+      "Do you eat a balanced diet?",
+      "Do you cook at home?",
+      "Has your diet changed since childhood?"
+    ],
+    "part3": [
+      "Why do diets vary so much between countries?",
+      "Should governments regulate food advertising?",
+      "Is nutrition information easy to understand?",
+      "How does income affect what people eat?"
+    ]
+  },
+  {
+    "slug": "health-worker-you-have-met",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a doctor, nurse or health worker you have met",
+    "bullets": [
+      "who this person was",
+      "when you met them",
+      "what they did"
+    ],
+    "explain": "and explain what impression they made on you.",
+    "part1": [
+      "Do you go for regular check-ups?",
+      "Are hospitals good where you live?",
+      "Would you like to work in healthcare?"
+    ],
+    "part3": [
+      "Why is healthcare work so demanding?",
+      "Should healthcare be free at the point of use?",
+      "How can countries train enough health workers?",
+      "What role will technology play in medicine?"
+    ]
+  },
+  {
+    "slug": "time-you-were-tired-but-continued",
+    "family": "health",
+    "difficulty": "hard",
+    "title": "Describe a time you felt very tired but had to continue",
+    "bullets": [
+      "what you were doing",
+      "why you were tired",
+      "how long it lasted"
+    ],
+    "explain": "and explain how you got through it.",
+    "part1": [
+      "Do you get enough sleep?",
+      "Do you take naps?",
+      "When do you feel most energetic?"
+    ],
+    "part3": [
+      "Why is tiredness so common in modern life?",
+      "How does lack of sleep affect performance?",
+      "Should workplaces limit long hours?",
+      "Is being busy seen as a sign of success?"
+    ]
+  },
+  {
+    "slug": "routine-before-going-to-sleep",
+    "family": "health",
+    "difficulty": "easy",
+    "title": "Describe a routine you follow before going to sleep",
+    "bullets": [
+      "what you do",
+      "how long it takes",
+      "when you started doing it"
+    ],
+    "explain": "and explain how it helps you.",
+    "part1": [
+      "What time do you go to bed?",
+      "Do you use your phone before sleeping?",
+      "Do you sleep well?"
+    ],
+    "part3": [
+      "Why do so many people sleep badly?",
+      "How do screens affect sleep quality?",
+      "Should schools start later in the morning?",
+      "Is sleep valued enough in your culture?"
+    ]
+  },
+  {
+    "slug": "health-campaign-you-have-seen",
+    "family": "health",
+    "difficulty": "hard",
+    "title": "Describe a health campaign or public health message you have seen",
+    "bullets": [
+      "what the message was",
+      "where you saw it",
+      "who it was aimed at"
+    ],
+    "explain": "and explain how effective you think it was.",
+    "part1": [
+      "Do you see health adverts where you live?",
+      "Do you follow health advice?",
+      "Where do you get health information?"
+    ],
+    "part3": [
+      "What makes a public health campaign work?",
+      "Should governments use taxes to change behaviour?",
+      "How can misinformation about health be reduced?",
+      "Do warnings on products change what people buy?"
+    ]
+  },
+  {
+    "slug": "time-you-walked-a-long-distance",
+    "family": "health",
+    "difficulty": "easy",
+    "title": "Describe a time you walked a long distance",
+    "bullets": [
+      "where you walked",
+      "why you walked so far",
+      "who was with you"
+    ],
+    "explain": "and explain how you felt afterwards.",
+    "part1": [
+      "Do you walk every day?",
+      "Do you count your steps?",
+      "Is your area good for walking?"
+    ],
+    "part3": [
+      "Why is walking underrated as exercise?",
+      "How can cities encourage people to walk more?",
+      "Do fitness trackers motivate people?",
+      "Should walking be part of the school day?"
+    ]
+  },
+  {
+    "slug": "food-you-avoid-for-health-reasons",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a food or drink you avoid for health reasons",
+    "bullets": [
+      "what it is",
+      "why you avoid it",
+      "when you stopped having it"
+    ],
+    "explain": "and explain how easy or difficult it has been.",
+    "part1": [
+      "Do you avoid any foods?",
+      "Do you read nutrition labels?",
+      "Do you drink sugary drinks?"
+    ],
+    "part3": [
+      "Should unhealthy products carry stronger warnings?",
+      "Why do people continue habits they know are harmful?",
+      "Is it fair to tax certain foods?",
+      "How much should the state influence personal choices?"
+    ]
+  },
+  {
+    "slug": "app-or-device-that-helps-you-stay-healthy",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe an app or device that helps you stay healthy",
+    "bullets": [
+      "what it is",
+      "how you use it",
+      "how long you have used it"
+    ],
+    "explain": "and explain how much it has actually helped.",
+    "part1": [
+      "Do you use a fitness app?",
+      "Do you track your sleep?",
+      "Do you trust health apps?"
+    ],
+    "part3": [
+      "Can technology make people healthier?",
+      "Who should be allowed to see health data?",
+      "Do wearable devices cause anxiety about health?",
+      "How might medicine use personal data in future?"
+    ]
+  },
+  {
+    "slug": "sport-you-would-like-to-try",
+    "family": "health",
+    "difficulty": "easy",
+    "title": "Describe a sport you would like to try",
+    "bullets": [
+      "what the sport is",
+      "where you could do it",
+      "what you would need"
+    ],
+    "explain": "and explain why it appeals to you.",
+    "part1": [
+      "Are you sporty?",
+      "What sports are popular in your country?",
+      "Would you join a sports club?"
+    ],
+    "part3": [
+      "Why do people take up new sports as adults?",
+      "Should sports clubs be cheaper?",
+      "How do role models influence sport participation?",
+      "Is watching sport as valuable as playing it?"
+    ]
+  },
+  {
+    "slug": "time-you-took-a-break-from-screens",
+    "family": "health",
+    "difficulty": "hard",
+    "title": "Describe a time you took a break from screens",
+    "bullets": [
+      "when it was",
+      "how long the break lasted",
+      "what you did instead"
+    ],
+    "explain": "and explain how the break affected you.",
+    "part1": [
+      "How long are you online each day?",
+      "Do you use screens before bed?",
+      "Have you tried to cut down?"
+    ],
+    "part3": [
+      "Why is it hard to disconnect?",
+      "Should companies design less addictive products?",
+      "How does screen use affect children's development?",
+      "Will future generations use technology differently?"
+    ]
+  },
+  {
+    "slug": "habit-you-would-like-to-give-up",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe a habit you would like to give up",
+    "bullets": [
+      "what the habit is",
+      "how long you have had it",
+      "why you want to stop"
+    ],
+    "explain": "and explain what would help you give it up.",
+    "part1": [
+      "Do you have any bad habits?",
+      "Are habits easy to change?",
+      "Who encourages you to improve?"
+    ],
+    "part3": [
+      "Why are habits so difficult to break?",
+      "Do support groups help people change?",
+      "Should employers help staff with health goals?",
+      "How does environment shape behaviour?"
+    ]
+  },
+  {
+    "slug": "person-who-is-very-energetic",
+    "family": "health",
+    "difficulty": "medium",
+    "title": "Describe someone you know who is very fit and energetic",
+    "bullets": [
+      "who this person is",
+      "what they do to stay fit",
+      "how you know them"
+    ],
+    "explain": "and explain what you could learn from them.",
+    "part1": [
+      "Do you have energetic friends?",
+      "Do you exercise with others?",
+      "Does motivation come easily to you?"
+    ],
+    "part3": [
+      "How do other people influence our health habits?",
+      "Is fitness becoming a status symbol?",
+      "Should health advice be personalised?",
+      "How does ageing change exercise needs?"
+    ]
+  },
+  {
+    "slug": "something-you-saved-money-to-buy",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe something you saved money to buy",
+    "bullets": [
+      "what it was",
+      "how long you saved",
+      "how you saved the money"
+    ],
+    "explain": "and explain how you felt when you finally bought it.",
+    "part1": [
+      "Do you save money?",
+      "Did you get pocket money as a child?",
+      "Do you budget each month?"
+    ],
+    "part3": [
+      "Why do some people find saving easier than others?",
+      "Should financial planning be taught in schools?",
+      "Does easy credit encourage overspending?",
+      "How do savings habits differ between generations?"
+    ]
+  },
+  {
+    "slug": "shop-where-you-enjoy-spending-time",
+    "family": "money",
+    "difficulty": "easy",
+    "title": "Describe a shop where you enjoy spending time",
+    "bullets": [
+      "what kind of shop it is",
+      "where it is",
+      "what it sells"
+    ],
+    "explain": "and explain why you enjoy being there.",
+    "part1": [
+      "Do you enjoy shopping?",
+      "Do you shop alone or with friends?",
+      "Do you prefer big stores or small shops?"
+    ],
+    "part3": [
+      "Why do shops try to make customers stay longer?",
+      "How has online shopping changed the experience?",
+      "Do shopping centres serve a social purpose?",
+      "Will physical shops disappear?"
+    ]
+  },
+  {
+    "slug": "time-you-got-a-good-bargain",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a time you got a good bargain",
+    "bullets": [
+      "what you bought",
+      "where you bought it",
+      "how much you paid"
+    ],
+    "explain": "and explain why it was such a good deal.",
+    "part1": [
+      "Do you look for discounts?",
+      "Do you compare prices?",
+      "Do you buy things in sales?"
+    ],
+    "part3": [
+      "Do sales make people buy things they do not need?",
+      "Should discount pricing be regulated?",
+      "Why are people attracted to bargains?",
+      "How do prices affect our idea of quality?"
+    ]
+  },
+  {
+    "slug": "expensive-thing-you-would-like-to-own",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe an expensive thing you would like to own",
+    "bullets": [
+      "what it is",
+      "how much it costs",
+      "how you learned about it"
+    ],
+    "explain": "and explain why you would like to own it.",
+    "part1": [
+      "What would you buy if you had extra money?",
+      "Do you prefer saving or spending?",
+      "Are luxury goods popular in your country?"
+    ],
+    "part3": [
+      "Why do people buy luxury items?",
+      "Is spending on status a waste of money?",
+      "How does advertising create desire?",
+      "Do expensive products last longer?"
+    ]
+  },
+  {
+    "slug": "way-you-manage-your-money",
+    "family": "money",
+    "difficulty": "hard",
+    "title": "Describe a way you manage your money",
+    "bullets": [
+      "what you do",
+      "when you started",
+      "what tools you use"
+    ],
+    "explain": "and explain how well it works for you.",
+    "part1": [
+      "Do you keep track of spending?",
+      "Do you use cash or cards?",
+      "Do you set financial goals?"
+    ],
+    "part3": [
+      "Should personal finance be a school subject?",
+      "Has digital money changed spending habits?",
+      "Why do people struggle with debt?",
+      "How can banks help customers save?"
+    ]
+  },
+  {
+    "slug": "product-worth-its-price",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a product that is worth its price",
+    "bullets": [
+      "what the product is",
+      "what it costs",
+      "how long you have had it"
+    ],
+    "explain": "and explain why it is worth the money.",
+    "part1": [
+      "Do you buy cheap or expensive things?",
+      "How do you decide what to buy?",
+      "Do you keep things for a long time?"
+    ],
+    "part3": [
+      "Is it better to buy quality or to buy cheaply?",
+      "Why are some products designed to fail?",
+      "Should manufacturers guarantee products longer?",
+      "How do consumers judge value?"
+    ]
+  },
+  {
+    "slug": "time-you-returned-something",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a time you returned something you bought",
+    "bullets": [
+      "what you bought",
+      "why you returned it",
+      "what happened"
+    ],
+    "explain": "and explain how the shop handled it.",
+    "part1": [
+      "Have you returned something recently?",
+      "Do you keep receipts?",
+      "Do you complain when service is poor?"
+    ],
+    "part3": [
+      "Should return policies be more generous?",
+      "How do returns affect the environment?",
+      "Are consumers well protected in your country?",
+      "Why do online purchases get returned so often?"
+    ]
+  },
+  {
+    "slug": "online-purchase-you-made",
+    "family": "money",
+    "difficulty": "easy",
+    "title": "Describe an online purchase you made",
+    "bullets": [
+      "what you bought",
+      "which website you used",
+      "how long delivery took"
+    ],
+    "explain": "and explain whether you were satisfied with it.",
+    "part1": [
+      "Do you shop online?",
+      "Do you trust online shops?",
+      "Do you read reviews before buying?"
+    ],
+    "part3": [
+      "Why do people prefer buying online?",
+      "How reliable are customer reviews?",
+      "How has delivery changed shopping expectations?",
+      "What are the costs of home delivery for cities?"
+    ]
+  },
+  {
+    "slug": "person-good-at-saving-money",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a person you know who is good at saving money",
+    "bullets": [
+      "who this person is",
+      "how they save",
+      "how you know about it"
+    ],
+    "explain": "and explain what you could learn from them.",
+    "part1": [
+      "Do you save regularly?",
+      "Who taught you about money?",
+      "Do you plan large purchases?"
+    ],
+    "part3": [
+      "Why are some people naturally careful with money?",
+      "Should children receive an allowance?",
+      "How does culture shape attitudes to saving?",
+      "Do savings protect people from financial shocks?"
+    ]
+  },
+  {
+    "slug": "something-you-would-spend-a-prize-on",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe something you would spend money on if you won a prize",
+    "bullets": [
+      "what you would buy or do",
+      "how much it might cost",
+      "who would benefit"
+    ],
+    "explain": "and explain why you would choose this.",
+    "part1": [
+      "Do you buy lottery tickets?",
+      "What would you do with unexpected money?",
+      "Do you give money to charity?"
+    ],
+    "part3": [
+      "Does sudden wealth make people happier?",
+      "Should lotteries be regulated more strictly?",
+      "Is giving money away a good use of wealth?",
+      "How does money affect life satisfaction?"
+    ]
+  },
+  {
+    "slug": "service-you-pay-for-every-month",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a service you pay for every month",
+    "bullets": [
+      "what the service is",
+      "how much it costs",
+      "how long you have paid for it"
+    ],
+    "explain": "and explain whether it is good value.",
+    "part1": [
+      "Do you have any subscriptions?",
+      "Do you cancel services you do not use?",
+      "Do you prefer paying monthly or once?"
+    ],
+    "part3": [
+      "Why have subscriptions become so common?",
+      "Do subscriptions make people spend more?",
+      "Should cancelling be made easier by law?",
+      "Will people own less and rent more in future?"
+    ]
+  },
+  {
+    "slug": "job-you-think-is-well-paid",
+    "family": "money",
+    "difficulty": "hard",
+    "title": "Describe a job you think is well paid",
+    "bullets": [
+      "what the job is",
+      "what the work involves",
+      "why it pays well"
+    ],
+    "explain": "and explain whether you think the pay is fair.",
+    "part1": [
+      "Are salaries discussed openly in your country?",
+      "Would you take a job you disliked for good pay?",
+      "What makes a job attractive?"
+    ],
+    "part3": [
+      "Why do salaries differ so much between professions?",
+      "Should pay reflect social value?",
+      "How can wage gaps be reduced?",
+      "Do high salaries attract the best people?"
+    ]
+  },
+  {
+    "slug": "time-you-helped-someone-choose-a-purchase",
+    "family": "money",
+    "difficulty": "medium",
+    "title": "Describe a time you helped someone choose what to buy",
+    "bullets": [
+      "who you helped",
+      "what they were buying",
+      "what advice you gave"
+    ],
+    "explain": "and explain whether they were happy with the result.",
+    "part1": [
+      "Do friends ask you for advice?",
+      "Do you research before buying?",
+      "Do you shop with other people?"
+    ],
+    "part3": [
+      "Why do people rely on recommendations?",
+      "How much influence do online reviewers have?",
+      "Should advertisers disclose paid recommendations?",
+      "Do consumers have too many choices?"
+    ]
+  },
+  {
+    "slug": "shopping-habit-you-have-changed",
+    "family": "money",
+    "difficulty": "hard",
+    "title": "Describe a shopping habit you have changed",
+    "bullets": [
+      "what you used to do",
+      "what you do now",
+      "why you changed"
+    ],
+    "explain": "and explain what difference the change has made.",
+    "part1": [
+      "How often do you shop?",
+      "Do you make shopping lists?",
+      "Have your spending habits changed?"
+    ],
+    "part3": [
+      "What makes consumers change their behaviour?",
+      "Can ethical shopping change industries?",
+      "Is second-hand shopping becoming normal?",
+      "How does economic uncertainty affect spending?"
+    ]
+  },
+  {
+    "slug": "something-you-bought-for-your-home",
+    "family": "money",
+    "difficulty": "easy",
+    "title": "Describe something you bought for your home",
+    "bullets": [
+      "what it was",
+      "why you needed it",
+      "where you bought it"
+    ],
+    "explain": "and explain how it changed your home.",
+    "part1": [
+      "Do you like buying things for your home?",
+      "Do you decorate your home?",
+      "Do you plan big purchases?"
+    ],
+    "part3": [
+      "Why do people spend so much on their homes?",
+      "Is home ownership realistic for young people?",
+      "How do homes reflect social status?",
+      "Should furniture be built to last decades?"
+    ]
+  },
+  {
+    "slug": "gift-you-would-like-to-buy-for-someone",
+    "family": "money",
+    "difficulty": "easy",
+    "title": "Describe a gift you would like to buy for someone",
+    "bullets": [
+      "who the gift is for",
+      "what you would buy",
+      "when you would give it"
+    ],
+    "explain": "and explain why you think they would like it.",
+    "part1": [
+      "Do you enjoy choosing presents?",
+      "How much do people spend on gifts in your country?",
+      "Do you prefer giving or receiving?"
+    ],
+    "part3": [
+      "Why is choosing presents difficult?",
+      "Should gift-giving be less commercial?",
+      "Do expensive gifts mean more?",
+      "How do gift customs change over time?"
+    ]
+  },
+  {
+    "slug": "custom-visitors-find-interesting",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a custom in your country that visitors find interesting",
+    "bullets": [
+      "what the custom is",
+      "when people follow it",
+      "who takes part"
+    ],
+    "explain": "and explain why visitors find it interesting.",
+    "part1": [
+      "Do many tourists visit your country?",
+      "Do you meet visitors from abroad?",
+      "What would you show a visitor first?"
+    ],
+    "part3": [
+      "How do customs survive over generations?",
+      "Should tourists be expected to follow local customs?",
+      "How does globalisation affect local traditions?",
+      "Can customs change too quickly?"
+    ]
+  },
+  {
+    "slug": "national-holiday-people-enjoy",
+    "family": "culture",
+    "difficulty": "easy",
+    "title": "Describe a national holiday that people enjoy in your country",
+    "bullets": [
+      "when it happens",
+      "what people do",
+      "why it is celebrated"
+    ],
+    "explain": "and explain what it means to people.",
+    "part1": [
+      "How many public holidays are there in your country?",
+      "What do you do on holidays?",
+      "Do you travel during holidays?"
+    ],
+    "part3": [
+      "Why do countries mark particular days?",
+      "Should there be more public holidays?",
+      "How do holidays affect the economy?",
+      "Do young people value traditional holidays?"
+    ]
+  },
+  {
+    "slug": "traditional-music-or-dance",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a piece of traditional music or dance from your country",
+    "bullets": [
+      "what it is",
+      "when it is performed",
+      "who performs it"
+    ],
+    "explain": "and explain why it is important culturally.",
+    "part1": [
+      "Do you like traditional music?",
+      "Have you learned to dance?",
+      "Is folk music popular with young people?"
+    ],
+    "part3": [
+      "How can traditional arts attract younger audiences?",
+      "Should governments fund traditional performance?",
+      "Does modern music replace traditional forms?",
+      "How do arts express national identity?"
+    ]
+  },
+  {
+    "slug": "traditional-craft-from-your-country",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a traditional craft from your country",
+    "bullets": [
+      "what the craft is",
+      "what materials it uses",
+      "who practises it"
+    ],
+    "explain": "and explain why it should be preserved.",
+    "part1": [
+      "Have you seen craftspeople at work?",
+      "Do you buy handmade products?",
+      "Did you learn any crafts at school?"
+    ],
+    "part3": [
+      "Why are traditional crafts declining?",
+      "Can crafts survive as businesses?",
+      "Should schools teach traditional skills?",
+      "How does tourism affect craft production?"
+    ]
+  },
+  {
+    "slug": "wedding-custom-in-your-culture",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a wedding custom in your culture",
+    "bullets": [
+      "what the custom is",
+      "when it takes place",
+      "who is involved"
+    ],
+    "explain": "and explain what it symbolises.",
+    "part1": [
+      "Are weddings big events in your country?",
+      "Have you been to a traditional wedding?",
+      "Do young people follow old customs?"
+    ],
+    "part3": [
+      "Why do wedding traditions persist?",
+      "How are marriage customs changing?",
+      "Should ceremonies be simpler?",
+      "What do rituals do for communities?"
+    ]
+  },
+  {
+    "slug": "museum-you-have-visited",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a museum you have visited",
+    "bullets": [
+      "where it is",
+      "what it contains",
+      "when you went"
+    ],
+    "explain": "and explain what you found most interesting there.",
+    "part1": [
+      "Do you like museums?",
+      "Did you visit museums at school?",
+      "Are museums free where you live?"
+    ],
+    "part3": [
+      "Should museums be free to enter?",
+      "Who should own historical objects?",
+      "How can museums stay relevant?",
+      "Do digital exhibits change how we learn history?"
+    ]
+  },
+  {
+    "slug": "language-or-dialect-in-your-region",
+    "family": "culture",
+    "difficulty": "hard",
+    "title": "Describe a language or dialect spoken in your region",
+    "bullets": [
+      "what it is",
+      "who speaks it",
+      "where it is spoken"
+    ],
+    "explain": "and explain why it matters to the people who speak it.",
+    "part1": [
+      "Do people speak different dialects in your country?",
+      "Can you understand other accents?",
+      "Did you learn a second language at school?"
+    ],
+    "part3": [
+      "Why do minority languages disappear?",
+      "Should governments protect local languages?",
+      "How does language shape identity?",
+      "Do global languages threaten local ones?"
+    ]
+  },
+  {
+    "slug": "story-or-legend-from-your-country",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a story or legend from your country",
+    "bullets": [
+      "what the story is",
+      "who tells it",
+      "when you first heard it"
+    ],
+    "explain": "and explain what lesson it teaches.",
+    "part1": [
+      "Do you know traditional stories?",
+      "Did adults tell you stories as a child?",
+      "Do you read folk tales?"
+    ],
+    "part3": [
+      "Why do societies keep telling old stories?",
+      "How do legends reflect a nation's values?",
+      "Should traditional stories be modernised?",
+      "Do children still hear folk tales?"
+    ]
+  },
+  {
+    "slug": "clothing-worn-on-special-occasions",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe clothing that is worn on special occasions in your country",
+    "bullets": [
+      "what the clothing is",
+      "when it is worn",
+      "who wears it"
+    ],
+    "explain": "and explain what it represents.",
+    "part1": [
+      "Do you own traditional clothes?",
+      "Do people dress traditionally where you live?",
+      "What do you wear to celebrations?"
+    ],
+    "part3": [
+      "Why do traditional clothes survive in modern societies?",
+      "Is traditional dress becoming a costume for tourists?",
+      "How does clothing express identity?",
+      "Should schools allow traditional dress?"
+    ]
+  },
+  {
+    "slug": "rule-of-politeness-in-your-culture",
+    "family": "culture",
+    "difficulty": "hard",
+    "title": "Describe a rule of politeness in your culture",
+    "bullets": [
+      "what the rule is",
+      "when it applies",
+      "who taught it to you"
+    ],
+    "explain": "and explain what happens if someone ignores it.",
+    "part1": [
+      "Are people polite where you live?",
+      "How do you greet people?",
+      "Do you say thank you often?"
+    ],
+    "part3": [
+      "Why do politeness rules differ between cultures?",
+      "Are manners becoming less important?",
+      "How should visitors learn local etiquette?",
+      "Does online communication reduce politeness?"
+    ]
+  },
+  {
+    "slug": "cultural-difference-you-noticed",
+    "family": "culture",
+    "difficulty": "hard",
+    "title": "Describe a cultural difference you have noticed",
+    "bullets": [
+      "what the difference is",
+      "where you noticed it",
+      "how you learned about it"
+    ],
+    "explain": "and explain how it changed your thinking.",
+    "part1": [
+      "Have you met people from other countries?",
+      "Do you watch foreign films?",
+      "Would you like to live abroad?"
+    ],
+    "part3": [
+      "How can people avoid misunderstandings between cultures?",
+      "Does travel reduce prejudice?",
+      "Should schools teach intercultural skills?",
+      "Are cultures becoming more similar?"
+    ]
+  },
+  {
+    "slug": "historical-figure-people-admire",
+    "family": "culture",
+    "difficulty": "hard",
+    "title": "Describe a historical figure people in your country admire",
+    "bullets": [
+      "who the person was",
+      "when they lived",
+      "what they did"
+    ],
+    "explain": "and explain why they are still remembered.",
+    "part1": [
+      "Do you like history?",
+      "Did you enjoy history lessons?",
+      "Do you visit historical sites?"
+    ],
+    "part3": [
+      "Why do nations celebrate certain historical figures?",
+      "Should history teaching present different viewpoints?",
+      "How do reputations change over time?",
+      "Is it right to judge the past by today's standards?"
+    ]
+  },
+  {
+    "slug": "place-of-cultural-importance-near-you",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a place of cultural importance near your home",
+    "bullets": [
+      "what the place is",
+      "why it is important",
+      "who visits it"
+    ],
+    "explain": "and explain how it should be looked after.",
+    "part1": [
+      "Are there old buildings in your town?",
+      "Do you visit cultural sites?",
+      "Do tourists come to your area?"
+    ],
+    "part3": [
+      "Who should pay for preserving heritage sites?",
+      "Should old buildings be modernised?",
+      "How does heritage tourism affect residents?",
+      "What is lost when historic places disappear?"
+    ]
+  },
+  {
+    "slug": "tradition-your-family-keeps",
+    "family": "culture",
+    "difficulty": "easy",
+    "title": "Describe a tradition your family keeps",
+    "bullets": [
+      "what the tradition is",
+      "when you do it",
+      "who takes part"
+    ],
+    "explain": "and explain why your family continues it.",
+    "part1": [
+      "Does your family have traditions?",
+      "Do you celebrate the new year?",
+      "Do you cook special food for holidays?"
+    ],
+    "part3": [
+      "Why do families create their own traditions?",
+      "How do traditions change between generations?",
+      "Do modern lifestyles leave room for tradition?",
+      "What holds communities together?"
+    ]
+  },
+  {
+    "slug": "media-that-explains-your-culture",
+    "family": "culture",
+    "difficulty": "hard",
+    "title": "Describe a book, film or show that explains your culture to others",
+    "bullets": [
+      "what it is",
+      "what it shows",
+      "who would enjoy it"
+    ],
+    "explain": "and explain how well it represents your culture.",
+    "part1": [
+      "Do foreigners know much about your country?",
+      "Do you recommend films to friends?",
+      "What would you show a visitor about your culture?"
+    ],
+    "part3": [
+      "Can films give an accurate picture of a country?",
+      "Do stereotypes in media cause harm?",
+      "Should countries promote their culture abroad?",
+      "How does cultural export affect a nation's image?"
+    ]
+  },
+  {
+    "slug": "monument-or-statue-you-have-seen",
+    "family": "culture",
+    "difficulty": "medium",
+    "title": "Describe a monument or statue you have seen",
+    "bullets": [
+      "what it is",
+      "where it is",
+      "who or what it commemorates"
+    ],
+    "explain": "and explain what people think about it.",
+    "part1": [
+      "Are there monuments in your city?",
+      "Do you take photos of landmarks?",
+      "Do you know your city's history?"
+    ],
+    "part3": [
+      "Why do societies build monuments?",
+      "Should controversial monuments be removed?",
+      "How do public spaces reflect history?",
+      "Who decides what a country commemorates?"
+    ]
+  },
+  {
+    "slug": "plan-you-have-for-next-year",
+    "family": "future-plans",
+    "difficulty": "easy",
+    "title": "Describe a plan you have for the next year",
+    "bullets": [
+      "what the plan is",
+      "when you will start",
+      "what you need to do first"
+    ],
+    "explain": "and explain why this plan matters to you.",
+    "part1": [
+      "Do you make plans for the year ahead?",
+      "Are you good at keeping plans?",
+      "Do you write your goals down?"
+    ],
+    "part3": [
+      "Why do people set goals at the start of a year?",
+      "Do long-term plans work in uncertain times?",
+      "How does planning affect motivation?",
+      "Should schools teach students to plan their futures?"
+    ]
+  },
+  {
+    "slug": "place-you-would-like-to-live",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a place you would like to live in the future",
+    "bullets": [
+      "where it is",
+      "what it is like",
+      "when you might move there"
+    ],
+    "explain": "and explain why you would like to live there.",
+    "part1": [
+      "Do you like where you live now?",
+      "Would you move to another city?",
+      "What makes a place good to live in?"
+    ],
+    "part3": [
+      "Why do people move away from their hometowns?",
+      "What attracts people to particular cities?",
+      "How does remote work change where people live?",
+      "Should governments encourage people to stay in rural areas?"
+    ]
+  },
+  {
+    "slug": "skill-you-want-children-to-learn",
+    "family": "future-plans",
+    "difficulty": "hard",
+    "title": "Describe a skill you think children should learn",
+    "bullets": [
+      "what the skill is",
+      "at what age they should learn it",
+      "who could teach it"
+    ],
+    "explain": "and explain why it will be useful to them.",
+    "part1": [
+      "What did you learn as a child?",
+      "Do children learn practical skills at school?",
+      "Should children help at home?"
+    ],
+    "part3": [
+      "Which skills will matter most in the future?",
+      "Should schools focus on knowledge or skills?",
+      "How can parents support learning at home?",
+      "Do children learn better through play or instruction?"
+    ]
+  },
+  {
+    "slug": "change-to-your-daily-life",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a change you would like to make to your daily life",
+    "bullets": [
+      "what you would change",
+      "why you want to change it",
+      "when you could start"
+    ],
+    "explain": "and explain what difference it would make.",
+    "part1": [
+      "Do you like your daily routine?",
+      "Would you change your working hours?",
+      "Do you have enough free time?"
+    ],
+    "part3": [
+      "Why do people find change difficult?",
+      "How does work shape daily life?",
+      "Should societies rethink the working week?",
+      "What makes a balanced day?"
+    ]
+  },
+  {
+    "slug": "job-you-would-try-for-a-short-time",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a job you would like to try for a short time",
+    "bullets": [
+      "what the job is",
+      "what you would do",
+      "how long you would do it"
+    ],
+    "explain": "and explain why you would like to try it.",
+    "part1": [
+      "Have you had a part-time job?",
+      "Would you like to change career?",
+      "What jobs look interesting to you?"
+    ],
+    "part3": [
+      "Should people change careers more often?",
+      "How can workers retrain mid-career?",
+      "Do short-term jobs suit modern economies?",
+      "Is job security still possible?"
+    ]
+  },
+  {
+    "slug": "course-you-plan-to-take",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a course you plan to take",
+    "bullets": [
+      "what the course is",
+      "where you would study",
+      "when you plan to start"
+    ],
+    "explain": "and explain how it will help you.",
+    "part1": [
+      "Do you want to study more?",
+      "Do you prefer online or in-person study?",
+      "How do you choose courses?"
+    ],
+    "part3": [
+      "Why do adults return to education?",
+      "Should employers pay for further study?",
+      "Are qualifications more important than experience?",
+      "How is higher education changing?"
+    ]
+  },
+  {
+    "slug": "something-you-want-to-achieve",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe something you want to achieve in the next five years",
+    "bullets": [
+      "what you want to achieve",
+      "why it matters to you",
+      "what steps you will take"
+    ],
+    "explain": "and explain what might make it difficult.",
+    "part1": [
+      "Do you set yourself targets?",
+      "Are you an ambitious person?",
+      "Who encourages you?"
+    ],
+    "part3": [
+      "Why do some people achieve their goals and others do not?",
+      "Is ambition always positive?",
+      "How does society define success?",
+      "Should goals be shared publicly?"
+    ]
+  },
+  {
+    "slug": "trip-you-are-planning",
+    "family": "future-plans",
+    "difficulty": "easy",
+    "title": "Describe a trip you are planning",
+    "bullets": [
+      "where you will go",
+      "who you will go with",
+      "what you will do"
+    ],
+    "explain": "and explain why you chose this trip.",
+    "part1": [
+      "Do you plan holidays in advance?",
+      "Where would you like to go next?",
+      "Do you prefer travelling alone or with others?"
+    ],
+    "part3": [
+      "How do people choose holiday destinations?",
+      "Has travel become too easy?",
+      "Should tourism be limited in fragile places?",
+      "How will travel change in the next decade?"
+    ]
+  },
+  {
+    "slug": "habit-you-plan-to-start",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a habit you plan to start",
+    "bullets": [
+      "what the habit is",
+      "when you will do it",
+      "why you chose it"
+    ],
+    "explain": "and explain how you will keep it going.",
+    "part1": [
+      "Do you have good habits?",
+      "Do you find routines helpful?",
+      "Have you started anything new recently?"
+    ],
+    "part3": [
+      "What helps people stick to new habits?",
+      "Do apps help people change behaviour?",
+      "How long does real change take?",
+      "Should workplaces support personal goals?"
+    ]
+  },
+  {
+    "slug": "person-you-plan-to-visit",
+    "family": "future-plans",
+    "difficulty": "easy",
+    "title": "Describe a person you plan to visit",
+    "bullets": [
+      "who the person is",
+      "where they live",
+      "when you will visit"
+    ],
+    "explain": "and explain why you want to see them.",
+    "part1": [
+      "Do your relatives live nearby?",
+      "How do you keep in touch with people far away?",
+      "Do you enjoy having guests?"
+    ],
+    "part3": [
+      "How do families stay close over long distances?",
+      "Has technology replaced visiting people?",
+      "Why do people move away from family?",
+      "What does hospitality mean in your culture?"
+    ]
+  },
+  {
+    "slug": "family-history-you-want-to-learn",
+    "family": "future-plans",
+    "difficulty": "hard",
+    "title": "Describe something you would like to learn about your family history",
+    "bullets": [
+      "what you want to find out",
+      "who could tell you",
+      "how you would research it"
+    ],
+    "explain": "and explain why this interests you.",
+    "part1": [
+      "Do you know about your grandparents' lives?",
+      "Does your family keep old photos?",
+      "Do you like history?"
+    ],
+    "part3": [
+      "Why are people interested in their ancestry?",
+      "Should family histories be recorded formally?",
+      "How do family stories shape identity?",
+      "What can ordinary lives tell us about the past?"
+    ]
+  },
+  {
+    "slug": "way-you-would-help-your-community",
+    "family": "future-plans",
+    "difficulty": "hard",
+    "title": "Describe a way you would like to help your community",
+    "bullets": [
+      "what you would do",
+      "who you would help",
+      "what you would need"
+    ],
+    "explain": "and explain why this kind of help is needed.",
+    "part1": [
+      "Is there a strong community where you live?",
+      "Have you volunteered before?",
+      "Do neighbours help each other?"
+    ],
+    "part3": [
+      "How can communities solve local problems themselves?",
+      "Should volunteering be encouraged by employers?",
+      "Why do people give their time to others?",
+      "What makes community projects succeed?"
+    ]
+  },
+  {
+    "slug": "technology-you-hope-will-exist",
+    "family": "future-plans",
+    "difficulty": "hard",
+    "title": "Describe a technology you hope will exist in ten years",
+    "bullets": [
+      "what it would do",
+      "who would use it",
+      "what problem it would solve"
+    ],
+    "explain": "and explain why it would be valuable.",
+    "part1": [
+      "Do you follow technology news?",
+      "Do you like new gadgets?",
+      "What technology do you rely on?"
+    ],
+    "part3": [
+      "How do societies decide which technologies to develop?",
+      "Should there be limits on new technology?",
+      "Who benefits most from innovation?",
+      "How can technology reduce inequality?"
+    ]
+  },
+  {
+    "slug": "change-you-expect-in-your-city",
+    "family": "future-plans",
+    "difficulty": "hard",
+    "title": "Describe a change you expect to see in your city",
+    "bullets": [
+      "what the change is",
+      "when you expect it",
+      "who it will affect"
+    ],
+    "explain": "and explain whether you think it will be positive.",
+    "part1": [
+      "Is your city growing?",
+      "Are new buildings going up?",
+      "Would you like your city to change?"
+    ],
+    "part3": [
+      "How should cities plan for growing populations?",
+      "Should residents vote on local developments?",
+      "What will cities look like in fifty years?",
+      "How can cities become more sustainable?"
+    ]
+  },
+  {
+    "slug": "promise-you-made-to-yourself",
+    "family": "future-plans",
+    "difficulty": "medium",
+    "title": "Describe a promise you made to yourself",
+    "bullets": [
+      "what the promise was",
+      "when you made it",
+      "why you made it"
+    ],
+    "explain": "and explain how well you have kept it.",
+    "part1": [
+      "Do you make new year resolutions?",
+      "Do you keep your promises?",
+      "Do you tell others about your plans?"
+    ],
+    "part3": [
+      "Why do people break promises to themselves?",
+      "Does telling others help you keep commitments?",
+      "How important is self-discipline?",
+      "Can motivation be maintained over years?"
+    ]
+  },
+  {
+    "slug": "event-you-are-looking-forward-to",
+    "family": "future-plans",
+    "difficulty": "easy",
+    "title": "Describe an event you are looking forward to",
+    "bullets": [
+      "what the event is",
+      "when it will happen",
+      "who will be there"
+    ],
+    "explain": "and explain why you are looking forward to it.",
+    "part1": [
+      "Do you have anything planned soon?",
+      "Do you like surprises?",
+      "How do you celebrate good news?"
+    ],
+    "part3": [
+      "Why does anticipation make people happy?",
+      "Do people plan celebrations differently now?",
+      "How do shared events strengthen relationships?",
+      "Is looking forward better than the event itself?"
+    ]
+  }
+]
