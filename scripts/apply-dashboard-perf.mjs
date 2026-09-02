@@ -1,7 +1,7 @@
 // scripts/apply-dashboard-perf.mjs
 // Applies supabase/migrations/20260901010000_dashboard_perf.sql (dashboard_overview
 // v8 + the activity_daily* rollups), backfills the rollup from BACKFILL_FROM
-// (default 2026-01-01), and prints a before/after timing table for the four
+// (default 2026-07-01; refresh_activity_daily clamps anything earlier), and prints a before/after timing table for the four
 // /data ranges.
 //
 //   node scripts/apply-dashboard-perf.mjs
@@ -9,13 +9,8 @@
 //   node scripts/apply-dashboard-perf.mjs --skip-apply    # time + backfill only
 //   node scripts/apply-dashboard-perf.mjs --from 2026-01-01
 //
-// WHY the backfill starts months before the first event: activity_rollup_boundary
-// only trusts a CONTIGUOUS run of watermarked days starting at the range's own
-// first day. The 90-day preset starts before 2026-07-01, so a backfill from the
-// first event day left that whole window (and its prior-period window) reading
-// raw rows — 3.1s on 2026-09-02 while every other range took <300ms. Empty days
-// get watermark rows too, so starting the backfill at 2026-01-01 covers every
-// preset and every prior-period window from April 2026 onward for good.
+// Ranges that start before 2026-07-01 (the 90-day preset) are handled by
+// 20260902010000_rollup_boundary_pre_epoch.sql, not by backfilling further.
 //
 // Reads SUPABASE_DB_SESSION_URL from ROOT/.env.local (or the environment).
 // The timing connection raises statement_timeout to 120s deliberately: the
@@ -60,7 +55,7 @@ if (!url) {
 
 const EPOCH = '2026-07-01T00:00:00.000Z';
 const fromArg = process.argv.indexOf('--from');
-const BACKFILL_FROM = fromArg > -1 && process.argv[fromArg + 1] ? process.argv[fromArg + 1] : '2026-01-01';
+const BACKFILL_FROM = fromArg > -1 && process.argv[fromArg + 1] ? process.argv[fromArg + 1] : '2026-07-01';
 if (!/^\d{4}-\d{2}-\d{2}$/.test(BACKFILL_FROM)) {
   console.error(`--from must be YYYY-MM-DD, got ${BACKFILL_FROM}`);
   process.exit(1);
