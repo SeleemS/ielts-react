@@ -222,15 +222,42 @@ function countWritingIssues(result) {
   );
 }
 
-// Free users are entitled to the overall band + the FIRST criterion only.
-// Everything else is a Premium entitlement, so it must be withheld at the API —
-// blurring it client-side still ships the text in the response (paywall bypass).
+// Rewrites are a single paragraph by prompt instruction; this is a defensive
+// ceiling so a verbose model can never balloon the stored/returned payload.
+const MAX_REWRITE_CHARS = 900;
+
+function normalizeRewrite(rewrite) {
+  if (!rewrite || typeof rewrite !== 'object') return null;
+  const text = typeof rewrite.text === 'string' ? rewrite.text.trim() : '';
+  if (!text) return null;
+  return {
+    focus: typeof rewrite.focus === 'string' ? rewrite.focus.trim().slice(0, 160) : '',
+    text: text.slice(0, MAX_REWRITE_CHARS),
+  };
+}
+
+// The free lifetime sample is a real diagnostic, not a stub: the overall band
+// and ALL FOUR criteria (band + strengths + improvements) are the candidate's
+// to keep. What Premium buys is the FIXES — the examiner summary, the
+// prioritised improvement plan, every corrected example beyond the first, and
+// the band-8 rewrite.
+//
+// The withheld text is removed HERE rather than blurred in the browser: a CSS
+// filter over real text is a paywall bypass (see WritingScoreReport, which
+// renders shaped placeholders instead of the real strings). The counts below
+// are bare numbers so the upgrade CTA can be specific without leaking content.
 // The full result is still persisted server-side for the user's own history.
-function reduceForFree(result, task) {
-  const firstKey = task === 1 ? 'taskAchievement' : 'taskResponse';
+function reduceForFree(result) {
+  const corrected = Array.isArray(result.correctedExamples) ? result.correctedExamples : [];
+  const rewrite = normalizeRewrite(result.rewrite);
   return {
     overallBand: result.overallBand,
-    criteria: { [firstKey]: result.criteria?.[firstKey] || {} },
+    criteria: result.criteria || {},
+    // One real correction, so the preview shows the genuine article.
+    correctedExamples: corrected.slice(0, 1),
+    lockedCorrectionCount: Math.max(0, corrected.length - 1),
+    // Presence flag only — never the rewrite text itself.
+    rewriteLocked: Boolean(rewrite),
     lockedIssueCount: countWritingIssues(result),
   };
 }
@@ -273,6 +300,8 @@ UNDER-LENGTH PENALTY: If the response is below the required minimum (150 words f
 OVERALL BAND RULE: overallBand = the average of the four criterion bands, rounded to the NEAREST 0.5 (a .25 rounds up to .5, a .75 rounds up to the next whole). Compute it exactly this way; do not eyeball it.
 
 FEEDBACK STYLE: Be specific, constructive and SCANNABLE. For each criterion give 1-3 "strengths" bullets and 1-3 "improvements" bullets. Each bullet is ONE short sentence (under 20 words), states one concrete observation, and quotes or paraphrases a brief phrase from the essay as evidence where useful. NO long paragraphs. The top-level "improvements" list holds the 3-5 highest-impact actions across all criteria. correctedExamples must take real problematic sentences/phrases from the essay ("original") and give an improved version ("suggestion").
+
+REWRITE: "rewrite" takes ONE weak paragraph from the candidate's own response and rewrites it at band-8 level, keeping their ideas and argument. Return 60-90 words of prose in "text" — never the whole essay — and name the paragraph and the reason in "focus" in under 15 words.
 
 Return ONLY the structured JSON object requested — no prose, no markdown, no HTML.
 
@@ -446,7 +475,7 @@ Assess this essay as an IELTS examiner and return the structured JSON.`;
       ],
       responseFormat: {
         type: 'json_schema',
-        json_schema: buildWritingScoreSchema(task),
+        json_schema: buildWritingScoreSchema(task, { includeRewrite: true }),
       },
     });
 
@@ -510,7 +539,7 @@ Assess this essay as an IELTS examiner and return the structured JSON.`;
         error: 'The scoring service returned an invalid result. Please try again.',
       });
     }
-    result = { ...result, overallBand };
+    result = { ...result, overallBand, rewrite: normalizeRewrite(result.rewrite) };
 
     await saveWritingScore({
       userId,
@@ -530,7 +559,7 @@ Assess this essay as an IELTS examiner and return the structured JSON.`;
       quotaRemaining: quota.remaining,
       plan: quota.plan,
       free: isFreeScore,
-      ...(isFreeScore ? reduceForFree(result, task) : result),
+      ...(isFreeScore ? reduceForFree(result) : result),
     });
   } catch (e) {
     await refundQuota(userId, quota);

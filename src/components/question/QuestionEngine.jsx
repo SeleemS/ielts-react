@@ -20,6 +20,7 @@ import BandDial from '../mock/BandDial';
 import SectionBreakdown from '../mock/SectionBreakdown';
 import { usePlayOnMount, usePrefersReducedMotion } from '../mock/scoreAnimation';
 import ShareRow from '../ShareRow';
+import WritingPromptCard from './WritingPromptCard';
 import { Flame } from 'lucide-react';
 import { useStreak } from '../../lib/useStreak';
 import { isStreakMilestone } from '../../lib/streak';
@@ -133,7 +134,7 @@ function StreakLine({ signedIn }) {
   );
 }
 
-function ResultsSummary({ score, total, skill, module, showBand, onReset, summaryRef, signedIn, sections, byNumber }) {
+function ResultsSummary({ score, total, skill, module, showBand, onReset, summaryRef, signedIn, sections, byNumber, isMockTest = false }) {
   const router = useRouter();
   const pct = total ? Math.round((score / total) * 100) : 0;
   const band = showBand ? estimateBand(score, total, skill, module) : null;
@@ -265,14 +266,15 @@ function ResultsSummary({ score, total, skill, module, showBand, onReset, summar
               : `I'm practising IELTS ${skill} at IELTS-Bank — free questions with instant marking`
         }
       />
-      {(skill === 'reading' || skill === 'listening') && (
-        <div className="mt-4 rounded-md border border-border bg-card p-3 text-sm">
-          <span className="text-muted-foreground">Ready for the next skill? </span>
-          <NextLink href="/ielts-writing-checker" className="font-semibold text-accent no-underline">
-            Get your IELTS Writing scored by AI
-          </NextLink>
-        </div>
-      )}
+      <WritingPromptCard
+        className="mt-4"
+        skill={skill}
+        band={band}
+        score={score}
+        total={total}
+        isMock={isMock || isMockTest}
+      />
+
       {!signedIn ? <NewsletterSignup source={`${skill}-results`} variant="compact" className="mt-4" /> : null}
     </div>
   );
@@ -567,6 +569,7 @@ export default function QuestionEngine({
             signedIn={Boolean(user?.id)}
             sections={sections}
             byNumber={results.byNumber}
+            isMockTest={Boolean(mockTestId)}
           />
           {postSubmitContent}
         </>

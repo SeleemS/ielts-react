@@ -31,6 +31,7 @@ import FreeSampleChip from '../src/components/question/FreeSampleChip';
 import { ScoringProgress } from '../src/components/question/ScoreUI';
 import WritingScoreReport from '../src/components/question/WritingScoreReport';
 import { getSessionAccess } from '../src/lib/sessionAccess';
+import { consumeWritingDraft } from '../src/lib/writingDraft';
 
 import { WRITING_CHECKER_SEO } from '../lib/writingCheckerSeo';
 import { WRITING_PROMPT_MAX_CHARS } from '../lib/writingLimits';
@@ -134,6 +135,14 @@ export default function WritingCheckerPage() {
   // Last essay text already captured to the account — prevents duplicate
   // attempt rows when the gate fires repeatedly for the same draft.
   const capturedEssayRef = useRef('');
+  // Set when the homepage hero handed off an essay: once auth has resolved we
+  // run the normal submit path for the user without a second click.
+  const [autoRun, setAutoRun] = useState(false);
+  // Draft restore runs exactly once and gates the persist effect below.
+  const [restored, setRestored] = useState(false);
+  const restoredRef = useRef(false);
+  const autoRunDoneRef = useRef(false);
+  const formRef = useRef(null);
 
   const active = TASK_TYPES.find((t) => t.value === taskType) || TASK_TYPES[2];
   const apiTask = active.apiTask;
@@ -143,11 +152,30 @@ export default function WritingCheckerPage() {
   const progressValue = Math.min((wordCount / minWords) * 100, 100);
   const isSufficient = wordCount >= minWords;
 
-  // Restore any saved draft (task type, prompt, essay) on mount. This is what
-  // carries a signed-out user's work across the magic-link sign-in round-trip:
-  // we persist before opening the sign-in dialog and restore here.
+  // Restore a draft on mount. Two sources, in priority order:
+  //   1. A one-shot handoff from the homepage hero paste box (sessionStorage).
+  //      It wins over the stored draft and arms an automatic submit so the user
+  //      continues straight into the existing flow — sign-in gate, free sample,
+  //      report — instead of pressing the same button twice.
+  //   2. This page's own draft (localStorage), which carries a signed-out
+  //      user's work across the sign-in round-trip.
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || restoredRef.current) return;
+    // React StrictMode double-invokes mount effects in development. Without
+    // this guard the second pass finds the handoff already consumed, falls
+    // through to the localStorage branch, and restores the EMPTY draft the
+    // persist effect wrote from initial state — silently wiping the essay the
+    // hero just handed over.
+    restoredRef.current = true;
+    const handoff = consumeWritingDraft();
+    if (handoff) {
+      setTaskType(handoff.taskType);
+      setPrompt(handoff.prompt);
+      setEssay(handoff.essay);
+      if (handoff.autoSubmit) setAutoRun(true);
+      setRestored(true);
+      return;
+    }
     try {
       const raw = window.localStorage.getItem(DRAFT_KEY);
       if (!raw) return;
@@ -159,12 +187,16 @@ export default function WritingCheckerPage() {
       }
     } catch {
       /* ignore malformed draft */
+    } finally {
+      setRestored(true);
     }
   }, []);
 
   // Persist the draft on every change so nothing is lost on navigation/auth.
+  // Gated on `restored` so the first render's empty state never overwrites a
+  // stored draft before the restore above has had a chance to load it.
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !restored) return;
     try {
       window.localStorage.setItem(
         DRAFT_KEY,
@@ -173,7 +205,7 @@ export default function WritingCheckerPage() {
     } catch {
       /* storage full / unavailable — non-fatal */
     }
-  }, [taskType, prompt, essay]);
+  }, [restored, taskType, prompt, essay]);
 
   // Premium gate: capture the essay to the signed-in user's account (attempt
   // row without a band — the checker has no passage row, so passage_id stays
@@ -291,8 +323,8 @@ export default function WritingCheckerPage() {
     runScore();
   }, [runScore]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Shared by the form's own submit button and by the homepage-hero handoff.
+  const startSubmit = useCallback(() => {
     setErrorMsg('');
 
     if (!isSufficient) {
@@ -313,7 +345,25 @@ export default function WritingCheckerPage() {
     }
 
     continueSubmit();
+  }, [continueSubmit, isSufficient, loading, minWords, user, wordCount]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    startSubmit();
   };
+
+  // Continue the homepage hero's submission once auth has resolved. Runs once:
+  // a refresh of this page will not silently re-score (the handoff record was
+  // consumed on read, and the ref guards a same-mount re-entry).
+  useEffect(() => {
+    if (!autoRun || loading || autoRunDoneRef.current) return;
+    autoRunDoneRef.current = true;
+    setAutoRun(false);
+    if (typeof formRef.current?.scrollIntoView === 'function') {
+      formRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+    startSubmit();
+  }, [autoRun, loading, startSubmit]);
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -381,7 +431,7 @@ export default function WritingCheckerPage() {
           {/* Tool */}
           <section className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
             <div className="rounded-xl border border-border bg-card p-5 shadow-sm sm:p-7">
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-1.5">
                   <Label htmlFor="task-type">Task type</Label>
                   <Select

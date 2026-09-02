@@ -25,11 +25,12 @@ npm run audit:analytics
 
 Current audited surface:
 
-- 260 interactive JSX elements
-- 9 forms
-- 6 dialogs/popups
-- 85 explicit product-event calls
-- 0 uncaptured interaction handlers
+- 382 interactive JSX elements
+- 11 forms
+- 7 dialogs/popups
+- 139 explicit product-event calls
+- 1 uncaptured interaction handler (`src/components/datadash/GlobeStage.jsx`
+  drag surface — pre-existing; add `data-analytics-skip` or a semantic role)
 - 0 parser failures
 
 The generic capture layer records:
@@ -55,6 +56,23 @@ Explicit domain events remain the source of truth for outcomes and funnel
 milestones, including auth, attempts, AI scoring, estimator, audio,
 newsletter, paywall, checkout, purchase, subscription, and realtime-examiner
 events.
+
+### Writing-activation events
+
+The free AI Writing report is the site's primary conversion driver, so the
+paths into it are instrumented end to end:
+
+| Event | Emitted by | Key props |
+| --- | --- | --- |
+| `hero_essay_submit` | Homepage hero paste box | `source`, `task_type`, `chars`, `word_count` |
+| `writing_prompt_shown` | Post-result card after a Reading/Listening submission | `source_skill`, `band`, `variant` |
+| `writing_prompt_click` | The same card's CTA, free and Pro variants | `source_skill`, `band`, `variant` |
+| `pro_preview_shown` | Free Writing report rendering its masked Pro preview | `source`, `skill`, `band`, `corrections_shown`, `corrections_locked`, `rewrite_locked` |
+
+`writing_prompt_shown`'s `variant` is `free` (the sample is still available),
+`upgrade` (spent, no Pro) or `premium` (Pro subscriber). The `upgrade` variant's
+CTA deliberately emits the existing `paywall_upgrade_click` rather than
+`writing_prompt_click`, so the upsell-path query below keeps counting it.
 
 ## Required journey fields
 
