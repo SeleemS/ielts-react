@@ -26,6 +26,13 @@ const PROSE = [
   "[&_em]:italic",
   "[&_a]:font-medium [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-accent/80",
   "[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-accent/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground",
+  // Tables: comparison tables are among the most quotable things a guide can
+  // publish, so they get first-class styling here rather than rendering as
+  // unstyled rows. The wrapper below supplies the horizontal scroll on mobile.
+  "[&_table]:my-6 [&_table]:w-full [&_table]:border-collapse [&_table]:text-left [&_table]:text-sm",
+  "[&_caption]:mb-2 [&_caption]:text-left [&_caption]:text-sm [&_caption]:font-semibold [&_caption]:text-foreground",
+  "[&_th]:border [&_th]:border-border [&_th]:bg-muted/40 [&_th]:px-3 [&_th]:py-2 [&_th]:align-top [&_th]:text-xs [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-muted-foreground",
+  "[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:align-top",
 ].join(" ");
 
 export default function BlogPost({ post }) {
@@ -68,6 +75,20 @@ export default function BlogPost({ post }) {
     },
   };
 
+  // Emitted only when the post actually carries FAQ entries; the rendered
+  // section below is built from the same array.
+  const faqJsonLd = post.faq?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }
+    : null;
+
   return (
     <>
       <Head>
@@ -97,6 +118,14 @@ export default function BlogPost({ post }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
+        {faqJsonLd ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c"),
+            }}
+          />
+        ) : null}
       </Head>
 
       <div className="flex min-h-screen flex-col bg-secondary/40">
@@ -150,10 +179,36 @@ export default function BlogPost({ post }) {
                 ) : null}
               </header>
 
+              {/* overflow-x-auto so a wide comparison table scrolls inside the
+                  article instead of forcing the page to scroll sideways. */}
               <div
-                className={PROSE}
+                className={`${PROSE} overflow-x-auto`}
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
               />
+
+              {/* Optional per-post FAQ. Rendered from the SAME array that feeds
+                  the FAQPage JSON-LD above, so the structured data can never
+                  describe questions the reader cannot see. */}
+              {post.faq?.length ? (
+                <section className="mt-10 border-t border-border pt-8">
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                    Frequently asked questions
+                  </h2>
+                  <div className="mt-5 space-y-4">
+                    {post.faq.map((item) => (
+                      <div
+                        key={item.q}
+                        className="rounded-xl border border-border bg-card p-5 shadow-sm"
+                      >
+                        <h3 className="text-base font-semibold text-foreground">{item.q}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                          {item.a}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
               <ShareRow
                 className="mt-8 justify-start border-t border-border pt-6"
                 label="Share this guide"
