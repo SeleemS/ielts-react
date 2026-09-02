@@ -1,11 +1,21 @@
 // scripts/apply-dashboard-perf.mjs
 // Applies supabase/migrations/20260901010000_dashboard_perf.sql (dashboard_overview
-// v8 + the activity_daily* rollups), backfills the rollup from 2026-07-01, and
-// prints a before/after timing table for the four /data ranges.
+// v8 + the activity_daily* rollups), backfills the rollup from BACKFILL_FROM
+// (default 2026-01-01), and prints a before/after timing table for the four
+// /data ranges.
 //
 //   node scripts/apply-dashboard-perf.mjs
 //   node scripts/apply-dashboard-perf.mjs --skip-before   # re-run, no baseline
 //   node scripts/apply-dashboard-perf.mjs --skip-apply    # time + backfill only
+//   node scripts/apply-dashboard-perf.mjs --from 2026-01-01
+//
+// WHY the backfill starts months before the first event: activity_rollup_boundary
+// only trusts a CONTIGUOUS run of watermarked days starting at the range's own
+// first day. The 90-day preset starts before 2026-07-01, so a backfill from the
+// first event day left that whole window (and its prior-period window) reading
+// raw rows — 3.1s on 2026-09-02 while every other range took <300ms. Empty days
+// get watermark rows too, so starting the backfill at 2026-01-01 covers every
+// preset and every prior-period window from April 2026 onward for good.
 //
 // Reads SUPABASE_DB_SESSION_URL from ROOT/.env.local (or the environment).
 // The timing connection raises statement_timeout to 120s deliberately: the
@@ -49,6 +59,12 @@ if (!url) {
 }
 
 const EPOCH = '2026-07-01T00:00:00.000Z';
+const fromArg = process.argv.indexOf('--from');
+const BACKFILL_FROM = fromArg > -1 && process.argv[fromArg + 1] ? process.argv[fromArg + 1] : '2026-01-01';
+if (!/^\d{4}-\d{2}-\d{2}$/.test(BACKFILL_FROM)) {
+  console.error(`--from must be YYYY-MM-DD, got ${BACKFILL_FROM}`);
+  process.exit(1);
+}
 // Mirrors pages/api/data/overview.js: same windows the dashboard actually asks for.
 function ranges() {
   const now = new Date();
@@ -129,10 +145,10 @@ try {
     await client.query('commit');
   }
 
-  console.log('backfilling activity_daily* from 2026-07-01…');
+  console.log(`backfilling activity_daily* from ${BACKFILL_FROM}…`);
   const backfillStarted = process.hrtime.bigint();
   const backfill = await client.query('select public.refresh_activity_daily($1::date) as result', [
-    '2026-07-01',
+    BACKFILL_FROM,
   ]);
   const backfillMs = Number(process.hrtime.bigint() - backfillStarted) / 1e6;
   console.log(`  ${backfillMs.toFixed(0)} ms ·`, JSON.stringify(backfill.rows[0].result));
