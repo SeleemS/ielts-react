@@ -14,6 +14,7 @@ const testState = vi.hoisted(() => ({
   setLocalPref: null,
   saveUserPref: null,
   track: null,
+  promoLive: true,
 }));
 
 vi.mock('next/router', () => ({
@@ -34,10 +35,19 @@ vi.mock('../src/lib/prefs', () => ({
   loadUserPref: async () => null,
   saveUserPref: (...args) => testState.saveUserPref(...args),
 }));
+// A live promo is mocked in: the shipped PROMO is inactive, so without this
+// the modal correctly never renders (covered by its own test below).
 vi.mock('../src/lib/saleConfig', () => ({
-  SALE: { name: 'Summer Sale', endsAt: '2026-07-31T23:59:59-04:00', tagline: 'Lowest price of the year.' },
-  isSaleLive: () => true,
-  saleEndsAtMs: () => Date.now() + 5 * 86400000,
+  PROMO: {
+    active: true,
+    name: 'September offer',
+    couponId: 'IELTSBANK_SEPT30',
+    percentOff: 30,
+    endsAt: '2026-09-30T23:59:59-04:00',
+    appliesTo: ['monthly', 'annual'],
+  },
+  isPromoLive: () => testState.promoLive,
+  promoEndsAtMs: () => Date.now() + 5 * 86400000,
 }));
 
 import OfferReminderModal from '../src/components/OfferReminderModal';
@@ -71,6 +81,7 @@ beforeEach(() => {
   testState.setLocalPref = vi.fn();
   testState.saveUserPref = vi.fn();
   testState.track = vi.fn();
+  testState.promoLive = true;
   window.sessionStorage.clear();
   window.localStorage.clear();
   container = document.createElement('div');
@@ -99,8 +110,9 @@ describe('OfferReminderModal', () => {
 
     const dialog = document.querySelector('[role="dialog"]');
     expect(dialog).not.toBeNull();
-    expect(dialog.textContent).toContain('Summer Sale is on');
-    expect(dialog.textContent).toContain('See the Summer Sale');
+    expect(dialog.textContent).toContain('September offer is on');
+    expect(dialog.textContent).toContain('See the September offer');
+    expect(dialog.textContent).toContain('30% off at');
     expect(testState.track).toHaveBeenCalledWith('sale_reminder_shown', {
       count: 4,
       appearance: 1,
@@ -112,7 +124,7 @@ describe('OfferReminderModal', () => {
     await answerQuestions(4);
 
     const cta = [...document.querySelectorAll('[role="dialog"] button')].find((b) =>
-      b.textContent.includes('See the Summer Sale')
+      b.textContent.includes('See the September offer')
     );
     await act(async () => {
       cta.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -138,6 +150,14 @@ describe('OfferReminderModal', () => {
 
     expect(testState.setLocalPref).toHaveBeenCalledWith('saleReminderMuted', true);
     expect(testState.saveUserPref).toHaveBeenCalledWith('user-1', 'saleReminderMuted', true);
+    expect(document.querySelector('[role="dialog"]')).toBeNull();
+  });
+
+  it('never appears while no coupon-backed promo is live', async () => {
+    // The shipped default: PROMO.active === false, so there is no evergreen nag.
+    testState.promoLive = false;
+    await render();
+    await answerQuestions(12);
     expect(document.querySelector('[role="dialog"]')).toBeNull();
   });
 

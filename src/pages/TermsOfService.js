@@ -99,14 +99,15 @@ const TermsOfService = () => {
                 <ul className="mt-3 list-disc space-y-2 pl-6">
                   <li>
                     <strong className="font-semibold text-foreground">Subscriptions.</strong>{' '}
-                    Monthly, three-month, six-month and annual plans renew automatically at the
-                    price and interval shown at checkout until cancelled. Taxes may be added where
-                    required.
+                    Monthly and annual plans renew automatically at the price and interval shown
+                    at checkout until cancelled. Three-month and six-month plans are no longer
+                    sold; where one is still held, it continues to renew on the same terms until
+                    cancelled or changed. Taxes may be added where required.
                   </li>
                   <li>
                     <strong className="font-semibold text-foreground">Exam Pass.</strong>{' '}
-                    The Exam Pass is one payment for 28 days of Premium access. It does not renew
-                    automatically.
+                    The Exam Pass is one payment for 30 days of Premium access. It does not renew,
+                    no further payment is taken, and access ends on the date shown in your account.
                   </li>
                   <li>
                     <strong className="font-semibold text-foreground">Cancellation.</strong>{' '}
@@ -116,8 +117,8 @@ const TermsOfService = () => {
                   </li>
                   <li>
                     <strong className="font-semibold text-foreground">14-day money-back guarantee.</strong>{' '}
-                    You may request a refund within 14 calendar days of your first paid purchase by
-                    contacting <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                    You may request a refund within 14 calendar days of your first paid purchase —
+                    a subscription or the one-time Exam Pass — by contacting <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
                     from the email on your account. The guarantee applies once per customer. We may
                     refuse requests involving fraud, chargeback abuse, material violation of these
                     terms, or substantially consumed live-examiner usage.

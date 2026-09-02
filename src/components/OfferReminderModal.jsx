@@ -9,11 +9,13 @@ import { usePlan } from '../lib/usePlan';
 import { track } from '../lib/analytics';
 import { getLocalPref, setLocalPref, loadUserPref, saveUserPref } from '../lib/prefs';
 import { PRACTICE_EVENT } from '../lib/practiceActivity';
-import { SALE, isSaleLive, saleEndsAtMs } from '../lib/saleConfig';
+import { PROMO, isPromoLive, promoEndsAtMs } from '../lib/saleConfig';
 import { trackSelectPromotion, trackViewPromotion } from '../lib/ecommerce';
 
-// "Every few questions" reminder of the Summer Sale, shown to signed-in,
-// non-premium users while the sale is live. Mounted once globally in _app.js.
+// "Every few questions" reminder of the current promo, shown to signed-in,
+// non-premium users while that promo is live. Mounted once globally in _app.js.
+// With no promo configured (the default) isPromoLive() is false and this
+// component never renders: there is no evergreen "sale" nag.
 //
 // Cadence (per browser session): first at FIRST_AT graded submits, then every
 // REPEAT_EVERY after a dismissal, capped at MAX_PER_SESSION. "Don't remind me"
@@ -103,7 +105,7 @@ export default function OfferReminderModal() {
       const s = stateRef.current;
       if (s.open || s.muted || s.planLoading || s.isPremium || !s.userId) return;
       if (isExcludedPath(s.pathname)) return;
-      if (!isSaleLive()) return;
+      if (!isPromoLive()) return;
       const shown = getSessionShown();
       if (shown >= MAX_PER_SESSION) return;
       const count = Number(event?.detail?.count || 0);
@@ -142,26 +144,27 @@ export default function OfferReminderModal() {
   if (!open) return null;
 
   return (
-    <AccessibleModal open={open} onClose={handleLater} title={`☀️ ${SALE.name} is on`} analyticsId="sale_reminder">
+    <AccessibleModal open={open} onClose={handleLater} title={`✨ ${PROMO.name} is on`} analyticsId="sale_reminder">
       <div className="flex flex-col gap-4">
         <p className="text-sm leading-6 text-muted-foreground">
           You&apos;re putting in the practice — make it count. Unlock full AI Writing &amp; Speaking
-          scores, a live AI examiner, and timed mock tests. {SALE.tagline}
+          scores, a live AI examiner, and timed mock tests — {PROMO.percentOff}% off at
+          checkout while the offer runs.
         </p>
 
         <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
           <p className="text-xs font-bold uppercase tracking-wide text-amber-900 dark:text-amber-200">
-            Offer ends {new Date(SALE.endsAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}
+            Offer ends {new Date(PROMO.endsAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}
           </p>
           <div className="mt-2.5">
-            <SaleCountdown targetMs={saleEndsAtMs()} size="sm" onExpire={close} />
+            <SaleCountdown targetMs={promoEndsAtMs()} size="sm" onExpire={close} />
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
           <Button variant="accent" className="w-full" onClick={handleSeeOffer}>
             <Sparkles className="h-4 w-4" />
-            See the {SALE.name}
+            See the {PROMO.name}
           </Button>
           <div className="flex items-center justify-between">
             <button

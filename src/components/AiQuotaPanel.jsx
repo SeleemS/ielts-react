@@ -4,7 +4,7 @@ import { Sparkles } from 'lucide-react';
 import Modal from './AccessibleModal';
 import { usePlan } from '../lib/usePlan';
 import { track } from '../lib/analytics';
-import { money, planPricing } from '../lib/saleConfig';
+import { money, planPricing, cheapestMonthlyRate } from '../lib/saleConfig';
 
 // Limit modal for AI-scoring CTAs. Writing includes one lifetime free sample;
 // after that, this opens in two situations:
@@ -87,8 +87,12 @@ export default function AiQuotaPanel({
               <Sparkles className="h-4 w-4" />
               Upgrade to Premium
             </NextLink>
+            {/* List prices only. The modal has no region context, so it quotes
+                the standard rates; PPP visitors see their own lower prices on
+                /pricing, which is where the link goes. */}
             <p className="text-center text-xs text-muted-foreground">
-              From {money(planPricing('3month', false).perMonth)}/mo — cancel anytime.
+              From {money(cheapestMonthlyRate(false))}/mo on the annual plan, or a
+              one-time {money(planPricing('exam_pass', false).list)} Exam Pass.
             </p>
           </>
         )}

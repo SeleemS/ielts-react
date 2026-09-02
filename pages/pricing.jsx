@@ -42,21 +42,23 @@ import { PRICING_SEO } from '../lib/pricingSeo';
 import { cn } from '../src/lib/utils';
 import SaleCountdown from '../src/components/SaleCountdown';
 import {
-  SALE,
-  isSaleLive,
-  saleEndsAtMs,
+  EXAM_PASS_DAYS,
+  PROMO,
+  isPromoLive,
+  promoEndsAtMs,
+  planOrder,
+  highlightedSku,
   planPricing,
   money,
-  maxSavings,
-  maxPercentOff,
 } from '../src/lib/saleConfig';
 
 const PAGE_TITLE = PRICING_SEO.title;
 const PAGE_DESCRIPTION = PRICING_SEO.description;
 
-// Everything Pro unlocks — shown on the Pro card and the "Everything included"
-// grid. The single Pro plan is billed monthly or every 3 months; prices and the
-// Summer Sale live in src/lib/saleConfig.js (the single source of truth).
+// Everything Pro unlocks — shown on every Pro card and in the "Everything
+// included" grid. The single Pro tier is sold three ways (Monthly, Annual, and
+// the one-time Exam Pass); prices and the promo live in src/lib/saleConfig.js
+// (the single source of truth).
 const FREE_INCLUDES = [
   'Full Reading & Listening question bank',
   'Instant marking with answer keys',
@@ -105,7 +107,7 @@ const TRUST_BAND = [
   {
     icon: ShieldCheck,
     title: '14-day money-back guarantee',
-    body: 'Ask within 14 days of your first purchase for a full refund. No forms to fill in.',
+    body: 'Ask within 14 days of your first purchase for a full refund — the one-time Exam Pass included. No forms to fill in.',
   },
   {
     icon: Lock,
@@ -130,11 +132,15 @@ const TESTIMONIALS = [];
 const PRICING_FAQS = [
   {
     q: 'Is there really a money-back guarantee?',
-    a: 'Yes. If Pro is not right for you, ask within 14 days of your first purchase and we will refund it — no forms and no questions. The full terms are on the billing and refund page.',
+    a: 'Yes, and it covers every plan — including the one-time Exam Pass. If Pro is not right for you, ask within 14 days of your first purchase and we will refund it — no forms and no questions. The full terms are on the billing and refund page.',
+  },
+  {
+    q: 'What is the Exam Pass?',
+    a: `One payment for ${EXAM_PASS_DAYS} days of everything in Pro. It never renews and there is nothing to cancel — access simply ends on the date shown in your account. It suits a learner whose test is a few weeks away, and it is the option we recommend where cards often reject recurring payments.`,
   },
   {
     q: 'Can I cancel anytime?',
-    a: 'Yes. Cancel whenever you like from your account and you keep Pro access until the end of the period you have already paid for. There are no cancellation fees.',
+    a: 'Yes. Cancel a subscription whenever you like from your account and you keep Pro access until the end of the period you have already paid for. There are no cancellation fees, and the Exam Pass has nothing to cancel because it never renews.',
   },
   {
     q: 'What is free, and what needs Pro?',
@@ -207,6 +213,47 @@ function daysUntil(value) {
   const date = new Date(`${value}T00:00:00`);
   if (Number.isNaN(date.getTime())) return null;
   return Math.max(0, Math.ceil((date.getTime() - Date.now()) / 86400000));
+}
+
+// The three differentiators for one plan card. Every plan unlocks the identical
+// Pro tier, so the bullets describe the commitment, not the features (those are
+// in the comparison table and the "Everything included" grid below).
+function planPoints(plan, annualVsMonthlyPct) {
+  if (plan.isOneTime) {
+    return [
+      `Full Pro access for ${plan.days} days`,
+      'One payment — it never renews',
+      'Nothing to cancel; access simply ends',
+    ];
+  }
+  if (plan.sku === 'annual') {
+    return [
+      'Full Pro access for 12 months',
+      annualVsMonthlyPct > 0
+        ? `Save ${annualVsMonthlyPct}% against paying monthly`
+        : 'The lowest effective monthly rate',
+      'Covers your prep and a retake cycle',
+    ];
+  }
+  return [
+    'Full Pro access, month to month',
+    'Cancel in one click, anytime',
+    'Best while your test date is unsettled',
+  ];
+}
+
+// Optional exam-date nudge on a card. Only shown when the learner has actually
+// set an exam date, and only where the plan genuinely fits that window.
+function planNote(plan, { examDays, examWeeks }) {
+  if (examDays == null || !examWeeks) return '';
+  const weeks = `${examWeeks} ${examWeeks === 1 ? 'week' : 'weeks'}`;
+  if (plan.isOneTime && examDays <= plan.days) {
+    return `Your test is in ${weeks} — one pass covers it end to end.`;
+  }
+  if (plan.sku === 'annual' && examDays <= 90) {
+    return `Your test is in ${weeks} — this covers your prep and a retake cycle.`;
+  }
+  return '';
 }
 
 function contextualCopy(upgrade) {
@@ -289,9 +336,10 @@ function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
         <div className="mt-4 rounded-lg bg-muted p-3 text-sm text-muted-foreground">
           {reason === 'price' ? (
             <>
-              Fair enough. The 3-month plan works out to{' '}
-              {perMonthText ? <strong>{perMonthText}/month</strong> : 'less per month'} — and
-              prices are already set for your region.{' '}
+              Fair enough. The annual plan works out to{' '}
+              {perMonthText ? <strong>{perMonthText}/month</strong> : 'less per month'}, and the
+              one-time Exam Pass avoids a subscription entirely — prices are already set for
+              your region.{' '}
               <button type="button" onClick={onSeePlans} className="font-semibold text-accent underline">
                 Compare plans
               </button>
@@ -407,18 +455,18 @@ export default function PricingPage() {
   } = usePlan();
   const [busySku, setBusySku] = React.useState(null);
   const [error, setError] = React.useState('');
+  // Set from the checkout API's `code` so a duplicate-purchase refusal can
+  // point at billing management instead of just showing red text.
+  const [errorCode, setErrorCode] = React.useState('');
   const [signInOpen, setSignInOpen] = React.useState(false);
   const [pendingSku, setPendingSku] = React.useState(null);
   const [examDate, setExamDate] = React.useState(null);
   const [activation, setActivation] = React.useState('idle');
   const [answeredCount, setAnsweredCount] = React.useState(0);
-  // Pro billing cadence selected by the toggle; defaults to 3 months (best
-  // value) so the higher-ARPU plan leads, with Monthly one tap away.
-  const [cadence, setCadence] = React.useState('3month');
-  // Whether the Summer Sale chrome renders. Defaults to SALE.active for a
-  // matching SSR/first paint, then refined on the client (and flipped off by
-  // the countdown's onExpire) to avoid any Date-based hydration mismatch.
-  const [saleLive, setSaleLive] = React.useState(SALE.active);
+  // Whether the promo chrome renders. Defaults to PROMO.active for a matching
+  // SSR/first paint, then refined on the client (and flipped off by the
+  // countdown's onExpire) to avoid any Date-based hydration mismatch.
+  const [promoLive, setPromoLive] = React.useState(PROMO.active);
   const trackedRef = React.useRef({ paywall: '', purchase: '' });
 
   const checkoutStatus = typeof router.query.checkout === 'string' ? router.query.checkout : '';
@@ -433,28 +481,38 @@ export default function PricingPage() {
   const pauseActive =
     Boolean(pauseUntil) && new Date(pauseUntil).getTime() > Date.now();
   const pausePending = planStatus === 'paused';
+  // A one-time Exam Pass is the only entitlement carrying an expiry. Its holder
+  // still sees the plan grid (a pass can be converted into a subscription);
+  // anyone holding a recurring plan sees the manage-your-plan panel instead.
+  const examPassActive =
+    Boolean(expiresAt) && new Date(expiresAt).getTime() > Date.now();
+  const ownsSubscription =
+    (isPremium && !examPassActive) || pauseActive || pausePending;
   const context = contextualCopy(upgrade);
   const examDays = daysUntil(examDate);
   const examWeeks = examDays == null ? null : Math.max(1, Math.ceil(examDays / 7));
 
   const pricingFaqJsonLd = React.useMemo(() => faqJsonLdFor(PRICING_FAQS), []);
 
-  // Resolve the region's numbers for both cadences (sale price = real price;
-  // regular = struck anchor). PPP keeps the lower regional prices.
+  // The three sellable plans for this region, in card order, with the
+  // highlighted one in the middle. PPP visitors lead with the Exam Pass
+  // (recurring cards are frequently declined without a mandate there); every
+  // other visitor leads with Annual.
+  const planKeys = planOrder(regionalPricing);
+  const featuredSku = highlightedSku(regionalPricing);
+  const plans = planKeys.map((sku) => planPricing(sku, regionalPricing));
   const monthlyPricing = planPricing('monthly', regionalPricing);
-  const threeMonthPricing = planPricing('3month', regionalPricing);
-  const proPricing = cadence === 'monthly' ? monthlyPricing : threeMonthPricing;
-  // Savings from paying every 3 months vs month-to-month (billing-frequency
-  // discount shown on the toggle), independent of the sale.
-  const quarterVsMonthlyPct =
-    monthlyPricing && threeMonthPricing
-      ? Math.round((1 - threeMonthPricing.sale / (monthlyPricing.sale * 3)) * 100)
+  const annualPricing = planPricing('annual', regionalPricing);
+  // Genuine billing-frequency saving: a year prepaid vs twelve monthly charges.
+  // Both numbers are prices we really charge, so this is not an anchor.
+  const annualVsMonthlyPct =
+    monthlyPricing && annualPricing
+      ? Math.round((1 - annualPricing.price / (monthlyPricing.price * 12)) * 100)
       : 0;
-  const saleBestSavings = maxSavings(regionalPricing);
 
   React.useEffect(() => {
-    // Refine the sale state on the client so an expired sale hides its chrome.
-    setSaleLive(isSaleLive());
+    // Refine the promo state on the client so an expired promo hides its chrome.
+    setPromoLive(isPromoLive());
   }, []);
 
   React.useEffect(() => {
@@ -471,16 +529,8 @@ export default function PricingPage() {
     if (trackedRef.current.itemList) return;
     trackedRef.current.itemList = true;
     trackViewItemList(regionalPricing, upgrade || 'pricing');
-    if (isSaleLive()) trackViewPromotion('pricing_banner');
+    trackViewPromotion('pricing_banner');
   }, [router.isReady, checkoutStatus, regionalPricing, upgrade]);
-
-  const selectCadence = React.useCallback(
-    (nextCadence) => {
-      setCadence(nextCadence);
-      trackSelectItem(nextCadence, regionalPricing);
-    },
-    [regionalPricing]
-  );
 
   // Live, real social proof: total practice questions answered across all
   // learners. Fetched client-side; renders only if the RPC returns a count.
@@ -557,6 +607,7 @@ export default function PricingPage() {
 
   const startCheckout = React.useCallback(async (sku) => {
     setError('');
+    setErrorCode('');
     if (!user) {
       setPendingSku(sku);
       setSignInOpen(true);
@@ -564,6 +615,9 @@ export default function PricingPage() {
     }
     setBusySku(sku);
     track('checkout_start', { sku, source: upgrade || 'pricing', country, ppp: regionalPricing });
+    // The cards are all visible at once, so choosing one IS the select_item
+    // step of the GA4 funnel; begin_checkout follows immediately.
+    trackSelectItem(sku, regionalPricing);
     trackBeginCheckout(sku, regionalPricing, upgrade || 'pricing');
     try {
       const { headers, sessionError } = await authHeader();
@@ -586,7 +640,10 @@ export default function PricingPage() {
         return;
       }
       if (body.code === 'anonymous_user') setSignInOpen(true);
-      else setError(body.error || 'Could not start checkout. Please try again.');
+      else {
+        setErrorCode(body.code || '');
+        setError(body.error || 'Could not start checkout. Please try again.');
+      }
     } catch {
       setError('Could not start checkout. Please try again.');
     } finally {
@@ -700,7 +757,7 @@ export default function PricingPage() {
         {checkoutStatus === 'canceled' ? (
           <CanceledRecovery
             upgrade={upgrade}
-            perMonthText={threeMonthPricing?.perMonth ? money(threeMonthPricing.perMonth) : ''}
+            perMonthText={annualPricing?.perMonth ? money(annualPricing.perMonth) : ''}
             onSeePlans={() => {
               document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
             }}
@@ -709,6 +766,15 @@ export default function PricingPage() {
         {error ? (
           <div role="alert" className="mx-auto mt-6 max-w-xl rounded-lg border border-red-300 bg-red-50 p-4 text-center text-sm text-red-900">
             {error}
+            {errorCode === 'already_premium' || errorCode === 'already_exam_pass' ? (
+              <>
+                {' '}
+                <NextLink href="/billing/manage" className="font-semibold underline">
+                  Manage your plan
+                </NextLink>
+                .
+              </>
+            ) : null}
           </div>
         ) : null}
         {planError ? (
@@ -717,27 +783,25 @@ export default function PricingPage() {
           </div>
         ) : null}
 
-        {isPremium || pauseActive || pausePending ? (
+        {ownsSubscription ? (
           <div className="mx-auto mt-8 max-w-xl rounded-xl border bg-card p-6 text-center shadow-sm">
             <p className="text-lg font-semibold">
               {pauseActive
                 ? 'Your Pro plan is paused'
                 : pausePending
                   ? 'Your Pro plan is resuming'
-                  : 'Your Pro tools are active ✨'}
+                  : 'You already have Pro — manage your plan'}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
               {pauseActive
                 ? `Premium access resumes ${new Date(pauseUntil).toLocaleDateString()}.`
                 : pausePending
                   ? 'Stripe is processing the scheduled resume. Access returns after payment succeeds.'
-                : expiresAt
-                ? `Your Exam Pass is active until ${new Date(expiresAt).toLocaleDateString()}.`
-                : planStatus === 'canceled' && renewsAt
-                  ? `Your plan stays active until ${new Date(renewsAt).toLocaleDateString()}.`
-                  : renewsAt
-                    ? `Renews on ${new Date(renewsAt).toLocaleDateString()}.`
-                    : 'Thanks for supporting IELTS Bank.'}
+                  : planStatus === 'canceled' && renewsAt
+                    ? `Your plan stays active until ${new Date(renewsAt).toLocaleDateString()}.`
+                    : renewsAt
+                      ? `Renews on ${new Date(renewsAt).toLocaleDateString()}.`
+                      : 'Thanks for supporting IELTS Bank.'}
             </p>
             {hasBillingAccount ? (
               <Button asChild variant="outline" className="mt-4">
@@ -749,13 +813,36 @@ export default function PricingPage() {
           </div>
         ) : (
           <div className="mt-10">
-            {/* Summer Sale banner + live countdown. Hidden once the sale ends
-                (the sale price then simply becomes the plain Pro price). */}
-            {saleLive ? (
+            {/* An Exam Pass holder keeps the plan grid: a pass can be turned
+                into a subscription at any time. Only a second pass is refused
+                (checkout returns already_exam_pass). */}
+            {examPassActive ? (
+              <div className="mx-auto mb-8 max-w-2xl rounded-xl border bg-card p-5 text-center shadow-sm">
+                <p className="text-base font-semibold text-foreground">
+                  Your Exam Pass ends on {new Date(expiresAt).toLocaleDateString()}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  It never renews. Subscribe below whenever you want Pro to continue past that
+                  date.
+                </p>
+                {hasBillingAccount ? (
+                  <Button asChild variant="outline" className="mt-4">
+                    <NextLink href="/billing/manage" className="no-underline">
+                      Manage billing
+                    </NextLink>
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
+
+            {/* Promo banner. Renders only while saleConfig's PROMO is live,
+                which requires a real Stripe coupon that checkout verifies. No
+                promo, no banner — and never an invented "was" price. */}
+            {promoLive ? (
               <div
                 role="button"
                 tabIndex={0}
-                aria-label="See sale prices"
+                aria-label="See offer prices"
                 onClick={() => {
                   trackSelectPromotion('pricing_banner');
                   document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
@@ -772,168 +859,157 @@ export default function PricingPage() {
                 <div className="flex flex-col items-center gap-4 p-5 text-center sm:flex-row sm:justify-between sm:p-6 sm:text-left">
                   <div>
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
-                      <Sparkles className="h-3.5 w-3.5" /> {SALE.name}
+                      <Sparkles className="h-3.5 w-3.5" /> {PROMO.name}
                     </span>
                     <p className="mt-2.5 text-lg font-extrabold tracking-tight text-amber-950 dark:text-amber-50 sm:text-xl">
-                      Up to {maxPercentOff(regionalPricing)}% off Pro — save up to {money(saleBestSavings)}
+                      {PROMO.percentOff}% off at checkout
                     </p>
                     <p className="mt-1 text-sm font-medium text-amber-900/80 dark:text-amber-100/80">
-                      {SALE.tagline}
+                      The discount is applied by Stripe when you check out.
                     </p>
                   </div>
                   <div className="shrink-0 text-center">
                     <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-900/70 dark:text-amber-100/70">
                       Ends in
                     </p>
-                    <SaleCountdown targetMs={saleEndsAtMs()} onExpire={() => setSaleLive(false)} />
+                    <SaleCountdown targetMs={promoEndsAtMs()} onExpire={() => setPromoLive(false)} />
                   </div>
                 </div>
               </div>
             ) : null}
 
-            {/* Billing cadence toggle — 3 months leads (best value). */}
-            <div className="flex justify-center">
-              <div
-                role="tablist"
-                aria-label="Billing period"
-                className="inline-flex items-center gap-1 rounded-full border border-border bg-muted p-1"
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={cadence === 'monthly'}
-                  onClick={() => selectCadence('monthly')}
-                  className={cn(
-                    'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                    cadence === 'monthly'
-                      ? 'bg-background text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={cadence === '3month'}
-                  onClick={() => selectCadence('3month')}
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-                    cadence === '3month'
-                      ? 'bg-background text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  3 months
-                  {quarterVsMonthlyPct > 0 ? (
-                    <span className="rounded-full bg-accent/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-accent">
-                      Save {quarterVsMonthlyPct}%
-                    </span>
-                  ) : null}
-                </button>
+            {/* Free tier stays a single compact strip so the paid grid is
+                exactly three cards. The full Free vs Pro table is below. */}
+            <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-muted/40 p-5">
+              <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                <div>
+                  <p className="text-sm font-bold text-foreground">Free — $0, forever</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {FREE_INCLUDES.join(' · ')}
+                  </p>
+                </div>
+                <Button asChild variant="outline" className="shrink-0">
+                  <NextLink href="/reading" className="no-underline">Keep practising free</NextLink>
+                </Button>
               </div>
             </div>
 
-            {/* Free vs Pro — the core comparison. */}
-            <div id="plans" className="mx-auto mt-8 grid max-w-4xl items-stretch gap-5 md:grid-cols-2">
-              <Card className="flex flex-col border-border shadow-sm">
-                <CardContent className="flex h-full flex-col p-6">
-                  <h2 className="text-base font-bold text-foreground">Free</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">Practise the question bank, forever.</p>
-                  <div className="mt-4 flex items-baseline gap-1.5">
-                    <span className="text-4xl font-extrabold tracking-tight text-foreground">$0</span>
-                    <span className="text-sm font-medium text-muted-foreground">/ forever</span>
-                  </div>
-                  <ul className="mt-6 flex flex-1 flex-col gap-2.5">
-                    {FREE_INCLUDES.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        <span className="text-foreground">{item}</span>
-                      </li>
-                    ))}
-                    <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <X className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/40" />
-                      <span>No AI Writing / Speaking feedback, examiner, or mocks</span>
-                    </li>
-                  </ul>
-                  <Button asChild variant="outline" className="mt-6 w-full">
-                    <NextLink href="/reading" className="no-underline">Keep practising free</NextLink>
-                  </Button>
-                </CardContent>
-              </Card>
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                Every plan below unlocks the same Pro tier — only the billing differs.
+              </p>
+              <ul className="mx-auto mt-3 flex max-w-4xl flex-wrap justify-center gap-2">
+                {PRO_INCLUDES.map((item) => (
+                  <li
+                    key={item}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground"
+                  >
+                    <Check className="h-3.5 w-3.5 shrink-0 text-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <Card className="relative flex flex-col border-2 border-accent bg-accent/[0.03] shadow-xl ring-1 ring-accent/10">
-                <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground shadow-md">
-                  Most popular
-                </span>
-                <CardContent className="flex h-full flex-col p-6 pt-7">
-                  <div className="flex items-center justify-between gap-2">
-                    <h2 className="text-base font-bold text-foreground">Pro</h2>
-                    {saleLive ? (
-                      <Badge variant="secondary" className="bg-amber-500 uppercase tracking-wide text-white">
-                        {SALE.name}
-                      </Badge>
-                    ) : null}
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">Everything you need to lift your band.</p>
-
-                  <div className="mt-4 flex items-baseline gap-2">
-                    {saleLive ? (
-                      <span className="text-lg font-semibold text-muted-foreground line-through decoration-2">
-                        {money(proPricing.regular)}
+            <div
+              id="plans"
+              className="mx-auto mt-5 grid max-w-5xl items-stretch gap-5 md:grid-cols-3"
+            >
+              {plans.map((plan) => {
+                const featured = plan.sku === featuredSku;
+                const alreadyOwned = plan.isOneTime && examPassActive;
+                const note = planNote(plan, { examDays, examWeeks });
+                return (
+                  <Card
+                    key={plan.sku}
+                    className={cn(
+                      'relative flex flex-col shadow-sm',
+                      featured
+                        ? 'border-2 border-accent bg-accent/[0.03] shadow-xl ring-1 ring-accent/10'
+                        : 'border-border'
+                    )}
+                  >
+                    {featured ? (
+                      <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground shadow-md">
+                        {plan.isOneTime ? 'Best for your region' : 'Best value'}
                       </span>
                     ) : null}
-                    <span className="text-4xl font-extrabold tracking-tight text-foreground">
-                      {money(proPricing.sale)}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm font-medium text-muted-foreground">
-                    {proPricing.cadence}
-                    {proPricing.perMonth ? ` · ≈ ${money(proPricing.perMonth)}/mo` : ''}
-                  </p>
-                  {saleLive && proPricing.savings > 0 ? (
-                    <p className="mt-2 inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-xs font-bold text-amber-900 dark:bg-amber-500/15 dark:text-amber-200">
-                      Save {money(proPricing.savings)} · {proPricing.percentOff}% off — ends{' '}
-                      {new Date(SALE.endsAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                    </p>
-                  ) : null}
+                    <CardContent className="flex h-full flex-col p-6 pt-7">
+                      <div className="flex items-center justify-between gap-2">
+                        <h2 className="text-base font-bold text-foreground">{plan.name}</h2>
+                        {plan.promo ? (
+                          <Badge variant="secondary" className="bg-amber-500 uppercase tracking-wide text-white">
+                            {PROMO.percentOff}% off
+                          </Badge>
+                        ) : null}
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">{plan.blurb}</p>
 
-                  {cadence === '3month' && examWeeks && examDays <= 90 ? (
-                    <p className="mt-3 rounded-lg bg-accent/10 p-2 text-xs font-semibold text-accent">
-                      Your test is in {examWeeks} {examWeeks === 1 ? 'week' : 'weeks'} — this plan
-                      covers your prep{examDays <= 45 ? ' and a retake cycle' : ''}.
-                    </p>
-                  ) : null}
+                      <div className="mt-4 flex items-baseline gap-2">
+                        {plan.promo ? (
+                          <span className="text-lg font-semibold text-muted-foreground line-through decoration-2">
+                            {money(plan.list)}
+                          </span>
+                        ) : null}
+                        <span className="text-4xl font-extrabold tracking-tight text-foreground">
+                          {money(plan.price)}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm font-medium text-muted-foreground">
+                        {plan.isOneTime
+                          ? `one-time · ${plan.days} days of Pro`
+                          : `${plan.cadence}${plan.perMonth ? ` · ≈ ${money(plan.perMonth)}/mo` : ''}`}
+                      </p>
+                      {plan.promo ? (
+                        <p className="mt-2 inline-flex w-fit items-center rounded-md bg-amber-100 px-2 py-1 text-xs font-bold text-amber-900 dark:bg-amber-500/15 dark:text-amber-200">
+                          {money(plan.price)} with the {PROMO.name} until{' '}
+                          {new Date(PROMO.endsAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </p>
+                      ) : null}
 
-                  <ul className="mt-5 flex flex-1 flex-col gap-2.5">
-                    {PRO_INCLUDES.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-sm">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                        <span className="text-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                      {note ? (
+                        <p className="mt-3 rounded-lg bg-accent/10 p-2 text-xs font-semibold text-accent">
+                          {note}
+                        </p>
+                      ) : null}
 
-                  <Button
-                    type="button"
-                    variant="accent"
-                    aria-label={`Choose ${proPricing.name} plan`}
-                    onClick={() => startCheckout(cadence)}
-                    disabled={busySku !== null || planLoading || Boolean(planError)}
-                    className="mt-6 w-full"
-                  >
-                    {busySku === cadence ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Sparkles className="h-4 w-4" />
-                    )}
-                    Choose this plan
-                  </Button>
-                  <p className="mt-2 text-center text-xs text-muted-foreground">
-                    14-day money-back guarantee · cancel anytime
-                  </p>
-                </CardContent>
-              </Card>
+                      <ul className="mt-5 flex flex-1 flex-col gap-2.5">
+                        {planPoints(plan, annualVsMonthlyPct).map((item) => (
+                          <li key={item} className="flex items-start gap-2.5 text-sm">
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                            <span className="text-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <Button
+                        type="button"
+                        variant={featured ? 'accent' : 'outline'}
+                        aria-label={`Choose ${plan.name} plan`}
+                        onClick={() => startCheckout(plan.sku)}
+                        disabled={
+                          busySku !== null || planLoading || Boolean(planError) || alreadyOwned
+                        }
+                        className="mt-6 w-full"
+                      >
+                        {busySku === plan.sku ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Sparkles className="h-4 w-4" />
+                        )}
+                        {alreadyOwned ? 'Exam Pass active' : 'Choose this plan'}
+                      </Button>
+                      <p className="mt-2 text-center text-xs text-muted-foreground">
+                        14-day money-back guarantee ·{' '}
+                        {plan.isOneTime ? 'never renews' : 'cancel anytime'}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         )}

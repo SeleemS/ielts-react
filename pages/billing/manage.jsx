@@ -184,17 +184,12 @@ export default function ManageBillingPage() {
     isPremium
     && ['monthly', '3month', '6month', 'annual'].includes(planSku)
     && ['active', 'trialing'].includes(planStatus);
+  // Annual is the only upgrade target on sale. Monthly and the retired
+  // 3-month/6-month plans can all move up to it in place.
   const upgrades =
-    !canChangeRecurringPlan
-      ? []
-      : planSku === 'monthly'
-      ? [
-          { sku: '3month', label: 'Upgrade to 3 months' },
-          { sku: 'annual', label: 'Upgrade to annual' },
-        ]
-      : planSku === '3month' || planSku === '6month'
-        ? [{ sku: 'annual', label: 'Upgrade to annual' }]
-        : [];
+    canChangeRecurringPlan && ['monthly', '3month', '6month'].includes(planSku)
+      ? [{ sku: 'annual', label: 'Upgrade to annual' }]
+      : [];
   return (
     <>
       <Head>

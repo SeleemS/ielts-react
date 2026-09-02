@@ -15,23 +15,32 @@ import {
   subscriptionSku,
   subscriptionIsPpp,
 } from '../../../lib/billing';
+import { planPricing } from '../../../src/lib/saleConfig';
 
 const CHANGE_WINDOW_SECONDS = 10 * 60;
 const CHANGE_MAX_PER_WINDOW = 10;
 const QUOTE_MAX_AGE_SECONDS = 5 * 60;
-const UPGRADE_PRICE_CONTRACTS = {
-  '3month': {
-    global: { amountMinor: 1999, interval: 'month', intervalCount: 3 },
-    ppp: { amountMinor: 899, interval: 'month', intervalCount: 3 },
-  },
-  annual: {
-    global: { amountMinor: 4499, interval: 'year', intervalCount: 1 },
-    ppp: { amountMinor: 1999, interval: 'year', intervalCount: 1 },
-  },
-};
+// Annual is the only in-place upgrade target now that the 3-month plan is
+// retired from sale. Monthly, 3-month and 6-month subscribers can all move up
+// to it; the price contract is derived from saleConfig so the two can never
+// drift apart. Coupons are never applied to an in-place upgrade, so the
+// contract is the list price.
+const UPGRADE_TARGET_SKUS = ['annual'];
+
+function upgradePriceContract(targetSku, ppp) {
+  const plan = UPGRADE_TARGET_SKUS.includes(targetSku)
+    ? planPricing(targetSku, ppp)
+    : null;
+  if (!plan || plan.isOneTime) return null;
+  return {
+    amountMinor: Math.round(plan.list * 100),
+    interval: plan.interval,
+    intervalCount: plan.intervalCount,
+  };
+}
 
 function upgradePriceMismatch(price, targetSku, ppp) {
-  const expected = UPGRADE_PRICE_CONTRACTS[targetSku]?.[ppp ? 'ppp' : 'global'];
+  const expected = upgradePriceContract(targetSku, ppp);
   const valid =
     Boolean(expected) &&
     price?.active === true &&
@@ -133,7 +142,7 @@ export default async function handler(req, res) {
   if (!user) return res.status(401).json({ error: 'Sign in to change your plan.' });
 
   const targetSku = typeof req.body?.sku === 'string' ? req.body.sku : '';
-  if (!['3month', 'annual'].includes(targetSku)) {
+  if (!UPGRADE_TARGET_SKUS.includes(targetSku)) {
     return res.status(400).json({ error: 'Choose a valid upgrade plan.' });
   }
   const action = req.body?.action == null ? 'preview' : req.body.action;

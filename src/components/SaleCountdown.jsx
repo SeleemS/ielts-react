@@ -69,7 +69,7 @@ export default function SaleCountdown({ targetMs, onExpire, size = 'md', classNa
     <div
       className={cn('flex items-center gap-1.5 sm:gap-2', className)}
       role="timer"
-      aria-label="Time left in the Summer Sale"
+      aria-label="Time left in the current offer"
       suppressHydrationWarning
     >
       {units.map((unit, index) => (

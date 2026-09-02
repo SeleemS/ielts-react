@@ -1,7 +1,9 @@
 // scripts/setup-stripe-catalog.mjs
 // Idempotently creates the Stripe catalog for docs/MONETIZATION.md §3:
 //   * one product: "IELTS Bank Premium"
-//   * eight USD prices, addressed by lookup_key (4 global + 4 PPP)
+//   * six USD prices for the plans on sale, addressed by lookup_key
+//     (3 global + 3 PPP). The retired 3-month/6-month prices are deliberately
+//     absent: they still bill existing subscribers and must never be recreated.
 //   * optional 100%-off coupon + promotion code used ONLY for E2E verification
 //
 //   node scripts/setup-stripe-catalog.mjs                    # read-only audit
@@ -95,15 +97,18 @@ async function stripeGet(pathname, params) {
   return json;
 }
 
+// Kept in step with src/lib/saleConfig.js and with
+// scripts/configure-exam-pass-annual.mjs, which is the script that MOVES a
+// price (create + transfer_lookup_key + archive). This one only ever creates
+// what is missing, so an amount here that disagrees with the live catalogue
+// makes the audit throw rather than silently re-pricing anything.
 const PRICES = [
-  { lookup_key: 'premium_monthly',     unit_amount: 899,  interval: 'month', interval_count: 1,  nickname: 'Premium Monthly (global)' },
-  { lookup_key: 'premium_3month',      unit_amount: 1999, interval: 'month', interval_count: 3,  nickname: 'Premium 3-Month hero (global)' },
-  { lookup_key: 'premium_annual',      unit_amount: 4499, interval: 'year',  interval_count: 1,  nickname: 'Premium Annual (global)' },
-  { lookup_key: 'premium_exam_pass',   unit_amount: 1499, nickname: 'Premium Exam Pass — 28 days (global)' },
-  { lookup_key: 'premium_monthly_ppp', unit_amount: 399,  interval: 'month', interval_count: 1,  nickname: 'Premium Monthly (PPP)' },
-  { lookup_key: 'premium_3month_ppp',  unit_amount: 899,  interval: 'month', interval_count: 3,  nickname: 'Premium 3-Month hero (PPP)' },
-  { lookup_key: 'premium_annual_ppp',  unit_amount: 1999, interval: 'year',  interval_count: 1,  nickname: 'Premium Annual (PPP)' },
-  { lookup_key: 'premium_exam_pass_ppp', unit_amount: 699, nickname: 'Premium Exam Pass — 28 days (PPP)' },
+  { lookup_key: 'premium_monthly',     unit_amount: 899,  interval: 'month', interval_count: 1,  nickname: 'Pro Monthly (global)' },
+  { lookup_key: 'premium_annual',      unit_amount: 4999, interval: 'year',  interval_count: 1,  nickname: 'Pro Annual (global)' },
+  { lookup_key: 'premium_exam_pass',   unit_amount: 1499, nickname: 'Pro Exam Pass — 30 days (global)' },
+  { lookup_key: 'premium_monthly_ppp', unit_amount: 399,  interval: 'month', interval_count: 1,  nickname: 'Pro Monthly (PPP)' },
+  { lookup_key: 'premium_annual_ppp',  unit_amount: 1999, interval: 'year',  interval_count: 1,  nickname: 'Pro Annual (PPP)' },
+  { lookup_key: 'premium_exam_pass_ppp', unit_amount: 599, nickname: 'Pro Exam Pass — 30 days (PPP)' },
 ];
 
 async function main() {
