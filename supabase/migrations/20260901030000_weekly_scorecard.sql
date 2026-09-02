@@ -32,8 +32,9 @@
 --  6 new_payers           distinct users with a subscription_activated row.
 --  7 mrr_usd              METHOD: current entitlement state x the charged
 --                         price of the SKU (mirrors src/lib/saleConfig.js —
---                         monthly $8.99, 3month $19.99, PPP $3.99 / $8.99,
---                         retired 6month $49.99; an unknown or absent
+--                         monthly $8.99, annual $49.99, PPP $3.99 / $19.99,
+--                         retired 3month $19.99 (PPP $8.99) and 6month $29.99
+--                         (PPP $14.99); an unknown or absent
 --                         plan_sku is valued at the global monthly price).
 --                         A row counts when it satisfies the recurring half of
 --                         lib/premium.isPremiumRow: plan='premium', not
@@ -136,9 +137,10 @@ renewals as (
 ),
 prices(sku, monthly_global, monthly_ppp) as (
   values
-    ('monthly', 8.99::numeric,     3.99::numeric),
-    ('3month',  19.99::numeric / 3, 8.99::numeric / 3),
-    ('6month',  49.99::numeric / 6, null::numeric)   -- retired for new sales
+    ('monthly', 8.99::numeric,      3.99::numeric),
+    ('annual',  49.99::numeric / 12, 19.99::numeric / 12),
+    ('3month',  19.99::numeric / 3,  8.99::numeric / 3),   -- retired for new sales
+    ('6month',  29.99::numeric / 6,  14.99::numeric / 6)   -- retired; the only live 6-month sub was charged $29.99
 ),
 subs as (
   select

@@ -56,8 +56,11 @@ describe('weekly_scorecard migration', () => {
 
   it('documents and implements the MRR method', () => {
     expect(scorecard).toContain('method: current entitlement state x the charged');
-    expect(scorecard).toContain("('monthly', 8.99::numeric,     3.99::numeric)");
-    expect(scorecard).toContain("('3month',  19.99::numeric / 3, 8.99::numeric / 3)");
+    expect(scorecard).toContain("('monthly', 8.99::numeric,      3.99::numeric)");
+    expect(scorecard).toContain("('annual',  49.99::numeric / 12, 19.99::numeric / 12)");
+    expect(scorecard).toContain("('3month',  19.99::numeric / 3,  8.99::numeric / 3)");
+    // the only live 6-month subscription was charged $29.99, never $49.99
+    expect(scorecard).toContain("('6month',  29.99::numeric / 6,  14.99::numeric / 6)");
     // the recurring half of lib/premium.isPremiumRow
     expect(scorecard).toContain('u.plan_expires_at is null');
     expect(scorecard).toContain("u.plan_status in ('active', 'trialing', 'past_due')");
