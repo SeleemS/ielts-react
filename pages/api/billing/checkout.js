@@ -1,9 +1,15 @@
 // pages/api/billing/checkout.js
-// Creates a Stripe Checkout Session for a currently advertised subscription.
+// Creates a Stripe Checkout Session for a currently advertised plan: the
+// Monthly or Annual subscription, or the one-time 30-day Exam Pass.
 //   * signed-in, NON-anonymous users only (receipts + portal need an email);
 //   * price resolved server-side by lookup_key — PPP variant when the request
 //     geo (x-vercel-ip-country) is in the PPP list. Never client-chosen.
+//   * an account that already owns a recurring subscription cannot buy a
+//     second one (409 already_premium); an Exam Pass holder may subscribe but
+//     cannot stack a second pass (409 already_exam_pass).
 //   * promotion codes allowed; card collection skipped for 100%-off checkouts.
+//   * when saleConfig's PROMO is live, its REAL Stripe coupon is attached and
+//     its percent_off is verified against saleConfig before the session opens.
 export const config = { runtime: 'nodejs' };
 
 import { createClient } from '@supabase/supabase-js';
@@ -11,34 +17,43 @@ import { clientIp, originAllowed } from '../../../lib/apiSecurity';
 import {
   CHECKOUT_SKUS,
   getStripe,
+  isOneTimeSku,
   resolveLookupKey,
   isPppCountry,
 } from '../../../lib/billing';
 import { isPremiumRow } from '../../../lib/premium';
 import { sanitizeGaClientId } from '../../../lib/ga4mp';
-import { planPricing } from '../../../src/lib/saleConfig';
+import { PROMO, planPricing, promoAppliesTo } from '../../../src/lib/saleConfig';
 
 const CHECKOUT_WINDOW_SECONDS = 10 * 60;
 const CHECKOUT_MAX_PER_WINDOW = 10;
 
+// Stripe charges the resolved Price, not the amount rendered from saleConfig.
+// The advertised contract covers the amount, the currency, and the billing
+// cadence — including one-time vs recurring, which is what separates the Exam
+// Pass from a subscription.
 function advertisedPriceMismatch(price, sku, ppp) {
   const expected = planPricing(sku, ppp);
-  const expectedIntervalCount = sku === '3month' ? 3 : 1;
-  const expectedMinor = expected ? Math.round(expected.sale * 100) : null;
+  const expectedMinor = expected ? Math.round(expected.list * 100) : null;
+  const cadenceValid = expected?.isOneTime
+    ? price?.type === 'one_time' && !price?.recurring
+    : price?.type === 'recurring'
+      && price?.recurring?.interval === expected?.interval
+      && price?.recurring?.interval_count === expected?.intervalCount
+      && price?.recurring?.usage_type === 'licensed';
   const valid =
     Boolean(expected) &&
     price?.active === true &&
     price?.currency === 'usd' &&
     price?.unit_amount === expectedMinor &&
-    price?.type === 'recurring' &&
-    price?.recurring?.interval === 'month' &&
-    price?.recurring?.interval_count === expectedIntervalCount &&
-    price?.recurring?.usage_type === 'licensed';
+    cadenceValid;
   return valid
     ? null
     : {
         expectedMinor,
-        expectedIntervalCount,
+        expectedType: expected?.isOneTime ? 'one_time' : 'recurring',
+        expectedInterval: expected?.interval ?? null,
+        expectedIntervalCount: expected?.intervalCount ?? null,
         actualMinor: price?.unit_amount ?? null,
         actualCurrency: price?.currency ?? null,
         actualType: price?.type ?? null,
@@ -46,6 +61,26 @@ function advertisedPriceMismatch(price, sku, ppp) {
         actualIntervalCount: price?.recurring?.interval_count ?? null,
         actualUsageType: price?.recurring?.usage_type ?? null,
         active: price?.active ?? null,
+      };
+}
+
+// The promo coupon is the only way a discount is ever advertised, so the page
+// copy is only honest if Stripe's coupon really takes off the same percentage.
+// Anything else (wrong percentage, amount_off coupon, expired, deleted) fails
+// closed exactly like a price mismatch.
+function promoCouponMismatch(coupon) {
+  const valid =
+    coupon?.valid === true &&
+    coupon?.deleted !== true &&
+    coupon?.percent_off === PROMO.percentOff;
+  return valid
+    ? null
+    : {
+        couponId: PROMO.couponId,
+        expectedPercentOff: PROMO.percentOff,
+        actualPercentOff: coupon?.percent_off ?? null,
+        actualAmountOff: coupon?.amount_off ?? null,
+        valid: coupon?.valid ?? null,
       };
 }
 
@@ -170,11 +205,30 @@ export default async function handler(req, res) {
     && userRow.plan === 'premium'
     && userRow.plan_status === 'paused'
   );
-  if (
-    isPremiumRow({ ...userRow, billing_pause_until: null })
-    || hasTruePausedSubscription
-  ) {
-    return res.status(409).json({ error: 'You already have Premium.', code: 'already_premium' });
+  const entitledNow = isPremiumRow({ ...userRow, billing_pause_until: null });
+  // An unexpired one-time pass with no subscription behind it. A pass holder
+  // is deliberately allowed to convert to a subscription while the pass runs
+  // (Stripe bills the subscription from day one; the pass simply stops being
+  // the thing granting access) — but must not stack a second pass.
+  const holdsExamPass = Boolean(
+    entitledNow
+    && userRow.plan_expires_at
+    && new Date(userRow.plan_expires_at).getTime() > Date.now()
+    && !userRow.stripe_subscription_id
+  );
+  const ownsRecurringPlan =
+    (entitledNow && !holdsExamPass) || hasTruePausedSubscription;
+  if (ownsRecurringPlan) {
+    return res.status(409).json({
+      error: 'You already have Pro — manage your plan.',
+      code: 'already_premium',
+    });
+  }
+  if (holdsExamPass && isOneTimeSku(sku)) {
+    return res.status(409).json({
+      error: 'Your Exam Pass is still active. Subscribe instead, or wait until it ends.',
+      code: 'already_exam_pass',
+    });
   }
   const winBackEligible =
     offer === 'winback' &&
@@ -227,9 +281,8 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Pricing unavailable. Please try again later.' });
     }
 
-    // Stripe charges the resolved Price, not the amount rendered from
-    // saleConfig. Fail closed before customer/session creation unless amount,
-    // currency, and billing cadence match the advertised plan exactly.
+    // Fail closed before customer/session creation unless amount, currency,
+    // and billing cadence match the advertised plan exactly.
     const mismatch = advertisedPriceMismatch(price, sku, isPppCountry(country));
     if (mismatch) {
       console.error('checkout PRICE MISMATCH:', {
@@ -240,6 +293,27 @@ export default async function handler(req, res) {
       return res.status(503).json({
         error: 'Pricing is being updated. Please try again later.',
       });
+    }
+
+    // The advertised promo, if any, must be a live Stripe coupon taking off
+    // exactly the percentage saleConfig renders. The win-back coupon takes
+    // precedence: Stripe accepts only one coupon per session.
+    const promoApplies = !winBackEligible && promoAppliesTo(sku);
+    let promoCouponId = null;
+    if (promoApplies) {
+      const coupon = await stripe.coupons
+        .retrieve(PROMO.couponId)
+        .catch((error) => ({ error }));
+      const couponMismatch = coupon?.error
+        ? { couponId: PROMO.couponId, retrieveError: coupon.error.message }
+        : promoCouponMismatch(coupon);
+      if (couponMismatch) {
+        console.error('checkout PROMO COUPON MISMATCH:', { sku, ...couponMismatch });
+        return res.status(503).json({
+          error: 'Pricing is being updated. Please try again later.',
+        });
+      }
+      promoCouponId = PROMO.couponId;
     }
 
     let customerId = userRow.stripe_customer_id;
@@ -288,19 +362,25 @@ export default async function handler(req, res) {
           }
         : {};
 
+    // The Exam Pass is a single charge, so it opens a `payment` session with
+    // no subscription_data: nothing is stored to renew, and the webhook grants
+    // a fixed window instead of a billing period. `payment_method_collection`
+    // is a subscription/setup-mode field and is omitted for one-time payments.
+    const oneTime = isOneTimeSku(sku);
+    const couponId = winBackEligible
+      ? process.env.STRIPE_WINBACK_COUPON_ID
+      : promoCouponId;
     const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
+      mode: oneTime ? 'payment' : 'subscription',
       customer: customerId,
       line_items: [{ price: price.id, quantity: 1 }],
-      allow_promotion_codes: !winBackEligible,
-      ...(winBackEligible
-        ? { discounts: [{ coupon: process.env.STRIPE_WINBACK_COUPON_ID }] }
-        : {}),
-      payment_method_collection: 'if_required',
+      allow_promotion_codes: !couponId,
+      ...(couponId ? { discounts: [{ coupon: couponId }] } : {}),
+      ...(oneTime ? {} : { payment_method_collection: 'if_required' }),
       client_reference_id: userRow.id,
       metadata,
       ...tosConsent,
-      subscription_data: { metadata },
+      ...(oneTime ? {} : { subscription_data: { metadata } }),
       ...(process.env.STRIPE_AUTOMATIC_TAX === '1' ? { automatic_tax: { enabled: true } } : {}),
       success_url: `${origin}/pricing?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/pricing?checkout=canceled`,

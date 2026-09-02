@@ -18,6 +18,10 @@ const testState = vi.hoisted(() => ({
   pauseUntil: null,
   hasBillingAccount: false,
   planStatus: 'inactive',
+  isPremium: false,
+  expiresAt: null,
+  renewsAt: null,
+  ppp: false,
 }));
 
 vi.mock('next/head', () => ({
@@ -62,10 +66,10 @@ vi.mock('../src/lib/auth', () => ({
 }));
 vi.mock('../src/lib/usePlan', () => ({
   usePlan: () => ({
-    isPremium: false,
+    isPremium: testState.isPremium,
     planStatus: testState.planStatus,
-    renewsAt: null,
-    expiresAt: null,
+    renewsAt: testState.renewsAt,
+    expiresAt: testState.expiresAt,
     pauseUntil: testState.pauseUntil,
     hasBillingAccount: testState.hasBillingAccount,
     loading: false,
@@ -100,7 +104,7 @@ vi.mock('../lib/supabase', () => ({
   getPublicTrustStats: async () => ({ questionsAnswered: 0 }),
 }));
 vi.mock('../lib/billing', () => ({
-  isPppCountry: () => false,
+  isPppCountry: () => testState.ppp,
 }));
 vi.mock('../src/lib/analytics', () => ({
   track: vi.fn(),
@@ -150,6 +154,10 @@ beforeEach(() => {
   testState.pauseUntil = null;
   testState.hasBillingAccount = false;
   testState.planStatus = 'inactive';
+  testState.isPremium = false;
+  testState.expiresAt = null;
+  testState.renewsAt = null;
+  testState.ppp = false;
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -274,7 +282,7 @@ describe('pricing authentication handoff', () => {
     expect(container.querySelector('a[href="/billing/manage"]')).not.toBeNull();
   });
 
-  it('gives the checkout action a plan-specific accessible name', async () => {
+  it('gives every checkout action a plan-specific accessible name', async () => {
     testState.router = {
       isReady: true,
       query: {},
@@ -282,12 +290,17 @@ describe('pricing authentication handoff', () => {
 
     await renderPage();
 
-    // Single Pro plan; the toggle defaults to the 3-month cadence (best value).
+    // Three cards, global order: Monthly, Annual (highlighted), Exam Pass.
     expect(
       [...container.querySelectorAll('main button[aria-label]')].map(
         (button) => button.getAttribute('aria-label')
       )
-    ).toEqual(['Choose 3 months plan']);
+    ).toEqual(['Choose Monthly plan', 'Choose Annual plan', 'Choose Exam Pass plan']);
+    expect(container.textContent).toContain('$8.99');
+    expect(container.textContent).toContain('$49.99');
+    expect(container.textContent).toContain('$14.99');
+    // Item 39: no fictitious anchors — nothing is struck through.
+    expect(container.querySelector('.line-through')).toBeNull();
   });
 
   it('stays on pricing and resumes the plan selected before sign-in', async () => {
@@ -301,8 +314,8 @@ describe('pricing authentication handoff', () => {
     });
     await renderPage();
 
-    const proButton = [...container.querySelectorAll('button')].find(
-      (button) => button.textContent.trim() === 'Choose this plan'
+    const proButton = container.querySelector(
+      'button[aria-label="Choose Annual plan"]'
     );
     act(() => {
       proButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -326,7 +339,7 @@ describe('pricing authentication handoff', () => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer test-access-token',
       },
-      body: JSON.stringify({ sku: '3month', offer: '', ga_cid: null }),
+      body: JSON.stringify({ sku: 'annual', offer: '', ga_cid: null }),
     });
   });
 
@@ -344,8 +357,8 @@ describe('pricing authentication handoff', () => {
 
       await renderPage();
 
-      const proButton = [...container.querySelectorAll('button')].find(
-        (button) => button.textContent.trim() === 'Choose this plan'
+      const proButton = container.querySelector(
+        'button[aria-label="Choose Annual plan"]'
       );
       await act(async () => {
         proButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -360,6 +373,81 @@ describe('pricing authentication handoff', () => {
       expect(global.fetch).not.toHaveBeenCalled();
     }
   );
+
+  it('leads a PPP region with the one-time Exam Pass at the regional price', async () => {
+    testState.router = { isReady: true, query: {} };
+    testState.ppp = true;
+
+    await renderPage();
+
+    // Card order puts the highlighted plan in the middle.
+    expect(
+      [...container.querySelectorAll('main button[aria-label]')].map((button) =>
+        button.getAttribute('aria-label')
+      )
+    ).toEqual(['Choose Monthly plan', 'Choose Exam Pass plan', 'Choose Annual plan']);
+    expect(container.textContent).toContain('Best for your region');
+    expect(container.textContent).toContain('$5.99');
+    expect(container.textContent).toContain('$3.99');
+    expect(container.textContent).toContain('$19.99');
+    expect(container.textContent).not.toContain('$14.99');
+  });
+
+  it('tells an active subscriber to manage the plan they already have', async () => {
+    testState.router = { isReady: true, query: {} };
+    testState.user = { id: 'user-1' };
+    testState.isPremium = true;
+    testState.planStatus = 'active';
+    testState.renewsAt = '2099-01-20T00:00:00.000Z';
+    testState.hasBillingAccount = true;
+
+    await renderPage();
+
+    expect(container.textContent).toContain('You already have Pro — manage your plan');
+    expect(container.textContent).not.toContain('Choose this plan');
+    expect(container.querySelector('a[href="/billing/manage"]')).not.toBeNull();
+  });
+
+  it('lets an Exam Pass holder subscribe, but not buy a second pass', async () => {
+    testState.router = { isReady: true, query: {} };
+    testState.user = { id: 'user-1' };
+    testState.isPremium = true;
+    testState.planStatus = 'active';
+    testState.expiresAt = '2099-01-20T00:00:00.000Z';
+
+    await renderPage();
+
+    expect(container.textContent).toContain('Your Exam Pass ends on');
+    const passButton = container.querySelector('button[aria-label="Choose Exam Pass plan"]');
+    expect(passButton.disabled).toBe(true);
+    expect(passButton.textContent).toContain('Exam Pass active');
+    const annualButton = container.querySelector('button[aria-label="Choose Annual plan"]');
+    expect(annualButton.disabled).toBe(false);
+  });
+
+  it('points a duplicate-purchase refusal at billing management', async () => {
+    testState.router = { isReady: true, query: {} };
+    testState.user = { id: 'user-1' };
+    global.fetch.mockResolvedValue({
+      ok: false,
+      json: async () => ({
+        error: 'You already have Pro — manage your plan.',
+        code: 'already_premium',
+      }),
+    });
+
+    await renderPage();
+    const annualButton = container.querySelector('button[aria-label="Choose Annual plan"]');
+    await act(async () => {
+      annualButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const alert = container.querySelector('[role="alert"]');
+    expect(alert.textContent).toContain('You already have Pro');
+    expect(alert.querySelector('a[href="/billing/manage"]')).not.toBeNull();
+  });
 
   it('disables every checkout action when current plan verification fails', async () => {
     testState.router = {
@@ -377,7 +465,7 @@ describe('pricing authentication handoff', () => {
     const checkoutButtons = [...container.querySelectorAll('button')].filter(
       (button) => button.textContent.includes('Choose this plan')
     );
-    expect(checkoutButtons).toHaveLength(1);
+    expect(checkoutButtons).toHaveLength(3);
     expect(checkoutButtons.every((button) => button.disabled)).toBe(true);
   });
 });

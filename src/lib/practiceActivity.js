@@ -1,6 +1,6 @@
 // src/lib/practiceActivity.js
 // A tiny, consent-independent counter of graded practice submissions in the
-// current browser session. Drives the "every few questions" Summer Sale
+// current browser session. Drives the "every few questions" promo
 // reminder (src/components/OfferReminderModal.jsx) — a product feature, so it
 // must NOT be gated on analytics consent.
 //

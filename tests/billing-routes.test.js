@@ -6,6 +6,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Readable } from 'node:stream';
 import { createHmac } from 'node:crypto';
 import Stripe from 'stripe';
+import { PROMO } from '../src/lib/saleConfig';
 
 const WEBHOOK_SECRET = 'whsec_test_secret_for_vitest';
 
@@ -132,17 +133,23 @@ const mockState = {
   reconciliationOutcome: 'activated user user-1 (active)',
   priceOverride: null,
   priceList: null,
+  coupon: null,
+  couponReject: null,
   stripeCalls: {},
 };
 
+// Mirrors the live catalogue after scripts/configure-exam-pass-annual.mjs:
+// annual at $49.99, and the Exam Pass as a genuine one-time price.
 function priceForLookupKey(lookupKey) {
   const priceShape = {
     premium_monthly: { unit_amount: 899, interval: 'month', interval_count: 1 },
     premium_3month: { unit_amount: 1999, interval: 'month', interval_count: 3 },
-    premium_annual: { unit_amount: 4499, interval: 'year', interval_count: 1 },
+    premium_annual: { unit_amount: 4999, interval: 'year', interval_count: 1 },
+    premium_exam_pass: { unit_amount: 1499 },
     premium_monthly_ppp: { unit_amount: 399, interval: 'month', interval_count: 1 },
     premium_3month_ppp: { unit_amount: 899, interval: 'month', interval_count: 3 },
     premium_annual_ppp: { unit_amount: 1999, interval: 'year', interval_count: 1 },
+    premium_exam_pass_ppp: { unit_amount: 599 },
   }[lookupKey] || { unit_amount: 7999, interval: 'year', interval_count: 1 };
   return {
     id: 'price_mock_1',
@@ -150,13 +157,17 @@ function priceForLookupKey(lookupKey) {
     active: true,
     currency: 'usd',
     billing_scheme: 'per_unit',
-    type: 'recurring',
     unit_amount: priceShape.unit_amount,
-    recurring: {
-      interval: priceShape.interval,
-      interval_count: priceShape.interval_count,
-      usage_type: 'licensed',
-    },
+    ...(priceShape.interval
+      ? {
+          type: 'recurring',
+          recurring: {
+            interval: priceShape.interval,
+            interval_count: priceShape.interval_count,
+            usage_type: 'licensed',
+          },
+        }
+      : { type: 'one_time', recurring: null }),
     ...(mockState.priceOverride || {}),
   };
 }
@@ -231,6 +242,13 @@ vi.mock('../lib/billing', async (importOriginal) => {
               mockState.priceList
               || [priceForLookupKey(args.lookup_keys[0])],
           };
+        },
+      },
+      coupons: {
+        retrieve: async (id) => {
+          mockState.stripeCalls.couponRetrieve = id;
+          if (mockState.couponReject) throw mockState.couponReject;
+          return mockState.coupon;
         },
       },
       customers: {
@@ -310,11 +328,29 @@ describe('POST /api/billing/checkout', () => {
     mockState.reconciliationOutcome = 'activated user user-1 (active)';
     mockState.priceOverride = null;
     mockState.priceList = null;
+    mockState.coupon = null;
+    mockState.couponReject = null;
     mockState.stripeCalls = {};
     vi.restoreAllMocks();
     delete process.env.STRIPE_AUTOMATIC_TAX;
     delete process.env.STRIPE_WINBACK_COUPON_ID;
   });
+
+  // Item 39: the only discount the page may advertise is a real Stripe coupon,
+  // and checkout must verify it takes off exactly the advertised percentage.
+  function withLivePromo(overrides = {}) {
+    const saved = { ...PROMO };
+    Object.assign(PROMO, {
+      active: true,
+      name: 'September offer',
+      couponId: 'IELTSBANK_SEPT30',
+      percentOff: 30,
+      endsAt: new Date(Date.now() + 7 * 86400000).toISOString(),
+      appliesTo: ['monthly', 'annual', 'exam_pass'],
+      ...overrides,
+    });
+    return () => Object.assign(PROMO, saved);
+  }
 
   async function callCheckout({ headers = {}, body = { sku: 'monthly' } } = {}) {
     const { default: handler } = await import('../pages/api/billing/checkout');
@@ -377,8 +413,8 @@ describe('POST /api/billing/checkout', () => {
     expect(mockState.stripeCalls).toEqual({});
   });
 
-  it.each(['lifetime', 'annual', 'exam_pass', '6month'])(
-    'rejects unavailable new-purchase SKU %s before account or Stripe work',
+  it.each(['lifetime', '3month', '6month'])(
+    'rejects retired or unknown new-purchase SKU %s before account or Stripe work',
     async (sku) => {
       mockState.authUser = { id: 'user-1' };
       const res = await callCheckout({
@@ -410,6 +446,62 @@ describe('POST /api/billing/checkout', () => {
     };
     const res = await callCheckout({ headers: { authorization: 'Bearer tok' } });
     expect(res.statusCode).toBe(409);
+    expect(res.jsonBody.code).toBe('already_premium');
+    expect(res.jsonBody.error).toBe('You already have Pro — manage your plan.');
+  });
+
+  it('blocks an active subscriber from buying any second plan, Exam Pass included', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = {
+      id: 'user-1',
+      email: 'a@b.com',
+      is_anonymous: false,
+      plan: 'premium',
+      plan_status: 'active',
+      plan_renews_at: '2099-01-20T00:00:00.000Z',
+      stripe_customer_id: 'cus_existing',
+      stripe_subscription_id: 'sub_existing',
+    };
+
+    for (const sku of ['monthly', 'annual', 'exam_pass']) {
+      const res = await callCheckout({
+        headers: { authorization: 'Bearer tok' },
+        body: { sku },
+      });
+      expect(res.statusCode).toBe(409);
+      expect(res.jsonBody.code).toBe('already_premium');
+    }
+    expect(mockState.rpcCalls).toEqual([]);
+    expect(mockState.stripeCalls).toEqual({});
+  });
+
+  it('lets an Exam Pass holder subscribe but not stack a second pass', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = {
+      id: 'user-1',
+      email: 'a@b.com',
+      is_anonymous: false,
+      plan: 'premium',
+      plan_status: 'active',
+      plan_expires_at: '2099-01-20T00:00:00.000Z',
+      stripe_customer_id: 'cus_existing',
+      stripe_subscription_id: null,
+    };
+
+    const blocked = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: 'exam_pass' },
+    });
+    expect(blocked.statusCode).toBe(409);
+    expect(blocked.jsonBody.code).toBe('already_exam_pass');
+    expect(mockState.stripeCalls).toEqual({});
+
+    const allowed = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: 'annual' },
+    });
+    expect(allowed.statusCode).toBe(200);
+    expect(mockState.stripeCalls.sessionCreate.mode).toBe('subscription');
   });
 
   it('rejects a second recurring checkout while Premium access is paused', async () => {
@@ -537,22 +629,71 @@ describe('POST /api/billing/checkout', () => {
     expect(session.automatic_tax).toBeUndefined();
   });
 
-  it('creates a global 3-month checkout on the advertised price contract', async () => {
+  it('creates a global annual checkout on the advertised price contract', async () => {
     mockState.authUser = { id: 'user-1' };
     mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
     const res = await callCheckout({
       headers: { authorization: 'Bearer tok' },
-      body: { sku: '3month' },
+      body: { sku: 'annual' },
     });
     expect(res.statusCode).toBe(200);
-    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_3month']);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_annual']);
     const session = mockState.stripeCalls.sessionCreate;
     expect(session.mode).toBe('subscription');
-    expect(session.subscription_data.metadata.sku).toBe('3month');
+    expect(session.subscription_data.metadata.sku).toBe('annual');
     expect(session.subscription_data.metadata.ppp).toBe('0');
   });
 
-  it('lets an eligible win-back account buy the 3-month plan at list price', async () => {
+  it('opens the Exam Pass as a one-time payment with nothing set up to renew', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    const res = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: 'exam_pass' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_exam_pass']);
+    const session = mockState.stripeCalls.sessionCreate;
+    expect(session.mode).toBe('payment');
+    expect(session.subscription_data).toBeUndefined();
+    // payment_method_collection is a subscription/setup-mode field; sending it
+    // on a one-time session is rejected by Stripe.
+    expect(session.payment_method_collection).toBeUndefined();
+    expect(session.metadata).toMatchObject({ sku: 'exam_pass', ppp: '0', user_id: 'user-1' });
+    expect(session.client_reference_id).toBe('user-1');
+  });
+
+  it('resolves the regional Exam Pass price for a PPP visitor', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    const res = await callCheckout({
+      headers: { authorization: 'Bearer tok', 'x-vercel-ip-country': 'IN' },
+      body: { sku: 'exam_pass' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_exam_pass_ppp']);
+    expect(mockState.stripeCalls.sessionCreate.metadata.ppp).toBe('1');
+  });
+
+  it('blocks an Exam Pass checkout if Stripe returns a recurring price', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    mockState.priceOverride = {
+      type: 'recurring',
+      recurring: { interval: 'month', interval_count: 1, usage_type: 'licensed' },
+    };
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const res = await callCheckout({
+      headers: { authorization: 'Bearer tok' },
+      body: { sku: 'exam_pass' },
+    });
+
+    expect(res.statusCode).toBe(503);
+    expect(mockState.stripeCalls.sessionCreate).toBeUndefined();
+  });
+
+  it('lets an eligible win-back account buy the annual plan at list price', async () => {
     process.env.STRIPE_WINBACK_COUPON_ID = 'IELTSBANK_WINBACK40';
     mockState.authUser = { id: 'user-1' };
     mockState.userRow = {
@@ -564,7 +705,7 @@ describe('POST /api/billing/checkout', () => {
     };
     const res = await callCheckout({
       headers: { authorization: 'Bearer tok' },
-      body: { sku: '3month', offer: 'winback' },
+      body: { sku: 'annual', offer: 'winback' },
     });
     expect(res.statusCode).toBe(200);
     expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
@@ -576,10 +717,10 @@ describe('POST /api/billing/checkout', () => {
     mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
     const res = await callCheckout({
       headers: { authorization: 'Bearer tok', 'x-vercel-ip-country': 'IN' },
-      body: { sku: '3month' },
+      body: { sku: 'annual' },
     });
     expect(res.statusCode).toBe(200);
-    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_3month_ppp']);
+    expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual(['premium_annual_ppp']);
     expect(mockState.stripeCalls.sessionCreate.subscription_data.metadata.ppp).toBe('1');
   });
 
@@ -784,6 +925,88 @@ describe('POST /api/billing/checkout', () => {
     expect(mockState.stripeCalls.sessionCreate.discounts).toEqual([
       { coupon: 'IELTSBANK_WINBACK40' },
     ]);
+  });
+
+  it('attaches the configured promo coupon and stops stacking promotion codes', async () => {
+    const restore = withLivePromo();
+    mockState.coupon = { id: 'IELTSBANK_SEPT30', percent_off: 30, valid: true };
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    try {
+      const res = await callCheckout({ headers: { authorization: 'Bearer tok' } });
+
+      expect(res.statusCode).toBe(200);
+      expect(mockState.stripeCalls.couponRetrieve).toBe('IELTSBANK_SEPT30');
+      const session = mockState.stripeCalls.sessionCreate;
+      expect(session.discounts).toEqual([{ coupon: 'IELTSBANK_SEPT30' }]);
+      // Stripe accepts either a coupon or promotion codes, never both.
+      expect(session.allow_promotion_codes).toBe(false);
+    } finally {
+      restore();
+    }
+  });
+
+  it.each([
+    ['a different percentage', { id: 'IELTSBANK_SEPT30', percent_off: 20, valid: true }],
+    ['an amount-off coupon', { id: 'IELTSBANK_SEPT30', amount_off: 300, valid: true }],
+    ['an invalid coupon', { id: 'IELTSBANK_SEPT30', percent_off: 30, valid: false }],
+  ])('fails closed when the promo coupon is %s', async (_label, coupon) => {
+    const restore = withLivePromo();
+    mockState.coupon = coupon;
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      const res = await callCheckout({ headers: { authorization: 'Bearer tok' } });
+
+      expect(res.statusCode).toBe(503);
+      expect(res.jsonBody.error).toMatch(/pricing is being updated/i);
+      expect(mockState.stripeCalls.sessionCreate).toBeUndefined();
+    } finally {
+      restore();
+    }
+  });
+
+  it('fails closed when the promo coupon no longer exists in Stripe', async () => {
+    const restore = withLivePromo();
+    mockState.couponReject = new Error('No such coupon');
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    try {
+      const res = await callCheckout({ headers: { authorization: 'Bearer tok' } });
+      expect(res.statusCode).toBe(503);
+      expect(mockState.stripeCalls.sessionCreate).toBeUndefined();
+    } finally {
+      restore();
+    }
+  });
+
+  it('never touches a coupon for a SKU the promo does not name', async () => {
+    const restore = withLivePromo({ appliesTo: ['annual'] });
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    try {
+      const res = await callCheckout({
+        headers: { authorization: 'Bearer tok' },
+        body: { sku: 'exam_pass' },
+      });
+      expect(res.statusCode).toBe(200);
+      expect(mockState.stripeCalls.couponRetrieve).toBeUndefined();
+      expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
+      expect(mockState.stripeCalls.sessionCreate.allow_promotion_codes).toBe(true);
+    } finally {
+      restore();
+    }
+  });
+
+  it('ships with no promo, so no coupon is ever fetched at checkout', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    const res = await callCheckout({ headers: { authorization: 'Bearer tok' } });
+    expect(res.statusCode).toBe(200);
+    expect(mockState.stripeCalls.couponRetrieve).toBeUndefined();
+    expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
   });
 
   it('enables automatic Tax only when the production setting is explicitly on', async () => {
@@ -1124,7 +1347,7 @@ describe('POST /api/billing/change-plan', () => {
         targetSku: 'annual',
         amountDue: 3200,
         currency: 'usd',
-        targetAmount: 4499,
+        targetAmount: 4999,
         interval: 'year',
         intervalCount: 1,
         prorationDate,
@@ -1157,7 +1380,7 @@ describe('POST /api/billing/change-plan', () => {
         targetSku: 'annual',
         amountDue: 3200,
         currency: 'usd',
-        targetAmount: 4499,
+        targetAmount: 4999,
         interval: 'year',
         intervalCount: 1,
         token: expect.any(String),
@@ -1272,10 +1495,21 @@ describe('POST /api/billing/change-plan', () => {
     mockState.retrievedSubscription.metadata.ppp = '1';
     mockState.retrievedSubscription.items.data[0].price.lookup_key =
       'premium_monthly_ppp';
-    await callChangePlan({ sku: '3month' });
+    await callChangePlan({ sku: 'annual' });
     expect(mockState.stripeCalls.pricesList.lookup_keys).toEqual([
-      'premium_3month_ppp',
+      'premium_annual_ppp',
     ]);
+  });
+
+  it('refuses a retired plan as an upgrade target', async () => {
+    // The 3-month plan still bills its existing subscribers, but it is no
+    // longer sold, so nobody may move onto it.
+    for (const sku of ['3month', '6month', 'exam_pass']) {
+      mockState.stripeCalls = {};
+      const res = await callChangePlan({ sku });
+      expect(res.statusCode).toBe(400);
+      expect(mockState.stripeCalls.subscriptionUpdate).toBeUndefined();
+    }
   });
 
   it.each([
@@ -1331,15 +1565,18 @@ describe('POST /api/billing/change-plan', () => {
   });
 
   it('rejects same-term and downgrade requests before modifying Stripe', async () => {
+    // Monthly is not a valid target at all now that annual is the only upgrade.
     const same = await callChangePlan({ sku: 'monthly' });
     expect(same.statusCode).toBe(400);
     expect(mockState.stripeCalls.subscriptionUpdate).toBeUndefined();
 
+    // Already annual: asking for annual again is not an upgrade.
     mockState.retrievedSubscription.items.data[0].price.lookup_key =
       'premium_annual';
     mockState.stripeCalls = {};
-    const downgrade = await callChangePlan({ sku: '3month' });
-    expect(downgrade.statusCode).toBe(409);
+    const alreadyAnnual = await callChangePlan({ sku: 'annual' });
+    expect(alreadyAnnual.statusCode).toBe(409);
+    expect(alreadyAnnual.jsonBody.code).toBe('not_an_upgrade');
     expect(mockState.stripeCalls.subscriptionUpdate).toBeUndefined();
   });
 

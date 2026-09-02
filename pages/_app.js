@@ -136,7 +136,7 @@ function MyApp({ Component, pageProps }) {
       )}
 
         <Component {...pageProps} />
-        {/* Global Summer Sale reminder — self-gates to signed-in, non-premium
+        {/* Global promo reminder — self-gates to signed-in, non-premium
             users and only fires every few graded submits (see the component). */}
         <OfferReminderModal />
         {/* The private /data dashboard is operator-only and excluded from

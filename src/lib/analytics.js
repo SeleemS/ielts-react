@@ -158,7 +158,7 @@ export function getAttribution() {
 
 export function track(event, params = {}, options = {}) {
   if (typeof window === 'undefined' || !event) return;
-  // Product-feature counter for the Summer Sale reminder. Intentionally runs
+  // Product-feature counter for the promo reminder. Intentionally runs
   // BEFORE the analytics-consent gate below: the reminder is not analytics, so
   // a user who declined analytics must still get the offer nudge. No-ops for
   // non-submit events. Isolated so a listener/storage failure can never take

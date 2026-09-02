@@ -17,7 +17,7 @@
 - **Gated (the product we sell):** AI scoring of Writing & Speaking (rubric-anchored, per-criterion feedback), "unlimited" scores under fair-use daily caps (§5.3), the Realtime AI speaking examiner (metered in minutes, §9), progress analytics, an ad-free experience, and mock-test / export features.
 - **Free metering:** anonymous users sign up first; each signed-in free account receives **1 lifetime Writing score** on the mini model. The result reveals the overall band and first criterion, with the rest teased behind Premium. Speaking stays Premium-only.
 - **Premium limits (§5.3):** Writing 2/day, 10/week, 30/month; recorded Speaking 1/day, 5/week, 15/month; Realtime examiner **60 min/period** global (30 on PPP plans). Current unit economics and the service-role cost views are documented in `docs/AI-COST-CONTROLS.md`.
-- **Prices (USD, global list):** **$9.99/mo**, **hero SKU $29.99 / 6 months (~$5/mo)**, **$44.99/year (~$3.75/mo)**, and a **$14.99 non-renewing 28-day Exam Pass**. Eligible PPP markets use separate server-selected prices; Gulf markets remain full price.
+- **Prices (USD, global list):** **$8.99/mo**, **$49.99/year (~$4.17/mo — the highlighted plan)**, and a **$14.99 non-renewing 30-day Exam Pass** (the highlighted plan in PPP markets, where recurring cards are often declined). Eligible PPP markets use separate server-selected prices; Gulf markets remain full price. No fictitious anchor prices: discounts appear only when a real Stripe coupon is attached.
 - **Payments:** **Stripe** (see decision note above) — Checkout + Billing subscriptions, webhook → `users.plan`; PPP implemented as separate Stripe Prices selected server-side by request geo (`x-vercel-ip-country`). Stripe Tax support is implemented, but live activation remains pending account setup and `STRIPE_AUTOMATIC_TAX=1`; tax registrations are our responsibility as MoR.
 - **MVP paid launch:** Supabase Auth (anon → Google/email) → server-side metering → Writing scoring API → Stripe Checkout + webhook → `users.plan` gate. Everything else (analytics dashboards, speaking, exports) ships after money is flowing.
 
@@ -137,29 +137,35 @@ Funnel assumptions (industry-typical for free-content edtech): ~8% of sessions c
 
 ## 3. Pricing recommendation
 
-### 3.1 Global list prices (USD)
+### 3.1 Global list prices (USD) — current, as sold on /pricing
+
+Source of truth: `src/lib/saleConfig.js`. Three SKUs are sellable; `CHECKOUT_SKUS` in `lib/billing.js` enforces it.
 
 | SKU | Price | Effective /mo | Role |
 |---|---|---|---|
-| Monthly | **$9.99** | $9.99 | Anchor / impulse; most users see this first |
-| **6-month (HERO)** | **$29.99** | **~$5.00** | Default recommended plan — matches a real IELTS study cycle |
-| Annual | **$44.99** | ~$3.75 | Best value; maximizes cash upfront + retention |
-| Exam Pass | **$14.99** | n/a | One payment for 28 days; never renews |
+| Monthly | **$8.99** | $8.99 | Entry point while a test date is unsettled |
+| **Annual (BEST VALUE)** | **$49.99** | **~$4.17** | Highlighted plan outside PPP markets; maximum cash upfront + retention |
+| **Exam Pass** | **$14.99** | n/a | One payment for **30 days**; never renews. Highlighted plan **in PPP markets** |
 
-Rationale for the 6-month hero: IELTS prep is a **fixed-duration project**, not an indefinite service. Buyers think "I test in ~3–5 months," so a 6-month prepay converts better than monthly and dramatically reduces churn/refund exposure vs a rolling monthly plan. Price it as the visually-highlighted middle option.
+There are **no struck-through anchor prices anywhere**. A discount is only ever displayed when a real Stripe coupon is attached at checkout (`PROMO` in `src/lib/saleConfig.js`), and `pages/api/billing/checkout.js` refuses the session unless Stripe reports the same `percent_off` the page advertised.
+
+Why the Exam Pass leads in PPP markets: Indian cards routinely reject recurring charges without a mandate, while one-off charges succeed. Elsewhere the annual plan leads because IELTS prep is a **fixed-duration project** and a prepay converts better than a rolling monthly plan while cutting churn and refund exposure.
+
+**Retired from sale** (still billing existing subscribers; lookup keys retained in `LOOKUP_BY_SKU`, and both remain upgradable to annual): 3-month $19.99 / $8.99 PPP, 6-month $29.99. Nobody is re-priced — Stripe keeps billing archived prices.
 
 ### 3.2 PPP-discounted tiers (eligible lower-income markets)
 
 PPP is implemented as separate Stripe Prices selected **server-side** from trusted request geo (`x-vercel-ip-country`), set at **~55% off** in eligible markets. Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, Oman, Syria, Iran, and Sudan are explicitly excluded from PPP selection.
 
-| SKU | Global | PPP (India/MENA/SEA) |
-|---|---|---|
-| Monthly | $9.99 | **$3.99** |
-| 6-month (hero) | $29.99 | **$14.99** |
-| Annual | $44.99 | **$19.99** |
-| Exam Pass | $14.99 | **$6.99** |
+| SKU | Global | PPP (India/MENA/SEA) | Stripe lookup keys |
+|---|---|---|---|
+| Monthly | $8.99 | **$3.99** | `premium_monthly` / `premium_monthly_ppp` |
+| Annual | $49.99 | **$19.99** | `premium_annual` / `premium_annual_ppp` |
+| Exam Pass (30 days, one-time) | $14.99 | **$5.99** | `premium_exam_pass` / `premium_exam_pass_ppp` |
 
-PPP is not optional here: a $9.99 global price is a hard wall in ₹/₨ markets, and unauthorized-region full-price sales drive chargebacks. Server-side PPP price selection both lifts conversion and cuts fraud/refund rates. (Note: Stripe's UPI support is limited vs Paddle's — a known conversion loss for Indian traffic; monitor and revisit.)
+Catalogue changes go through `scripts/configure-exam-pass-annual.mjs` (dry run by default, `--apply` to write). Stripe price amounts are immutable, so it creates a replacement price with `transfer_lookup_key: true` and archives the superseded one.
+
+PPP is not optional here: a $8.99 global price is a hard wall in ₹/₨ markets, and unauthorized-region full-price sales drive chargebacks. Server-side PPP price selection both lifts conversion and cuts fraud/refund rates. (Note: Stripe's UPI support is limited vs Paddle's — a known conversion loss for Indian traffic; monitor and revisit.)
 
 ### 3.3 Justification vs named competitors (current 2026 prices)
 
@@ -240,8 +246,9 @@ SUPABASE_SERVICE_ROLE_KEY=...        # server only — webhook + scoring route
 # Stripe
 STRIPE_SECRET_KEY=sk_live_...        # server only
 STRIPE_WEBHOOK_SECRET=whsec_...      # server only — verify webhook signatures
-# Price IDs are resolved at runtime by lookup_key (premium_monthly, premium_6month,
-# premium_annual, premium_exam_pass, plus each key's _ppp variant), so no
+# Price IDs are resolved at runtime by lookup_key (premium_monthly, premium_annual,
+# premium_exam_pass — plus the retired premium_3month/premium_6month for existing
+# subscribers — and each key's _ppp variant), so no
 # per-price env vars are needed.
 STRIPE_AUTOMATIC_TAX=1
 STRIPE_WINBACK_COUPON_ID=...        # optional: enables validated 40%-off monthly win-back
@@ -267,7 +274,7 @@ OPENAI_API_KEY=...
 2. Use the Supabase **service role** client (never the anon key) to write.
 3. Handle events idempotently, keyed on `stripe_subscription_id` (state upserts, not increments):
    - `checkout.session.completed` → map `client_reference_id`/metadata → user; set `plan='premium'`, `plan_status='active'`, `plan_started_at`, `stripe_customer_id`, `stripe_subscription_id`, seed realtime minutes (§9).
-   - one-time Exam Pass checkout → set a 28-day `plan_expires_at`, seed realtime minutes, and never create a renewing subscription.
+   - one-time Exam Pass checkout (`mode: payment`) → set a 30-day `plan_expires_at`, seed realtime minutes, and never create a renewing subscription. A pass holder may later subscribe (the subscription clears `plan_expires_at`); an account already holding a recurring plan is refused a second purchase with 409 `already_premium`, and a pass holder is refused a second pass with 409 `already_exam_pass`.
    - `customer.subscription.created`/`updated` → sync `plan_status` from Stripe status (`active`/`trialing` → premium-active; `past_due` → grace; `canceled`/`unpaid`/`incomplete_expired` → downgrade at period end), refresh `plan_renews_at` from `current_period_end`; either `cancel_at_period_end=true` or an explicit future `cancel_at` → `plan_status='canceled'` but **retain premium until `plan_renews_at`**. Stripe Customer Portal can use either cancellation representation, so both are required.
    - `customer.subscription.deleted` → `plan='free'`, `plan_status='canceled'`.
    - `invoice.paid` → resync entitlement and refill the Realtime allowance for the renewal period.
@@ -381,7 +388,7 @@ Mapped to the roadmap: **auth → metering → paywall → analytics.** Ship in 
 
 ### Phase C — Minimum Viable Paid Launch  ← **first money**
 6. **Add billing columns** to `users` (§4.2) + service-role-only write trigger; premium daily counters + realtime meter on `user_quotas`.
-7. **Stripe setup**: one Premium product, 8 prices by `lookup_key` (Monthly, 6-month, Annual, Exam Pass; global + PPP); promo-code support for launch discounts and E2E verification.
+7. **Stripe setup**: one Pro product, 6 sellable prices by `lookup_key` (Monthly, Annual, Exam Pass; global + PPP) plus the retired 3-month/6-month prices that still bill existing subscribers; promo-code support for launch discounts and E2E verification.
 8. **Checkout**: `POST /api/billing/checkout` → server-resolved price (geo → PPP) → Stripe Checkout redirect.
 9. **Webhook route** (`pages/api/webhooks/stripe.js`): signature verify + idempotent upsert of `plan`/`plan_status`/`plan_renews_at`/`stripe_*` (§4.4).
 10. **Gate in the scoring route**: signed-in free receives one lifetime Writing sample; premium enters fair-use daily caps (§5.3); Speaking stays Premium-only.

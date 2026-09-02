@@ -15,31 +15,42 @@
 // (lib/billing.js) both report the same checkout session safely.
 
 import { track } from './analytics';
-import { PLANS, SALE, isSaleLive, planPricing } from './saleConfig';
+import { PLANS, PROMO, isPromoLive, planOrder, planPricing, promoAppliesTo } from './saleConfig';
 
 export const ITEM_LIST_ID = 'pricing_pro_plans';
-export const PROMOTION_ID = 'summer_sale_2026';
 
-const ITEM_IDS = { monthly: 'pro_monthly', '3month': 'pro_3month' };
+// GA4 promotion id for the current promo. Falls back to a stable literal so
+// promotion events never emit `undefined` while no promo is configured.
+export function promotionId() {
+  return PROMO.couponId || 'pro_promo';
+}
 
-// GA4 item for one plan in one region. `price` is the real charged price;
-// `discount` is the struck-anchor delta so promo reporting matches the page.
+const ITEM_IDS = {
+  monthly: 'pro_monthly',
+  annual: 'pro_annual',
+  exam_pass: 'pro_exam_pass',
+};
+
+// GA4 item for one plan in one region. `price` is what the visitor actually
+// pays; `discount` is the real coupon delta (0 unless a promo is live), never
+// a marketing anchor.
 export function planItem(sku, ppp = false) {
   const pricing = planPricing(sku, ppp);
   if (!pricing) return null;
   return {
     item_id: ITEM_IDS[sku] || `pro_${sku}`,
     item_name: `Pro ${pricing.name}`,
-    item_category: 'subscription',
+    item_category: pricing.isOneTime ? 'one_time' : 'subscription',
     item_variant: ppp ? 'ppp' : 'global',
-    price: pricing.sale,
+    price: pricing.price,
     discount: pricing.savings,
     quantity: 1,
   };
 }
 
-function saleCoupon() {
-  return isSaleLive() ? PROMOTION_ID : undefined;
+// GA4 `coupon` for a plan: present only when a real coupon is attached.
+function planCoupon(sku) {
+  return promoAppliesTo(sku) ? promotionId() : undefined;
 }
 
 // The scalar mirror of one item for the first-party sink.
@@ -48,7 +59,7 @@ function flatPlanProps(sku, ppp) {
   return {
     sku,
     ppp: Boolean(ppp),
-    value: pricing ? pricing.sale : null,
+    value: pricing ? pricing.price : null,
     currency: 'USD',
   };
 }
@@ -57,13 +68,14 @@ export function trackViewItemList(ppp = false, source = 'pricing') {
   track('view_item_list', {
     item_list_id: ITEM_LIST_ID,
     item_list_name: 'Pro plans',
-    items: Object.keys(PLANS).map((sku) => planItem(sku, ppp)),
+    items: planOrder(ppp).map((sku) => planItem(sku, ppp)),
     ppp: Boolean(ppp),
     source,
   });
 }
 
 export function trackSelectItem(sku, ppp = false) {
+  if (!PLANS[sku]) return;
   track('select_item', {
     item_list_id: ITEM_LIST_ID,
     item_list_name: 'Pro plans',
@@ -74,7 +86,7 @@ export function trackSelectItem(sku, ppp = false) {
 
 export function trackBeginCheckout(sku, ppp = false, source = 'pricing') {
   track('begin_checkout', {
-    coupon: saleCoupon(),
+    coupon: planCoupon(sku),
     items: [planItem(sku, ppp)],
     ...flatPlanProps(sku, ppp),
     source,
@@ -99,14 +111,14 @@ export function trackPurchase({
     amountMinor != null && Number.isFinite(Number(amountMinor))
       ? Math.round(Number(amountMinor)) / 100
       : pricing
-        ? pricing.sale
+        ? pricing.price
         : null;
   if (value == null) return;
   track('purchase', {
     transaction_id: transactionId,
     value,
     currency: String(currency || 'USD').toUpperCase(),
-    coupon: saleCoupon(),
+    coupon: planCoupon(sku),
     items: [{ ...planItem(sku, ppp), price: value }],
     sku,
     ppp: Boolean(ppp),
@@ -114,19 +126,22 @@ export function trackPurchase({
   });
 }
 
-// Promotion impressions/clicks for the sale chrome (banner, reminder modal).
+// Promotion impressions/clicks for the promo chrome (banner, reminder modal).
+// These only fire while a real coupon-backed promo is live.
 export function trackViewPromotion(creativeSlot) {
+  if (!isPromoLive()) return;
   track('view_promotion', {
-    promotion_id: PROMOTION_ID,
-    promotion_name: SALE.name,
+    promotion_id: promotionId(),
+    promotion_name: PROMO.name,
     creative_slot: creativeSlot,
   });
 }
 
 export function trackSelectPromotion(creativeSlot) {
+  if (!isPromoLive()) return;
   track('select_promotion', {
-    promotion_id: PROMOTION_ID,
-    promotion_name: SALE.name,
+    promotion_id: promotionId(),
+    promotion_name: PROMO.name,
     creative_slot: creativeSlot,
   });
 }
