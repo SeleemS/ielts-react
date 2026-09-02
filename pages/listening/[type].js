@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { ArrowRight, Inbox, Target, ListChecks, AlertTriangle, Clock } from 'lucide-react';
+import { ArrowRight, Inbox, Target, ListChecks, AlertTriangle, Clock, HelpCircle } from 'lucide-react';
 import Navbar from '../../src/components/Navbar';
 import Footer from '../../src/components/Footer';
 import { Button } from '../../components/ui/button';
@@ -9,6 +9,7 @@ import { listPassagesByListeningPart } from '../../lib/supabase';
 import {
   getListeningPartSeo,
   LISTENING_PARTS,
+  LISTENING_PART_FAQS,
   LISTENING_PART_SLUGS,
 } from '../../lib/listeningQuestionTypes';
 
@@ -20,7 +21,7 @@ const DIFFICULTY_STYLES = {
   hard: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20',
 };
 // Visible freshness for the strategy guides — bump when guide prose changes.
-const GUIDE_UPDATED = 'August 2026';
+const GUIDE_UPDATED = 'September 2026';
 
 const DIFFICULTY_FALLBACK =
   'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-500/10 dark:text-slate-300 dark:border-slate-500/20';
@@ -43,13 +44,31 @@ export default function ListeningPartHub({ typeKey, items }) {
   const seo = getListeningPartSeo(typeKey);
   const { canonical } = seo;
 
+  const faqs = LISTENING_PART_FAQS[typeKey] || [];
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Listening', item: `${SITE_URL}/listeningquestion` },
-      { '@type': 'ListItem', position: 3, name: label, item: canonical },
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Listening', item: `${SITE_URL}/listeningquestion` },
+          { '@type': 'ListItem', position: 3, name: label, item: canonical },
+        ],
+      },
+      ...(faqs.length
+        ? [
+            {
+              '@type': 'FAQPage',
+              '@id': `${canonical}#faq`,
+              mainEntity: faqs.map((faq) => ({
+                '@type': 'Question',
+                name: faq.q,
+                acceptedAnswer: { '@type': 'Answer', text: faq.a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -247,6 +266,24 @@ export default function ListeningPartHub({ typeKey, items }) {
                 </div>
               )}
             </section>
+
+            {/* ===================== FAQ ===================== */}
+            {faqs.length > 0 && (
+              <section className="mb-12">
+                <h2 className="mb-4 flex items-center gap-2 text-2xl font-bold tracking-tight text-foreground">
+                  <HelpCircle className="h-5 w-5 text-accent" />
+                  IELTS Listening {label}: common questions
+                </h2>
+                <div className="space-y-5">
+                  {faqs.map((faq) => (
+                    <div key={faq.q}>
+                      <h3 className="text-base font-bold text-foreground">{faq.q}</h3>
+                      <p className="mt-1 leading-relaxed text-muted-foreground">{faq.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* ===================== CROSS-LINKS ===================== */}
             <section className="rounded-2xl border border-border bg-secondary/40 p-6 sm:p-8">

@@ -46,6 +46,8 @@ import {
   buildSpeakingQuestionJsonLd,
   serializeJsonLd,
 } from '../../lib/speakingQuestionSeo';
+import { buildSpeakingAnswerCapsule } from '../../lib/speakingAnswerCapsule';
+import { classifySpeakingFamily, SPEAKING_TOPIC_FAMILIES } from '../../lib/speakingTopicFamilies';
 const SCORE_API = '/api/score/speaking';
 const UPLOAD_BUCKET = 'speaking-uploads';
 // Premium gate: when a signed-in non-premium user submits a recording we
@@ -967,6 +969,15 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
 
   const partLabel = part ? `Part ${part}` : 'Speaking';
   const topic = item?.topic || item?.title || '';
+  // Deterministic "Quick answer" capsule built from the item's own fields — no
+  // model call at request time, so it ships in the statically generated HTML.
+  const capsule = buildSpeakingAnswerCapsule(item);
+  const familySlug = item
+    ? item.cueCard?.family ||
+      classifySpeakingFamily({ title: item.title, topic, topicTags: item.topicTags })
+    : null;
+  const family = familySlug ? SPEAKING_TOPIC_FAMILIES[familySlug] : null;
+  const partHref = part ? `/speaking/part-${part}` : '/speakingquestion';
 
   const errorForStatus = (statusCode, data) => {
     if (statusCode === 401) return 'Your session has expired. Please sign in again to get feedback.';
@@ -1233,6 +1244,37 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
             <p className="mt-1 text-sm text-muted-foreground">
               IELTS Speaking Practice — AI-Powered Feedback
             </p>
+
+            {/* Answer capsule: what to talk about, how to shape the time, and the
+                one trap — above the fold, in the first screen of the page. */}
+            {capsule ? (
+              <div className="mt-4 rounded-xl border border-accent/30 bg-accent/5 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quick answer</p>
+                <p className="mt-1 leading-relaxed text-foreground">{capsule.headline}</p>
+                <p className="mt-2 leading-relaxed text-muted-foreground">{capsule.structure}</p>
+                <p className="mt-2 leading-relaxed text-muted-foreground">{capsule.trap}</p>
+              </div>
+            ) : null}
+
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+              <NextLink href={partHref} className="font-semibold text-accent no-underline hover:underline">
+                IELTS Speaking {partLabel} guide
+              </NextLink>
+              {family ? (
+                <NextLink
+                  href={`/speaking/topics/${family.slug}`}
+                  className="font-semibold text-accent no-underline hover:underline"
+                >
+                  More {family.label.toLowerCase()} cue cards
+                </NextLink>
+              ) : null}
+              <NextLink
+                href="/speaking/new-cue-cards"
+                className="text-muted-foreground no-underline hover:text-accent"
+              >
+                Newest cue cards
+              </NextLink>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">

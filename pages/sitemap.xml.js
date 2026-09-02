@@ -2,6 +2,8 @@ import { posts } from '../lib/posts';
 import { SKILLS, listMockTests, listPassages } from '../lib/supabase';
 import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
 import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
+import { SPEAKING_PART_SLUGS } from '../lib/speakingParts';
+import { SPEAKING_FAMILY_SLUGS } from '../lib/speakingTopicFamilies';
 
 import { SITE_URL } from '../lib/site';
 
@@ -32,6 +34,12 @@ export const STATIC_ROUTES = [
   ...READING_QUESTION_TYPE_SLUGS.map((slug) => `/reading/${slug}`),
   // Listening part hub pages (pages/listening/[type].js).
   ...LISTENING_PART_SLUGS.map((slug) => `/listening/${slug}`),
+  // Speaking part hubs (pages/speaking/[part].js).
+  ...SPEAKING_PART_SLUGS.map((slug) => `/speaking/${slug}`),
+  // Speaking topic-family hubs (pages/speaking/topics/[family].js).
+  ...SPEAKING_FAMILY_SLUGS.map((slug) => `/speaking/topics/${slug}`),
+  // Freshness hub for newly published cue cards.
+  '/speaking/new-cue-cards',
 ];
 
 // Build an ISO date (YYYY-MM-DD) or null. Accepts human-readable strings like
