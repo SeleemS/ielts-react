@@ -39,6 +39,7 @@ import {
 } from '../src/lib/ecommerce';
 import { getSessionAccess } from '../src/lib/sessionAccess';
 import { PRICING_SEO } from '../lib/pricingSeo';
+import { calibrationPricingLine } from '../lib/calibrationStats';
 import { cn } from '../src/lib/utils';
 import SaleCountdown from '../src/components/SaleCountdown';
 import {
@@ -54,6 +55,11 @@ import {
 
 const PAGE_TITLE = PRICING_SEO.title;
 const PAGE_DESCRIPTION = PRICING_SEO.description;
+
+// One measured accuracy claim, read from lib/calibrationStats.json at build
+// time. Null (and therefore nothing rendered) until a calibration run has
+// actually been done — see pages/ielts-writing-checker-accuracy.js.
+const accuracyLine = calibrationPricingLine();
 
 // Everything Pro unlocks — shown on every Pro card and in the "Everything
 // included" grid. The single Pro tier is sold three ways (Monthly, Annual, and
@@ -1031,6 +1037,21 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+          {/* Measured scorer accuracy. Renders NOTHING until a real calibration
+              run exists (lib/calibrationStats.json), so this can never become an
+              asserted "within 0.5 bands" claim like the ones competitors make. */}
+          {accuracyLine ? (
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              {accuracyLine} —{' '}
+              <NextLink
+                href="/ielts-writing-checker-accuracy"
+                className="font-semibold text-accent no-underline hover:underline"
+              >
+                see how we measured it
+              </NextLink>
+              .
+            </p>
+          ) : null}
           {answeredCount > 0 ? (
             <p className="mt-6 text-center text-sm text-muted-foreground">
               <span className="font-bold text-foreground">{answeredCount.toLocaleString()}</span>{' '}
