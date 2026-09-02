@@ -20,6 +20,11 @@ answer is gated.
 
 ## Run a batch
 
+Use **Node 20+**: the generator itself is fetch-only and runs on 18, but the chained
+model-answer step uses `@supabase/supabase-js`, which needs a native WebSocket. The
+generator detects an old Node and tells you the follow-up command instead of failing
+silently.
+
 ```bash
 # 0. from a worktree: secrets live in the main checkout
 cp /path/to/ielts-react/.env.local .env.local
@@ -58,6 +63,15 @@ Other flags: `--reuse-audio` (skip TTS when the storage object exists), `--only=
 Audio: exactly **one** TTS clip per card (the examiner reading the whole card) at
 `speaking/<slug>/cue.mp3` in the public `listening-audio` bucket. Round-off questions are
 left empty for batch cards to keep the per-card TTS cost at one clip.
+
+## Pilot run (2 September 2026)
+
+Batch 1 at `--size 5` was published end to end: 5 cue cards (`people` family) →
+TTS + upload → `passages` + `speaking_details` → 5 Band 8–9 model answers (259–298
+words) → IndexNow 200 OK for 9 URLs (5 cards + `/speaking/new-cue-cards`,
+`/speaking/part-2`, `/speakingquestion`, `/speaking/topics/people`). Re-running the
+same batch now reports "5 already imported" and writes nothing. Remaining: batches
+2–11 (`--batch 2 --size 25`, and so on).
 
 ## Cost / pacing
 

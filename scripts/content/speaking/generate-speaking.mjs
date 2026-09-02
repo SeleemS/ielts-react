@@ -43,6 +43,9 @@
  *   --reuse-audio      skip TTS when the storage object already exists
  *   --only=<substr>    filter by slug/file substring
  *
+ * Run on Node 20+ (the chained model-answer step uses @supabase/supabase-js,
+ * which needs a native WebSocket).
+ *
  * Requires OPENAI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY in .env.local
  * (repo ROOT — copy it into a worktree if you work in one). --dry-run needs none
  * of them.
@@ -516,7 +519,16 @@ async function runFromTopics() {
   log(`import complete: ${imported.length} imported, ${failed.length} failed, ${skipped} skipped`);
 
   // 7. Model answers for exactly the new slugs (band 8-9 teaser + premium).
-  if (DO_MODEL_ANSWERS && imported.length) {
+  //    @supabase/supabase-js needs a native WebSocket, so the chained step needs
+  //    Node 20+ (this script itself is fetch-only and runs on 18).
+  const nodeMajor = Number(process.versions.node.split('.')[0]);
+  if (DO_MODEL_ANSWERS && imported.length && nodeMajor < 20) {
+    console.error(
+      `\n  SKIPPING model answers: Node ${process.versions.node} detected, but ` +
+        'generate-speaking-model-answers.mjs needs Node 20+. Re-run it separately on a newer Node:\n' +
+        `    node scripts/content/generate-speaking-model-answers.mjs --limit=${imported.length}\n`
+    );
+  } else if (DO_MODEL_ANSWERS && imported.length) {
     log(`generating model answers for ${imported.length} new cue card(s)…`);
     for (const row of imported) {
       const res = spawnSync(
