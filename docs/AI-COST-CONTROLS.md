@@ -1,6 +1,6 @@
 # AI cost controls and unit economics
 
-Updated: 2026-07-20
+Updated: 2026-09-01
 
 ## What is measured
 
@@ -71,10 +71,33 @@ percentiles after sufficient production volume.
 
 | Operation | Typical assumption | Typical | Conservative |
 |---|---|---:|---:|
-| Paid Writing score | 2,500 input + 1,200 output tokens | ~$0.015 | ~$0.025 |
+| Paid Writing score | 2,650 input + 1,350 output tokens | ~$0.017 | ~$0.028 |
 | Free Writing sample | same shape on GPT-4.1 mini | ~$0.003 | ~$0.006 |
 | Recorded Speaking score | 2 audio min + 2,000 input + 800 output | ~$0.023 | ~$0.037 |
 | Live examiner | reserved duration estimate | ~$0.06/min | use ledger reconciliation |
+
+### Cost delta: the band-8 `rewrite` field (2026-09-01)
+
+`/api/score/writing` now asks for one extra structured-output field: a band-8
+rewrite of a single weak paragraph, used by the report's Pro section and, in
+masked form, by the free report's Pro preview. It is prompt-capped at 60-90
+words and hard-truncated server-side at 900 characters, so the added output is
+~150 tokens plus ~30 tokens of schema/instruction input.
+
+| Model | Added output | Added input | Delta per score |
+|---|---:|---:|---:|
+| GPT-5.1 (paid) | ~150 tokens @ $10/1M | ~30 tokens @ $1.25/1M | **+~$0.0015** (~10%) |
+| GPT-4.1 mini (free sample) | ~150 tokens @ $1.60/1M | ~30 tokens @ $0.40/1M | **+~$0.00025** (~8%) |
+
+At the enforced quotas that is at most **+$0.045/month** for a fully utilizing
+paid customer, and a one-off **+$0.00025** per free account. The field is opt-in
+at the schema level (`buildWritingScoreSchema(task, { includeRewrite: true })`),
+so the Band Estimator's short-sample scorer — which shares the schema and runs
+for anonymous visitors — is deliberately excluded and its cost is unchanged.
+
+There is no `max_tokens` cap on the call: structured outputs truncated mid-JSON
+fail to parse, which would refund the quota and 502 the user. Length is
+controlled by the prompt and the response is truncated after parsing instead.
 
 At the maximum score quotas below, paid Writing plus recorded Speaking costs
 about **$0.79/month typically** and **$1.31/month conservatively** per fully

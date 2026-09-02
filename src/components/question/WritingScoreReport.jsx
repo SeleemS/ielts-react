@@ -62,6 +62,39 @@ function LockedPlaceholder({ label, hint }) {
   );
 }
 
+// Shaped, content-free placeholder for paid report sections. The bars are
+// empty divs — there is no real text under the blur to reveal, because the
+// withheld strings never leave the server (see reduceForFree in the writing
+// route). The blur + lock exist to show the SHAPE of what Pro adds.
+function MaskedLines({ widths }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="select-none space-y-2 blur-[3px] [filter:blur(3px)]"
+    >
+      {widths.map((width, index) => (
+        <div
+          key={index}
+          className="h-3 rounded bg-muted-foreground/25"
+          style={{ width }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function MaskedCorrection() {
+  return (
+    <div className="rounded-md border border-border/70 bg-secondary/30 p-3">
+      <MaskedLines widths={['92%', '61%']} />
+    </div>
+  );
+}
+
+function hasBand(criterion) {
+  return typeof criterion?.band === 'number';
+}
+
 function issueCount(result) {
   const criterionIssues = Object.values(result.criteria || {}).reduce(
     (count, criterion) =>
@@ -89,7 +122,19 @@ export default function WritingScoreReport({
   const corrected = Array.isArray(result.correctedExamples)
     ? result.correctedExamples
     : [];
+  const rewrite = result.rewrite && typeof result.rewrite === 'object' ? result.rewrite : null;
   const isTeaser = result.free === true && !sample;
+  // How many corrections the API held back. The free payload ships exactly one
+  // real correction plus this count — never the withheld text.
+  const lockedCorrections = Number.isFinite(result.lockedCorrectionCount)
+    ? Math.max(0, result.lockedCorrectionCount)
+    : 0;
+  // Show the real number of withheld corrections, capped so the block stays a
+  // preview rather than a wall; at least two when the source sent no count.
+  const maskedCorrectionCount = Math.min(Math.max(lockedCorrections, 2), 3);
+  // The Band Estimator's free reveal still withholds criteria 2-4, so the
+  // upgrade copy must not claim all four bands are visible there.
+  const visibleCriteria = criteriaMeta.filter(([key]) => hasBand(criteria[key] || {})).length;
   const trackedRef = React.useRef(false);
 
   React.useEffect(() => {
@@ -101,7 +146,30 @@ export default function WritingScoreReport({
       skill: 'writing',
       band: result.overallBand,
     });
-  }, [analyticsSource, isTeaser, result.overallBand]);
+    track('pro_preview_shown', {
+      source: analyticsSource,
+      skill: 'writing',
+      band: result.overallBand,
+      corrections_shown: corrected.length,
+      corrections_locked: lockedCorrections,
+      rewrite_locked: result.rewriteLocked === true,
+    });
+  }, [
+    analyticsSource,
+    corrected.length,
+    isTeaser,
+    lockedCorrections,
+    result.overallBand,
+    result.rewriteLocked,
+  ]);
+
+  const onUpgradeClick = React.useCallback(() => {
+    track('paywall_upgrade_click', {
+      source: analyticsSource,
+      skill: 'writing',
+      band: result.overallBand,
+    });
+  }, [analyticsSource, result.overallBand]);
 
   return (
     <div className="space-y-5">
@@ -113,11 +181,15 @@ export default function WritingScoreReport({
       />
 
       <div className="space-y-3">
-        {criteriaMeta.map(([key, label], index) => {
-          if (isTeaser && index > 0) {
+        {criteriaMeta.map(([key, label]) => {
+          const criterion = criteria[key] || {};
+          // Free reports now keep ALL FOUR criterion bands (see reduceForFree
+          // in the writing route). A criterion with no band means the source
+          // withheld it — the Band Estimator's free reveal still sends only
+          // the first — so it stays a locked placeholder there.
+          if (isTeaser && !hasBand(criterion)) {
             return <LockedPlaceholder key={key} label={label} />;
           }
-          const criterion = criteria[key] || {};
           return (
             <div key={key} className="rounded-lg border border-border bg-card p-4">
               <div className="mb-2 flex items-center justify-between gap-3">
@@ -134,10 +206,67 @@ export default function WritingScoreReport({
       </div>
 
       {isTeaser ? (
-        <LockedPlaceholder
-          label="Examiner summary, improvement plan & corrected examples"
-          hint={`Unlock Premium for the examiner summary, a prioritised plan to raise your band, and line-by-line corrected examples from your ${submissionLabel}.`}
-        />
+        <>
+          <LockedPlaceholder
+            label="Examiner summary & improvement plan"
+            hint={`Unlock Pro for the examiner summary and a prioritised plan to raise your band on your next ${submissionLabel}.`}
+          />
+
+          {/* Pro preview: one real correction in the clear, then shaped
+              placeholders. The withheld text is never sent to the browser, so
+              there is nothing behind the blur to un-blur. */}
+          <div className="rounded-lg border border-primary/25 bg-card p-4">
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <h3 className="text-sm font-bold text-foreground">Corrected examples</h3>
+              {lockedCorrections > 0 ? (
+                <span className="text-xs font-semibold text-muted-foreground">
+                  1 of {lockedCorrections + 1} shown
+                </span>
+              ) : null}
+            </div>
+            {corrected.length > 0 ? (
+              <div className="rounded-md border border-border/70 bg-secondary/30 p-3">
+                <p className="text-sm text-destructive line-through decoration-destructive/50">
+                  {corrected[0].original}
+                </p>
+                <p className="mt-1 text-sm font-medium text-accent">
+                  {corrected[0].suggestion}
+                </p>
+              </div>
+            ) : null}
+            <div className="mt-3 space-y-3">
+              {Array.from({ length: maskedCorrectionCount }).map((_, index) => (
+                <MaskedCorrection key={index} />
+              ))}
+            </div>
+
+            {result.rewriteLocked ? (
+              <div className="mt-5 border-t border-border pt-4">
+                <h3 className="mb-2 text-sm font-bold text-foreground">
+                  Band 8 rewrite of your weakest paragraph
+                </h3>
+                <MaskedLines widths={['97%', '100%', '88%', '94%', '52%']} />
+              </div>
+            ) : null}
+
+            <div className="mt-5 flex flex-col items-center gap-2 text-center">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-foreground">
+                <Lock className="h-4 w-4 text-primary" aria-hidden="true" />
+                Unlock all corrections and a Band 8 rewrite with Pro
+              </span>
+              <Button asChild variant="accent" size="sm">
+                <NextLink
+                  href="/pricing?upgrade=writing"
+                  onClick={onUpgradeClick}
+                  className="no-underline"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Upgrade to Pro
+                </NextLink>
+              </Button>
+            </div>
+          </div>
+        </>
       ) : (
         <>
           {result.summary && (
@@ -157,6 +286,18 @@ export default function WritingScoreReport({
               </ul>
             </div>
           )}
+
+          {rewrite?.text ? (
+            <div className="rounded-lg border border-border bg-card p-4">
+              <h3 className="text-sm font-bold text-foreground">
+                Band 8 rewrite of your weakest paragraph
+              </h3>
+              {rewrite.focus ? (
+                <p className="mt-0.5 text-xs text-muted-foreground">{rewrite.focus}</p>
+              ) : null}
+              <p className="mt-2 text-sm leading-relaxed text-foreground">{rewrite.text}</p>
+            </div>
+          ) : null}
 
           {corrected.length > 0 && (
             <div className="rounded-lg border border-border bg-card p-4">
@@ -186,19 +327,16 @@ export default function WritingScoreReport({
             {result.lockedIssueCount ?? issueCount(result)} fixable issues
           </h3>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            You&apos;ve seen your overall band and first criterion. Unlock the other three criteria,
-            examiner summary, improvement plan, and corrected examples.
+            {visibleCriteria >= criteriaMeta.length
+              ? 'You’ve seen your band on all four criteria and one real correction. '
+              : 'You’ve seen your overall band and your first criterion. '}
+            Pro unlocks every correction, the examiner summary, your improvement plan, and a
+            Band 8 rewrite.
           </p>
           <Button asChild variant="accent" className="mt-4">
             <NextLink
               href="/pricing?upgrade=writing"
-              onClick={() =>
-                track('paywall_upgrade_click', {
-                  source: analyticsSource,
-                  skill: 'writing',
-                  band: result.overallBand,
-                })
-              }
+              onClick={onUpgradeClick}
               className="no-underline"
             >
               <Sparkles className="h-4 w-4" />

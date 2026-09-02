@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import {
   ArrowRight,
   BookOpen,
@@ -22,8 +23,12 @@ import Footer from '../components/Footer';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import { Textarea } from '../../components/ui/textarea';
+import { Label } from '../../components/ui/label';
+import { cn } from '../lib/utils';
 import NewsletterSignup from '../components/NewsletterSignup';
 import { track } from '../lib/analytics';
+import { saveWritingDraft } from '../lib/writingDraft';
 import DashboardTeaser from '../components/home/DashboardTeaser';
 
 import { SITE_URL } from '../../lib/site';
@@ -157,6 +162,143 @@ const STEPS = [
   },
 ];
 
+// Hero task-type toggle. The checker understands three task types; the hero
+// offers the two top-level choices and lets the checker refine Task 1
+// Academic vs General Training if the user wants to.
+const HERO_TASKS = [
+  { value: 'task2', label: 'Task 2', hint: 'essay' },
+  { value: 'task1-academic', label: 'Task 1', hint: 'report / letter' },
+];
+
+// Above-the-fold paste box. The free AI Writing report is the one thing on the
+// site that reliably converts, so the homepage leads with it instead of a
+// generic "start practising" pitch: type here, get a band. Submitting stores a
+// one-shot handoff draft and routes into /ielts-writing-checker, which
+// pre-fills and continues straight into the existing flow (sign-in gate →
+// free lifetime sample → report, or the Pro gate once that sample is spent).
+function HeroEssayBox() {
+  const router = useRouter();
+  const [taskType, setTaskType] = React.useState('task2');
+  const [essay, setEssay] = React.useState('');
+  const [prompt, setPrompt] = React.useState('');
+  const [showPrompt, setShowPrompt] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
+
+  const trimmed = essay.trim();
+  const words = trimmed ? trimmed.split(/\s+/).length : 0;
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (!trimmed || submitting) return;
+    setSubmitting(true);
+    track('hero_essay_submit', {
+      source: 'homepage_hero',
+      task_type: taskType,
+      chars: essay.length,
+      word_count: words,
+    });
+    saveWritingDraft({ taskType, prompt, essay });
+    router.push('/ielts-writing-checker?from=home_hero');
+  };
+
+  return (
+    <form
+      onSubmit={onSubmit}
+      className="mx-auto mt-8 max-w-2xl rounded-2xl border border-white/15 bg-white/[0.07] p-4 text-left shadow-xl backdrop-blur sm:p-6"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div
+          className="inline-flex rounded-lg border border-white/15 bg-white/5 p-1"
+          role="group"
+          aria-label="Task type"
+        >
+          {HERO_TASKS.map((task) => (
+            <Button
+              key={task.value}
+              type="button"
+              size="sm"
+              variant="ghost"
+              aria-pressed={taskType === task.value}
+              onClick={() => setTaskType(task.value)}
+              className={cn(
+                'rounded-md px-3 text-xs font-semibold hover:bg-white/10 hover:text-white',
+                taskType === task.value
+                  ? 'bg-white text-primary hover:bg-white hover:text-primary'
+                  : 'text-slate-300'
+              )}
+            >
+              {task.label}
+              <span className="hidden font-normal opacity-70 sm:inline">{task.hint}</span>
+            </Button>
+          ))}
+        </div>
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          onClick={() => setShowPrompt((open) => !open)}
+          className="px-2 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white"
+          aria-expanded={showPrompt}
+          aria-controls="hero-prompt"
+        >
+          {showPrompt ? 'Hide the question' : 'Add the question (optional)'}
+        </Button>
+      </div>
+
+      {showPrompt ? (
+        <div className="mt-3">
+          <Label htmlFor="hero-prompt" className="sr-only">
+            Task question or prompt (optional)
+          </Label>
+          <Textarea
+            id="hero-prompt"
+            value={prompt}
+            onChange={(event) => setPrompt(event.target.value)}
+            maxLength={2000}
+            placeholder="Paste the exact task question for more accurate marking…"
+            className="min-h-[64px] resize-y"
+          />
+        </div>
+      ) : null}
+
+      <div className="mt-3">
+        <Label htmlFor="hero-essay" className="sr-only">
+          Your essay
+        </Label>
+        <Textarea
+          id="hero-essay"
+          value={essay}
+          onChange={(event) => setEssay(event.target.value)}
+          placeholder="Paste your essay here…"
+          className="min-h-[150px] resize-y sm:min-h-[176px]"
+        />
+      </div>
+
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <span className="text-xs font-medium tabular-nums text-slate-300">
+          {words} {words === 1 ? 'word' : 'words'}
+          {taskType === 'task2' ? ' · 250 recommended' : ' · 150 recommended'}
+        </span>
+        <Button
+          type="submit"
+          variant="accent"
+          size="lg"
+          disabled={!trimmed || submitting}
+          className="w-full sm:w-auto"
+        >
+          {submitting ? 'Opening the checker…' : 'Score my essay'}
+          <ArrowRight className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <p className="mt-3 text-xs leading-relaxed text-slate-300">
+        Free means one AI Writing report per account — a single lifetime sample. You sign
+        in when you submit; no card is asked for.
+      </p>
+    </form>
+  );
+}
+
 const HomePage = ({ counts = {} }) => {
   const skills = Skills(counts);
 
@@ -213,54 +355,65 @@ const HomePage = ({ counts = {} }) => {
                   'radial-gradient(600px circle at 20% 0%, hsl(160 84% 39% / 0.18), transparent 45%), radial-gradient(700px circle at 90% 20%, hsl(160 84% 39% / 0.10), transparent 40%)',
               }}
             />
-            <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+            <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
               <div className="mx-auto max-w-3xl text-center">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-emerald-300">
                   <GraduationCap className="h-3.5 w-3.5" />
-                  Trusted free IELTS practice
+                  AI Writing report — no card needed
                 </span>
-                <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-                  Master IELTS with real,
-                  <br className="hidden sm:block" />
-                  <span className="text-emerald-400"> auto-scored practice</span>
+                <h1 className="mt-5 text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
+                  Get your IELTS Writing band in
+                  <span className="text-emerald-400"> 60 seconds</span> — free
                 </h1>
-                <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-200">
-                  Practise authentic-style Reading, Writing, Listening and Speaking,
-                  get instant auto-scoring, and receive AI band feedback on your essays
-                  and recordings.
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg">
+                  Paste a Task 2 essay. Four examiner criteria, band estimate, what&apos;s
+                  holding you back. No card.
                 </p>
-                <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <Button asChild variant="accent" size="lg" className="w-full sm:w-auto">
-                    <NextLink href="/readingquestion" className="no-underline">
-                      Start practicing
-                      <ArrowRight className="h-4 w-4" />
-                    </NextLink>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
-                  >
-                    <NextLink href="/blog" className="no-underline">
-                      Read study tips
-                    </NextLink>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-emerald-300/40 bg-emerald-300/10 text-emerald-100 hover:bg-emerald-300/20 hover:text-white sm:w-auto"
-                  >
-                    <NextLink href="/band-estimator" className="no-underline">
-                      Estimate my band
-                    </NextLink>
-                  </Button>
-                </div>
               </div>
 
-              {/* Credibility strip */}
-              <div className="mx-auto mt-16 grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
+              <HeroEssayBox />
+
+              <div className="mx-auto mt-6 flex max-w-2xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
+                >
+                  <NextLink href="/readingquestion" className="no-underline">
+                    Start practicing
+                  </NextLink>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-emerald-300/40 bg-emerald-300/10 text-emerald-100 hover:bg-emerald-300/20 hover:text-white sm:w-auto"
+                >
+                  <NextLink href="/band-estimator" className="no-underline">
+                    Estimate my band
+                  </NextLink>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
+                >
+                  <NextLink href="/blog" className="no-underline">
+                    Read study tips
+                  </NextLink>
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* ====================== TRUST COUNTERS ====================== */}
+          {/* Moved out of the hero so the paste box stays above the fold on a
+              375px phone; the numbers still land immediately below it. */}
+          <section className="border-b border-border bg-primary text-primary-foreground">
+            <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+              <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
                 {[
                   {
                     label: 'Questions answered',
@@ -273,8 +426,10 @@ const HomePage = ({ counts = {} }) => {
                   { label: 'Listening tests', value: fmt(counts.listening) },
                   { label: 'Speaking topics', value: fmt(counts.speaking) },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-primary px-6 py-6 text-center">
-                    <div className="text-3xl font-extrabold text-white">{stat.value}</div>
+                  <div key={stat.label} className="bg-primary px-4 py-5 text-center sm:px-6 sm:py-6">
+                    <div className="text-2xl font-extrabold text-white sm:text-3xl">
+                      {stat.value}
+                    </div>
                     <div className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-300">
                       {stat.label}
                     </div>
