@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { ArrowRight, CalendarDays, Files, LayoutDashboard, Settings, Sparkles, Target, Trophy } from 'lucide-react';
 import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
@@ -15,6 +16,9 @@ import { LoadingState, SignedOutState, ErrorState } from '../src/components/dash
 import { buildDashboardData, formatBand, getInitials, SKILL_META } from '../src/components/dashboard/utils';
 import LearningInsights from '../src/components/dashboard/LearningInsights';
 import InviteCard from '../src/components/dashboard/InviteCard';
+import StreakCard from '../src/components/dashboard/StreakCard';
+import DailyReminderCard from '../src/components/dashboard/DailyReminderCard';
+import EmailPreferences from '../src/components/dashboard/EmailPreferences';
 import { isPremiumActive } from '../src/lib/usePlan';
 import BaselineCard from '../src/components/estimator/BaselineCard';
 
@@ -224,9 +228,21 @@ function FreeUpgradeCard({ examDate }) {
 }
 
 function DashboardBody({ user, signOut }) {
+  const router = useRouter();
   const { status, data, error } = useDashboardData(user);
-  const [activeTab, setActiveTab] = React.useState('overview');
+  // Email footers link to /dashboard?tab=settings#email-preferences, so the
+  // settings tab has to be openable from a URL.
+  const [activeTab, setActiveTab] = React.useState(
+    TABS.some((tab) => tab.id === router.query.tab) ? router.query.tab : 'overview'
+  );
   const [profileOverride, setProfileOverride] = React.useState(null);
+
+  // On a statically optimized page the query arrives after hydration, so the
+  // deep link has to be applied once the router is ready too.
+  const queryTab = router.query.tab;
+  React.useEffect(() => {
+    if (router.isReady && TABS.some((tab) => tab.id === queryTab)) setActiveTab(queryTab);
+  }, [router.isReady, queryTab]);
 
   if (status === 'loading' || status === 'idle') return <LoadingState />;
   if (status === 'error') return <ErrorState message={error} />;
@@ -248,6 +264,7 @@ function DashboardBody({ user, signOut }) {
 
   return (
     <div className="space-y-5">
+      <StreakCard />
       <DashboardHero user={user} profile={profile} data={data} />
       <DashboardNav active={activeTab} onChange={changeTab} />
       <div id="dashboard-content" tabIndex={-1} className="space-y-5 outline-none">
@@ -259,18 +276,26 @@ function DashboardBody({ user, signOut }) {
             <StatsOverview data={data} weeklyGoal={weeklyGoal} />
             <BandTrend skills={data.skills} targetBand={targetBand} isPremium={isPremium} />
             <LearningInsights data={data} targetBand={targetBand} />
+            <DailyReminderCard userId={user.id} />
             <InviteCard />
             <RecentActivity items={data.items} onViewAll={() => changeTab('submissions')} />
           </>
         )}
         {activeTab === 'submissions' && <SubmissionHistory items={data.items} />}
         {activeTab === 'settings' && (
-          <AccountSettings
-            user={user}
-            profile={profile}
-            onProfileChange={(changes) => setProfileOverride((current) => ({ ...(current || {}), ...changes }))}
-            onSignOut={signOut}
-          />
+          <>
+            <AccountSettings
+              user={user}
+              profile={profile}
+              onProfileChange={(changes) => setProfileOverride((current) => ({ ...(current || {}), ...changes }))}
+              onSignOut={signOut}
+            />
+            <EmailPreferences
+              user={user}
+              profile={profile}
+              onProfileChange={(changes) => setProfileOverride((current) => ({ ...(current || {}), ...changes }))}
+            />
+          </>
         )}
       </div>
     </div>

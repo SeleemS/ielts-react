@@ -7,20 +7,21 @@
 import * as React from 'react';
 import { getSupabase } from '../../lib/supabase';
 import { useAuth } from './auth';
-import { computeStreak } from './streak';
+import { computeStreakStats } from './streak';
 
 const WINDOW_DAYS = 120;
 
 export function useStreak({ assumeToday = false } = {}) {
   const { user } = useAuth();
-  const [state, setState] = React.useState({ loading: true, streak: 0, practicedToday: false });
+  const [state, setState] = React.useState({ loading: true, streak: 0, bestStreak: 0, practicedToday: false });
 
   React.useEffect(() => {
     if (!user?.id) {
       setState({
         loading: false,
         practicedToday: assumeToday,
-        streak: assumeToday ? computeStreak([], { assumeToday: true }).streak : 0,
+        bestStreak: assumeToday ? 1 : 0,
+        streak: assumeToday ? computeStreakStats([], { assumeToday: true }).streak : 0,
       });
       return undefined;
     }
@@ -36,10 +37,10 @@ export function useStreak({ assumeToday = false } = {}) {
       .then(({ data, error }) => {
         if (!active) return;
         const dates = error ? [] : (data || []).map((row) => row.created_at);
-        setState({ loading: false, ...computeStreak(dates, { assumeToday }) });
+        setState({ loading: false, ...computeStreakStats(dates, { assumeToday }) });
       })
       .catch(() => {
-        if (active) setState({ loading: false, ...computeStreak([], { assumeToday }) });
+        if (active) setState({ loading: false, ...computeStreakStats([], { assumeToday }) });
       });
     return () => {
       active = false;
