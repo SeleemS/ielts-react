@@ -1,7 +1,13 @@
 // computeStreak: consecutive local practice days ending today (or yesterday,
 // so an unbroken run isn't reported as 0 before today's practice).
 import { describe, expect, it } from 'vitest';
-import { computeStreak, isStreakMilestone, localDateKey } from '../src/lib/streak';
+import {
+  computeBestStreak,
+  computeStreak,
+  computeStreakStats,
+  isStreakMilestone,
+  localDateKey,
+} from '../src/lib/streak';
 
 const NOW = new Date('2026-08-02T15:00:00');
 const day = (offset, hour = 10) => {
@@ -59,5 +65,30 @@ describe('helpers', () => {
     expect(isStreakMilestone(3)).toBe(true);
     expect(isStreakMilestone(4)).toBe(false);
     expect(isStreakMilestone(30)).toBe(true);
+  });
+});
+
+// Personal best: the longest run anywhere in the window, shown next to the
+// current streak at the top of the dashboard.
+describe('computeBestStreak', () => {
+  it('finds the longest run even when the current streak is broken', () => {
+    const dates = [day(0), day(3), day(4), day(5), day(6), day(9), day(10)];
+    expect(computeStreak(dates, { now: NOW }).streak).toBe(1);
+    expect(computeBestStreak(dates, { now: NOW })).toBe(4);
+  });
+
+  it('counts a single practice day as a best of 1, and nothing as 0', () => {
+    expect(computeBestStreak([day(5)], { now: NOW })).toBe(1);
+    expect(computeBestStreak([], { now: NOW })).toBe(0);
+    expect(computeBestStreak(['garbage', null], { now: NOW })).toBe(0);
+  });
+
+  it('includes the just-submitted attempt with assumeToday', () => {
+    expect(computeBestStreak([day(1), day(2)], { assumeToday: true, now: NOW })).toBe(3);
+  });
+
+  it('computeStreakStats returns current and best together', () => {
+    const stats = computeStreakStats([day(0), day(1), day(5), day(6), day(7)], { now: NOW });
+    expect(stats).toMatchObject({ streak: 2, bestStreak: 3, practicedToday: true });
   });
 });

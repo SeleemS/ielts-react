@@ -3,6 +3,7 @@ export const config = { runtime: 'nodejs', maxDuration: 300 };
 import { createClient } from '@supabase/supabase-js';
 import { posts } from '../../../lib/posts';
 import { sendLifecycleEmail } from '../../../lib/lifecycleEmail';
+import { emailPrefFor, lifecycleEmailAllowed } from '../../../lib/emailPrefs';
 import { isPremiumRow } from '../../../lib/premium';
 
 const AUDIENCE_PAGE_SIZE = 1000;
@@ -146,6 +147,7 @@ export async function queueWeeklyDigest(admin, force = false, now = new Date()) 
           sessions: stats.recent,
           skills_line: skillsLine,
           streak: streakFor(stats.days),
+          best_streak: bestStreakFor(stats.days),
         },
       };
     }
@@ -201,6 +203,22 @@ const DAY_MS = 86400000;
 
 function utcDateKey(date) {
   return date.toISOString().slice(0, 10);
+}
+
+// Longest consecutive run of practice days inside the fetched window (40 days
+// here — a "best" older than that is not worth a second query). Used for the
+// "your best run" line in the streak emails.
+function bestStreakFor(days) {
+  let best = 0;
+  let run = 0;
+  let previous = null;
+  for (const key of [...days].sort()) {
+    const stamp = Date.parse(`${key}T00:00:00.000Z`);
+    run = previous !== null && stamp - previous === DAY_MS ? run + 1 : 1;
+    previous = stamp;
+    if (run > best) best = run;
+  }
+  return best;
 }
 
 function chunk(list, size) {
@@ -374,7 +392,7 @@ export async function queueStreakAtRisk(admin, now = new Date(), force = false) 
       if (!days.has(key)) break;
       streak += 1;
     }
-    if (streak >= 3) atRisk.push({ userId, streak });
+    if (streak >= 3) atRisk.push({ userId, streak, best: bestStreakFor(days) });
   }
   if (!atRisk.length) return 0;
   const emails = new Map();
@@ -394,7 +412,7 @@ export async function queueStreakAtRisk(admin, now = new Date(), force = false) 
       recipient_email: emails.get(entry.userId).toLowerCase(),
       email_type: 'streak_at_risk',
       idempotency_key: `streak_at_risk:${entry.userId}:${todayKey}`,
-      payload: { streak: entry.streak },
+      payload: { streak: entry.streak, best_streak: entry.best },
     }));
   if (!rows.length) return 0;
   return insertQueueRows(admin, rows);
@@ -443,13 +461,9 @@ export async function queueDay2Plan(admin, now = new Date()) {
   return insertQueueRows(admin, rows);
 }
 
-const MARKETING_EMAIL_TYPES = new Set([
-  'weekly_digest',
-  'win_back',
-  'paywall_followup',
-  'weekly_progress',
-  'streak_at_risk',
-]);
+// Which consent each type needs now lives in lib/emailPrefs.js
+// (LIFECYCLE_EMAIL_GATES) so the gate table is one testable object shared by
+// the cron, the unsubscribe route, and the dashboard preference block.
 const STALE_CLAIM_MINUTES = 15;
 
 export async function recipientAllowsMarketing(admin, email) {
@@ -462,6 +476,32 @@ export async function recipientAllowsMarketing(admin, email) {
     .maybeSingle();
   if (error) throw error;
   return Boolean(data);
+}
+
+// The recipient's stored email prefs. Queue rows carry user_id for account
+// holders; newsletter-only recipients resolve by email. A missing row means
+// "never answered", which lib/emailPrefs.js resolves per type.
+export async function recipientEmailPrefs(admin, row) {
+  const base = admin.from('users').select('prefs');
+  const scoped = row.user_id
+    ? base.eq('id', row.user_id)
+    : base.eq('email', String(row.recipient_email || '').trim().toLowerCase());
+  const { data, error } = await scoped.maybeSingle();
+  if (error) throw error;
+  return data?.prefs && typeof data.prefs === 'object' ? data.prefs : null;
+}
+
+// Consent decision for one queued email. The newsletter table is only read
+// when the stored prefs are silent AND the type falls back to it, so an
+// explicit opt-in/opt-out costs a single query.
+export async function lifecycleGateFor(admin, row) {
+  const pref = emailPrefFor(row.email_type);
+  if (!pref) return lifecycleEmailAllowed(row.email_type, {});
+  const prefs = await recipientEmailPrefs(admin, row);
+  const decision = lifecycleEmailAllowed(row.email_type, { prefs });
+  if (decision.allowed || decision.reason !== 'recipient-not-subscribed') return decision;
+  const newsletterSubscribed = await recipientAllowsMarketing(admin, row.recipient_email);
+  return lifecycleEmailAllowed(row.email_type, { prefs, newsletterSubscribed });
 }
 
 export async function reclaimStaleDeliveries(admin, now = new Date()) {
@@ -496,15 +536,13 @@ export async function deliverDue(admin, { send = sendLifecycleEmail, now = new D
 
   const results = { sent: 0, failed: 0, suppressed: 0, skipped: 0, reclaimed };
   for (const row of due || []) {
-    if (
-      MARKETING_EMAIL_TYPES.has(row.email_type) &&
-      !(await recipientAllowsMarketing(admin, row.recipient_email))
-    ) {
+    const gate = await lifecycleGateFor(admin, row);
+    if (!gate.allowed) {
       const { data: suppressed, error: suppressError } = await admin
         .from('lifecycle_emails')
         .update({
           status: 'suppressed',
-          last_error: 'recipient-not-subscribed',
+          last_error: gate.reason,
           updated_at: now.toISOString(),
         })
         .eq('id', row.id)

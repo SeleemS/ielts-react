@@ -13,6 +13,7 @@ import {
   CalendarDays,
 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
+import { Checkbox } from '../../../components/ui/checkbox';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
 import { cn } from '../../lib/utils';
@@ -22,6 +23,11 @@ import { track } from '../../lib/analytics';
 import { POST_AUTH_PATH } from '../../lib/authPaths';
 import { inter } from '../../lib/fonts';
 import { useDialogFocus } from '../../lib/dialogFocus';
+import {
+  defaultEmailOptIns,
+  emailConsentOptInRegion,
+  withEmailConsent,
+} from '../../lib/emailConsent';
 
 // Auth + onboarding dialog. Keeps the historical SignInDialog prop contract
 // (open / onOpenChange / title / description / trigger) so every existing
@@ -50,15 +56,23 @@ function matchesAuthError(error, code, legacyMessagePattern) {
   return error?.code === code || legacyMessagePattern.test(error?.message || '');
 }
 
-// Merge goal + target band into the signed-in user's row. Fails soft — the
-// worst outcome is an unanswered onboarding question.
-async function saveProfile(userId, { goal, band, examDate }) {
+// Merge goal + target band + the two email opt-ins into the signed-in user's
+// row. Fails soft — the worst outcome is an unanswered onboarding question.
+async function saveProfile(userId, { goal, band, examDate, studyPlanEmails, marketingEmails }) {
   if (!userId) return;
   try {
     const supabase = getSupabase();
     const { data } = await supabase.from('users').select('prefs').eq('id', userId).maybeSingle();
-    const prefs = data?.prefs && typeof data.prefs === 'object' ? { ...data.prefs } : {};
+    let prefs = data?.prefs && typeof data.prefs === 'object' ? { ...data.prefs } : {};
     if (goal) prefs.goal = goal;
+    // Records both answers, their timestamps, and the consent basis/region for
+    // the audit trail — including an explicit "no", which is what makes a
+    // later send defensible.
+    prefs = withEmailConsent(prefs, {
+      studyPlan: studyPlanEmails,
+      marketing: marketingEmails,
+      source: 'onboarding',
+    });
     const patch = { prefs };
     if (band) patch.target_band = parseFloat(band); // '8.0+' -> 8
     if (examDate) {
@@ -111,6 +125,13 @@ export default function SignInDialog({
   const [goal, setGoal] = React.useState('');
   const [band, setBand] = React.useState('');
   const [examDate, setExamDate] = React.useState('');
+  // Email opt-ins. Outside opt-in regions the study-plan box starts ticked
+  // (it is the service being signed up for); inside the EU/EEA/UK/CH — and
+  // whenever geo is unknown — nothing is pre-ticked. Marketing is never
+  // pre-ticked anywhere.
+  const [optInRegion, setOptInRegion] = React.useState(true);
+  const [studyPlanEmails, setStudyPlanEmails] = React.useState(false);
+  const [marketingEmails, setMarketingEmails] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState('');
   const [notice, setNotice] = React.useState('');
@@ -155,6 +176,11 @@ export default function SignInDialog({
       setGoal('');
       setBand('');
       setExamDate('');
+      const region = emailConsentOptInRegion();
+      const defaults = defaultEmailOptIns(region);
+      setOptInRegion(region);
+      setStudyPlanEmails(defaults.studyPlan);
+      setMarketingEmails(defaults.marketing);
       setBusy(false);
       setErrorMsg('');
       setNotice('');
@@ -395,13 +421,20 @@ export default function SignInDialog({
   const handleAboutSubmit = async (skipped) => {
     setBusy(true);
     try {
-      if (!skipped) await saveProfile(user?.id, { goal, band, examDate });
+      // Skipping stores nothing at all — a pre-ticked box the user never saw
+      // through to a submit is not consent.
+      if (!skipped) {
+        await saveProfile(user?.id, { goal, band, examDate, studyPlanEmails, marketingEmails });
+      }
       track('onboarding_answered', {
         trigger,
         skipped: Boolean(skipped),
         goal: skipped ? null : goal || null,
         target_band: skipped ? null : band || null,
         exam_date: skipped ? null : examDate || null,
+        study_plan_emails: skipped ? null : studyPlanEmails,
+        marketing_emails: skipped ? null : marketingEmails,
+        consent_basis: optInRegion ? 'opt_in' : 'opt_out',
       });
     } finally {
       setBusy(false);
@@ -586,10 +619,46 @@ export default function SignInDialog({
               Not booked yet
             </button>
           </div>
+          <div className="flex flex-col gap-3 rounded-lg border border-input p-3">
+            <label
+              htmlFor="onboarding-study-plan-emails"
+              className="flex cursor-pointer items-start gap-2.5 text-sm text-foreground"
+            >
+              <Checkbox
+                id="onboarding-study-plan-emails"
+                className="mt-0.5"
+                checked={studyPlanEmails}
+                onCheckedChange={setStudyPlanEmails}
+              />
+              <span>
+                Send me a study plan for my exam date
+                <span className="block text-xs text-muted-foreground">
+                  Countdown, weekly progress, and streak reminders. Stop any time in one click.
+                </span>
+              </span>
+            </label>
+            <label
+              htmlFor="onboarding-marketing-emails"
+              className="flex cursor-pointer items-start gap-2.5 text-sm text-foreground"
+            >
+              <Checkbox
+                id="onboarding-marketing-emails"
+                className="mt-0.5"
+                checked={marketingEmails}
+                onCheckedChange={setMarketingEmails}
+              />
+              <span>
+                Tips and offers by email
+                <span className="block text-xs text-muted-foreground">
+                  Occasional IELTS guides and product offers. Separate from your study plan.
+                </span>
+              </span>
+            </label>
+          </div>
           <Button
             variant="accent"
             className="w-full"
-            disabled={busy || (!goal && !band && !examDate)}
+            disabled={busy || (!goal && !band && !examDate && !studyPlanEmails && !marketingEmails)}
             onClick={() => handleAboutSubmit(false)}
           >
             {busy ? 'Saving…' : 'Start practising'}

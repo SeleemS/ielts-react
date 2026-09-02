@@ -54,8 +54,23 @@ abandonment without sending every keystroke or the answer itself.
 
 Explicit domain events remain the source of truth for outcomes and funnel
 milestones, including auth, attempts, AI scoring, estimator, audio,
-newsletter, paywall, checkout, purchase, subscription, and realtime-examiner
-events.
+newsletter, paywall, checkout, purchase, subscription, realtime-examiner, and
+push-reminder events.
+
+### Server-emitted events
+
+Two events are written server-side, with `anon_id` set to a synthetic
+`push:<user_id>` (the same convention as `billing:<user_id>`) because no
+browser session exists at that moment:
+
+| Event | Written by | Props |
+| --- | --- | --- |
+| `push_sent` | `/api/cron/push-reminders` after the push service accepts a daily reminder | `source`, `notification_id`, `streak`, `destination` |
+| `push_click` | `/api/push/event`, beaconed by the service worker's `notificationclick` | `source`, `notification_id`, `streak` |
+
+`/api/push/event` is not origin-checked (a service worker may send no Origin);
+it authenticates by requiring the posted push endpoint to match an existing
+`push_subscriptions` row, and is IP rate-limited like `/api/track`.
 
 ### Writing-activation events
 
