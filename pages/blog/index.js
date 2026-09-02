@@ -124,9 +124,13 @@ export default function BlogIndex({ posts }) {
 }
 
 export async function getStaticProps() {
-  const sorted = [...posts].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  // Project only the fields the cards and the CollectionPage JSON-LD use.
+  // Passing whole posts shipped every article's full HTML body in the page's
+  // __NEXT_DATA__ — 608 kB of payload for an index that renders four fields —
+  // and Next warned about it at build time.
+  const sorted = [...posts]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .map(({ slug, title, date, excerpt }) => ({ slug, title, date, excerpt }));
 
   return { props: { posts: sorted } };
 }

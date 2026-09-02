@@ -6,6 +6,7 @@ import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
 
 import { SITE_URL } from '../lib/site';
+import { listRoundupMonths, parseMonthSlug } from '../lib/task2Roundup';
 
 const PAGE_TITLE = 'IELTS Writing Task 2 Topics 2026 (with Practice Questions)';
 const PAGE_DESCRIPTION =
@@ -295,7 +296,7 @@ function DataTable({ table }) {
   );
 }
 
-export default function IeltsWritingTask2Topics() {
+export default function IeltsWritingTask2Topics({ roundupMonths }) {
   return (
     <>
       <Head>
@@ -418,6 +419,30 @@ export default function IeltsWritingTask2Topics() {
               </p>
             </section>
 
+            {/* ============ MONTHLY ROUNDUPS ============ */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                Monthly Task 2 topic roundups
+              </h2>
+              <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">
+                A month-by-month view of the same question bank, grouped by essay frame rather than
+                by subject. These pages are a practice schedule, not a prediction: nobody can tell
+                you which question you will get, so the useful drill is to write one essay from each
+                frame until none of them is unfamiliar.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {roundupMonths.map((month) => (
+                  <NextLink
+                    key={month.slug}
+                    href={`/ielts-writing-task-2-topics/${month.slug}`}
+                    className="rounded-lg border border-border bg-card px-3 py-2 text-sm font-semibold text-foreground no-underline shadow-sm transition-colors hover:border-accent/40 hover:text-accent"
+                  >
+                    {month.label}
+                  </NextLink>
+                ))}
+              </div>
+            </section>
+
             {/* ===================== FAQ ===================== */}
             <section className="mb-12">
               <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground">
@@ -458,4 +483,16 @@ export default function IeltsWritingTask2Topics() {
       </div>
     </>
   );
+}
+
+// The month list is resolved at BUILD time, not in the component: computing it
+// from `new Date()` at module scope would run again in the browser against the
+// visitor's clock and could hydrate a different list than was rendered.
+export async function getStaticProps() {
+  return {
+    props: {
+      roundupMonths: listRoundupMonths(new Date(), 6).map((slug) => parseMonthSlug(slug)),
+    },
+    revalidate: 60 * 60 * 24,
+  };
 }

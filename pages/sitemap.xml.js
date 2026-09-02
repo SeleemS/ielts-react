@@ -4,6 +4,8 @@ import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
 import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
 import { SPEAKING_PART_SLUGS } from '../lib/speakingParts';
 import { SPEAKING_FAMILY_SLUGS } from '../lib/speakingTopicFamilies';
+import { listRoundupMonths } from '../lib/task2Roundup';
+import { SCORE_REQUIREMENT_COUNTRY_SLUGS } from '../lib/scoreRequirementsData';
 
 import { SITE_URL } from '../lib/site';
 
@@ -40,6 +42,8 @@ export const STATIC_ROUTES = [
   ...SPEAKING_FAMILY_SLUGS.map((slug) => `/speaking/topics/${slug}`),
   // Freshness hub for newly published cue cards.
   '/speaking/new-cue-cards',
+  // Per-country score requirement pages (pages/ielts-score-requirements/[country].js).
+  ...SCORE_REQUIREMENT_COUNTRY_SLUGS.map((slug) => `/ielts-score-requirements/${slug}`),
 ];
 
 // Build an ISO date (YYYY-MM-DD) or null. Accepts human-readable strings like
@@ -63,6 +67,14 @@ export async function getServerSideProps({ res }) {
 
   STATIC_ROUTES.forEach((route) =>
     entries.push({ loc: `${SITE_URL}${route}`, lastmod: today })
+  );
+
+  // Monthly Task 2 roundups (pages/ielts-writing-task-2-topics/[month].js).
+  // Resolved per REQUEST rather than at module load, so the sitemap starts
+  // listing the new month the day the calendar turns over — matching the
+  // route's own daily revalidate window.
+  listRoundupMonths(new Date(), 6).forEach((month) =>
+    entries.push({ loc: `${SITE_URL}/ielts-writing-task-2-topics/${month}`, lastmod: today })
   );
 
   posts.forEach((post) =>
