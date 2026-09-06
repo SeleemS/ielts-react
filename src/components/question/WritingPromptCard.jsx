@@ -52,7 +52,7 @@ export default function WritingPromptCard({
   const copy =
     variant === 'upgrade'
       ? {
-          body: 'Get full AI Writing reports with Pro — every criterion, corrected examples and a Band 8 rewrite, on as many essays as you write.',
+          body: 'Get full AI Writing reports with Pro — every criterion, corrected examples and a Band 8 rewrite, with up to 2 reports per day, 10 per week and 30 per month.',
           cta: 'See Pro plans',
           href: '/pricing?upgrade=writing',
         }

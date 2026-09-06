@@ -154,7 +154,7 @@ const PRICING_FAQS = [
   },
   {
     q: 'What exactly are the fair-use limits on Pro?',
-    a: 'Pro includes up to 2 AI Writing reports per day and 1 AI Speaking score per day, plus your plan’s live examiner minutes each month. The caps exist to keep scoring fast and sustainable for everyone; if you hit one, it resets the next day and your saved feedback stays available.',
+    a: 'Pro includes up to 2 AI Writing reports per day, 10 per week and 30 per month, plus up to 1 AI Speaking score per day, 5 per week and 15 per month. All three limits apply. Daily limits reset at midnight UTC, weekly limits on Monday at midnight UTC, and monthly limits on the first day of the month at midnight UTC. Your plan also includes live examiner minutes. If you reach a scoring limit, your saved feedback stays available while you wait for that allowance to reset.',
   },
   {
     q: 'How accurate are the AI band scores?',

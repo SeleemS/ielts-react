@@ -140,7 +140,7 @@ const FEATURES = [
   {
     icon: Star,
     title: 'Free core practice',
-    desc: 'Open any question and start practising without an account. All Reading and Listening practice is free forever — Premium unlocks AI Writing and Speaking scoring.',
+    desc: 'Try one Reading and one Listening question without an account. Create a free account to keep submitting answers and saving your progress. Pro adds continued AI Writing and Speaking scoring.',
   },
 ];
 
@@ -631,8 +631,8 @@ const HomePage = ({ counts = {} }) => {
                   Ready to boost your IELTS score?
                 </h2>
                 <p className="mx-auto mt-4 max-w-xl text-lg text-slate-200">
-                  Jump into a real practice question right now — it is free, and you do not
-                  need an account.
+                  Try your first Reading or Listening question without an account.
+                  Create a free account to keep submitting answers and saving your progress.
                 </p>
                 <ul className="mx-auto mt-8 flex max-w-xl flex-col items-start gap-3 text-left sm:flex-row sm:items-center sm:justify-center sm:gap-8">
                   {['Practice freely', 'Instant scoring', 'AI band feedback'].map((item) => (

@@ -21,7 +21,7 @@ export const SECTION_FAQS = {
   reading: [
     {
       q: 'Is IELTS-Bank reading practice free?',
-      a: 'Yes. Every reading passage is free to practise with instant marking, answer explanations and an estimated band. You only need an account if you want to save your progress across devices.',
+      a: 'Yes. Try one reading passage with instant marking, answer explanations and an estimated band without an account. Create a free account to submit more passages and save your progress across devices.',
     },
     {
       q: 'Are these real IELTS past papers?',
