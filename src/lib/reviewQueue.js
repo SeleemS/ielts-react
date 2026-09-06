@@ -35,3 +35,15 @@ export function buildQueue(attempts) {
   queue.sort((a, b) => b.missed.length - a.missed.length);
   return queue;
 }
+
+
+// Keep shared reading/completion context and options, but only render and grade
+// missed inputs. QuestionGroup renders inputs from questions; instructions HTML
+// is display-only and does not require retaining already-correct questions.
+export function selectReviewGroups(passage, missedNumbers) {
+  const missed = new Set((missedNumbers || []).map(Number));
+  return (passage?.groups || passage?.questionGroups || [])
+    .map(group => ({ ...group, questions: (group.questions || [])
+      .filter(question => missed.has(Number(question.number))) }))
+    .filter(group => group.questions.length > 0);
+}

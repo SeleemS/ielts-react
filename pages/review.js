@@ -7,17 +7,18 @@ import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
 import { Button } from '../components/ui/button';
 import QuestionEngine from '../src/components/question/QuestionEngine';
+import AudioPlayer from '../src/components/question/AudioPlayer';
+import { sanitizeHtml } from '../lib/sanitize';
 import SignInDialog from '../src/components/auth/SignInDialog';
 import { useAuth } from '../src/lib/auth';
 import { getSupabase, getStructuredPassage } from '../lib/supabase';
 import { track } from '../src/lib/analytics';
-import { buildQueue } from '../src/lib/reviewQueue';
+import { buildQueue, selectReviewGroups } from '../src/lib/reviewQueue';
 
 // Mistake review mode: the daily-return loop the dashboard's "Mistakes worth
 // revisiting" panel links into. For each practised passage we take the LATEST
 // attempt's per_question and queue the questions that were wrong or skipped.
-// Re-answering here runs the real QuestionEngine on just the groups that
-// contain those questions, and the new attempt it records updates the queue —
+// Re-answering here runs the real QuestionEngine on just those questions, and the new attempt it records updates the queue —
 // get them right and the passage clears itself. All data is the user's own
 // attempts (RLS owner-select); nothing here is synthesized.
 
@@ -37,18 +38,12 @@ function ReviewRunner({ entry, onBack }) {
     getStructuredPassage(entry.skill, entry.slug)
       .then((passage) => {
         if (!active) return;
-        const missed = new Set(entry.missed);
-        // Keep whole groups (completion groups embed their gaps in shared
-        // instructions HTML, so per-question filtering would break rendering);
-        // a group qualifies when it contains at least one missed question.
-        const groups = (passage?.groups || passage?.questionGroups || []).filter((group) =>
-          (group.questions || []).some((question) => missed.has(Number(question.number)))
-        );
+        const groups = selectReviewGroups(passage, entry.missed);
         if (!groups.length) {
           setState({ loading: false, groups: null, error: 'Nothing left to review here — nice.' });
           return;
         }
-        setState({ loading: false, groups, error: null });
+        setState({ loading: false, groups, passage, error: null });
       })
       .catch(() => {
         if (active) {
@@ -86,12 +81,28 @@ function ReviewRunner({ entry, onBack }) {
             {state.error}
           </div>
         ) : (
+          <>
+            <section aria-labelledby="review-context-heading" className="mb-6 rounded-lg border border-border bg-card p-4">
+              <h2 id="review-context-heading" className="mb-3 font-semibold">
+                {entry.skill === 'listening' ? 'Recording' : 'Reading passage'}
+              </h2>
+              {entry.skill === 'listening' ? (
+                state.passage?.audioUrl ? <AudioPlayer src={state.passage.audioUrl} /> :
+                  <p className="text-sm text-muted-foreground">This recording is currently unavailable.</p>
+              ) : null}
+              {state.passage?.bodyHtml ? (
+                <div className="max-h-[45vh] overflow-y-auto text-sm leading-7 [&_p]:mb-3"
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(state.passage.bodyHtml) }} />
+              ) : null}
+            </section>
           <QuestionEngine
             groups={state.groups}
             storageKey={entry.slug}
             skill={entry.skill}
             showBand={false}
+            reviewMode
           />
+          </>
         )}
       </div>
     </div>
@@ -104,6 +115,7 @@ export default function ReviewPage() {
   const [signInOpen, setSignInOpen] = React.useState(false);
   const [state, setState] = React.useState({ loading: true, queue: [], error: null });
   const [selected, setSelected] = React.useState(null);
+  const handledDeepLink = React.useRef(null);
 
   const loadQueue = React.useCallback(() => {
     setState({ loading: true, queue: [], error: null });
@@ -131,9 +143,16 @@ export default function ReviewPage() {
   // Deep link: /review?passage=<slug> preselects that passage once loaded.
   React.useEffect(() => {
     const wanted = typeof router.query.passage === 'string' ? router.query.passage : '';
-    if (!wanted || selected || state.loading) return;
+    if (!wanted) {
+      handledDeepLink.current = null;
+      return;
+    }
+    if (handledDeepLink.current === wanted || selected || state.loading) return;
     const entry = state.queue.find((item) => item.slug === wanted);
-    if (entry) setSelected(entry);
+    if (entry) {
+      handledDeepLink.current = wanted;
+      setSelected(entry);
+    }
   }, [router.query.passage, selected, state]);
 
   return (
@@ -149,6 +168,11 @@ export default function ReviewPage() {
             entry={selected}
             onBack={() => {
               setSelected(null);
+              if (router.query.passage) {
+                const query = { ...router.query };
+                delete query.passage;
+                router.replace({ pathname: '/review', query }, undefined, { shallow: true }).catch(() => {});
+              }
               loadQueue();
             }}
           />

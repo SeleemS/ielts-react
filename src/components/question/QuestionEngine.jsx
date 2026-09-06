@@ -35,7 +35,7 @@ import { isStreakMilestone } from '../../lib/streak';
 //   skill      - 'reading' | 'listening' (used in the storage key + band label)
 //   showBand   - optional; show a rough band estimate in the results summary
 
-function persistAttempt(skill, storageKey, answers, result, questions, startedAt, timestamp) {
+function persistAttempt(skill, storageKey, answers, result, questions, startedAt, timestamp, reviewMode = false) {
   if (typeof window === 'undefined' || !storageKey) return;
   try {
     const perQuestion = {};
@@ -51,14 +51,15 @@ function persistAttempt(skill, storageKey, answers, result, questions, startedAt
     const payload = {
       skill,
       slug: storageKey,
-      answers,
+      answers: reviewMode ? { ...answers, _practiceMode: 'review' } : answers,
+      ...(reviewMode ? { band: null, practiceMode: 'review' } : {}),
       perQuestion,
       score: result.score,
       total: result.total,
       timestamp: timestamp || new Date().toISOString(),
       startedAt,
     };
-    window.localStorage.setItem(`ielts-attempt:${skill}:${storageKey}`, JSON.stringify(payload));
+    window.localStorage.setItem(`ielts-attempt:${skill}:${reviewMode ? 'review:' : ''}${storageKey}`, JSON.stringify(payload));
   } catch {
     /* localStorage may be unavailable (private mode) — non-fatal */
   }
@@ -68,12 +69,12 @@ function persistAttempt(skill, storageKey, answers, result, questions, startedAt
 // attempt into Supabase (in addition to the localStorage write above). This is
 // fully fail-soft — any resolution/DB error is swallowed so the results UI is
 // never affected. Logged-out/offline users keep only the localStorage copy.
-async function persistAttemptToSupabase(userId, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId) {
+async function persistAttemptToSupabase(userId, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode = false) {
   if (!userId || !storageKey) return;
   try {
     // Mock attempts link to mock_tests, not a single passage.
     const passageId = mockTestId ? null : await resolvePassageId(storageKey, skill);
-    const band = estimateBand(result.score, result.total, skill, module);
+    const band = reviewMode ? null : estimateBand(result.score, result.total, skill, module);
     const perQuestion = {};
     Object.entries(result.byNumber).forEach(([num, item]) => {
       perQuestion[num] = {
@@ -87,7 +88,7 @@ async function persistAttemptToSupabase(userId, skill, storageKey, answers, resu
       passageId,
       mockTestId: mockTestId || null,
       skill,
-      responses: answers || {},
+      responses: reviewMode ? { ...answers, _practiceMode: 'review' } : answers || {},
       rawScore: result.score,
       total: result.total,
       perQuestion,
@@ -98,7 +99,7 @@ async function persistAttemptToSupabase(userId, skill, storageKey, answers, resu
     if (res.ok) {
       // Record the same timestamp we wrote to the local attempt so the
       // migration pass (syncLocalAttempts) won't re-insert this submission.
-      markAttemptSynced(`ielts-attempt:${skill}:${storageKey}`, submittedAt);
+      markAttemptSynced(`ielts-attempt:${skill}:${reviewMode ? 'review:' : ''}${storageKey}`, submittedAt);
     }
   } catch {
     /* never break the results UI on a persistence failure */
@@ -292,6 +293,7 @@ export default function QuestionEngine({
   storageKey,
   skill = 'reading',
   showBand = true,
+  reviewMode = false,
   className,
   postSubmitContent = null,
   durationSeconds = null,
@@ -328,8 +330,8 @@ export default function QuestionEngine({
   const openedRef = useRef(null);
   const { user } = useAuth();
   const inProgressKey = useMemo(
-    () => (storageKey ? `ielts-inprogress:${skill}:${storageKey}` : null),
-    [skill, storageKey]
+    () => (storageKey ? `ielts-inprogress:${skill}:${reviewMode ? 'review:' : ''}${storageKey}` : null),
+    [skill, storageKey, reviewMode]
   );
 
   const questions = useMemo(
@@ -430,7 +432,7 @@ export default function QuestionEngine({
     setSubmitted(true);
     const submittedAt = new Date().toISOString();
     const startedAt = startedAtRef.current || submittedAt;
-    persistAttempt(skill, storageKey, answers, result, questions, startedAt, submittedAt);
+    persistAttempt(skill, storageKey, answers, result, questions, startedAt, submittedAt, reviewMode);
     if (typeof window !== 'undefined' && inProgressKey) {
       try {
         window.localStorage.removeItem(inProgressKey);
@@ -440,7 +442,7 @@ export default function QuestionEngine({
     }
     if (user?.id) {
       // Cross-device mirror for signed-in users (fire-and-forget, fail-soft).
-      persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId).catch(
+      persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode).catch(
         () => {}
       );
     } else if (!mockTestId) {
@@ -448,13 +450,14 @@ export default function QuestionEngine({
       recordFreeSubmit(skill, storageKey);
     }
     if (typeof window !== 'undefined') {
-      const band = estimateBand(result.score, result.total, skill, module);
+      const band = reviewMode ? null : estimateBand(result.score, result.total, skill, module);
       track('attempt_submit', {
         skill,
         slug: storageKey,
         signed_in: Boolean(user?.id),
         score: result.score,
         total: result.total,
+        ...(reviewMode ? { practice_mode: 'review' } : {}),
         score_pct: result.total ? Math.round((result.score / result.total) * 100) : 0,
         band: typeof band === 'number' ? band : null,
         answered_count: answeredCount,
@@ -462,7 +465,7 @@ export default function QuestionEngine({
       });
       window.setTimeout(() => resultsRef.current?.focus(), 0);
     }
-  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId]);
+  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId, reviewMode]);
 
   // Two-step submit: with unanswered questions, the first click arms an
   // inline confirmation instead of submitting. Any answer change disarms it.

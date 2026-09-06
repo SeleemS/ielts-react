@@ -1,7 +1,9 @@
 // /review queue construction: latest attempt per passage wins, only wrong or
 // skipped questions queue, cleared passages drop out.
 import { describe, expect, it } from 'vitest';
-import { buildQueue } from '../src/lib/reviewQueue';
+import { buildQueue, selectReviewGroups } from '../src/lib/reviewQueue';
+
+import { gradeAll } from '../src/components/question/grade';
 
 const attempt = (overrides) => ({
   id: 'a1',
@@ -69,5 +71,38 @@ describe('buildQueue', () => {
     expect(buildQueue([attempt({ passages: null, per_question: { 1: { correct: false } } })])).toEqual([]);
     expect(buildQueue([])).toEqual([]);
     expect(buildQueue(null)).toEqual([]);
+  });
+});
+
+
+describe('selectReviewGroups', () => {
+  const groups = [
+    { id: 'tfng', questionType: 'true_false_not_given', questions: [1, 2, 3, 4, 5, 6].map(number => ({ number, answerKey: { accepted: ['TRUE'] } })) },
+    { id: 'completion', questionType: 'sentence_completion', instructionsHtml: '<p>7. River __ 8. Forest __</p>', options: [{ key: 'A', text: 'shared' }], imageSvg: '<svg/>', questions: [7, 8].map(number => ({ number, answerKey: { accepted: ['river'] } })) },
+  ];
+
+  it('grades only the missed input, without creating five new mistakes', () => {
+    const filtered = selectReviewGroups({ groups }, [1]);
+    expect(filtered).toHaveLength(1);
+    expect(filtered[0].questions.map(q => q.number)).toEqual([1]);
+    const result = gradeAll(filtered, { 1: 'TRUE' });
+    expect(result).toMatchObject({ score: 1, total: 1 });
+    expect(Object.keys(result.byNumber)).toEqual(['1']);
+    expect(buildQueue([attempt({ per_question: result.byNumber })])).toEqual([]);
+    expect(groups[0].questions).toHaveLength(6);
+  });
+
+  it('preserves sparse source numbers and shared completion context', () => {
+    const filtered = selectReviewGroups({ questionGroups: groups }, ['2', 8]);
+    expect(filtered.map(group => group.questions.map(q => q.number))).toEqual([[2], [8]]);
+    expect(filtered[1]).toMatchObject({ instructionsHtml: groups[1].instructionsHtml, options: groups[1].options, imageSvg: '<svg/>' });
+    const result = gradeAll(filtered, { 2: 'FALSE', 8: 'river' });
+    expect(result).toMatchObject({ score: 1, total: 2 });
+    expect(buildQueue([attempt({ per_question: result.byNumber })])[0].missed).toEqual([2]);
+  });
+
+  it('drops empty/nonmatching groups', () => {
+    expect(selectReviewGroups({ groups }, [99])).toEqual([]);
+    expect(selectReviewGroups(null, [1])).toEqual([]);
   });
 });
