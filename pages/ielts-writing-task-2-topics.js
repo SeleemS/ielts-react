@@ -6,7 +6,8 @@ import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
 
 import { SITE_URL } from '../lib/site';
-import { listRoundupMonths, parseMonthSlug } from '../lib/task2Roundup';
+import { listAvailableRoundupMonths, parseMonthSlug } from '../lib/task2Roundup';
+import { TASK2_PROMPTS } from '../lib/task2Prompts';
 
 const PAGE_TITLE = 'IELTS Writing Task 2 Topics 2026 (with Practice Questions)';
 const PAGE_DESCRIPTION =
@@ -491,7 +492,7 @@ export default function IeltsWritingTask2Topics({ roundupMonths }) {
 export async function getStaticProps() {
   return {
     props: {
-      roundupMonths: listRoundupMonths(new Date(), 6).map((slug) => parseMonthSlug(slug)),
+      roundupMonths: listAvailableRoundupMonths(TASK2_PROMPTS, new Date(), 6).map((slug) => parseMonthSlug(slug)),
     },
     revalidate: 60 * 60 * 24,
   };

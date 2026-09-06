@@ -9,7 +9,7 @@ import { TASK2_PROMPTS } from '../../lib/task2Prompts';
 import {
   buildMonthlyRoundup,
   isPublishableMonth,
-  listRoundupMonths,
+  listAvailableRoundupMonths,
   parseMonthSlug,
 } from '../../lib/task2Roundup';
 import { monthlyTask2Seo, TASK2_TOPICS_PATH } from '../../lib/task2TopicsSeo';
@@ -227,7 +227,7 @@ export async function getStaticPaths() {
     // Pre-render the trailing six months. `blocking` keeps the route alive when
     // the calendar rolls over between deploys: getStaticProps re-validates the
     // slug and 404s anything that is not a real, non-future month.
-    paths: listRoundupMonths(new Date(), 6).map((month) => ({ params: { month } })),
+    paths: listAvailableRoundupMonths(TASK2_PROMPTS, new Date(), 6).map((month) => ({ params: { month } })),
     fallback: 'blocking',
   };
 }
@@ -239,7 +239,7 @@ export async function getStaticProps({ params }) {
   const roundup = buildMonthlyRoundup(TASK2_PROMPTS, slug);
   if (!roundup || !roundup.groups.length) return { notFound: true };
 
-  const otherMonths = listRoundupMonths(new Date(), 6)
+  const otherMonths = listAvailableRoundupMonths(TASK2_PROMPTS, new Date(), 6)
     .filter((other) => other !== roundup.month.slug)
     .map((other) => parseMonthSlug(other));
 

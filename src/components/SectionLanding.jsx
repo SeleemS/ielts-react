@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import DataTable from './DataTable';
-import { READING_QUESTION_TYPE_LINKS } from '../../lib/readingQuestionTypes';
+import { availableReadingTypeLinks } from '../../lib/readingQuestionTypes';
 
 // Pure Tailwind/shadcn section landing. NO Chakra imports.
 //
@@ -152,6 +152,7 @@ const SectionLanding = ({
   )}&type=${encodeURIComponent(section || 'default')}`;
   const faqs = SECTION_FAQS[section] || [];
   const faqJsonLd = faqJsonLdFor(faqs);
+  const readingTypeLinks = section === 'reading' ? availableReadingTypeLinks(items) : [];
 
   return (
     <>
@@ -202,7 +203,7 @@ const SectionLanding = ({
             <DataTable skill={section} items={items} questionTypeOptions={questionTypeOptions} />
 
             {/* Reading only: practise by question type. */}
-            {section === 'reading' && (
+            {readingTypeLinks.length > 0 && (
               <section className="mt-12 rounded-2xl border border-border bg-secondary/40 p-6 sm:p-8">
                 <h2 className="text-xl font-bold tracking-tight text-foreground">
                   Practice by question type
@@ -212,7 +213,7 @@ const SectionLanding = ({
                   matching practice passages.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2.5">
-                  {READING_QUESTION_TYPE_LINKS.map(({ slug, label }) => (
+                  {readingTypeLinks.map(({ slug, label }) => (
                     <NextLink
                       key={slug}
                       href={`/reading/${slug}`}

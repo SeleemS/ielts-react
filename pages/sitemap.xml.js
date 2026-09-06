@@ -4,7 +4,8 @@ import { READING_QUESTION_TYPE_SLUGS } from '../lib/readingQuestionTypes';
 import { LISTENING_PART_SLUGS } from '../lib/listeningQuestionTypes';
 import { SPEAKING_PART_SLUGS } from '../lib/speakingParts';
 import { SPEAKING_FAMILY_SLUGS } from '../lib/speakingTopicFamilies';
-import { listRoundupMonths } from '../lib/task2Roundup';
+import { listAvailableRoundupMonths } from '../lib/task2Roundup';
+import { TASK2_PROMPTS } from '../lib/task2Prompts';
 import { SCORE_REQUIREMENT_COUNTRY_SLUGS } from '../lib/scoreRequirementsData';
 
 import { SITE_URL } from '../lib/site';
@@ -75,7 +76,7 @@ export async function getServerSideProps({ res }) {
   // Resolved per REQUEST rather than at module load, so the sitemap starts
   // listing the new month the day the calendar turns over — matching the
   // route's own daily revalidate window.
-  listRoundupMonths(new Date(), 6).forEach((month) =>
+  listAvailableRoundupMonths(TASK2_PROMPTS, new Date(), 6).forEach((month) =>
     entries.push({ loc: `${SITE_URL}/ielts-writing-task-2-topics/${month}`, lastmod: today })
   );
 
