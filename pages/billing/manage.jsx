@@ -10,7 +10,7 @@ import { useAuth } from '../../src/lib/auth';
 import { usePlan } from '../../src/lib/usePlan';
 import { getSupabase } from '../../lib/supabase';
 import { track } from '../../src/lib/analytics';
-import { billingStatusMessage, canOfferBillingPause } from '../../src/lib/billingStatus';
+import { billingStatusHeading, billingStatusMessage, canOfferBillingPause } from '../../src/lib/billingStatus';
 import { getSessionAccess } from '../../src/lib/sessionAccess';
 import Modal from '../../src/components/AccessibleModal';
 
@@ -176,10 +176,7 @@ export default function ManageBillingPage() {
   const pending = authLoading || loading;
   const effectivePauseUntil = pauseResult?.resumesAt || pauseUntil;
   const effectivePauseUsedAt = pauseResult?.usedAt || pauseUsedAt;
-  const pauseActive =
-    Boolean(effectivePauseUntil) &&
-    new Date(effectivePauseUntil).getTime() > Date.now();
-  const pausePending = planStatus === 'paused';
+  const billingDisplay = { pauseUntil: effectivePauseUntil, expiresAt, planStatus, renewsAt, isPremium, now: Date.now() };
   const canChangeRecurringPlan =
     isPremium
     && ['monthly', '3month', '6month', 'annual'].includes(planSku)
@@ -226,28 +223,10 @@ export default function ManageBillingPage() {
                   <ShieldCheck className="mt-1 h-5 w-5 text-emerald-600" />
                   <div>
                     <h2 className="font-bold">
-                      {pauseActive
-                        ? 'Premium is paused'
-                        : pausePending
-                          ? 'Billing is resuming'
-                          : planStatus === 'canceled'
-                            ? 'Premium is ending'
-                            : planStatus === 'past_due'
-                              ? 'Payment needs attention'
-                              : expiresAt
-                                ? 'Exam Pass is active'
-                                : isPremium
-                                  ? 'Keep Premium active'
-                                  : 'Premium is not active'}
+                      {billingStatusHeading(billingDisplay)}
                     </h2>
                     <p className="mt-1 text-sm text-slate-600">
-                      {billingStatusMessage({
-                        pauseUntil: effectivePauseUntil,
-                        expiresAt,
-                        planStatus,
-                        renewsAt,
-                        isPremium,
-                      })}
+                      {billingStatusMessage(billingDisplay)}
                     </p>
                   </div>
                 </div>

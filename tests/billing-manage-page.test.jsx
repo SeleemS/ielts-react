@@ -11,6 +11,7 @@ const testState = vi.hoisted(() => ({
   isPremium: true,
   pauseUntil: null,
   expiresAt: null,
+  renewsAt: '2026-10-01T00:00:00.000Z',
   hasBillingAccount: true,
   accessToken: 'billing-access-token',
   sessionError: null,
@@ -41,7 +42,7 @@ vi.mock('../src/lib/usePlan', () => ({
     isPremium: testState.isPremium,
     planSku: testState.planSku,
     planStatus: testState.planStatus,
-    renewsAt: '2026-10-01T00:00:00.000Z',
+    renewsAt: testState.renewsAt,
     expiresAt: testState.expiresAt,
     pauseUntil: testState.pauseUntil,
     pauseUsedAt: null,
@@ -86,6 +87,8 @@ beforeEach(() => {
   testState.isPremium = true;
   testState.pauseUntil = null;
   testState.expiresAt = null;
+  testState.renewsAt = '2026-10-01T00:00:00.000Z';
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-09-06T04:00:00.000Z'));
   testState.hasBillingAccount = true;
   testState.accessToken = 'billing-access-token';
   testState.sessionError = null;
@@ -101,6 +104,7 @@ afterEach(() => {
   container.remove();
   delete global.fetch;
   vi.clearAllMocks();
+  vi.restoreAllMocks();
 });
 
 describe('billing pause state', () => {
@@ -487,5 +491,25 @@ describe('billing upgrade confirmation', () => {
       'subscription_plan_change',
       expect.anything()
     );
+  });
+});
+
+
+describe('billing expired access display', () => {
+  it.each([
+    ['exam_pass', 'active', '2026-09-06T04:00:00.000Z', null, 'Exam Pass has expired', 'Exam Pass expired'],
+    ['monthly', 'canceled', null, '2026-09-06T04:00:00.000Z', 'Premium has ended', 'Premium access ended'],
+    ['exam_pass', 'refunded', '2026-10-01T00:00:00.000Z', null, 'Premium is not active', 'refund or dispute'],
+  ])('renders %s %s without active-access promises', async (sku, status, expires, renews, heading, detail) => {
+    testState.planSku = sku;
+    testState.planStatus = status;
+    testState.expiresAt = expires;
+    testState.renewsAt = renews;
+    testState.isPremium = false;
+    await act(async () => root.render(React.createElement(ManageBillingPage)));
+    expect(container.querySelector('h2').textContent).toBe(heading);
+    expect(container.textContent).toContain(detail);
+    expect(container.textContent).not.toContain('Exam Pass is active');
+    expect(container.textContent).not.toContain('Premium access continues until');
   });
 });
