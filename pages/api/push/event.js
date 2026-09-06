@@ -24,14 +24,15 @@ function getAdmin() {
 }
 
 function parseBody(req) {
+  let body = req.body;
   if (typeof req.body === 'string') {
     try {
-      return JSON.parse(req.body);
+      body = JSON.parse(req.body);
     } catch {
       return {};
     }
   }
-  return req.body || {};
+  return body && typeof body === 'object' && !Array.isArray(body) ? body : {};
 }
 
 export default async function handler(req, res) {
