@@ -153,15 +153,17 @@ export async function disableReminders({ accessToken }) {
   const subscription = await currentSubscription();
   if (!subscription) return { ok: true };
   const { endpoint } = subscription;
-  try {
-    await subscription.unsubscribe();
-  } catch {
-    /* the row is disabled below regardless */
-  }
-  await fetch('/api/push/subscribe', {
+  // Keep the endpoint available for retry if disabling on the server fails.
+  const response = await fetch('/api/push/subscribe', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
     body: JSON.stringify({ endpoint }),
   });
+  if (!response.ok) throw new Error(`unsubscribe-${response.status}`);
+  try {
+    await subscription.unsubscribe();
+  } catch {
+    /* The server row is already disabled, so reminders cannot be sent. */
+  }
   return { ok: true };
 }

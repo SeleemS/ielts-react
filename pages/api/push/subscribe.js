@@ -2,6 +2,7 @@ export const config = { runtime: 'nodejs' };
 
 import { createClient } from '@supabase/supabase-js';
 import { originAllowed } from '../../../lib/apiSecurity';
+import { validPushEndpoint } from '../../../lib/pushEndpoint';
 
 // Daily-reminder push subscriptions.
 //
@@ -95,7 +96,7 @@ export default async function handler(req, res) {
     }
 
     const subscription = body.subscription || {};
-    const endpoint = validEndpoint(subscription.endpoint);
+    const endpoint = validPushEndpoint(subscription.endpoint);
     const p256dh = typeof subscription.keys?.p256dh === 'string' ? subscription.keys.p256dh : '';
     const auth = typeof subscription.keys?.auth === 'string' ? subscription.keys.auth : '';
     if (!endpoint || !p256dh || !auth) {

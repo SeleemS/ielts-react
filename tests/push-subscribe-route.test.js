@@ -175,6 +175,16 @@ describe('/api/push/subscribe', () => {
     expect(state.upserts).toHaveLength(0);
   });
 
+  it.each([
+    'https://attacker.example/collect', 'https://127.0.0.1/internal',
+    'https://fcm.googleapis.com:443/wp/x', 'https://user@fcm.googleapis.com/wp/x',
+    'https://fcm.googleapis.com/wp/x#fragment',
+  ])('rejects untrusted endpoints before persistence: %s', async (endpoint) => {
+    const res = await call({ body: { subscription: { ...validSubscription, endpoint } } });
+    expect(res.statusCode).toBe(400);
+    expect(state.upserts).toHaveLength(0);
+  });
+
   it('disables only the caller’s own endpoint on DELETE', async () => {
     const res = await call({
       method: 'DELETE',

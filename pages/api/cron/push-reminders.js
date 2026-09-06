@@ -11,7 +11,8 @@ import { buildQueue } from '../../../src/lib/reviewQueue';
 // hour, send exactly one notification: "Your daily IELTS question is ready ·
 // 🔥 {streak}-day streak", deep-linked into the mistake-review pool (or the
 // reading index when that pool is empty). One per local calendar day is
-// enforced in lib/pushSchedule.js via last_sent_at.
+// enforced in lib/pushSchedule.js via last_sent_at. The service-only claim RPC rechecks this under a row lock
+// before dispatch and holds a lease across the provider request.
 //
 // Failure handling: 404/410 disables the subscription immediately (the
 // endpoint is gone for good); anything else increments `failures`, and five
@@ -101,7 +102,7 @@ export async function practiceContext(admin, userIds, now = new Date()) {
   return context;
 }
 
-async function recordSent(admin, subscription, notification, now) {
+async function recordSent(admin, subscription, notification) {
   const { error } = await admin.from('activity_events').insert({
     anon_id: `push:${subscription.user_id}`,
     user_id: subscription.user_id,
@@ -114,26 +115,6 @@ async function recordSent(admin, subscription, notification, now) {
     },
   });
   if (error) console.error('push_sent event insert failed:', error.message);
-  const { error: updateError } = await admin
-    .from('push_subscriptions')
-    .update({ last_sent_at: now.toISOString(), failures: 0, updated_at: now.toISOString() })
-    .eq('id', subscription.id);
-  if (updateError) throw updateError;
-}
-
-async function recordFailure(admin, subscription, result, now) {
-  const gone = result.gone;
-  const failures = Number(subscription.failures || 0) + 1;
-  const { error } = await admin
-    .from('push_subscriptions')
-    .update({
-      failures,
-      enabled: gone ? false : failures < 5,
-      disabled_reason: gone ? 'push-gone' : failures >= 5 ? 'too-many-failures' : null,
-      updated_at: now.toISOString(),
-    })
-    .eq('id', subscription.id);
-  if (error) throw error;
 }
 
 export async function sendDueReminders(
@@ -146,31 +127,49 @@ export async function sendDueReminders(
   if (!due.length) return results;
 
   const context = await practiceContext(admin, [...new Set(due.map((row) => row.user_id))], now);
-  for (const subscription of due) {
+  for (const candidate of due) {
+    const { data: claim, error: claimError } = await admin.rpc('claim_push_reminder', {
+      p_subscription_id: candidate.id,
+    });
+    if (claimError) throw claimError;
+    if (!claim?.claimed) continue;
+    const subscription = claim.subscription;
     const stats = context.get(subscription.user_id) || { streak: 0, reviewCount: 0 };
     const copy = reminderNotification(stats);
     const notificationId = `${subscription.id}:${now.toISOString().slice(0, 10)}`;
-    const result = await send(subscription, {
-      title: copy.title,
-      body: copy.body,
-      url: copy.url,
-      tag: 'daily-reminder',
-      notification_id: notificationId,
-      endpoint: subscription.endpoint,
-      streak: stats.streak,
+    let result;
+    try {
+      result = await send(subscription, {
+        title: copy.title,
+        body: copy.body,
+        url: copy.url,
+        tag: 'daily-reminder',
+        notification_id: notificationId,
+        endpoint: subscription.endpoint,
+        streak: stats.streak,
+      });
+    } catch {
+      result = { sent: false, gone: false };
+    }
+    const { data: finished, error: finishError } = await admin.rpc('finish_push_reminder', {
+      p_subscription_id: subscription.id,
+      p_token: claim.token,
+      p_sent: !!result?.sent,
+      p_gone: !!result?.gone,
+      p_invalid_endpoint: result?.reason === 'invalid-push-endpoint',
     });
+    if (finishError) throw finishError;
+    if (!finished) throw new Error('Push delivery claim no longer owned');
     if (result?.sent) {
       await recordSent(
         admin,
         subscription,
-        { notificationId, streak: stats.streak, url: copy.url },
-        now
+        { notificationId, streak: stats.streak, url: copy.url }
       );
       results.sent += 1;
     } else {
-      await recordFailure(admin, subscription, result || {}, now);
       results.failed += 1;
-      if (result?.gone) results.disabled += 1;
+      if (result?.gone || Number(subscription.failures || 0) >= 4) results.disabled += 1;
     }
   }
   return results;
