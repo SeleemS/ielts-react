@@ -125,7 +125,6 @@ export default function SpeakingExaminerPage() {
   const [captions, setCaptions] = React.useState([]); // [{role, text}]
   const [secondsLeft, setSecondsLeft] = React.useState(0);
   const [result, setResult] = React.useState(null);
-  const [activeMode, setActiveMode] = React.useState(null);
   const [pendingScore, setPendingScore] = React.useState(null);
 
   const pcRef = React.useRef(null);
@@ -155,7 +154,12 @@ export default function SpeakingExaminerPage() {
   // Auto-end when the examiner closes the test.
   const autoEndRef = React.useRef(null);
   const sessionOwnerRef = React.useRef(null);
+  const sessionModeRef = React.useRef(null);
+  const currentUserIdRef = React.useRef(user?.id || null);
+  currentUserIdRef.current = user?.id || null;
   const scoreAttemptRef = React.useRef(false);
+  const connectionGenerationRef = React.useRef(0);
+  const micFailsafeRef = React.useRef(null);
 
   React.useEffect(() => {
     const saved = loadPendingRealtimeScore(getBrowserSessionStorage());
@@ -202,6 +206,10 @@ export default function SpeakingExaminerPage() {
   React.useEffect(() => () => teardown(), []); // unmount cleanup
 
   function teardown() {
+    // Invalidate pending permission/mint/SDP work before releasing resources.
+    connectionGenerationRef.current += 1;
+    if (micFailsafeRef.current) clearTimeout(micFailsafeRef.current);
+    micFailsafeRef.current = null;
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = null;
     if (autoEndRef.current) clearTimeout(autoEndRef.current);
@@ -223,6 +231,7 @@ export default function SpeakingExaminerPage() {
     analyserExamRef.current = null;
     analyserMicRef.current = null;
     speakingStateRef.current = null;
+    if (audioRef.current) audioRef.current.srcObject = null;
   }
 
   // ---- waveform visualizer -------------------------------------------------
@@ -334,7 +343,7 @@ export default function SpeakingExaminerPage() {
       return;
     }
     setPhase('connecting');
-    setActiveMode(mode);
+    sessionModeRef.current = mode;
     transcriptRef.current = [];
     setCaptions([]);
     setCandidateWords(0);
@@ -342,9 +351,12 @@ export default function SpeakingExaminerPage() {
     endedRef.current = false;
     autoEndRef.current = null;
     track('realtime_session_start', { mode });
+    const generation = ++connectionGenerationRef.current;
+    const isCurrent = () => generation === connectionGenerationRef.current;
 
     try {
       const auth = await resolveSpeakingAuthAction(getSupabase);
+      if (!isCurrent()) return;
       if (auth.state === 'retry') {
         track('realtime_session_error', { mode, stage: 'start', error_type: 'auth_session' });
         setError('Could not verify your session. Please refresh and try again.');
@@ -361,6 +373,10 @@ export default function SpeakingExaminerPage() {
 
       // 1. Mic first — no point burning minutes if permission is denied.
       const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!isCurrent()) {
+        mic.getTracks().forEach((t) => t.stop());
+        return;
+      }
       micRef.current = mic;
       greetedRef.current = false;
       analyserMicRef.current = attachAnalyser(mic);
@@ -372,6 +388,7 @@ export default function SpeakingExaminerPage() {
         body: JSON.stringify({ mode }),
       });
       const mint = await mintRes.json().catch(() => ({}));
+      if (!isCurrent()) return;
       if (!mintRes.ok) {
         teardown();
         setPhase('idle');
@@ -384,6 +401,7 @@ export default function SpeakingExaminerPage() {
       const pc = new RTCPeerConnection();
       pcRef.current = pc;
       pc.ontrack = (e) => {
+        if (!isCurrent()) return;
         if (audioRef.current) {
           audioRef.current.srcObject = e.streams[0];
           // iOS Safari can silently ignore autoPlay for a srcObject assigned
@@ -399,18 +417,20 @@ export default function SpeakingExaminerPage() {
       micTrack.enabled = false;
       pc.addTrack(micTrack, mic);
       const unmuteMic = () => {
-        micTrack.enabled = true;
+        if (isCurrent()) micTrack.enabled = true;
       };
-      const micFailsafe = setTimeout(unmuteMic, 9000);
+      micFailsafeRef.current = setTimeout(unmuteMic, 9000);
 
       const dc = pc.createDataChannel('oai-events');
       dc.onopen = () => {
+        if (!isCurrent()) return;
         // Kick off the examiner's greeting EXACTLY once per session.
         if (greetedRef.current) return;
         greetedRef.current = true;
         dc.send(JSON.stringify({ type: 'response.create' }));
       };
       dc.onmessage = (e) => {
+        if (!isCurrent()) return;
         try {
           const ev = JSON.parse(e.data);
           if (
@@ -423,7 +443,8 @@ export default function SpeakingExaminerPage() {
             pushTranscript('examiner', ev.transcript);
           } else if (ev.type === 'response.done') {
             // Greeting finished — open the candidate's mic.
-            clearTimeout(micFailsafe);
+            clearTimeout(micFailsafeRef.current);
+            micFailsafeRef.current = null;
             unmuteMic();
           } else if (ev.type === 'error') {
             console.error('realtime event error:', ev.error?.message || ev);
@@ -432,7 +453,9 @@ export default function SpeakingExaminerPage() {
       };
 
       const offer = await pc.createOffer();
+      if (!isCurrent()) return;
       await pc.setLocalDescription(offer);
+      if (!isCurrent()) return;
       const sdpRes = await fetch(
         `https://api.openai.com/v1/realtime/calls?model=${encodeURIComponent(mint.model)}`,
         {
@@ -444,8 +467,12 @@ export default function SpeakingExaminerPage() {
           body: offer.sdp,
         }
       );
+      if (!isCurrent()) return;
       if (!sdpRes.ok) throw new Error(`webrtc answer failed (${sdpRes.status})`);
-      await pc.setRemoteDescription({ type: 'answer', sdp: await sdpRes.text() });
+      const answer = await sdpRes.text();
+      if (!isCurrent()) return;
+      await pc.setRemoteDescription({ type: 'answer', sdp: answer });
+      if (!isCurrent()) return;
 
       // 4. Session clock — hard stop at the paid duration.
       setSecondsLeft(mint.durationSeconds);
@@ -463,6 +490,7 @@ export default function SpeakingExaminerPage() {
       startVisualizer();
       minutes.refresh();
     } catch (e) {
+      if (!isCurrent()) return;
       teardown();
       setPhase('idle');
       setError(
@@ -478,8 +506,11 @@ export default function SpeakingExaminerPage() {
     endedRef.current = true;
     teardown();
     const transcript = transcriptRef.current;
+    // Timer/data-channel callbacks were created before the mode state render.
+    // Keep the session identity in refs so automatic endings use this session.
+    const sessionMode = sessionModeRef.current;
     track('realtime_session_end', {
-      mode: activeMode,
+      mode: sessionMode,
       turns: transcript.length,
     });
 
@@ -496,7 +527,7 @@ export default function SpeakingExaminerPage() {
       version: 1,
       requestId: createRealtimeScoreRequestId(),
       userId: sessionOwnerRef.current || user?.id || '',
-      mode: activeMode,
+      mode: sessionMode,
       createdAt: Date.now(),
       transcript,
     };
@@ -512,7 +543,7 @@ export default function SpeakingExaminerPage() {
     setError('');
     try {
       const outcome = await submitPendingRealtimeScore({
-        currentUserId: user?.id || null,
+        currentUserId: currentUserIdRef.current,
         fetchFn: fetch,
         getClient: getSupabase,
         pending,
@@ -573,6 +604,7 @@ export default function SpeakingExaminerPage() {
     setCandidateWords(0);
     endedRef.current = false;
     sessionOwnerRef.current = null;
+    sessionModeRef.current = null;
   }
 
   const handleScoringFinished = React.useCallback(() => {

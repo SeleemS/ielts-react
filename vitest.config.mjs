@@ -6,12 +6,12 @@ import { transformWithOxc } from 'vite';
 
 export default defineConfig({
   plugins: [{
-    name: 'review-page-jsx',
+    name: 'tested-pages-jsx',
     enforce: 'pre',
     transform(code, id) {
       // Next supports JSX in Pages Router .js files; compile this page for its
       // integration tests before Vite's plain-JavaScript import analysis.
-      if (id.endsWith('/pages/review.js')) {
+      if (['/pages/review.js', '/pages/speaking-examiner.js'].some(page => id.endsWith(page))) {
         return transformWithOxc(code, id, { lang: 'jsx' });
       }
       return null;
