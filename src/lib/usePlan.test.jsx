@@ -7,6 +7,7 @@ import { act } from 'react-dom/test-utils';
 const testState = vi.hoisted(() => ({
   user: { id: 'user-1', email: 'audit@example.com' },
   result: { data: null, error: null },
+  setupError: null,
 }));
 
 vi.mock('./auth', () => ({
@@ -19,7 +20,11 @@ vi.mock('../../lib/supabase', () => ({
     from: () => ({
       select: () => ({
         eq: () => ({
-          maybeSingle: () => Promise.resolve(testState.result),
+          maybeSingle: () => {
+            if (testState.setupError) throw testState.setupError;
+            // Match PostgREST: an awaitable builder without .finally().
+            return { then: (resolve, reject) => Promise.resolve(testState.result).then(resolve, reject) };
+          },
         }),
       }),
     }),
@@ -59,6 +64,7 @@ async function renderHook() {
 beforeEach(() => {
   testState.user = { id: 'user-1', email: 'audit@example.com' };
   testState.result = { data: null, error: null };
+  testState.setupError = null;
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -71,6 +77,12 @@ afterEach(() => {
 });
 
 describe('usePlan query failures', () => {
+  it('reports synchronous query setup failures without crashing the page', async () => {
+    testState.setupError = new Error('client unavailable');
+    const plan = await renderHook();
+    expect(plan.loading).toBe(false);
+    expect(plan.error).toBe('Could not verify your current plan. Please refresh and try again.');
+  });
   it('restores loading while a newly signed-in owner query is unresolved', async () => {
     testState.user = null;
     await act(async () => {

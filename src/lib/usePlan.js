@@ -28,11 +28,14 @@ let inFlight = { userId: null, promise: null };
 
 function fetchPlanRow(userId) {
   if (inFlight.userId === userId && inFlight.promise) return inFlight.promise;
-  const promise = getSupabase()
+  // PostgREST builders are thenables, not native Promises. Assimilate the
+  // builder before finally(), and route synchronous setup failures through
+  // the same rejection handler as network failures.
+  const promise = Promise.resolve().then(() => getSupabase()
     .from('users')
     .select('plan, plan_sku, plan_status, plan_renews_at, plan_expires_at, billing_pause_until, billing_pause_used_at, stripe_customer_id')
     .eq('id', userId)
-    .maybeSingle()
+    .maybeSingle())
     .finally(() => {
       if (inFlight.promise === promise) inFlight = { userId: null, promise: null };
     });
