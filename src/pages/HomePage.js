@@ -359,15 +359,15 @@ const HomePage = ({ counts = {} }) => {
               <div className="mx-auto max-w-3xl text-center">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-emerald-300">
                   <GraduationCap className="h-3.5 w-3.5" />
-                  AI Writing report — no card needed
+                  IELTS practice, feedback and progress
                 </span>
                 <h1 className="mt-5 text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
-                  Get your IELTS Writing band in
-                  <span className="text-emerald-400"> 60 seconds</span> — free
+                  Prepare for IELTS with
+                  <span className="text-emerald-400"> feedback you can use</span>
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg">
-                  Paste a Task 2 essay. Four examiner criteria, band estimate, what&apos;s
-                  holding you back. No card.
+                  Practise with timed tests, get AI feedback on your Writing and Speaking,
+                  and track your progress. Start with a free Writing sample below.
                 </p>
               </div>
 
@@ -381,7 +381,7 @@ const HomePage = ({ counts = {} }) => {
                   className="w-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
                 >
                   <NextLink href="/readingquestion" className="no-underline">
-                    Start practicing
+                    Free Reading practice
                   </NextLink>
                 </Button>
                 <Button
@@ -390,20 +390,11 @@ const HomePage = ({ counts = {} }) => {
                   variant="outline"
                   className="w-full border-emerald-300/40 bg-emerald-300/10 text-emerald-100 hover:bg-emerald-300/20 hover:text-white sm:w-auto"
                 >
-                  <NextLink href="/band-estimator" className="no-underline">
-                    Estimate my band
+                  <NextLink href="/pricing#plans" className="no-underline">
+                    Explore the 30-day Exam Pass
                   </NextLink>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="w-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
-                >
-                  <NextLink href="/blog" className="no-underline">
-                    Read study tips
-                  </NextLink>
-                </Button>
+
               </div>
             </div>
           </section>
@@ -561,21 +552,21 @@ const HomePage = ({ counts = {} }) => {
                 </div>
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-accent">
-                    IELTS-Bank Pro
+                    30-day Exam Pass
                   </p>
                   <p className="mt-1.5 text-sm text-foreground">
                     Full AI Writing reports, Speaking scoring, a live AI examiner, timed mocks
-                    and band trends — with a 14-day money-back guarantee.
+                    and band trends. One payment for 30 days. No automatic renewal.
                   </p>
                 </div>
               </div>
               <Button asChild variant="outline" className="shrink-0">
                 <NextLink
-                  href="/pricing"
+                  href="/pricing#plans"
                   className="no-underline"
                   onClick={() => track('product_cta_click', { source: 'homepage_pro_strip', product: 'pricing' })}
                 >
-                  Compare Free vs Pro
+                  See the Exam Pass
                   <ArrowRight className="h-4 w-4" />
                 </NextLink>
               </Button>

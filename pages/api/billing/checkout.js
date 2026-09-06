@@ -12,6 +12,9 @@
 //     its percent_off is verified against saleConfig before the session opens.
 export const config = { runtime: 'nodejs' };
 
+import { randomUUID } from 'node:crypto';
+import { recordCheckoutOperation } from '../../../lib/checkoutOperations';
+import { checkoutReturnUrls } from '../../../lib/upgradeContext';
 import { createClient } from '@supabase/supabase-js';
 import { clientIp, originAllowed } from '../../../lib/apiSecurity';
 import {
@@ -242,6 +245,12 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'The returning-subscriber offer is temporarily unavailable.' });
   }
 
+  const operationRequestId = randomUUID();
+  const recordOperation = (stage, sessionId = null) => recordCheckoutOperation(admin, {
+    userId: userRow.id, sku, requestId: operationRequestId, stage,
+    sessionId, created: Boolean(sessionId),
+  });
+
   try {
     const { data: allowed, error } = await admin.rpc('check_rate_limit', {
       p_bucket: 'billing-checkout',
@@ -251,11 +260,13 @@ export default async function handler(req, res) {
     });
     if (error) throw error;
     if (!allowed) {
+      await recordOperation('rate_limit');
       return res.status(429).json({
         error: 'Too many checkout attempts. Please wait a few minutes and try again.',
       });
     }
   } catch (error) {
+    await recordOperation('rate_limit');
     console.error('checkout rate-limit error:', error.message);
     return res.status(503).json({
       error: 'Could not start checkout. Please try again.',
@@ -265,6 +276,7 @@ export default async function handler(req, res) {
   const country = String(req.headers['x-vercel-ip-country'] || '').toUpperCase();
   const lookupKey = resolveLookupKey(sku, country);
 
+  let operationStage = 'catalog';
   let stripe;
   let unpersistedCustomerId = null;
   try {
@@ -277,6 +289,7 @@ export default async function handler(req, res) {
     });
     const price = prices.data[0];
     if (!price || prices.data.length !== 1) {
+      await recordOperation('catalog');
       console.error('checkout: missing price for lookup key', lookupKey);
       return res.status(500).json({ error: 'Pricing unavailable. Please try again later.' });
     }
@@ -285,6 +298,7 @@ export default async function handler(req, res) {
     // and billing cadence match the advertised plan exactly.
     const mismatch = advertisedPriceMismatch(price, sku, isPppCountry(country));
     if (mismatch) {
+      await recordOperation('catalog');
       console.error('checkout PRICE MISMATCH:', {
         sku,
         lookupKey,
@@ -301,6 +315,7 @@ export default async function handler(req, res) {
     const promoApplies = !winBackEligible && promoAppliesTo(sku);
     let promoCouponId = null;
     if (promoApplies) {
+      operationStage = 'coupon';
       const coupon = await stripe.coupons
         .retrieve(PROMO.couponId)
         .catch((error) => ({ error }));
@@ -308,6 +323,7 @@ export default async function handler(req, res) {
         ? { couponId: PROMO.couponId, retrieveError: coupon.error.message }
         : promoCouponMismatch(coupon);
       if (couponMismatch) {
+        await recordOperation('coupon');
         console.error('checkout PROMO COUPON MISMATCH:', { sku, ...couponMismatch });
         return res.status(503).json({
           error: 'Pricing is being updated. Please try again later.',
@@ -316,6 +332,7 @@ export default async function handler(req, res) {
       promoCouponId = PROMO.couponId;
     }
 
+    operationStage = 'customer';
     let customerId = userRow.stripe_customer_id;
     if (!customerId) {
       const customer = await stripe.customers.create({
@@ -370,6 +387,7 @@ export default async function handler(req, res) {
     const couponId = winBackEligible
       ? process.env.STRIPE_WINBACK_COUPON_ID
       : promoCouponId;
+    operationStage = 'session';
     const session = await stripe.checkout.sessions.create({
       mode: oneTime ? 'payment' : 'subscription',
       customer: customerId,
@@ -382,12 +400,13 @@ export default async function handler(req, res) {
       ...tosConsent,
       ...(oneTime ? {} : { subscription_data: { metadata } }),
       ...(process.env.STRIPE_AUTOMATIC_TAX === '1' ? { automatic_tax: { enabled: true } } : {}),
-      success_url: `${origin}/pricing?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/pricing?checkout=canceled`,
+      ...checkoutReturnUrls(origin, req.body),
     });
 
+    await recordOperation('session', session.id);
     return res.status(200).json({ url: session.url });
   } catch (e) {
+    await recordOperation(operationStage);
     if (stripe && unpersistedCustomerId) {
       try {
         await stripe.customers.del(unpersistedCustomerId);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { buildUpgradeHref } from '../../lib/upgradeContext';
 import Navbar from '../components/Navbar';
 import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
@@ -140,7 +141,7 @@ const WritingQuestion = ({ id: docId, passage, description, related = [] }) => {
     captureAttemptLocally();
     if (user?.id) await syncLocalAttempts(user.id).catch(() => {});
     track('paywall_redirect', { skill: 'writing', slug: storageKey, source: 'writing_submit' });
-    router.push('/pricing?upgrade=writing');
+    router.push(buildUpgradeHref({ upgrade: 'writing', stage: 'saved', return_to: `/writingquestion/${storageKey}` }));
   }, [captureAttemptLocally, router, storageKey, user?.id]);
 
   const runScore = useCallback(async () => {

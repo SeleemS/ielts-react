@@ -1,3 +1,4 @@
+import { normalizeUpgradeContext } from '../lib/upgradeContext';
 import * as React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -74,7 +75,7 @@ const FREE_INCLUDES = [
 const PRO_INCLUDES = [
   'Full AI Writing reports on all four criteria',
   'AI Speaking scoring from your recordings',
-  'Live AI examiner minutes every month',
+  'Live AI examiner practice included',
   'Full-length timed mock tests',
   'Writing & Speaking band trends',
   'Priority processing, completely ad-free',
@@ -83,7 +84,7 @@ const PRO_INCLUDES = [
 const PERKS = [
   'Full AI Writing reports with all four criteria and corrected examples',
   'AI Speaking scores from your recordings',
-  '30–60 live AI examiner minutes per month, depending on regional plan',
+  '30–60 live AI examiner minutes with your 30-day pass; monthly allowances on subscriptions',
   'Full-length timed mock tests with section breakdowns',
   'Writing and Speaking band trends on your dashboard',
   'Stronger scoring model with priority processing',
@@ -224,12 +225,13 @@ function daysUntil(value) {
 // The three differentiators for one plan card. Every plan unlocks the identical
 // Pro tier, so the bullets describe the commitment, not the features (those are
 // in the comparison table and the "Everything included" grid below).
-function planPoints(plan, annualVsMonthlyPct) {
+function planPoints(plan, annualVsMonthlyPct, regionalPricing) {
   if (plan.isOneTime) {
     return [
       `Full Pro access for ${plan.days} days`,
       'One payment — it never renews',
       'Nothing to cancel; access simply ends',
+      `${regionalPricing ? 30 : 60} live AI examiner minutes for your 30 days`,
     ];
   }
   if (plan.sku === 'annual') {
@@ -262,19 +264,19 @@ function planNote(plan, { examDays, examWeeks }) {
   return '';
 }
 
-function contextualCopy(upgrade) {
+function contextualCopy(upgrade, saved) {
   if (upgrade === 'writing') {
     return {
       icon: '✍️',
-      title: 'Your essay is saved and waiting',
-      body: 'Unlock your full score and examiner feedback below.',
+      title: saved ? 'Your essay is saved and waiting' : 'Keep improving your Writing score',
+      body: saved ? 'Return to your saved essay after checkout to request a full report.' : 'Get full reports on your next essays with the 30-day Exam Pass.',
     };
   }
   if (upgrade === 'speaking') {
     return {
       icon: '🎙️',
-      title: 'Your recording is saved and waiting',
-      body: 'Unlock your score and full examiner feedback below.',
+      title: saved ? 'Your recording is saved and waiting' : 'Get feedback on your Speaking',
+      body: saved ? 'Return to your saved recording after checkout to request a full report.' : 'Get full reports on your next recordings with the 30-day Exam Pass.',
     };
   }
   if (upgrade === 'mock') {
@@ -297,12 +299,12 @@ const CANCEL_REASONS = [
   { key: 'payment', label: 'Payment problem' },
 ];
 
-function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
+function CanceledRecovery({ upgrade, saved, returnTo, onSeePlans }) {
   const [reason, setReason] = React.useState('');
   const savedWork =
-    upgrade === 'writing'
+    saved && upgrade === 'writing'
       ? 'Your essay is still saved — nothing was lost.'
-      : upgrade === 'speaking'
+      : saved && upgrade === 'speaking'
         ? 'Your recording is still saved — nothing was lost.'
         : upgrade === 'mock'
           ? 'Your mock is still ready whenever you are.'
@@ -317,6 +319,11 @@ function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
         If you change your mind, every plan comes with a 14-day money-back
         guarantee — no forms, no questions.
       </p>
+      {returnTo ? (
+        <NextLink href={returnTo} className="mt-4 inline-block font-semibold text-primary underline">
+          Return to your practice
+        </NextLink>
+      ) : null}
       {reason === '' ? (
         <div className="mt-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -342,10 +349,8 @@ function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
         <div className="mt-4 rounded-lg bg-muted p-3 text-sm text-muted-foreground">
           {reason === 'price' ? (
             <>
-              Fair enough. The annual plan works out to{' '}
-              {perMonthText ? <strong>{perMonthText}/month</strong> : 'less per month'}, and the
-              one-time Exam Pass avoids a subscription entirely — prices are already set for
-              your region.{' '}
+              Free Reading and Listening practice remains available. The Exam Pass is a
+              one-time payment for 30 days, with no automatic renewal.{' '}
               <button type="button" onClick={onSeePlans} className="font-semibold text-accent underline">
                 Compare plans
               </button>
@@ -370,12 +375,12 @@ function CanceledRecovery({ upgrade, perMonthText, onSeePlans }) {
   );
 }
 
-function ActivationChecklist({ upgrade }) {
+function ActivationChecklist({ upgrade, saved, returnTo }) {
   const first =
     upgrade === 'writing'
-      ? { href: '/ielts-writing-checker', label: 'Score the essay you saved' }
+      ? { href: '/ielts-writing-checker', label: saved ? 'Score the essay you saved' : 'Score an essay' }
       : upgrade === 'speaking'
-        ? { href: '/speakingquestion', label: 'Score the recording you saved' }
+        ? { href: '/speakingquestion', label: saved ? 'Score the recording you saved' : 'Practise Speaking' }
         : upgrade === 'mock'
           ? { href: '/mock-test', label: 'Sit the mock you opened' }
           : { href: '/ielts-writing-checker', label: 'Score your first essay' };
@@ -385,8 +390,8 @@ function ActivationChecklist({ upgrade }) {
         <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" />
         <div>
           <p className="font-bold">You&apos;re in. Do this first:</p>
-          <div className="mt-3 grid gap-2 sm:grid-cols-3">
-            <NextLink href={first.href} className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-emerald-900 no-underline shadow-sm">
+          <div className="mt-3 flex flex-col gap-3">
+            <NextLink href={returnTo || first.href} className="rounded-lg bg-emerald-200 px-3 py-2 text-sm font-semibold text-emerald-900 no-underline shadow-sm">
               {first.label}
             </NextLink>
             <NextLink href="/speaking-examiner" className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-emerald-900 no-underline shadow-sm">
@@ -441,11 +446,13 @@ export default function PricingPage() {
   // first paints with standard pricing and flips to the regional rate on
   // mount. Checkout re-resolves geography server-side, so this is display-only.
   const [country, setCountry] = React.useState('');
+  const [countryReady, setCountryReady] = React.useState(false);
   const regionalPricing = isPppCountry(country);
 
   React.useEffect(() => {
     const match = document.cookie.match(/(?:^|;\s*)ib_country=([A-Z]{2})/);
     if (match) setCountry(match[1]);
+    setCountryReady(true);
   }, []);
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
@@ -468,6 +475,7 @@ export default function PricingPage() {
   const [pendingSku, setPendingSku] = React.useState(null);
   const [examDate, setExamDate] = React.useState(null);
   const [activation, setActivation] = React.useState('idle');
+  const [activationOwner, setActivationOwner] = React.useState('');
   const [answeredCount, setAnsweredCount] = React.useState(0);
   // Whether the promo chrome renders. Defaults to PROMO.active for a matching
   // SSR/first paint, then refined on the client (and flipped off by the
@@ -476,13 +484,13 @@ export default function PricingPage() {
   const trackedRef = React.useRef({ paywall: '', purchase: '' });
 
   const checkoutStatus = typeof router.query.checkout === 'string' ? router.query.checkout : '';
-  const upgrade =
-    router.query.upgrade === 'writing' ||
-    router.query.upgrade === 'speaking' ||
-    router.query.upgrade === 'mock'
-      ? router.query.upgrade
-      : '';
+  const upgradeContext = normalizeUpgradeContext(router.query);
+  const upgrade = upgradeContext.upgrade || '';
+  const stage = upgradeContext.stage || '';
+  const returnTo = upgradeContext.return_to || '';
   const sessionId = typeof router.query.session_id === 'string' ? router.query.session_id : '';
+  const activationKey = `${user?.id || ''}:${sessionId}`;
+  const currentActivation = activationOwner === activationKey ? activation : 'idle';
   const offer = router.query.offer === 'winback' ? 'winback' : '';
   const pauseActive =
     Boolean(pauseUntil) && new Date(pauseUntil).getTime() > Date.now();
@@ -494,16 +502,14 @@ export default function PricingPage() {
     Boolean(expiresAt) && new Date(expiresAt).getTime() > Date.now();
   const ownsSubscription =
     (isPremium && !examPassActive) || pauseActive || pausePending;
-  const context = contextualCopy(upgrade);
+  const saved = stage === 'saved';
+  const context = contextualCopy(upgrade, saved);
   const examDays = daysUntil(examDate);
   const examWeeks = examDays == null ? null : Math.max(1, Math.ceil(examDays / 7));
 
   const pricingFaqJsonLd = React.useMemo(() => faqJsonLdFor(PRICING_FAQS), []);
 
-  // The three sellable plans for this region, in card order, with the
-  // highlighted one in the middle. PPP visitors lead with the Exam Pass
-  // (recurring cards are frequently declined without a mandate there); every
-  // other visitor leads with Annual.
+  // The one-time Exam Pass leads every region; all plans retain their prices.
   const planKeys = planOrder(regionalPricing);
   const featuredSku = highlightedSku(regionalPricing);
   const plans = planKeys.map((sku) => planPricing(sku, regionalPricing));
@@ -531,12 +537,12 @@ export default function PricingPage() {
   // promotion impression) per pricing view. Skipped on the checkout-success
   // return so activation views don't count as shopping impressions.
   React.useEffect(() => {
-    if (!router.isReady || checkoutStatus === 'success') return;
+    if (!router.isReady || !countryReady || checkoutStatus === 'success') return;
     if (trackedRef.current.itemList) return;
     trackedRef.current.itemList = true;
     trackViewItemList(regionalPricing, upgrade || 'pricing');
     trackViewPromotion('pricing_banner');
-  }, [router.isReady, checkoutStatus, regionalPricing, upgrade]);
+  }, [router.isReady, countryReady, checkoutStatus, regionalPricing, upgrade]);
 
   // Live, real social proof: total practice questions answered across all
   // learners. Fetched client-side; renders only if the RPC returns a count.
@@ -564,9 +570,10 @@ export default function PricingPage() {
   }, [user?.id]);
 
   React.useEffect(() => {
+    let canceled = false;
+    setActivationOwner(activationKey);
+    setActivation('idle');
     if (checkoutStatus !== 'success' || !sessionId || !user?.id) return;
-    if (trackedRef.current.purchase === sessionId) return;
-    trackedRef.current.purchase = sessionId;
     setActivation('checking');
     getSupabase()
       .auth.getSession()
@@ -582,26 +589,31 @@ export default function PricingPage() {
       )
       .then(async (response) => {
         const body = await response.json().catch(() => ({}));
+        if (canceled) return;
         if (response.ok && body.active === true) {
-          track('purchase_success', { source: upgrade || 'pricing' });
-          // GA4 Monetization purchase: session id as transaction_id (GA and
-          // the webhook Measurement Protocol backstop dedupe on it), amount
-          // from the verified session so coupons report the charged price.
-          trackPurchase({
-            transactionId: sessionId,
-            sku: body.sku,
-            ppp: body.ppp === true,
-            amountMinor: body.amount_total,
-            currency: body.currency || 'USD',
-            source: upgrade || 'pricing',
-          });
+          if (trackedRef.current.purchase !== activationKey) {
+            trackedRef.current.purchase = activationKey;
+            track('purchase_success', { source: upgrade || 'pricing' });
+            // GA4 Monetization purchase: session id as transaction_id (GA and
+            // the webhook Measurement Protocol backstop dedupe on it), amount
+            // from the verified session so coupons report the charged price.
+            trackPurchase({
+              transactionId: sessionId,
+              sku: body.sku,
+              ppp: body.ppp === true,
+              amountMinor: body.amount_total,
+              currency: body.currency || 'USD',
+              source: upgrade || 'pricing',
+            });
+          }
           setActivation('active');
         } else {
           setActivation('delayed');
         }
       })
-      .catch(() => setActivation('delayed'));
-  }, [checkoutStatus, sessionId, upgrade, user?.id]);
+      .catch(() => { if (!canceled) setActivation('delayed'); });
+    return () => { canceled = true; };
+  }, [activationKey, checkoutStatus, sessionId, upgrade, user?.id]);
 
   const authHeader = React.useCallback(async () => {
     const { accessToken, error: sessionError } = await getSessionAccess(getSupabase);
@@ -638,7 +650,7 @@ export default function PricingPage() {
       const response = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...headers },
-        body: JSON.stringify({ sku, offer, ga_cid: gaClientId() }),
+        body: JSON.stringify({ sku, offer, ga_cid: gaClientId(), ...normalizeUpgradeContext({ upgrade, stage, return_to: returnTo }) }),
       });
       const body = await response.json().catch(() => ({}));
       if (response.ok && body.url) {
@@ -655,7 +667,7 @@ export default function PricingPage() {
     } finally {
       setBusySku(null);
     }
-  }, [authHeader, country, offer, regionalPricing, upgrade, user]);
+  }, [authHeader, country, offer, regionalPricing, upgrade, stage, returnTo, user]);
 
   React.useEffect(() => {
     if (!user?.id || signInOpen || !pendingSku) return;
@@ -711,11 +723,11 @@ export default function PricingPage() {
             IELTS-Bank Pro
           </Badge>
           <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
-            Know exactly what is holding your IELTS band back
+            30 days of focused IELTS preparation
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Keep the free question library. Add full rubric-anchored Writing and Speaking
-            feedback, live examiner practice, timed mocks, and trend insights.
+            Choose the Exam Pass for 30 days of full Writing and Speaking feedback,
+            live examiner practice, timed mocks, and trend insights. One payment, no renewal.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-medium text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 font-bold text-foreground">
@@ -724,7 +736,7 @@ export default function PricingPage() {
             </span>
             <span className="inline-flex items-center gap-1.5">
               <RefreshCw className="h-4 w-4 text-accent" />
-              Cancel anytime
+              Exam Pass never renews
             </span>
             <span className="inline-flex items-center gap-1.5">
               <Lock className="h-4 w-4 text-accent" />
@@ -738,15 +750,15 @@ export default function PricingPage() {
           ) : null}
         </header>
 
-        {checkoutStatus === 'success' && activation === 'active' ? (
-          <ActivationChecklist upgrade={upgrade} />
+        {checkoutStatus === 'success' && currentActivation === 'active' ? (
+          <ActivationChecklist upgrade={upgrade} saved={saved} returnTo={returnTo} />
         ) : null}
-        {checkoutStatus === 'success' && activation !== 'active' ? (
+        {checkoutStatus === 'success' && currentActivation !== 'active' ? (
           <div
             role="status"
             className="mx-auto mt-6 max-w-xl rounded-lg border bg-muted p-4 text-center text-sm text-muted-foreground"
           >
-            {authLoading || (user?.id && sessionId && activation !== 'delayed') ? (
+            {authLoading || (user?.id && sessionId && currentActivation !== 'delayed') ? (
               <>
                 <Loader2 className="mr-2 inline h-4 w-4 animate-spin" />
                 Confirming Pro access…
@@ -763,7 +775,8 @@ export default function PricingPage() {
         {checkoutStatus === 'canceled' ? (
           <CanceledRecovery
             upgrade={upgrade}
-            perMonthText={annualPricing?.perMonth ? money(annualPricing.perMonth) : ''}
+            saved={saved}
+            returnTo={returnTo}
             onSeePlans={() => {
               document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
             }}
@@ -895,7 +908,7 @@ export default function PricingPage() {
                   </p>
                 </div>
                 <Button asChild variant="outline" className="shrink-0">
-                  <NextLink href="/reading" className="no-underline">Keep practising free</NextLink>
+                  <NextLink href="/readingquestion" className="no-underline">Keep practising free</NextLink>
                 </Button>
               </div>
             </div>
@@ -919,7 +932,7 @@ export default function PricingPage() {
 
             <div
               id="plans"
-              className="mx-auto mt-5 grid max-w-5xl items-stretch gap-5 md:grid-cols-3"
+              className="mx-auto mt-5 grid max-w-5xl scroll-mt-28 items-stretch gap-5 md:grid-cols-3"
             >
               {plans.map((plan) => {
                 const featured = plan.sku === featuredSku;
@@ -937,7 +950,7 @@ export default function PricingPage() {
                   >
                     {featured ? (
                       <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground shadow-md">
-                        {plan.isOneTime ? 'Best for your region' : 'Best value'}
+                        30 days · no subscription
                       </span>
                     ) : null}
                     <CardContent className="flex h-full flex-col p-6 pt-7">
@@ -983,13 +996,20 @@ export default function PricingPage() {
                       ) : null}
 
                       <ul className="mt-5 flex flex-1 flex-col gap-2.5">
-                        {planPoints(plan, annualVsMonthlyPct).map((item) => (
+                        {planPoints(plan, annualVsMonthlyPct, regionalPricing).map((item) => (
                           <li key={item} className="flex items-start gap-2.5 text-sm">
                             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                             <span className="text-foreground">{item}</span>
                           </li>
                         ))}
                       </ul>
+
+                      {plan.isOneTime ? (
+                        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                          Scoring limits: Writing up to 2/day, 10/week, 30/month;
+                          Speaking up to 1/day, 5/week, 15/month. All limits apply.
+                        </p>
+                      ) : null}
 
                       <Button
                         type="button"
@@ -1006,7 +1026,7 @@ export default function PricingPage() {
                         ) : (
                           <Sparkles className="h-4 w-4" />
                         )}
-                        {alreadyOwned ? 'Exam Pass active' : 'Choose this plan'}
+                        {alreadyOwned ? 'Exam Pass active' : plan.isOneTime ? 'Get 30-day Exam Pass' : 'Choose this plan'}
                       </Button>
                       <p className="mt-2 text-center text-xs text-muted-foreground">
                         14-day money-back guarantee ·{' '}

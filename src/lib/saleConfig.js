@@ -123,18 +123,14 @@ export const PLANS = {
   },
 };
 
-// Card order for the pricing grid. The highlighted plan sits in the middle:
-// Annual everywhere except PPP markets, where recurring cards are frequently
-// declined without a mandate and the one-off pass converts instead.
-export function planOrder(ppp = false) {
-  return ppp
-    ? ['monthly', 'exam_pass', 'annual']
-    : ['monthly', 'annual', 'exam_pass'];
+// Lead with the same fixed 30-day commitment in every region. Regional
+// eligibility changes prices, not which plan is featured.
+export function planOrder() {
+  return ['exam_pass', 'monthly', 'annual'];
 }
 
-// The plan that gets the highlight ring and the badge.
-export function highlightedSku(ppp = false) {
-  return ppp ? 'exam_pass' : 'annual';
+export function highlightedSku() {
+  return 'exam_pass';
 }
 
 export const money = (value) => `$${Number(value).toFixed(2)}`;

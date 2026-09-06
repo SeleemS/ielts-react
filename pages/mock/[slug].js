@@ -14,6 +14,7 @@ import { getMockTest, listMockTests, getSupabase as getBrowserSupabase } from '.
 import { useAuth } from '../../src/lib/auth';
 import { usePlan } from '../../src/lib/usePlan';
 import { track } from '../../src/lib/analytics';
+import { buildUpgradeHref } from '../../lib/upgradeContext';
 
 import { getMockSeo } from '../../lib/mockSeo';
 import {
@@ -82,7 +83,7 @@ function PremiumGate({ mock, signedIn, onSignIn }) {
       </ul>
       <Button asChild variant="accent" size="lg" className="mt-7 w-full sm:w-auto sm:px-10">
         <NextLink
-          href="/pricing?upgrade=mock"
+          href={buildUpgradeHref({ upgrade: 'mock', stage: 'sample', return_to: `/mock/${mock.slug}` })}
           onClick={() => track('paywall_upgrade_click', { source: 'mock', slug: mock.slug })}
           className="no-underline"
         >

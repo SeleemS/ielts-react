@@ -1,7 +1,7 @@
 import * as React from 'react';
 import NextLink from 'next/link';
-import { Lock, Sparkles } from 'lucide-react';
-import { Button } from '../../../components/ui/button';
+import { Lock } from 'lucide-react';
+import ExamPassOffer from '../ExamPassOffer';
 import { cn } from '../../lib/utils';
 import { track } from '../../lib/analytics';
 import { BandHero, BandMeter, CriterionFeedback } from './ScoreUI';
@@ -95,19 +95,6 @@ function hasBand(criterion) {
   return typeof criterion?.band === 'number';
 }
 
-function issueCount(result) {
-  const criterionIssues = Object.values(result.criteria || {}).reduce(
-    (count, criterion) =>
-      count + (Array.isArray(criterion?.improvements) ? criterion.improvements.length : 0),
-    0
-  );
-  return (
-    criterionIssues +
-    (Array.isArray(result.improvements) ? result.improvements.length : 0) +
-    (Array.isArray(result.correctedExamples) ? result.correctedExamples.length : 0)
-  );
-}
-
 export default function WritingScoreReport({
   task,
   result,
@@ -162,14 +149,6 @@ export default function WritingScoreReport({
     result.overallBand,
     result.rewriteLocked,
   ]);
-
-  const onUpgradeClick = React.useCallback(() => {
-    track('paywall_upgrade_click', {
-      source: analyticsSource,
-      skill: 'writing',
-      band: result.overallBand,
-    });
-  }, [analyticsSource, result.overallBand]);
 
   return (
     <div className="space-y-5">
@@ -249,22 +228,7 @@ export default function WritingScoreReport({
               </div>
             ) : null}
 
-            <div className="mt-5 flex flex-col items-center gap-2 text-center">
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-foreground">
-                <Lock className="h-4 w-4 text-primary" aria-hidden="true" />
-                Unlock all corrections and a Band 8 rewrite with Pro
-              </span>
-              <Button asChild variant="accent" size="sm">
-                <NextLink
-                  href="/pricing?upgrade=writing"
-                  onClick={onUpgradeClick}
-                  className="no-underline"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  Upgrade to Pro
-                </NextLink>
-              </Button>
-            </div>
+
           </div>
         </>
       ) : (
@@ -318,32 +282,11 @@ export default function WritingScoreReport({
       )}
 
       {isTeaser ? (
-        <div className="sticky bottom-3 z-10 rounded-xl border border-primary/25 bg-background/95 p-5 text-center shadow-xl backdrop-blur">
-          <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <Lock className="h-5 w-5" />
-          </span>
-          <h3 className="mt-3 text-base font-bold text-foreground">
-            Your Band {formatBand(result.overallBand)} {submissionLabel} has{' '}
-            {result.lockedIssueCount ?? issueCount(result)} fixable issues
-          </h3>
-          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            {visibleCriteria >= criteriaMeta.length
-              ? 'You’ve seen your band on all four criteria and one real correction. '
-              : 'You’ve seen your overall band and your first criterion. '}
-            Pro unlocks every correction, the examiner summary, your improvement plan, and a
-            Band 8 rewrite.
-          </p>
-          <Button asChild variant="accent" className="mt-4">
-            <NextLink
-              href="/pricing?upgrade=writing"
-              onClick={onUpgradeClick}
-              className="no-underline"
-            >
-              <Sparkles className="h-4 w-4" />
-              Unlock full feedback — Premium
-            </NextLink>
-          </Button>
-        </div>
+        <ExamPassOffer skill="writing" source={analyticsSource} band={result.overallBand}>
+          {visibleCriteria >= criteriaMeta.length
+            ? `You’ve seen your band on all four criteria${corrected.length ? ' and one real correction' : ''}.`
+            : 'You’ve seen your overall band and your first criterion.'}
+        </ExamPassOffer>
       ) : null}
       {!sample && typeof result.overallBand === 'number' ? (
         <ShareRow

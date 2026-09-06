@@ -290,17 +290,31 @@ describe('pricing authentication handoff', () => {
 
     await renderPage();
 
-    // Three cards, global order: Monthly, Annual (highlighted), Exam Pass.
+    // Exam Pass leads both the visual grid and accessible checkout actions.
     expect(
       [...container.querySelectorAll('main button[aria-label]')].map(
         (button) => button.getAttribute('aria-label')
       )
-    ).toEqual(['Choose Monthly plan', 'Choose Annual plan', 'Choose Exam Pass plan']);
+    ).toEqual(['Choose Exam Pass plan', 'Choose Monthly plan', 'Choose Annual plan']);
     expect(container.textContent).toContain('$8.99');
     expect(container.textContent).toContain('$49.99');
     expect(container.textContent).toContain('$14.99');
+    expect(container.textContent).toContain('60 live AI examiner minutes for your 30 days');
+    expect(container.textContent).toContain('30 days · no subscription');
     // Item 39: no fictitious anchors — nothing is struck through.
     expect(container.querySelector('.line-through')).toBeNull();
+  });
+
+  it.each(['writing', 'speaking'])('only claims saved %s work when stage=saved', async (upgrade) => {
+    testState.router = { isReady: true, query: { upgrade, checkout: 'canceled' } };
+    await renderPage();
+    expect(container.textContent).not.toContain('is saved and waiting');
+    expect(container.textContent).not.toContain('is still saved');
+
+    testState.router.query.stage = 'saved';
+    await renderPage();
+    expect(container.textContent).toContain('is saved and waiting');
+    expect(container.textContent).toContain('is still saved');
   });
 
   it('stays on pricing and resumes the plan selected before sign-in', async () => {
@@ -380,14 +394,15 @@ describe('pricing authentication handoff', () => {
 
     await renderPage();
 
-    // Card order puts the highlighted plan in the middle.
+    // Regional pricing preserves the first-position one-time recommendation.
     expect(
       [...container.querySelectorAll('main button[aria-label]')].map((button) =>
         button.getAttribute('aria-label')
       )
-    ).toEqual(['Choose Monthly plan', 'Choose Exam Pass plan', 'Choose Annual plan']);
-    expect(container.textContent).toContain('Best for your region');
+    ).toEqual(['Choose Exam Pass plan', 'Choose Monthly plan', 'Choose Annual plan']);
+    expect(container.textContent).toContain('30 days · no subscription');
     expect(container.textContent).toContain('$5.99');
+    expect(container.textContent).toContain('30 live AI examiner minutes for your 30 days');
     expect(container.textContent).toContain('$3.99');
     expect(container.textContent).toContain('$19.99');
     expect(container.textContent).not.toContain('$14.99');
@@ -462,10 +477,67 @@ describe('pricing authentication handoff', () => {
     expect(container.querySelector('[role="alert"]')?.textContent).toContain(
       'Checkout is temporarily disabled'
     );
-    const checkoutButtons = [...container.querySelectorAll('button')].filter(
-      (button) => button.textContent.includes('Choose this plan')
-    );
+    const checkoutButtons = [...container.querySelectorAll('button[aria-label^="Choose "]')];
     expect(checkoutButtons).toHaveLength(3);
     expect(checkoutButtons.every((button) => button.disabled)).toBe(true);
+  });
+});
+
+describe('contextual Exam Pass checkout handoff', () => {
+  it.each(['writing', 'speaking'])('returns verified %s buyers to the original practice', async (upgrade) => {
+    testState.user = { id: 'user-1' };
+    const returnTo = `/${upgrade}question/original-task`;
+    testState.router.query = { checkout: 'success', session_id: 'cs_test_checkout_return', upgrade, stage: 'saved', return_to: returnTo };
+    global.fetch.mockResolvedValue({ ok: true, json: async () => ({ active: true }) });
+    await renderPage();
+    const link = container.querySelector(`a[href="${returnTo}"]`);
+    expect(link).not.toBeNull();
+    expect(link.textContent).toContain('you saved');
+  });
+  it('keeps the original return link after cancellation and rejects an external target', async () => {
+    testState.router.query = { checkout: 'canceled', upgrade: 'writing', stage: 'saved', return_to: '/writingquestion/original-task' };
+    await renderPage();
+    expect(container.querySelector('a[href="/writingquestion/original-task"]').textContent).toBe('Return to your practice');
+    testState.router.query.return_to = 'https://evil.example/';
+    await renderPage();
+    expect(container.querySelector('a[href="https://evil.example/"]')).toBeNull();
+  });
+  it('sends only normalized navigation context when starting checkout', async () => {
+    testState.user = { id: 'user-1' };
+    testState.router.query = { upgrade: 'writing', stage: 'sample', return_to: '/writingquestion/original-task', essay: 'private sample' };
+    global.fetch.mockResolvedValue({ ok: false, json: async () => ({ error: 'Test stop before Stripe.' }) });
+    await renderPage();
+    await act(async () => { container.querySelector('button[aria-label="Choose Exam Pass plan"]').click(); });
+    const request = global.fetch.mock.calls.find(call => call[0] === '/api/billing/checkout');
+    const body = JSON.parse(request[1].body);
+    expect(body).toMatchObject({ sku: 'exam_pass', upgrade: 'writing', stage: 'sample', return_to: '/writingquestion/original-task' });
+    expect(body).not.toHaveProperty('essay');
+    expect(container.textContent).not.toContain('is saved and waiting');
+  });
+});
+
+describe('checkout activation account ownership', () => {
+  it('clears an active success screen when the account changes and verifies again', async () => {
+    testState.user = { id: 'buyer-a' };
+    global.fetch.mockResolvedValueOnce({ ok: true, json: async () => ({ active: true }) });
+    await renderPage();
+    expect(container.textContent).toContain("You're in. Do this first:");
+    testState.user = { id: 'buyer-b' };
+    global.fetch.mockResolvedValueOnce({ ok: false, json: async () => ({ active: false }) });
+    await renderPage();
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(container.textContent).not.toContain("You're in. Do this first:");
+  });
+  it('ignores a previous buyer response that arrives after an account switch', async () => {
+    testState.user = { id: 'buyer-a' };
+    let resolveBuyerA;
+    global.fetch.mockImplementationOnce(() => new Promise(resolve => { resolveBuyerA = resolve; }));
+    await renderPage();
+    testState.user = { id: 'buyer-b' };
+    global.fetch.mockResolvedValueOnce({ ok: false, json: async () => ({ active: false }) });
+    await renderPage();
+    await act(async () => { resolveBuyerA({ ok: true, json: async () => ({ active: true }) }); });
+    expect(container.textContent).not.toContain("You're in. Do this first:");
+    expect(track).not.toHaveBeenCalledWith('purchase_success', expect.anything());
   });
 });

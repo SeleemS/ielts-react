@@ -629,6 +629,34 @@ describe('POST /api/billing/checkout', () => {
     expect(session.automatic_tax).toBeUndefined();
   });
 
+  it.each([
+    { upgrade: 'writing', stage: 'saved', return_to: '/ielts-writing-checker' },
+    { upgrade: 'speaking', stage: 'saved', return_to: '/speakingquestion/part-2-example' },
+    { upgrade: 'mock', stage: 'sample', return_to: '/mock/academic-reading-1' },
+  ])('carries safe context through both Stripe URLs: $upgrade', async (context) => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    const res = await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { sku: 'exam_pass', ...context, essay: 'private-content', audioPath: 'private-path' } });
+    expect(res.statusCode).toBe(200);
+    const session = mockState.stripeCalls.sessionCreate;
+    for (const key of ['success_url', 'cancel_url']) {
+      const target = new URL(session[key]);
+      expect(target.origin).toBe('https://www.ielts-bank.com');
+      expect(target.pathname).toBe('/pricing');
+      for (const [field, value] of Object.entries(context)) expect(target.searchParams.get(field)).toBe(value);
+      expect(session[key]).not.toContain('private');
+    }
+    expect(session.success_url).toContain('session_id={CHECKOUT_SESSION_ID}');
+  });
+
+  it('drops untrusted return URLs at the server boundary', async () => {
+    mockState.authUser = { id: 'user-1' };
+    mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+    await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { upgrade: 'writing', stage: 'saved', return_to: '//attacker.example/path' } });
+    expect(mockState.stripeCalls.sessionCreate.success_url).not.toContain('return_to');
+    expect(mockState.stripeCalls.sessionCreate.cancel_url).not.toContain('attacker');
+  });
+
   it('creates a global annual checkout on the advertised price contract', async () => {
     mockState.authUser = { id: 'user-1' };
     mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };

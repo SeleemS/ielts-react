@@ -109,7 +109,7 @@ describe('WritingScoreReport free-score preview', () => {
     expect(container.textContent).toContain('1 of 3 shown');
     expect(container.textContent).toContain('Band 8 rewrite of your weakest paragraph');
     expect(container.textContent).toContain(
-      'Unlock all corrections and a Band 8 rewrite with Pro'
+      '30 days to practise with full feedback'
     );
     expect(container.textContent).toContain('band on all four criteria and one real correction');
 
@@ -140,7 +140,9 @@ describe('WritingScoreReport free-score preview', () => {
       expect.objectContaining({ source: 'score_tease', stage: 'impression', band: 6 })
     );
 
-    const upgrade = container.querySelector('a[href="/pricing?upgrade=writing"]');
+    const upgrade = container.querySelector('a[href^="/pricing?upgrade=writing"]');
+    expect(container.querySelectorAll('a[href^="/pricing?upgrade=writing"]')).toHaveLength(1);
+    expect(container.textContent).toContain('on your next essays');
     upgrade.addEventListener('click', (event) => event.preventDefault());
     act(() => {
       upgrade.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -180,7 +182,7 @@ describe('WritingScoreReport free-score preview', () => {
     expect(container.textContent).toContain('They were late');
     expect(container.textContent).toContain('A band eight version');
     expect(container.textContent).toContain('Second body paragraph');
-    expect(container.textContent).not.toContain('Unlock full feedback — Premium');
+    expect(container.textContent).not.toContain('See the 30-day Exam Pass');
     expect(track).not.toHaveBeenCalled();
   });
 });

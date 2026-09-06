@@ -153,19 +153,16 @@ describe('saleConfig planPricing — regional (PPP)', () => {
 });
 
 describe('saleConfig card layout', () => {
-  it('sells exactly three plans and highlights the annual plan by default', () => {
+  it.each([false, true])('features the first-position Exam Pass without changing regional prices (PPP=%s)', (ppp) => {
     expect(Object.keys(PLANS)).toEqual(['monthly', 'annual', 'exam_pass']);
-    expect(planOrder(false)).toEqual(['monthly', 'annual', 'exam_pass']);
-    expect(highlightedSku(false)).toBe('annual');
-  });
-
-  it('leads PPP regions with the one-time Exam Pass, in the middle slot', () => {
-    // Indian cards commonly reject recurring charges without a mandate, so the
-    // pass — not a subscription — is the recommended plan there.
-    expect(highlightedSku(true)).toBe('exam_pass');
-    expect(planOrder(true)).toEqual(['monthly', 'exam_pass', 'annual']);
-    expect(planOrder(true)[1]).toBe(highlightedSku(true));
-    expect(planOrder(false)[1]).toBe(highlightedSku(false));
+    expect(planOrder(ppp)).toEqual(['exam_pass', 'monthly', 'annual']);
+    expect(highlightedSku(ppp)).toBe('exam_pass');
+    expect(planOrder(ppp)[0]).toBe(highlightedSku(ppp));
+    expect(planOrder(ppp).map(sku => planPricing(sku, ppp).price))
+      .toEqual(ppp ? [5.99, 3.99, 19.99] : [14.99, 8.99, 49.99]);
+    expect(planPricing('exam_pass', ppp)).toMatchObject({
+      days: 30, isOneTime: true, interval: null, intervalCount: null,
+    });
   });
 });
 

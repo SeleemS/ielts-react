@@ -147,7 +147,8 @@ describe('EstimatorResults writing gate', () => {
     expect(container.textContent).toContain('Your Writing feedback');
     expect(container.textContent).toContain('A clear position');
     expect(container.textContent).toContain('Coherence & Cohesion');
-    expect(container.textContent).toContain('Your Band 6.0 sample has 5 fixable issues');
+    expect(container.textContent).toContain('See the 30-day Exam Pass');
+    expect(container.textContent).toContain('on your next essays');
     expect(container.textContent).not.toContain('essay has 5 fixable issues');
     expect(onWritingRevealed).toHaveBeenCalledWith({ band: 6, overall: 6.5 });
   });

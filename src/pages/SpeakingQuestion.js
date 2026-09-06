@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { buildUpgradeHref } from '../../lib/upgradeContext';
 import {
   Mic,
   Square,
@@ -35,6 +36,7 @@ import {
 } from '../lib/pendingSpeakingSession';
 import { track } from '../lib/analytics';
 import AiQuotaPanel from '../components/AiQuotaPanel';
+import ExamPassOffer from '../components/ExamPassOffer';
 import {
   speakingAudioControlLabel,
   speakingQuestionAudioContext,
@@ -663,38 +665,10 @@ function ScoreReport({ result, slug = '' }) {
         </div>
       )}
 
-      {/* Free-sample upgrade handoff (mirrors the writing teaser). */}
       {isTeaser && (
-        <div className="rounded-xl border border-primary/25 bg-background/95 p-5 text-center shadow-lg">
-          <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <Lock className="h-5 w-5" />
-          </span>
-          <h3 className="mt-3 text-base font-bold text-foreground">
-            That was your free Speaking sample
-          </h3>
-          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            You&apos;ve seen your overall band and Fluency &amp; Coherence. Premium unlocks the
-            other two criteria, the examiner summary, and improvement advice — for every
-            recording.
-          </p>
-          <Button asChild variant="accent" className="mt-4">
-            <NextLink
-              href="/pricing?upgrade=speaking"
-              onClick={() =>
-                track('paywall_upgrade_click', {
-                  source: 'speaking_sample',
-                  skill: 'speaking',
-                  band: result.overallBand,
-                  slug,
-                })
-              }
-              className="no-underline"
-            >
-              <Sparkles className="h-4 w-4" />
-              Unlock full feedback — Premium
-            </NextLink>
-          </Button>
-        </div>
+        <ExamPassOffer skill="speaking" source="speaking_sample" band={result.overallBand}>
+          You&apos;ve seen your overall band and Fluency &amp; Coherence in your free sample.
+        </ExamPassOffer>
       )}
     </div>
   );
@@ -1011,7 +985,7 @@ const SpeakingQuestion = ({ id: routeId, item, description, related = [] }) => {
       }
     }
     track('paywall_redirect', { skill: 'speaking', slug: item.slug, source: 'speaking_submit' });
-    router.push('/pricing?upgrade=speaking');
+    router.push(buildUpgradeHref({ upgrade: 'speaking', stage: 'saved', return_to: `/speakingquestion/${item.slug || routeId}` }));
   };
 
   // POST an already-uploaded recording to the scorer and handle the outcome.

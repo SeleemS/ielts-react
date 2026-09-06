@@ -60,6 +60,7 @@ vi.mock('../src/lib/analytics', () => ({
 }));
 
 import WritingCheckerPage from '../pages/ielts-writing-checker';
+import { saveAttemptToSupabase } from '../src/lib/progress';
 import { saveWritingDraft, WRITING_DRAFT_KEY } from '../src/lib/writingDraft';
 import { track } from '../src/lib/analytics';
 
@@ -94,9 +95,26 @@ afterEach(() => {
   act(() => root.unmount());
   container.remove();
   vi.clearAllMocks();
+  vi.unstubAllGlobals();
 });
 
 describe('writing checker hero handoff', () => {
+  it('keeps a gated essay saved while carrying only safe return context to checkout', async () => {
+    testState.user = { id: 'test-user' };
+    saveAttemptToSupabase.mockResolvedValue({ ok: true });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 402, json: async () => ({ reason: 'premium_required' }) }));
+    saveWritingDraft({ taskType: 'task2', prompt: 'Discuss the topic.', essay: LONG_ESSAY });
+    await act(async () => { render(); });
+    await vi.waitFor(() => expect(testState.pushed).toHaveLength(1));
+    const target = new URL(testState.pushed[0], 'https://www.ielts-bank.com');
+    expect(Object.fromEntries(target.searchParams)).toEqual({ upgrade: 'writing', stage: 'saved', return_to: '/ielts-writing-checker' });
+    expect(target.href).not.toContain(LONG_ESSAY);
+    expect(JSON.parse(window.localStorage.getItem('ielts-writing-checker-draft')).essay).toBe(LONG_ESSAY);
+    expect(saveAttemptToSupabase).toHaveBeenCalledWith(expect.objectContaining({ userId: 'test-user', band: null, responses: expect.objectContaining({ essay: LONG_ESSAY }) }));
+    await act(async () => { root.unmount(); root = createRoot(container); render(); });
+    expect(container.querySelector('#essay').value).toBe(LONG_ESSAY);
+  });
+
   it('pre-fills from the hero draft and continues into the sign-in gate', () => {
     saveWritingDraft({
       taskType: 'task1-academic',

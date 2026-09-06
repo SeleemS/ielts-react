@@ -70,17 +70,17 @@ describe('funnel events', () => {
     expect(event).toBe('view_item_list');
     expect(params.item_list_id).toBe(ITEM_LIST_ID);
     expect(params.items.map((item) => item.item_id)).toEqual([
+      'pro_exam_pass',
       'pro_monthly',
       'pro_annual',
-      'pro_exam_pass',
     ]);
   });
 
   it('view_item_list follows the PPP card order', () => {
     trackViewItemList(true);
     expect(trackMock.mock.calls[0][1].items.map((item) => item.item_id)).toEqual([
-      'pro_monthly',
       'pro_exam_pass',
+      'pro_monthly',
       'pro_annual',
     ]);
   });
