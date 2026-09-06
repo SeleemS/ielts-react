@@ -4,7 +4,6 @@ import { Sparkles } from 'lucide-react';
 import { usePlan } from '../../lib/usePlan';
 import { useAuth } from '../../lib/auth';
 import { useFreeWritingSample } from '../../lib/useFreeWritingSample';
-import { money, planPricing } from '../../lib/saleConfig';
 
 // Small status line under the writing submit CTA so the free-sample state is
 // visible BEFORE the user composes a whole essay and gets a 402: either the
@@ -18,8 +17,6 @@ export default function FreeSampleChip({ className = '' }) {
   if (planLoading || isPremium) return null;
   if (user?.id && (sampleLoading || used === null)) return null;
 
-  const perMonth = money(planPricing('3month', false).perMonth);
-
   return (
     <p
       className={`mx-auto max-w-md text-center text-xs font-medium text-muted-foreground ${className}`}
@@ -31,9 +28,9 @@ export default function FreeSampleChip({ className = '' }) {
         </>
       ) : used ? (
         <>
-          Your free sample is used — Pro scores this essay in full, from{' '}
+          Your free sample is used — Pro scores this essay in full.{' '}
           <NextLink href="/pricing?upgrade=writing" className="font-semibold text-accent">
-            {perMonth}/mo
+            See Pro plans
           </NextLink>
           .
         </>
