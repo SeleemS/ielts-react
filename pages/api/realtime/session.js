@@ -6,6 +6,7 @@
 export const config = { runtime: 'nodejs' };
 
 import { randomUUID } from 'node:crypto';
+import { issueAssessmentTicket } from '../../../lib/realtimeAssessmentTicket';
 import { createClient } from '@supabase/supabase-js';
 import { clientIp, originAllowed } from '../../../lib/apiSecurity';
 import { realtimeReservationRow, recordAiUsage } from '../../../lib/aiCost';
@@ -95,6 +96,15 @@ export default async function handler(req, res) {
     });
   }
   const durationSeconds = MODES[mode].seconds;
+  const wantsAudio = req.body?.audioAssessment === true;
+  let assessment;
+  if (wantsAudio) {
+    if (process.env.NEXT_PUBLIC_REALTIME_AUDIO_ASSESSMENT !== 'true') {
+      return res.status(503).json({ error: 'Audio assessment is not enabled yet.' });
+    }
+    try { assessment = issueAssessmentTicket({ userId, mode, durationSeconds }); }
+    catch { return res.status(503).json({ error: 'Audio assessment is not configured yet.' }); }
+  }
 
   // Both mint limits fail closed: an infrastructure outage must not create
   // unbounded Realtime spend.
@@ -207,6 +217,11 @@ export default async function handler(req, res) {
 
     const instructions = buildInstructions(mode, items, durationSeconds);
     const body = buildSessionConfig(instructions);
+    if (wantsAudio) {
+      body.expires_after.seconds = 60;
+      body.session.reasoning = { effort: 'low' };
+      body.session.max_output_tokens = 512;
+    }
 
     const r = await fetch(OPENAI_CLIENT_SECRETS_URL, {
       method: 'POST',
@@ -233,6 +248,7 @@ export default async function handler(req, res) {
     );
 
     return res.status(200).json({
+      ...(assessment ? { assessment } : {}),
       clientSecret: payload.value,
       expiresAt: payload.expires_at || null,
       model: REALTIME_MODEL,

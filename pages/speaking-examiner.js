@@ -1,8 +1,11 @@
 // pages/speaking-examiner.js
 // Live AI speaking examiner (Premium): a real-time voice interview over
 // WebRTC with the OpenAI Realtime model, followed by a rubric-anchored
-// transcript score from the standard scoring pass. docs/MONETIZATION.md §9.
+// assessment. The gated audio pilot assesses all four criteria; legacy sessions
+// keep the transcript-only score. docs/MONETIZATION.md §9.
 import React from 'react';
+import { createRealtimeAudioRecorder, uploadRealtimeAudio } from '../src/lib/realtimeAudioRecorder';
+function audioAssessmentEnabled() { return process.env.NEXT_PUBLIC_REALTIME_AUDIO_ASSESSMENT === 'true'; }
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Mic, PhoneOff, Sparkles, Clock, CheckCircle2, Headphones, MessageSquare, Gauge } from 'lucide-react';
@@ -109,7 +112,7 @@ const SPEAKING_TIPS = [
   'Examiners reward answers that are developed — a reason and an example beat a one-liner.',
   'Pausing to think is fine; filling every silence with “you know” costs more.',
   'Paraphrasing the question in your answer shows lexical range.',
-  'Self-correcting a small mistake is a positive sign, not a penalty.',
+  'Occasional self-correction is natural; frequent repairs can interrupt fluency.',
   'In Part 2, using the full two minutes almost always helps your fluency band.',
 ];
 
@@ -127,6 +130,8 @@ export default function SpeakingExaminerPage() {
   const [result, setResult] = React.useState(null);
   const [pendingScore, setPendingScore] = React.useState(null);
 
+  const recorderRef = React.useRef(null);
+  const assessmentRef = React.useRef(null);
   const pcRef = React.useRef(null);
   const micRef = React.useRef(null);
   const transcriptRef = React.useRef([]);
@@ -206,6 +211,8 @@ export default function SpeakingExaminerPage() {
   React.useEffect(() => () => teardown(), []); // unmount cleanup
 
   function teardown() {
+    recorderRef.current?.dispose();
+    recorderRef.current = null;
     // Invalidate pending permission/mint/SDP work before releasing resources.
     connectionGenerationRef.current += 1;
     if (micFailsafeRef.current) clearTimeout(micFailsafeRef.current);
@@ -381,11 +388,18 @@ export default function SpeakingExaminerPage() {
       greetedRef.current = false;
       analyserMicRef.current = attachAnalyser(mic);
 
+      assessmentRef.current = null;
+      if (audioAssessmentEnabled()) {
+        const recorder = await createRealtimeAudioRecorder(mic);
+        if (!isCurrent()) { recorder.dispose(); return; }
+        recorderRef.current = recorder;
+      }
+
       // 2. Mint the metered session token.
       const mintRes = await fetch('/api/realtime/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...headers },
-        body: JSON.stringify({ mode }),
+        body: JSON.stringify({ mode, ...(audioAssessmentEnabled() ? { audioAssessment: true } : {}) }),
       });
       const mint = await mintRes.json().catch(() => ({}));
       if (!isCurrent()) return;
@@ -396,6 +410,9 @@ export default function SpeakingExaminerPage() {
         minutes.refresh();
         return;
       }
+
+      assessmentRef.current = mint.assessment || null;
+      if (audioAssessmentEnabled() && !mint.assessment) throw new Error('assessment-not-enabled');
 
       // 3. WebRTC to OpenAI Realtime.
       const pc = new RTCPeerConnection();
@@ -486,6 +503,7 @@ export default function SpeakingExaminerPage() {
         });
       }, 1000);
 
+      recorderRef.current?.start();
       setPhase('live');
       startVisualizer();
       minutes.refresh();
@@ -496,7 +514,9 @@ export default function SpeakingExaminerPage() {
       setError(
         e?.name === 'NotAllowedError'
           ? 'Microphone access is required — please allow it and try again.'
-          : 'Could not connect to the examiner. Please try again.'
+          : e?.message?.startsWith('audio-recording')
+            ? 'This browser could not record audio for pronunciation assessment. Try an up-to-date Chrome or Safari browser.'
+            : 'Could not connect to the examiner. Please try again.'
       );
     }
   }
@@ -504,6 +524,17 @@ export default function SpeakingExaminerPage() {
   async function endInterview() {
     if (endedRef.current) return;
     endedRef.current = true;
+    setPhase('scoring');
+    let audioBlobs;
+    const recorder = recorderRef.current;
+    recorderRef.current = null;
+    // Freeze capture before closing media. Flush the final audio frames.
+    try { if (recorder) audioBlobs = await recorder.stop(); }
+    catch {
+      teardown(); setPhase('idle');
+      setError('The recording could not be recovered, so pronunciation was not assessed.');
+      return;
+    }
     teardown();
     const transcript = transcriptRef.current;
     // Timer/data-channel callbacks were created before the mode state render.
@@ -517,7 +548,7 @@ export default function SpeakingExaminerPage() {
     const candidateWords = transcript
       .filter((t) => t.role === 'candidate')
       .reduce((n, t) => n + t.text.split(/\s+/).filter(Boolean).length, 0);
-    if (candidateWords < MIN_SCORABLE_WORDS) {
+    if (!audioBlobs && candidateWords < MIN_SCORABLE_WORDS) {
       setPhase('idle');
       setError('The session ended before there was enough speech to score.');
       return;
@@ -525,13 +556,15 @@ export default function SpeakingExaminerPage() {
 
     const scorePayload = {
       version: 1,
-      requestId: createRealtimeScoreRequestId(),
+      requestId: assessmentRef.current?.requestId || createRealtimeScoreRequestId(),
       userId: sessionOwnerRef.current || user?.id || '',
       mode: sessionMode,
       createdAt: Date.now(),
       transcript,
+      ...(audioBlobs ? { audioBlobs, assessmentTicket: assessmentRef.current.ticket } : {}),
     };
-    const stored = savePendingRealtimeScore(getBrowserSessionStorage(), scorePayload);
+    // Raw audio stays in memory until uploaded, never in session/localStorage.
+    const stored = !audioBlobs && savePendingRealtimeScore(getBrowserSessionStorage(), scorePayload);
     const recoverableScore = { ...scorePayload, stored };
     setPendingScore(recoverableScore);
     await scorePendingInterview(recoverableScore);
@@ -542,6 +575,24 @@ export default function SpeakingExaminerPage() {
     setPhase('scoring');
     setError('');
     try {
+      if (pending.audioBlobs && !pending.audioAssessment) {
+        if (!currentUserIdRef.current || currentUserIdRef.current !== pending.userId) {
+          setPhase('score_error'); setError('Sign in with the account that recorded this interview to upload its audio.'); return;
+        }
+        try {
+          const count = await uploadRealtimeAudio(getSupabase(), pending);
+          pending.audioAssessment = { ticket: pending.assessmentTicket, count };
+          delete pending.audioBlobs;
+          delete pending.uploadedParts;
+          delete pending.assessmentTicket;
+          pending.stored = savePendingRealtimeScore(getBrowserSessionStorage(), pending);
+          setPendingScore({ ...pending });
+        } catch {
+          setPhase('score_error');
+          setError('The recording upload did not finish. Keep this tab open and retry; your audio is still here.');
+          return;
+        }
+      }
       const outcome = await submitPendingRealtimeScore({
         currentUserId: currentUserIdRef.current,
         fetchFn: fetch,
@@ -659,7 +710,7 @@ export default function SpeakingExaminerPage() {
           </h1>
           <p className="mt-3 text-muted-foreground">
             Talk to an AI examiner that runs the real 3-part IELTS Speaking format — adaptive
-            questions, a timed cue card, and a band score with feedback at the end.
+            questions, a timed cue card, and a practice band estimate with feedback at the end.
           </p>
         </header>
 
@@ -668,6 +719,11 @@ export default function SpeakingExaminerPage() {
             {error}
           </div>
         ) : null}
+
+        {audioAssessmentEnabled() && phase === 'idle' ? <p className="mt-4 rounded-lg border p-4 text-sm text-muted-foreground">
+          Your microphone audio will be recorded and sent to OpenAI for feedback on all four speaking criteria, including pronunciation.
+          Use headphones to keep the examiner’s voice out of your recording. Audio is stored privately for retries, deleted after a confirmed assessment, and otherwise scheduled for deletion after 30 days.
+        </p> : null}
 
         {/* ---------- gate: signed-out / free ---------- */}
         {phase === 'idle' && !planLoading && !isPremium ? (
@@ -810,7 +866,7 @@ export default function SpeakingExaminerPage() {
               <button
                 type="button"
                 onClick={endInterview}
-                disabled={candidateWords < MIN_SCORABLE_WORDS}
+                disabled={candidateWords < MIN_SCORABLE_WORDS && !(assessmentRef.current && assessmentRef.current.durationSeconds - secondsLeft >= 30)}
                 className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <PhoneOff className="h-4 w-4" /> End interview &amp; get my score
@@ -833,9 +889,11 @@ export default function SpeakingExaminerPage() {
             <ScoringProgress
               done={Boolean(result)}
               onFinished={handleScoringFinished}
-              stages={SPEAKING_STAGES}
+              stages={pendingScore?.audioAssessment || pendingScore?.audioBlobs
+                ? [{ icon: Headphones, label: 'Listening to your recording' }, ...SPEAKING_STAGES.slice(1, 4), { icon: Headphones, label: 'Assessing pronunciation and intelligibility' }, ...SPEAKING_STAGES.slice(4)]
+                : SPEAKING_STAGES}
               tips={SPEAKING_TIPS}
-              heading="Marking your transcript against the official rubric"
+              heading={pendingScore?.audioAssessment || pendingScore?.audioBlobs ? "Assessing your recording against the speaking rubric" : "Marking your transcript against the official rubric"}
             />
           </div>
         ) : null}
@@ -872,7 +930,9 @@ export default function SpeakingExaminerPage() {
         {/* ---------- results ---------- */}
         {phase === 'done' && result ? (
           <div className="mt-8 space-y-4">
-            <BandHero band={result.overallBand} subtitle="Live speaking interview" />
+            {Number.isFinite(result.overallBand) ? (
+              <BandHero band={result.overallBand} subtitle={result.assessmentBasis === 'candidate_audio' ? 'Estimated speaking band · four criteria' : 'Transcript-based practice estimate'} />
+            ) : <p className="rounded-xl border p-5 font-semibold">Not enough clear audio for an overall band. Review the feedback and try again.</p>}
 
             {result.summary ? (
               <div className="rounded-xl border bg-card p-5 shadow-sm">
@@ -883,11 +943,12 @@ export default function SpeakingExaminerPage() {
               </div>
             ) : null}
 
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
               {[
                 ['Fluency & Coherence', result.criteria?.fluencyCoherence],
                 ['Lexical Resource', result.criteria?.lexicalResource],
                 ['Grammatical Range & Accuracy', result.criteria?.grammaticalRange],
+                ...(result.assessmentBasis === 'candidate_audio' ? [['Pronunciation', result.criteria?.pronunciation]] : []),
               ].map(([label, c]) => (
                 <Card key={label}>
                   <CardContent className="p-5">
@@ -909,11 +970,21 @@ export default function SpeakingExaminerPage() {
             </div>
 
             <p className="rounded-md bg-secondary/60 px-4 py-3 text-xs leading-5 text-muted-foreground">
-              <span className="font-semibold text-foreground">A note on pronunciation:</span>{' '}
-              pronunciation can&apos;t be judged fairly from a transcript, so this estimate covers
-              the three criteria above. In the real test it counts for a quarter of your score —
-              keep practising aloud with the examiner.
+              {result.assessmentBasis === 'candidate_audio'
+                ? 'AI practice estimate, not an official IELTS score. All four criteria carry equal weight. Pronunciation reflects clarity, sounds, stress, rhythm and intonation—not accent identity. A drill only samples one part of the test.'
+                : "Pronunciation cannot be judged from a transcript. This practice estimate covers only fluency/coherence, vocabulary and grammar."}
             </p>
+            {result.audioEvidence?.length ? <Card><CardContent className="p-5">
+              <h2 className="font-semibold">Pronunciation observations</h2>
+              <p className="mt-1 text-xs text-muted-foreground">Approximate times in your microphone recording.</p>
+              <ul className="mt-3 space-y-2 text-sm">{result.audioEvidence.map((e, i) => <li key={i}>
+                <span className="font-medium">{fmtTime(Math.floor(e.startSeconds))}–{fmtTime(Math.floor(e.endSeconds))}: </span>{e.observation}
+              </li>)}</ul>
+            </CardContent></Card> : null}
+            {result.limitations?.length ? <div className="rounded-xl border p-5">
+              <h2 className="font-semibold">Assessment limits</h2>
+              <ul className="mt-2 list-disc pl-5 text-sm text-muted-foreground">{result.limitations.map((item, i) => <li key={i}>{item}</li>)}</ul>
+            </div> : null}
 
             {Array.isArray(result.improvements) && result.improvements.length ? (
               <div className="rounded-xl border bg-card p-5 shadow-sm">

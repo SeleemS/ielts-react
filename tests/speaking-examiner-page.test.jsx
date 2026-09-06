@@ -3,7 +3,8 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { createRoot } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-const state = vi.hoisted(() => ({ refresh: vi.fn(), userId: 'qa-fixture' }));
+const state = vi.hoisted(() => ({ refresh: vi.fn(), userId: 'qa-fixture', recorder: null, upload: vi.fn() }));
+vi.mock('../src/lib/realtimeAudioRecorder', () => ({ createRealtimeAudioRecorder: async () => { if (state.recorder instanceof Error) throw state.recorder; return state.recorder; }, uploadRealtimeAudio: (...args) => state.upload(...args) }));
 vi.mock('next/head', () => ({ default: () => null }));
 vi.mock('next/link', () => ({ default: ({ href, children }) => <a href={href}>{children}</a> }));
 vi.mock('../src/components/Navbar', () => ({ default: () => null }));
@@ -28,6 +29,8 @@ beforeEach(async () => {
   vi.useFakeTimers();
   intervalSpy = vi.spyOn(globalThis, 'setInterval');
   clearIntervalSpy = vi.spyOn(globalThis, 'clearInterval');
+  state.recorder = { start: vi.fn(), dispose: vi.fn(), stop: vi.fn(async () => [new Blob(['audio'])]) };
+  state.upload.mockReset().mockResolvedValue(1);
   sessionStorage.clear(); state.userId = 'qa-fixture';
   peers = [];
   track = { enabled: true, stop: vi.fn() };
@@ -48,7 +51,7 @@ beforeEach(async () => {
   container = document.createElement('div'); document.body.appendChild(container); root = createRoot(container);
   await act(async () => root.render(<SpeakingExaminerPage />));
 });
-afterEach(() => { if (root) unmount(); container.remove(); vi.restoreAllMocks(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.clearAllMocks(); });
+afterEach(() => { if (root) unmount(); container.remove(); vi.restoreAllMocks(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.clearAllMocks(); });
 describe('synthetic WebRTC page lifecycle (no device or provider calls)', () => {
   it('requests microphone before minting and greets exactly once, then unmutes after the greeting', async () => {
     await start();
@@ -64,6 +67,32 @@ describe('synthetic WebRTC page lifecycle (no device or provider calls)', () => 
     expect(track.stop).toHaveBeenCalledOnce();
     expect(peers[0].close).toHaveBeenCalledOnce();
     expect(vi.getTimerCount()).toBe(0);
+  });
+  it('records candidate audio and preserves an uploaded recording for score retry without recording again', async () => {
+    vi.stubEnv('NEXT_PUBLIC_REALTIME_AUDIO_ASSESSMENT', 'true');
+    const requestId='22222222-2222-4222-8222-222222222222';
+    fetchMock.mockReset().mockResolvedValueOnce(response({clientSecret:'fixture',model:'gpt-realtime-2.1',durationSeconds:300,assessment:{ticket:'signed-ticket',requestId}})).mockResolvedValueOnce(response({}));
+    await start();
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).audioAssessment).toBe(true);
+    expect(state.recorder.start).toHaveBeenCalledOnce();
+    await act(async () => peers[0].channel.onmessage({data:JSON.stringify({type:'conversation.item.input_audio_transcription.completed',transcript:Array(45).fill('word').join(' ')})}));
+    fetchMock.mockResolvedValueOnce(response({error:'retry'},false));
+    await act(async () => [...container.querySelectorAll('button')].find(b=>b.textContent.includes('End interview')).click());
+    expect(state.recorder.stop).toHaveBeenCalledOnce();
+    expect(state.upload).toHaveBeenCalledOnce();
+    expect(JSON.parse(fetchMock.mock.calls[2][1].body)).toMatchObject({requestId,audioAssessment:{ticket:'signed-ticket',count:1}});
+    expect(sessionStorage.getItem('ielts-pending-realtime-score')).not.toContain('audioBlobs');
+    fetchMock.mockResolvedValueOnce(response({overallBand:null,assessmentStatus:'insufficient_evidence'}));
+    await act(async () => [...container.querySelectorAll('button')].find(b=>b.textContent.includes('Retry scoring my interview')).click());
+    expect(state.upload).toHaveBeenCalledOnce();
+    expect(sessionStorage.length).toBe(0);
+  });
+  it('does not reserve minutes if pronunciation recording cannot initialize', async () => {
+    vi.stubEnv('NEXT_PUBLIC_REALTIME_AUDIO_ASSESSMENT', 'true');
+    state.recorder=new Error('audio-recording-unsupported');
+    await start();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(container.textContent).toContain('could not record audio');
   });
   it('denied microphone permission does not reserve paid minutes', async () => {
     navigator.mediaDevices.getUserMedia.mockRejectedValue(Object.assign(new Error('denied'), { name: 'NotAllowedError' }));

@@ -1,11 +1,15 @@
 // pages/api/score/speaking-realtime.js
-// Scores the transcript of a live AI-examiner speaking session (the Realtime
-// feature, docs/MONETIZATION.md §9). Premium-only. Does NOT consume the
-// ai-score meter — the session minutes were already paid at mint time.
-// Mirrors pages/api/score/speaking.js: same 3 transcript-assessable criteria,
-// same structured-output schema, same attempts/scores persistence.
+// Premium post-interview assessment: signed candidate audio uses Realtime 2.1
+// and all four criteria; legacy transcripts retain the three-criterion scorer.
+// Session minutes are reserved at mint time; idempotent scoring retries do not
+// consume another reservation. Raw audio never passes through this request.
 export const config = { runtime: 'nodejs' };
+export const maxDuration = 180;
 
+import { verifyAssessmentTicket } from '../../../lib/realtimeAssessmentTicket';
+import { loadAssessmentAudio, scoreRecordedInterview } from '../../../lib/realtimeAudioScorer';
+import { realtimeUsageRow } from '../../../lib/realtimeCost';
+import { AUDIO_ASSESSMENT_MODEL } from '../../../lib/speakingAudioAssessment';
 import { createClient } from '@supabase/supabase-js';
 import { clientIp, originAllowed } from '../../../lib/apiSecurity';
 import { chatUsageRow, recordAiUsage } from '../../../lib/aiCost';
@@ -73,7 +77,7 @@ async function checkLimit(bucket, identifier, windowSeconds, max) {
 }
 
 function buildSystemPrompt() {
-  return `You are a certified, experienced IELTS Speaking examiner. You mark strictly and consistently against the official IELTS Speaking public band descriptors. Marking is fair and evidence-based: for every judgement you cite concrete evidence quoted or paraphrased from the candidate's transcribed answers.
+  return `You are an AI IELTS Speaking practice assessor, not an official or certified examiner. You mark strictly and consistently against the official IELTS Speaking public band descriptors. Marking is fair and evidence-based: for every judgement you cite concrete evidence quoted or paraphrased from the candidate's transcribed answers.
 
 You are given the FULL TRANSCRIPT of a live practice speaking interview between an AI examiner and a candidate. The EXAMINER turns are context only — assess ONLY the CANDIDATE's language. Assess ONLY the THREE criteria a transcript can support, each on the 0-9 band scale (halves allowed):
 
@@ -176,6 +180,15 @@ export default async function handler(req, res) {
   if (!MODES[mode]) {
     return res.status(400).json({ error: 'Unknown session mode.' });
   }
+  const audioRequested = body.audioAssessment != null;
+  let audioClaims = null;
+  if (audioRequested) {
+    audioClaims = verifyAssessmentTicket(body.audioAssessment?.ticket, { userId, mode, requestId });
+    if (!audioClaims || !Number.isInteger(body.audioAssessment?.count)
+      || body.audioAssessment.count < 1 || body.audioAssessment.count > 2) {
+      return res.status(400).json({ error: 'Invalid or expired audio assessment reference.' });
+    }
+  }
   const transcript = Array.isArray(body.transcript) ? body.transcript : [];
   const turns = transcript
     .filter(
@@ -195,7 +208,7 @@ export default async function handler(req, res) {
   const candidateWords = turns
     .filter((t) => t.role === 'candidate')
     .reduce((n, t) => n + countWords(t.text), 0);
-  if (candidateWords < MIN_CANDIDATE_WORDS) {
+  if (!audioRequested && candidateWords < MIN_CANDIDATE_WORDS) {
     return res.status(422).json({
       error:
         'There is not enough of your speech in this session to score fairly. Try a longer conversation with the examiner.',
@@ -209,7 +222,9 @@ export default async function handler(req, res) {
         p_request_id: requestId,
         p_user_id: userId,
         p_mode: mode,
-        p_transcript: turns,
+        p_transcript: audioRequested
+          ? [...turns, { role: 'examiner', text: `[assessment:audio-v1;parts:${body.audioAssessment.count}]` }]
+          : turns,
       });
       const claimed = Array.isArray(data) ? data[0] : data;
       if (error || !claimed?.action) {
@@ -295,7 +310,20 @@ export default async function handler(req, res) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
   let result;
-  try {
+  if (audioRequested) {
+    clearTimeout(timeout);
+    try {
+      const audio = await loadAssessmentAudio({ userId, requestId, count: body.audioAssessment.count, maxSeconds: audioClaims.durationSeconds });
+      const scored = await scoreRecordedInterview({ ...audio, mode, transcript: rendered,
+        onResponse: response => recordAiUsage(getAdmin(), realtimeUsageRow({ userId, response, durationSeconds: audio.durationSeconds, mode })),
+      });
+      result = scored.result;
+
+    } catch (error) {
+      console.error('audio assessment failed:', error.message);
+      return failAndRespond(502, { error: 'Audio assessment could not finish. Your recording is saved; retry this interview.' });
+    }
+  } else try {
     const r = await fetch(OPENAI_CHAT_URL, {
       method: 'POST',
       signal: controller.signal,
@@ -347,18 +375,18 @@ export default async function handler(req, res) {
   const fluency = criteria.fluencyCoherence?.band;
   const lexical = criteria.lexicalResource?.band;
   const grammar = criteria.grammaticalRange?.band;
-  if (
+  if (!audioRequested && (
     !isValidSpeakingBand(fluency) ||
     !isValidSpeakingBand(lexical) ||
     !isValidSpeakingBand(grammar)
-  ) {
+  )) {
     console.error(
       'realtime scoring returned invalid bands:',
       JSON.stringify(criteria).slice(0, 500)
     );
     return failAndRespond(502, { error: 'Scoring failed. Please try again.' });
   }
-  const overallBand = roundBandMean((fluency + lexical + grammar) / 3);
+  const overallBand = audioRequested ? result.overallBand : roundBandMean((fluency + lexical + grammar) / 3);
   result = { ...result, overallBand };
 
   // --- Persist (fail-soft) -------------------------------------------------
@@ -373,6 +401,8 @@ export default async function handler(req, res) {
         skill: 'speaking',
         responses: {
           realtime: true,
+          assessmentBasis: audioRequested ? 'candidate_audio' : 'transcript',
+          ...(audioRequested ? { audioEvidence: result.audioEvidence, limitations: result.limitations, confidence: result.confidence } : {}),
           mode,
           transcript: turns,
           ...(requestId ? { realtime_request_id: requestId } : {}),
@@ -390,7 +420,7 @@ export default async function handler(req, res) {
         skill: 'speaking',
         overall_band: overallBand,
         criteria: result.criteria || {},
-        model: SCORING_MODEL,
+        model: audioRequested ? AUDIO_ASSESSMENT_MODEL : SCORING_MODEL,
       });
       if (scoreErr) {
         console.error('realtime score insert failed:', scoreErr.message);
@@ -411,6 +441,16 @@ export default async function handler(req, res) {
     return res.status(503).json({
       error: 'Your score finished but confirmation is delayed. Retry this saved interview.',
     });
+  }
+  // Delete only after the idempotent result is durably confirmed. Retryable
+  // failures retain owner-only audio; the existing cleanup cron is the backstop.
+  if (audioRequested) {
+    try {
+      const { error } = await getAdmin().storage.from('speaking-uploads').remove(
+        Array.from({ length: body.audioAssessment.count }, (_, i) => `${userId}/${requestId}/audio-${i}.wav`)
+      );
+      if (error) throw error;
+    } catch (error) { console.error('assessment audio cleanup failed:', error.message); }
   }
   return res.status(200).json(responseBody);
 }

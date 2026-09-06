@@ -1,9 +1,12 @@
+import { issueAssessmentTicket } from '../lib/realtimeAssessmentTicket';
+import { normalizeAudioAssessment } from '../lib/speakingAudioAssessment';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-role-dummy';
 
 const state = {
+  audioCalls: [],
   authUser: null,
   authReject: null,
   planRow: { plan: 'free', plan_status: 'inactive' },
@@ -22,8 +25,10 @@ const state = {
   deletedAttemptIds: [],
 };
 
+vi.mock('../lib/realtimeAudioScorer', () => ({ loadAssessmentAudio: async args => { state.audioCalls.push(args); return { parts: [], durationSeconds: 60 }; }, scoreRecordedInterview: async () => ({ result: normalizeAudioAssessment({ criteria: Object.fromEntries(['fluencyCoherence','lexicalResource','grammaticalRange','pronunciation'].map(k=>[k,{band:6,strengths:['Evidence'],improvements:['Action']}])), summary:'Practice', improvements:['One','Two','Three'], limitations:[], confidence:'medium',audioEvidence:[{startSeconds:1,endSeconds:3,observation:'Stress'}] },60), response: {} }) }));
 vi.mock('@supabase/supabase-js', () => ({
   createClient: () => ({
+    storage: { from: () => ({ remove: async () => ({error:null}) }) },
     auth: {
       getUser: async () => {
         if (state.authReject) throw state.authReject;
@@ -137,6 +142,7 @@ async function callRoute(options) {
 
 describe('POST /api/score/speaking-realtime access gate', () => {
   beforeEach(() => {
+    state.audioCalls = [];
     state.authUser = null;
     state.authReject = null;
     state.planRow = { plan: 'free', plan_status: 'inactive' };
@@ -157,6 +163,22 @@ describe('POST /api/score/speaking-realtime access gate', () => {
     vi.restoreAllMocks();
   });
 
+  it('requires a paid signed audio ticket before loading recordings or calling a model', async () => {
+    state.authUser={id:'user-1'};state.planRow={plan:'premium',plan_status:'active'};
+    const res=await callRoute({body:{mode:'part1',requestId:'22222222-2222-4222-8222-222222222222',audioAssessment:{ticket:'forged',count:1}}});
+    expect(res.statusCode).toBe(400);expect(state.audioCalls).toHaveLength(0);expect(state.rpcCalls).toHaveLength(0);
+  });
+  it('scores signed candidate audio on four criteria and persists the actual model', async () => {
+    process.env.REALTIME_ASSESSMENT_SECRET='x'.repeat(40);process.env.OPENAI_API_KEY='test';
+    state.authUser={id:'user-1'};state.planRow={plan:'premium',plan_status:'active'};
+    const issued=issueAssessmentTicket({userId:'user-1',mode:'part1',durationSeconds:300});
+    const res=await callRoute({body:{mode:'part1',requestId:issued.requestId,transcript:[{role:'candidate',text:Array(45).fill('word').join(' ')}],audioAssessment:{ticket:issued.ticket,count:1}}});
+    expect(res.statusCode).toBe(200);expect(res.jsonBody.criteria.pronunciation.band).toBe(6);
+    expect(res.jsonBody.overallBand).toBe(6);expect(res.jsonBody.assessmentBasis).toBe('candidate_audio');
+    expect(state.tableCalls.find(c=>c.table==='scores').values.model).toBe('gpt-realtime-2.1');
+    expect(state.rpcCalls.filter(c=>c.name==='consume_realtime_seconds')).toHaveLength(0);
+    delete process.env.REALTIME_ASSESSMENT_SECRET;
+  });
   it('enforces POST and same-origin requests before authentication', async () => {
     let res = await callRoute({ method: 'GET' });
     expect(res.statusCode).toBe(405);

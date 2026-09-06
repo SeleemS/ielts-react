@@ -1,0 +1,104 @@
+{
+  "result": {
+    "criteria": {
+      "fluencyCoherence": {
+        "band": 7,
+        "strengths": [
+          "Sustains a clear response with a logical shift from what is liked to what should change",
+          "Uses linking well with contrast and cause-effect (for example, moving from community benefits to transport problems)"
+        ],
+        "improvements": [
+          "Reduce slight pauses between ideas to sound more effortless",
+          "Add a brief example or comparison to extend the point on transport more naturally"
+        ]
+      },
+      "lexicalResource": {
+        "band": 7,
+        "strengths": [
+          "Good range for the topic, including 'sense of community', 'opportunities', 'unreliable', and 'appointments'",
+          "Paraphrases effectively and keeps vocabulary appropriate"
+        ],
+        "improvements": [
+          "Increase precision with a few more nuanced terms (for example, 'frequency', 'coverage', or 'accessibility')",
+          "Use more varied adjectives/adverbs to avoid repetition"
+        ]
+      },
+      "grammaticalRange": {
+        "band": 7,
+        "strengths": [
+          "Uses a mix of simple and complex structures, including conditionals and relative clauses",
+          "Meaning remains clear with generally accurate control"
+        ],
+        "improvements": [
+          "Add more complex sentence forms with subordinate clauses to show flexibility",
+          "Watch for minor tense consistency and clause boundary smoothness"
+        ]
+      },
+      "pronunciation": {
+        "band": 7,
+        "strengths": [
+          "Generally clear and easy to follow with steady rhythm",
+          "Intonation supports contrast and emphasis, aiding coherence"
+        ],
+        "improvements": [
+          "Tighten connected speech in longer sentences to avoid slight choppiness",
+          "Ensure key content words are stressed consistently for maximum clarity"
+        ]
+      }
+    },
+    "overallBand": 7,
+    "summary": "Estimated band around 7 for this sample. The response is coherent and well-linked, with a solid lexical range and mostly accurate grammar. Pronunciation is intelligible and supports meaning, though there is room to sound more effortless and connected.",
+    "improvements": [
+      "Practice speaking in longer turns with fewer pauses by rehearsing a short outline and then delivering it without notes",
+      "Expand topic-specific vocabulary for transport and infrastructure to increase precision",
+      "Use more varied complex sentence structures (for example, concessive and conditional clauses) to show flexibility",
+      "Record yourself and focus on smoother connected speech and consistent stress on key words"
+    ],
+    "audioEvidence": [
+      {
+        "startSeconds": 0,
+        "endSeconds": 5,
+        "observation": "Clear articulation with steady rhythm; intelligibility is good and the speaker is easy to follow."
+      },
+      {
+        "startSeconds": 10,
+        "endSeconds": 20,
+        "observation": "Intonation helps mark contrast when shifting from advantages to a problem, supporting listener understanding."
+      },
+      {
+        "startSeconds": 30,
+        "endSeconds": 39,
+        "observation": "Longer sentence delivery becomes slightly choppy, but words remain understandable and meaning is not lost."
+      }
+    ],
+    "limitations": [
+      "Assessment is based on a brief Part 1-style sample and may not reflect performance across other topics or longer turns",
+      "No independent verification of the audio beyond the provided sample, so confidence is limited"
+    ],
+    "confidence": "medium",
+    "assessmentBasis": "candidate_audio",
+    "assessmentStatus": "estimated",
+    "model": "gpt-realtime-2.1"
+  },
+  "usage": {
+    "total_tokens": 1728,
+    "input_tokens": 1129,
+    "output_tokens": 599,
+    "input_token_details": {
+      "text_tokens": 731,
+      "audio_tokens": 398,
+      "image_tokens": 0,
+      "cached_tokens": 0,
+      "cached_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      }
+    },
+    "output_token_details": {
+      "text_tokens": 599,
+      "audio_tokens": 0,
+      "reasoning_tokens": 31
+    }
+  }
+}

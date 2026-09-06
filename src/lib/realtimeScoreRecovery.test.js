@@ -95,6 +95,12 @@ describe('pending realtime score storage', () => {
     expect(savePendingRealtimeScore(storage, pendingScore())).toBe(false);
   });
 
+  it('retains an uploaded audio reference even when transcription was unavailable', () => {
+    const storage=memoryStorage();
+    const pending={...pendingScore(),transcript:[],audioAssessment:{ticket:'signed-ticket',count:1}};
+    expect(savePendingRealtimeScore(storage,pending)).toBe(true);
+    expect(loadPendingRealtimeScore(storage,{now:pending.createdAt+1000})).toMatchObject({transcript:[],audioAssessment:pending.audioAssessment});
+  });
   it('adds and persists a request ID when loading a pre-idempotency transcript', () => {
     const storage = memoryStorage();
     const legacy = pendingScore();

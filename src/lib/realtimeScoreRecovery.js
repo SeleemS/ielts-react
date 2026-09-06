@@ -38,7 +38,7 @@ function normalizePendingRealtimeScore(value) {
     || !ALLOWED_MODES.has(mode)
     || !Number.isFinite(createdAt)
   ) return null;
-  if (!Array.isArray(value.transcript) || value.transcript.length === 0) return null;
+  if (!Array.isArray(value.transcript) || (value.transcript.length === 0 && !value.audioAssessment)) return null;
 
   let totalChars = 0;
   const transcript = [];
@@ -57,7 +57,10 @@ function normalizePendingRealtimeScore(value) {
     transcript.push({ role: turn.role, text });
   }
 
-  return { version: 1, requestId, userId, mode, createdAt, transcript };
+  const audioAssessment = value.audioAssessment;
+  if (audioAssessment != null && (typeof audioAssessment.ticket !== 'string' || audioAssessment.ticket.length > 2000
+    || !Number.isInteger(audioAssessment.count) || audioAssessment.count < 1 || audioAssessment.count > 2)) return null;
+  return { version: 1, requestId, userId, mode, createdAt, transcript, ...(audioAssessment ? { audioAssessment } : {}) };
 }
 
 export function savePendingRealtimeScore(storage, pending) {
@@ -134,6 +137,7 @@ export async function submitPendingRealtimeScore({
         requestId: normalized.requestId,
         mode: normalized.mode,
         transcript: normalized.transcript,
+        ...(normalized.audioAssessment ? { audioAssessment: normalized.audioAssessment } : {}),
       }),
     });
     const body = await response.json().catch(() => ({}));
@@ -144,7 +148,7 @@ export async function submitPendingRealtimeScore({
         message: body.error || 'Scoring failed. Please try again.',
       };
     }
-    if (!Number.isFinite(body.overallBand)) {
+    if (!Number.isFinite(body.overallBand) && !(body.overallBand === null && body.assessmentStatus === 'insufficient_evidence')) {
       return {
         status: 'api_error',
         message: 'Scoring returned an incomplete result. Please try again.',
