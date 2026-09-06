@@ -413,7 +413,7 @@ const WritingQuestion = ({ id: docId, passage, description, related = [] }) => {
               {isLoading ? 'Analyzing…' : 'Get AI Feedback'}
             </Button>
           </div>
-          <FreeSampleChip className="mt-3" />
+          {!result && <FreeSampleChip className="mt-3" />}
           <div className="mt-2"><AiQuotaPanel userId={user?.id} remaining={result?.quotaRemaining} open={quotaOpen} onClose={() => setQuotaOpen(false)} skill="writing" resetsAt={quotaResetsAt} /></div>
           <RelatedPractice skill="writing" items={related} className="mt-10" />
         </main>

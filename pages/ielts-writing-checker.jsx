@@ -520,7 +520,7 @@ export default function WritingCheckerPage() {
                     while you sign up.
                   </p>
                 ) : (
-                  <FreeSampleChip />
+                  !result && <FreeSampleChip />
                 )}
               </form>
             </div>

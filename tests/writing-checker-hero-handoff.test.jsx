@@ -35,7 +35,7 @@ vi.mock('../src/components/Navbar', () => ({ default: () => React.createElement(
 vi.mock('../src/components/Footer', () => ({ default: () => React.createElement('footer') }));
 vi.mock('../src/components/NewsletterSignup', () => ({ default: () => null }));
 vi.mock('../src/components/AiQuotaPanel', () => ({ default: () => null }));
-vi.mock('../src/components/question/FreeSampleChip', () => ({ default: () => null }));
+vi.mock('../src/components/question/FreeSampleChip', () => ({ default: () => React.createElement('p', { 'data-testid': 'free-sample-status' }, 'Free sample available') }));
 vi.mock('../src/components/question/WritingScoreReport', () => ({
   default: () => React.createElement('div', null, 'report'),
 }));
@@ -99,6 +99,18 @@ afterEach(() => {
 });
 
 describe('writing checker hero handoff', () => {
+  it('removes the stale free-sample status as soon as a score arrives', async () => {
+    testState.user = { id: 'test-user' };
+    saveAttemptToSupabase.mockResolvedValue({ ok: true });
+    let finishScore;
+    vi.stubGlobal('fetch', vi.fn().mockImplementation(() => new Promise(resolve => { finishScore = resolve; })));
+    saveWritingDraft({ taskType: 'task2', essay: LONG_ESSAY });
+    await act(async () => { render(); });
+    expect(container.querySelector('[data-testid="free-sample-status"]')).not.toBeNull();
+    await act(async () => { finishScore({ ok: true, status: 200, json: async () => ({ overallBand: 6, free: true, criteria: {} }) }); });
+    expect(container.querySelector('[data-testid="free-sample-status"]')).toBeNull();
+  });
+
   it('keeps a gated essay saved while carrying only safe return context to checkout', async () => {
     testState.user = { id: 'test-user' };
     saveAttemptToSupabase.mockResolvedValue({ ok: true });
