@@ -1,0 +1,163 @@
+{
+  "testedAt": "2026-09-06T04:26:22.340Z",
+  "method": "Separate PostgreSQL connections, SET LOCAL ROLE service_role, isolated empty schema clones of installed billing functions",
+  "customerRowsReadOrChanged": 0,
+  "stripeRequests": 0,
+  "races": [
+    {
+      "name": "duplicate activation preserves interleaved consumed quota",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "already_applied",
+      "finalPlan": "premium",
+      "remainingSeconds": 321,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 0,
+      "revocations": 0
+    },
+    {
+      "name": "activation rollback lets waiting retry grant once",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "rolled_back",
+      "firstOutcome": "applied",
+      "secondOutcome": "applied",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 0,
+      "revocations": 0
+    },
+    {
+      "name": "activation versus same purchase refund, refundFirst=false",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "revoked",
+      "finalPlan": "free",
+      "remainingSeconds": 0,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 0,
+      "revocations": 1
+    },
+    {
+      "name": "activation versus same purchase refund, refundFirst=true",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "recorded",
+      "secondOutcome": "revoked",
+      "finalPlan": "free",
+      "remainingSeconds": 0,
+      "checkoutReceipts": 0,
+      "subscriptionReceipts": 0,
+      "revocations": 1
+    },
+    {
+      "name": "duplicate renewal preserves interleaved consumed quota",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "already_applied",
+      "finalPlan": "premium",
+      "remainingSeconds": 222,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 1,
+      "revocations": 0
+    },
+    {
+      "name": "new renewal versus prior purchase refund, refundFirst=false",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "not_current",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 1,
+      "revocations": 1
+    },
+    {
+      "name": "new renewal versus prior purchase refund, refundFirst=true",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "revoked",
+      "secondOutcome": "applied",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 1,
+      "revocations": 1
+    },
+    {
+      "name": "renewal versus same invoice refund, refundFirst=false",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "revoked",
+      "finalPlan": "free",
+      "remainingSeconds": 0,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 1,
+      "revocations": 1
+    },
+    {
+      "name": "renewal versus same invoice refund, refundFirst=true",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "not_current",
+      "secondOutcome": "revoked",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 1,
+      "subscriptionReceipts": 0,
+      "revocations": 1
+    },
+    {
+      "name": "new subscription versus old deletion, deleteFirst=false",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "stale",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 2,
+      "subscriptionReceipts": 1,
+      "revocations": 0
+    },
+    {
+      "name": "new subscription versus old deletion, deleteFirst=true",
+      "passed": true,
+      "separateConnectionLockObserved": true,
+      "firstTransaction": "committed",
+      "firstOutcome": "applied",
+      "secondOutcome": "applied",
+      "finalPlan": "premium",
+      "remainingSeconds": 3600,
+      "checkoutReceipts": 2,
+      "subscriptionReceipts": 1,
+      "revocations": 0
+    }
+  ],
+  "functionParity": {
+    "count": 5,
+    "normalizedDefinitionsEqual": true,
+    "installedDefinitionsSha256": "f0e2da45abe1aa8198ee058d843f98cb0c66079003d22a17ef020ae867030c7d"
+  },
+  "fixtureIsolation": {
+    "foreign_keys": 0,
+    "application_triggers": 0
+  },
+  "allPassed": true,
+  "cleanupVerified": true,
+  "limits": "Cloned installed function logic has exact normalized parity; unrelated auth/profile triggers, foreign keys and production RLS policies are excluded. Tests use fixed synthetic provider facts, not live Stripe events/network delivery."
+}

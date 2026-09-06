@@ -1,0 +1,69 @@
+{
+  "testedAt": "2026-09-06T04:36:22.269Z",
+  "customerRowsReadOrChanged": 0,
+  "checks": [
+    {
+      "name": "unknown code",
+      "passed": true
+    },
+    {
+      "name": "self referral",
+      "passed": true
+    },
+    {
+      "name": "unknown user",
+      "passed": true
+    },
+    {
+      "name": "stale account",
+      "passed": true
+    },
+    {
+      "name": "anonymous account",
+      "passed": true
+    },
+    {
+      "name": "valid award once",
+      "passed": true
+    },
+    {
+      "name": "repeat cannot award again",
+      "passed": true
+    },
+    {
+      "name": "transaction rollback reverses both awards and receipt",
+      "passed": true
+    },
+    {
+      "name": "rolled-back redemption retries once",
+      "passed": true
+    },
+    {
+      "name": "monthly fifth award caps sixth attribution",
+      "passed": true
+    },
+    {
+      "name": "concurrent fifth credit awards only winner and retains loser attribution",
+      "passed": true
+    }
+  ],
+  "findings": [],
+  "functionParity": {
+    "normalizedDefinitionsEqual": true,
+    "installedDefinitionSha256": "94445260c96f72685b532f1c14859ee4cfdf8ae690eb2aeeabf8a371e00a9b98"
+  },
+  "fixtureIsolation": {
+    "foreign_keys": 0,
+    "application_triggers": 0
+  },
+  "concurrentCap": {
+    "separateConnectionLockObserved": true,
+    "firstCredited": true,
+    "secondCredited": false,
+    "finalBonus": 5,
+    "expectedMaximum": 5
+  },
+  "allBoundaryChecksPassed": true,
+  "cleanupVerified": true,
+  "limits": "Exact installed SECURITY DEFINER logic with service-role JWT context; only isolated synthetic rows. Auth/profile triggers, foreign keys and production RLS excluded. No actual referral or customer quota writes."
+}

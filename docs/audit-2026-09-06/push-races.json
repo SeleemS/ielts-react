@@ -1,0 +1,40 @@
+{
+  "testedAt": "2026-09-06T04:31:25.653Z",
+  "customerRowsReadOrChanged": 0,
+  "providerRequests": 0,
+  "races": [
+    {
+      "name": "concurrent claims grant one lease",
+      "passed": true,
+      "separateConnectionLockObserved": true
+    },
+    {
+      "name": "reclaim rejects waiting stale-token completion",
+      "passed": true,
+      "separateConnectionLockObserved": true
+    },
+    {
+      "name": "completion preserves user disable, disableFirst=true",
+      "passed": true,
+      "separateConnectionLockObserved": true
+    },
+    {
+      "name": "completion preserves user disable, disableFirst=false",
+      "passed": true,
+      "separateConnectionLockObserved": true
+    }
+  ],
+  "method": "Separate PostgreSQL connections; service_role; exact installed function clones",
+  "functionParity": {
+    "count": 2,
+    "normalizedDefinitionsEqual": true,
+    "installedDefinitionsSha256": "f3959d20d9d6650d640e2533c91f070c022b3795e31897c626d89a812d3da04a"
+  },
+  "fixtureIsolation": {
+    "foreign_keys": 0,
+    "application_triggers": 0
+  },
+  "allPassed": true,
+  "cleanupVerified": true,
+  "limits": "Exact installed function logic; isolated table constraints/indexes/defaults. Production RLS, auth foreign keys and application triggers excluded. No push-provider delivery; provider acceptance followed by process crash is not exactly-once."
+}

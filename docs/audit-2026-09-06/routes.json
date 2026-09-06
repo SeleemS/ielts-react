@@ -1,0 +1,392 @@
+[
+  {
+    "file": "pages/404.js",
+    "route": "/404",
+    "kind": "page"
+  },
+  {
+    "file": "pages/500.jsx",
+    "route": "/500",
+    "kind": "page"
+  },
+  {
+    "file": "pages/about.js",
+    "route": "/about",
+    "kind": "page"
+  },
+  {
+    "file": "pages/api/billing/change-plan.js",
+    "route": "/api/billing/change-plan",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/billing/checkout.js",
+    "route": "/api/billing/checkout",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/billing/pause.js",
+    "route": "/api/billing/pause",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/billing/portal.js",
+    "route": "/api/billing/portal",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/billing/verify-session.js",
+    "route": "/api/billing/verify-session",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/contact.js",
+    "route": "/api/contact",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/cleanup.js",
+    "route": "/api/cron/cleanup",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/daily-report.js",
+    "route": "/api/cron/daily-report",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/lifecycle-emails.js",
+    "route": "/api/cron/lifecycle-emails",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/push-reminders.js",
+    "route": "/api/cron/push-reminders",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/resume-billing.js",
+    "route": "/api/cron/resume-billing",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/cron/weekly-scorecard.js",
+    "route": "/api/cron/weekly-scorecard",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/csp-report.js",
+    "route": "/api/csp-report",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/data/login.js",
+    "route": "/api/data/login",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/data/overview.js",
+    "route": "/api/data/overview",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/data/realtime.js",
+    "route": "/api/data/realtime",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/data/retention.js",
+    "route": "/api/data/retention",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/data/scorecard.js",
+    "route": "/api/data/scorecard",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/estimator/reveal.js",
+    "route": "/api/estimator/reveal",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/estimator/score-writing.js",
+    "route": "/api/estimator/score-writing",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/mock/[slug].js",
+    "route": "/api/mock/[slug]",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/newsletter/subscribe.js",
+    "route": "/api/newsletter/subscribe",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/newsletter/unsubscribe.js",
+    "route": "/api/newsletter/unsubscribe",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/og.jsx",
+    "route": "/api/og",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/push/event.js",
+    "route": "/api/push/event",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/push/key.js",
+    "route": "/api/push/key",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/push/subscribe.js",
+    "route": "/api/push/subscribe",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/realtime/session.js",
+    "route": "/api/realtime/session",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/referral/redeem.js",
+    "route": "/api/referral/redeem",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/score/speaking-realtime.js",
+    "route": "/api/score/speaking-realtime",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/score/speaking.js",
+    "route": "/api/score/speaking",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/score/writing.js",
+    "route": "/api/score/writing",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/track.js",
+    "route": "/api/track",
+    "kind": "api"
+  },
+  {
+    "file": "pages/api/webhooks/stripe.js",
+    "route": "/api/webhooks/stripe",
+    "kind": "api"
+  },
+  {
+    "file": "pages/auth/callback.jsx",
+    "route": "/auth/callback",
+    "kind": "page"
+  },
+  {
+    "file": "pages/band-calculator.js",
+    "route": "/band-calculator",
+    "kind": "page"
+  },
+  {
+    "file": "pages/band-estimator.js",
+    "route": "/band-estimator",
+    "kind": "page"
+  },
+  {
+    "file": "pages/billing/manage.jsx",
+    "route": "/billing/manage",
+    "kind": "page"
+  },
+  {
+    "file": "pages/blog/[slug].js",
+    "route": "/blog/[slug]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/blog/index.js",
+    "route": "/blog",
+    "kind": "page"
+  },
+  {
+    "file": "pages/contactus.js",
+    "route": "/contactus",
+    "kind": "page"
+  },
+  {
+    "file": "pages/dashboard.js",
+    "route": "/dashboard",
+    "kind": "page"
+  },
+  {
+    "file": "pages/data.js",
+    "route": "/data",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-band-descriptors.js",
+    "route": "/ielts-band-descriptors",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-score-requirements/[country].js",
+    "route": "/ielts-score-requirements/[country]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-score-requirements.js",
+    "route": "/ielts-score-requirements",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-test-format.js",
+    "route": "/ielts-test-format",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-vs-toefl-pte-duolingo.js",
+    "route": "/ielts-vs-toefl-pte-duolingo",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-writing-checker-accuracy.js",
+    "route": "/ielts-writing-checker-accuracy",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-writing-checker.jsx",
+    "route": "/ielts-writing-checker",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-writing-task-2-topics/[month].js",
+    "route": "/ielts-writing-task-2-topics/[month]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/ielts-writing-task-2-topics.js",
+    "route": "/ielts-writing-task-2-topics",
+    "kind": "page"
+  },
+  {
+    "file": "pages/index.js",
+    "route": "/",
+    "kind": "page"
+  },
+  {
+    "file": "pages/listening/[type].js",
+    "route": "/listening/[type]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/listeningquestion/[id].js",
+    "route": "/listeningquestion/[id]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/listeningquestion/index.js",
+    "route": "/listeningquestion",
+    "kind": "page"
+  },
+  {
+    "file": "pages/mock/[slug].js",
+    "route": "/mock/[slug]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/mock-test.js",
+    "route": "/mock-test",
+    "kind": "page"
+  },
+  {
+    "file": "pages/pricing.jsx",
+    "route": "/pricing",
+    "kind": "page"
+  },
+  {
+    "file": "pages/privacypolicy.js",
+    "route": "/privacypolicy",
+    "kind": "page"
+  },
+  {
+    "file": "pages/r.js",
+    "route": "/r",
+    "kind": "page"
+  },
+  {
+    "file": "pages/reading/[type].js",
+    "route": "/reading/[type]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/readingquestion/[id].js",
+    "route": "/readingquestion/[id]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/readingquestion/index.js",
+    "route": "/readingquestion",
+    "kind": "page"
+  },
+  {
+    "file": "pages/review.js",
+    "route": "/review",
+    "kind": "page"
+  },
+  {
+    "file": "pages/sitemap.xml.js",
+    "route": "/sitemap.xml",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speaking/[part].js",
+    "route": "/speaking/[part]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speaking/new-cue-cards.js",
+    "route": "/speaking/new-cue-cards",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speaking/topics/[family].js",
+    "route": "/speaking/topics/[family]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speaking-examiner.js",
+    "route": "/speaking-examiner",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speakingquestion/[id].js",
+    "route": "/speakingquestion/[id]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/speakingquestion/index.js",
+    "route": "/speakingquestion",
+    "kind": "page"
+  },
+  {
+    "file": "pages/termsofservice.js",
+    "route": "/termsofservice",
+    "kind": "page"
+  },
+  {
+    "file": "pages/writingquestion/[id].js",
+    "route": "/writingquestion/[id]",
+    "kind": "page"
+  },
+  {
+    "file": "pages/writingquestion/index.js",
+    "route": "/writingquestion",
+    "kind": "page"
+  }
+]
