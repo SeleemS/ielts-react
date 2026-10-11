@@ -200,7 +200,7 @@ function signInTitle(sku, regionalPricing) {
   const plan = sku ? planPricing(sku, regionalPricing) : null;
   if (!plan) return 'Sign in to upgrade';
   return plan.isOneTime
-    ? 'Create your account to get the Exam Pass'
+    ? `Create your account to get the ${plan.name}`
     : `Create your account to start ${plan.name} Pro`;
 }
 
@@ -837,7 +837,7 @@ export default function PricingPage() {
               <Sparkles className="h-4 w-4" />
             )}
             {alreadyOwned
-              ? 'Exam Pass active'
+              ? 'Pass active'
               : plan.isOneTime
                 ? `Get ${plan.days}-day Exam Pass`
                 : plan.sku === 'annual'
@@ -1173,8 +1173,9 @@ export default function PricingPage() {
                       Not sure yet? Week Pass — {money(planPricing('week_pass', regionalPricing).price)} once
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      {WEEK_PASS_DAYS} days of Pro: unlimited marked practice, Writing and Speaking
-                      scoring and timed mocks. Live AI examiner not included. Never renews.
+                      {WEEK_PASS_DAYS} days of Pro: unlimited marked Reading &amp; Listening practice, AI
+                      Writing and Speaking scoring (fair-use limits apply) and timed mocks. Live AI
+                      examiner not included. Never renews.
                     </p>
                   </div>
                   <Button

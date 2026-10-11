@@ -2,12 +2,12 @@ export function billingStatusHeading({ pauseUntil, expiresAt, planStatus, renews
   if (planStatus === 'refunded') return 'Premium is not active';
   if (pauseUntil && new Date(pauseUntil).getTime() > now) return 'Premium is paused';
   if (planStatus === 'paused') return 'Billing is resuming';
-  if (expiresAt && new Date(expiresAt).getTime() <= now) return 'Exam Pass has expired';
+  if (expiresAt && new Date(expiresAt).getTime() <= now) return 'Your pass has expired';
   if (planStatus === 'canceled') {
     return isPremium && new Date(renewsAt).getTime() > now ? 'Premium is ending' : 'Premium has ended';
   }
   if (planStatus === 'past_due') return 'Payment needs attention';
-  if (expiresAt && isPremium) return 'Exam Pass is active';
+  if (expiresAt && isPremium) return 'Your pass is active';
   return isPremium ? 'Keep Premium active' : 'Premium is not active';
 }
 
@@ -30,10 +30,10 @@ export function billingStatusMessage({
   }
   if (expiresAt) {
     if (new Date(expiresAt).getTime() <= now) {
-      return `Your Exam Pass expired ${new Date(expiresAt).toLocaleDateString()}.`;
+      return `Your pass expired ${new Date(expiresAt).toLocaleDateString()}.`;
     }
-    if (!isPremium) return 'Your Exam Pass is not currently active.';
-    return `Your Exam Pass ends ${new Date(expiresAt).toLocaleDateString()}.`;
+    if (!isPremium) return 'Your pass is not currently active.';
+    return `Your pass ends ${new Date(expiresAt).toLocaleDateString()}.`;
   }
   if (planStatus === 'canceled' && renewsAt) {
     if (new Date(renewsAt).getTime() <= now) {

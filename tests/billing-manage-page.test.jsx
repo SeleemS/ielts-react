@@ -257,7 +257,7 @@ describe('billing account state', () => {
       await Promise.resolve();
     });
 
-    expect(container.textContent).toContain('Exam Pass is active');
+    expect(container.textContent).toContain('Your pass is active');
     expect(container.textContent).toContain('Review billing history');
     expect(container.textContent).toContain('There is no active recurring plan to cancel');
     expect(container.textContent).not.toContain('schedule cancellation at period end');
@@ -497,7 +497,7 @@ describe('billing upgrade confirmation', () => {
 
 describe('billing expired access display', () => {
   it.each([
-    ['exam_pass', 'active', '2026-09-06T04:00:00.000Z', null, 'Exam Pass has expired', 'Exam Pass expired'],
+    ['exam_pass', 'active', '2026-09-06T04:00:00.000Z', null, 'Your pass has expired', 'pass expired'],
     ['monthly', 'canceled', null, '2026-09-06T04:00:00.000Z', 'Premium has ended', 'Premium access ended'],
     ['exam_pass', 'refunded', '2026-10-01T00:00:00.000Z', null, 'Premium is not active', 'refund or dispute'],
   ])('renders %s %s without active-access promises', async (sku, status, expires, renews, heading, detail) => {
@@ -509,7 +509,7 @@ describe('billing expired access display', () => {
     await act(async () => root.render(React.createElement(ManageBillingPage)));
     expect(container.querySelector('h2').textContent).toBe(heading);
     expect(container.textContent).toContain(detail);
-    expect(container.textContent).not.toContain('Exam Pass is active');
+    expect(container.textContent).not.toContain('Your pass is active');
     expect(container.textContent).not.toContain('Premium access continues until');
   });
 });

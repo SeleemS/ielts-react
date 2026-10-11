@@ -28,7 +28,7 @@ describe('billing status display', () => {
     expect(billingStatusMessage({
       expiresAt: '2026-08-16T04:35:48.000Z',
       isPremium: true,
-    })).toContain('Exam Pass ends');
+    })).toContain('pass ends');
 
     expect(billingStatusMessage({
       pauseUntil: '2026-07-25T04:35:48.000Z',
@@ -74,8 +74,8 @@ describe('billing status display', () => {
 
 describe('billing expiry display boundaries', () => {
   it.each([
-    ['expired pass', { expiresAt: '2026-07-19T04:35:48.000Z', planStatus: 'active', isPremium: false }, 'Exam Pass has expired', 'Exam Pass expired'],
-    ['future pass', { expiresAt: '2026-07-20T04:35:48.000Z', planStatus: 'active', isPremium: true }, 'Exam Pass is active', 'Exam Pass ends'],
+    ['expired pass', { expiresAt: '2026-07-19T04:35:48.000Z', planStatus: 'active', isPremium: false }, 'Your pass has expired', 'pass expired'],
+    ['future pass', { expiresAt: '2026-07-20T04:35:48.000Z', planStatus: 'active', isPremium: true }, 'Your pass is active', 'pass ends'],
     ['ended cancellation', { renewsAt: '2026-07-19T04:35:48.000Z', planStatus: 'canceled', isPremium: false }, 'Premium has ended', 'Premium access ended'],
     ['paid-through cancellation', { renewsAt: '2026-07-20T04:35:48.000Z', planStatus: 'canceled', isPremium: true }, 'Premium is ending', 'Premium access continues until'],
     ['refunded with retained dates', { expiresAt: '2026-07-20T04:35:48.000Z', planStatus: 'refunded', isPremium: false }, 'Premium is not active', 'refund or dispute'],

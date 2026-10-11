@@ -97,7 +97,7 @@ export function observedOfferPath({ events, practice, sessions, fulfillments, ex
     if (!click) continue;
     result.subsequentlyClicked++;
     const created = sessions.filter(s => s.livemode && (s.client_reference_id || s.metadata?.user_id) === u
-      && ['exam_pass', 'monthly', 'annual'].includes(s.metadata?.sku)
+      && ['exam_pass', 'week_pass', 'monthly', 'annual'].includes(s.metadata?.sku)
       && s.created * 1000 >= Date.parse(click.created_at) && s.created * 1000 < stop);
     const activated = s => s.status === 'complete' && s.payment_status === 'paid' && s.amount_total > 0
       && fulfillments.some(f => f.session_id === s.id && f.outcome === 'applied'

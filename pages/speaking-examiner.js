@@ -1199,8 +1199,17 @@ export default function SpeakingExaminerPage() {
               <Clock className="mr-1 inline h-4 w-4 align-[-2px]" />
               {minutes.loading
                 ? 'Loading your examiner minutes…'
-                : `${minutesLeft} examiner minutes left this period`}
+                : minutes.quotaSeconds === 0
+                  ? 'Your current pass does not include live examiner minutes.'
+                  : `${minutesLeft} examiner minutes left this period`}
             </p>
+            {!minutes.loading && minutes.quotaSeconds === 0 ? (
+              <p className="mt-2 text-center text-sm">
+                <NextLink href="/pricing#plans" className="font-semibold text-primary underline">
+                  Add examiner minutes with the Exam Pass or a subscription
+                </NextLink>
+              </p>
+            ) : null}
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {MODE_CARDS.map((card) => (
                 <Card
@@ -1238,7 +1247,7 @@ export default function SpeakingExaminerPage() {
                     {minutes.remainingSeconds < card.minutes * 60 && !minutes.loading ? (
                       <p className="mt-2 text-center text-xs text-muted-foreground">
                         Not enough minutes left
-                        {minutes.resetsAt
+                        {minutes.resetsAt && minutes.quotaSeconds > 0
                           ? ` — refills ${new Date(minutes.resetsAt).toLocaleDateString()}`
                           : ''}
                       </p>

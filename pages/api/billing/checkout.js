@@ -303,7 +303,9 @@ export default async function handler(req, res) {
       console.error('checkout EXAM PASS LENGTH NOT DEPLOYED:', {
         sku,
         advertisedDays: passDaysForSku(sku),
-        fix: 'run scripts/apply-exam-pass-length.mjs or unset NEXT_PUBLIC_EXAM_PASS_DAYS',
+        fix: sku === 'week_pass'
+          ? 'run scripts/apply-exam-pass-length.mjs or unset NEXT_PUBLIC_WEEK_PASS'
+          : 'run scripts/apply-exam-pass-length.mjs or unset NEXT_PUBLIC_EXAM_PASS_DAYS',
       });
       return res.status(503).json({
         error: 'Pricing is being updated. Please try again later.',
