@@ -317,7 +317,12 @@ async function main() {
     products.data.find((item) => item.metadata?.ieltsbank === PRODUCT_METADATA_MARKER) || null;
 
   const lookupKeys = [...DESIRED_PRICES.map((spec) => spec.lookupKey), ...RETIRED_LOOKUP_KEYS];
-  const prices = await stripe.prices.list({ active: true, limit: 100, lookup_keys: lookupKeys });
+  // Stripe accepts at most 10 lookup_keys per list call.
+  const prices = { data: [] };
+  for (let i = 0; i < lookupKeys.length; i += 10) {
+    const page = await stripe.prices.list({ active: true, limit: 100, lookup_keys: lookupKeys.slice(i, i + 10) });
+    prices.data.push(...page.data);
+  }
 
   const plan = planCatalogChanges({
     product,
