@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { TERMS_SEO } from '../../lib/termsSeo';
-import { EXAM_PASS_DAYS } from '../lib/saleConfig';
+import { EXAM_PASS_DAYS, WEEK_PASS_DAYS, WEEK_PASS_ENABLED } from '../lib/saleConfig';
 
 const TermsOfService = () => {
   return (
@@ -110,6 +110,14 @@ const TermsOfService = () => {
                     The Exam Pass is one payment for {EXAM_PASS_DAYS} days of Premium access. It does not renew,
                     no further payment is taken, and access ends on the date shown in your account.
                   </li>
+                  {WEEK_PASS_ENABLED ? (
+                    <li>
+                      <strong className="font-semibold text-foreground">Week Pass.</strong>{' '}
+                      The Week Pass is one payment for {WEEK_PASS_DAYS} days of Premium access, excluding
+                      live AI examiner minutes. It does not renew, no further payment is taken, and access
+                      ends on the date shown in your account. One pass can be active at a time.
+                    </li>
+                  ) : null}
                   <li>
                     <strong className="font-semibold text-foreground">Cancellation.</strong>{' '}
                     You may cancel a subscription at any time from billing settings. Unless a
@@ -119,7 +127,7 @@ const TermsOfService = () => {
                   <li>
                     <strong className="font-semibold text-foreground">14-day money-back guarantee.</strong>{' '}
                     You may request a refund within 14 calendar days of your first paid purchase —
-                    a subscription or the one-time Exam Pass — by contacting <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                    a subscription or a one-time pass — by contacting <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
                     from the email on your account. The guarantee applies once per customer. We may
                     refuse requests involving fraud, chargeback abuse, material violation of these
                     terms, or substantially consumed live-examiner usage.

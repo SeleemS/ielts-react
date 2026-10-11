@@ -1,7 +1,8 @@
 import { checkoutAttribution } from '../../../lib/monetizationExperiment';
 // pages/api/billing/checkout.js
 // Creates a Stripe Checkout Session for a currently advertised plan: the
-// Monthly or Annual subscription, or the one-time Exam Pass (EXAM_PASS_DAYS).
+// Monthly or Annual subscription, the one-time Exam Pass (EXAM_PASS_DAYS), or
+// the 7-day one-time Week Pass (only while NEXT_PUBLIC_WEEK_PASS=1).
 //   * signed-in, NON-anonymous users only (receipts + portal need an email);
 //   * price resolved server-side by lookup_key — PPP variant when the request
 //     geo (x-vercel-ip-country) is in the PPP list. Never client-chosen.
@@ -35,11 +36,18 @@ import { BILLING_USER_COLUMNS, checkoutEligibility } from '../../../lib/checkout
 import { sanitizeGaClientId } from '../../../lib/ga4mp';
 import {
   LEGACY_EXAM_PASS_DAYS,
+  WEEK_PASS_DAYS,
   examPassDays,
+  weekPassEnabled,
   PROMO,
   planPricing,
   promoAppliesTo,
 } from '../../../src/lib/saleConfig';
+
+// Length a one-time checkout advertises and the webhook will grant.
+function passDaysForSku(sku) {
+  return sku === 'week_pass' ? WEEK_PASS_DAYS : examPassDays();
+}
 
 const CHECKOUT_WINDOW_SECONDS = 10 * 60;
 const CHECKOUT_MAX_PER_WINDOW = 10;
@@ -100,18 +108,19 @@ function promoCouponMismatch(coupon) {
       };
 }
 
-// A pass longer than the legacy 30 days is only sold once the database
-// function that grants it is live (supabase/migrations/20260923130000_exam_pass_length.sql).
+// A pass of any length other than the legacy 30 days (45-day Exam Pass, 7-day
+// Week Pass) is only sold once the database function that grants it is live
+// (supabase/migrations/20261011120000_pass_lengths_week_pass.sql).
 // Otherwise the page would promise N days and the grant would give 30. A
 // positive answer is cached for the life of the function instance.
-let verifiedPassDays = null;
+const verifiedPassDays = new Set();
 async function examPassLengthDeployed(admin, days) {
-  if (days === LEGACY_EXAM_PASS_DAYS || verifiedPassDays === days) return true;
+  if (days === LEGACY_EXAM_PASS_DAYS || verifiedPassDays.has(days)) return true;
   try {
     const { data, error } = await admin.rpc('billing_exam_pass_days_supported');
     if (error || !Array.isArray(data)) return false;
     if (!data.map(Number).includes(days)) return false;
-    verifiedPassDays = days;
+    verifiedPassDays.add(days);
     return true;
   } catch {
     return false;
@@ -205,7 +214,7 @@ export default async function handler(req, res) {
   if (!authUser) return res.status(401).json({ error: 'Sign in to upgrade.' });
 
   const sku = typeof req.body?.sku === 'string' ? req.body.sku : 'monthly';
-  if (!CHECKOUT_SKUS.includes(sku)) {
+  if (!CHECKOUT_SKUS.includes(sku) || (sku === 'week_pass' && !weekPassEnabled())) {
     return res.status(400).json({ error: 'Unknown plan.' });
   }
   // The winback coupon only applies to the monthly plan. When a returning
@@ -289,10 +298,11 @@ export default async function handler(req, res) {
   let stripe;
   let unpersistedCustomerId = null;
   try {
-    if (isOneTimeSku(sku) && !(await examPassLengthDeployed(admin, examPassDays()))) {
+    if (isOneTimeSku(sku) && !(await examPassLengthDeployed(admin, passDaysForSku(sku)))) {
       await recordOperation('catalog');
       console.error('checkout EXAM PASS LENGTH NOT DEPLOYED:', {
-        advertisedDays: examPassDays(),
+        sku,
+        advertisedDays: passDaysForSku(sku),
         fix: 'run scripts/apply-exam-pass-length.mjs or unset NEXT_PUBLIC_EXAM_PASS_DAYS',
       });
       return res.status(503).json({
@@ -381,7 +391,7 @@ export default async function handler(req, res) {
       ppp: isPppCountry(country) ? '1' : '0',
       // The pass length this checkout advertised; the webhook grants exactly
       // this, so a later length change never alters what was bought.
-      ...(isOneTimeSku(sku) ? { pass_days: String(examPassDays()) } : {}),
+      ...(isOneTimeSku(sku) ? { pass_days: String(passDaysForSku(sku)) } : {}),
       ...(gaCid ? { ga_cid: gaCid } : {}),
       ...checkoutAttribution(req.body),
       // Set only by pages/api/billing/resume.js (a request property, never the

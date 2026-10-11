@@ -43,6 +43,8 @@ const currentCatalogue = () => [
   priceFor('premium_annual_ppp'),
   priceFor('premium_exam_pass'),
   priceFor('premium_exam_pass_ppp', { id: 'price_pass_ppp_old', unit_amount: 699 }),
+  priceFor('premium_week_pass'),
+  priceFor('premium_week_pass_ppp'),
 ];
 
 function fakeStripe() {
@@ -77,6 +79,8 @@ describe('desired catalogue', () => {
       premium_annual_ppp: Math.round(PLANS.annual.ppp.price * 100),
       premium_exam_pass: Math.round(PLANS.exam_pass.global.price * 100),
       premium_exam_pass_ppp: Math.round(PLANS.exam_pass.ppp.price * 100),
+      premium_week_pass: Math.round(PLANS.week_pass.global.price * 100),
+      premium_week_pass_ppp: Math.round(PLANS.week_pass.ppp.price * 100),
     };
     expect(
       Object.fromEntries(DESIRED_PRICES.map((spec) => [spec.lookupKey, spec.unitAmount]))
@@ -87,6 +91,8 @@ describe('desired catalogue', () => {
       premium_annual_ppp: 1999,
       premium_exam_pass: 1499,
       premium_exam_pass_ppp: 599,
+      premium_week_pass: 499,
+      premium_week_pass_ppp: 199,
     });
   });
 
@@ -312,5 +318,19 @@ describe('applyCatalogPlan', () => {
     const lines = log.mock.calls.map(([line]) => line);
     expect(lines).toContain('DRY RUN would create price premium_annual $49.99');
     expect(lines).toContain('DRY RUN would archive superseded price price_annual_old');
+  });
+});
+
+describe('week pass catalogue', () => {
+  it('creates both missing Week Pass prices as one-time prices and touches nothing else', () => {
+    const prices = currentCatalogue().filter((price) => !price.lookup_key.startsWith('premium_week_pass'))
+      .map((price) => priceFor(price.lookup_key));
+    const plan = planCatalogChanges({ product: { id: 'prod_Uu1zOteWhf7k0G', name: 'IELTS Bank Pro' }, prices });
+    const changes = plan.prices.filter((item) => item.action !== 'none');
+    expect(changes.map((item) => [item.spec.lookupKey, item.action])).toEqual([
+      ['premium_week_pass', 'create'],
+      ['premium_week_pass_ppp', 'create'],
+    ]);
+    expect(changes.every((item) => !item.spec.interval)).toBe(true);
   });
 });

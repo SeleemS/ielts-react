@@ -76,6 +76,16 @@ export const DESIRED_PRICES = [
     unitAmount: 599,
     nickname: 'Pro Exam Pass — 30 days (PPP)',
   },
+  {
+    lookupKey: 'premium_week_pass',
+    unitAmount: 499,
+    nickname: 'Pro Week Pass — 7 days (global)',
+  },
+  {
+    lookupKey: 'premium_week_pass_ppp',
+    unitAmount: 199,
+    nickname: 'Pro Week Pass — 7 days (PPP)',
+  },
 ];
 
 // Retired from sale but still billing existing subscribers. This script must

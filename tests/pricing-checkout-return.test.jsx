@@ -523,7 +523,7 @@ describe('pricing authentication handoff', () => {
 
     await renderPage();
 
-    expect(container.textContent).toContain('Your Exam Pass ends on');
+    expect(container.textContent).toContain('Your pass ends on');
     const passButton = container.querySelector('button[aria-label="Choose Exam Pass plan"]');
     expect(passButton.disabled).toBe(true);
     expect(passButton.textContent).toContain('Exam Pass active');

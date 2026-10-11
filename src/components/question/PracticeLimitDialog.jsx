@@ -5,7 +5,7 @@ import AccessibleModal from '../AccessibleModal';
 import { Button } from '../../../components/ui/button';
 import { buildUpgradeHref } from '../../../lib/upgradeContext';
 import { FREE_PRACTICE_TESTS } from '../../../lib/practiceAllowance';
-import { EXAM_PASS_DAYS, money, planPricing } from '../../lib/saleConfig';
+import { EXAM_PASS_DAYS, WEEK_PASS_DAYS, WEEK_PASS_ENABLED, money, planPricing } from '../../lib/saleConfig';
 import { useVisitorMarket } from '../../lib/useVisitorMarket';
 import { track } from '../../lib/analytics';
 
@@ -30,6 +30,7 @@ export default function PracticeLimitDialog({ open, onClose, skill, slug, used }
 
   const pass = planPricing('exam_pass', ppp);
   const monthly = planPricing('monthly', ppp);
+  const week = WEEK_PASS_ENABLED ? planPricing('week_pass', ppp) : null;
   const href = buildUpgradeHref({ upgrade: 'practice', stage: 'saved', return_to: returnTo });
 
   return (
@@ -63,6 +64,17 @@ export default function PracticeLimitDialog({ open, onClose, skill, slug, used }
       <p className="mt-3 text-center text-xs text-muted-foreground">
         One payment, never renews{monthly ? ` · or ${money(monthly.price)}/month, cancel anytime` : ''} · 14-day money-back guarantee
       </p>
+      {week ? (
+        <p className="mt-3 text-center text-sm">
+          <NextLink
+            href={`${href}#week-pass`}
+            className="font-semibold text-foreground underline"
+            onClick={() => track('paywall_upgrade_click', { source: 'practice_limit', skill, slug, sku: 'week_pass' })}
+          >
+            Just this week? Try {WEEK_PASS_DAYS} days for {money(week.price)}
+          </NextLink>
+        </p>
+      ) : null}
       <p className="mt-4 text-center text-xs text-muted-foreground">
         Questions and answer keys stay free to read.{' '}
         <button type="button" onClick={onClose} className="font-semibold text-foreground underline">

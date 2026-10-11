@@ -194,7 +194,7 @@ describe('saleConfig planPricing — regional (PPP)', () => {
 
 describe('saleConfig card layout', () => {
   it.each([false, true])('features the first-position Exam Pass without changing regional prices (PPP=%s)', (ppp) => {
-    expect(Object.keys(PLANS)).toEqual(['monthly', 'annual', 'exam_pass']);
+    expect(Object.keys(PLANS)).toEqual(['monthly', 'annual', 'exam_pass', 'week_pass']);
     expect(planOrder(ppp)).toEqual(['exam_pass', 'monthly', 'annual']);
     expect(highlightedSku(ppp)).toBe('exam_pass');
     expect(planOrder(ppp)[0]).toBe(highlightedSku(ppp));

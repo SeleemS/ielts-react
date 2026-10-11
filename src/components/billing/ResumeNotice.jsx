@@ -10,7 +10,7 @@ export const RESUME_NOTICES = {
   plan_changed: 'The plan in that checkout link is no longer on sale. Here are today’s plans — no charge was made.',
   offer_ended: 'The offer in that checkout link has ended, so we didn’t reopen it at the old price. Today’s prices are below — no charge was made.',
   already_premium: 'Good news — you already have Pro, so there’s nothing left to pay. We retired your old checkout link so you can’t be charged twice.',
-  already_exam_pass: 'Your Exam Pass is still active, so we didn’t open a second one. You can switch to a subscription from the pricing page whenever you like.',
+  already_exam_pass: 'Your pass is still active, so we didn’t open a second one. You can switch to a subscription from the pricing page whenever you like.',
 };
 
 export function resumeNoticeText(code) {

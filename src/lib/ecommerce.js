@@ -29,6 +29,7 @@ const ITEM_IDS = {
   monthly: 'pro_monthly',
   annual: 'pro_annual',
   exam_pass: 'pro_exam_pass',
+  week_pass: 'pro_week_pass',
 };
 
 // GA4 item for one plan in one region. `price` is what the visitor actually

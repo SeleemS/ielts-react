@@ -60,6 +60,8 @@ import {
   highlightedSku,
   planPricing,
   money,
+  WEEK_PASS_DAYS,
+  WEEK_PASS_ENABLED,
 } from '../src/lib/saleConfig';
 
 const PAGE_TITLE = PRICING_SEO.title;
@@ -1026,7 +1028,7 @@ export default function PricingPage() {
             {examPassActive ? (
               <div className="mx-auto mb-8 max-w-2xl rounded-xl border bg-card p-5 text-center shadow-sm">
                 <p className="text-base font-semibold text-foreground">
-                  Your Exam Pass ends on {new Date(expiresAt).toLocaleDateString()}
+                  Your pass ends on {new Date(expiresAt).toLocaleDateString()}
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   It never renews. Subscribe below whenever you want Pro to continue past that
@@ -1159,6 +1161,35 @@ export default function PricingPage() {
                 ))}
               </ul>
             </div>
+
+            {/* Week Pass: a low-commitment way in, kept out of the three-card
+                grid so the Exam Pass stays the lead offer. Sold only while
+                NEXT_PUBLIC_WEEK_PASS=1 (checkout enforces the same flag). */}
+            {WEEK_PASS_ENABLED ? (
+              <div className="mx-auto mt-8 max-w-5xl rounded-2xl border border-accent/30 bg-accent/[0.04] p-5" data-testid="week-pass-offer" id="week-pass">
+                <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                  <div>
+                    <p className="text-sm font-bold text-foreground">
+                      Not sure yet? Week Pass — {money(planPricing('week_pass', regionalPricing).price)} once
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {WEEK_PASS_DAYS} days of Pro: unlimited marked practice, Writing and Speaking
+                      scoring and timed mocks. Live AI examiner not included. Never renews.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="shrink-0"
+                    onClick={() => startCheckout('week_pass')}
+                    disabled={busySku !== null || planLoading || Boolean(planError) || examPassActive}
+                  >
+                    {busySku === 'week_pass' ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                    {examPassActive ? 'Pass active' : `Try ${WEEK_PASS_DAYS} days`}
+                  </Button>
+                </div>
+              </div>
+            ) : null}
 
             {/* Free tier stays a single compact strip so the paid grid is
                 exactly three cards. The full Free vs Pro table is below. */}

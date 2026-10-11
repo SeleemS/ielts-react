@@ -1,4 +1,4 @@
--- Run inside a transaction after applying 20260923130000_exam_pass_length.sql;
+-- Run inside a transaction after applying 20261011120000_pass_lengths_week_pass.sql;
 -- caller MUST ROLLBACK. Only a synthetic QA auth/user record is created and all
 -- data is rolled back (scripts/apply-exam-pass-length.mjs does exactly that).
 do $$
@@ -58,7 +58,7 @@ begin
     raise exception 'replay changed the recorded window: %', v_result;
   end if;
 
-  if public.billing_exam_pass_days_supported() <> array[30, 45] then
+  if public.billing_exam_pass_days_supported() <> array[7, 30, 45] then
     raise exception 'deployment probe mismatch';
   end if;
 end;

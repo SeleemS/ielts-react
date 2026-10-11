@@ -12,6 +12,8 @@
 //     premium_annual_ppp     -> $19.99   /year
 //     premium_exam_pass      -> $14.99   one-time (EXAM_PASS_DAYS days)
 //     premium_exam_pass_ppp  -> $5.99    one-time (EXAM_PASS_DAYS days)
+//     premium_week_pass      -> $4.99    one-time (7 days, no live examiner)
+//     premium_week_pass_ppp  -> $1.99    one-time (7 days, no live examiner)
 //   pages/api/billing/checkout.js re-verifies every one of those against the
 //   live Stripe Price before a Checkout Session is created (PRICE MISMATCH).
 //
@@ -51,13 +53,26 @@ export function examPassDays() {
 export const EXAM_PASS_DAYS = examPassDays();
 
 // The pass length a specific checkout promised (stamped at session creation),
-// or null for sessions created before the stamp existed.
+// or null for sessions created before the stamp existed. A Week Pass checkout
+// may only ever promise WEEK_PASS_DAYS.
 export function examPassDaysFromMetadata(metadata) {
   const raw = metadata?.pass_days;
   if (raw == null || raw === '') return null;
   const days = Number(raw);
+  if (metadata?.sku === 'week_pass') return days === WEEK_PASS_DAYS ? days : null;
   return SUPPORTED_EXAM_PASS_DAYS.includes(days) ? days : null;
 }
+
+// Week Pass: a cheap 7-day, one-time trial of Pro WITHOUT live-examiner
+// minutes. It is sold only when NEXT_PUBLIC_WEEK_PASS=1, which must be set
+// only after (a) supabase/migrations/20261011120000_pass_lengths_week_pass.sql
+// is applied and (b) the premium_week_pass(_ppp) Stripe prices exist. Checkout
+// independently refuses to sell it until the database can grant 7 days.
+export const WEEK_PASS_DAYS = 7;
+export function weekPassEnabled() {
+  return String(process.env.NEXT_PUBLIC_WEEK_PASS || '').trim() === '1';
+}
+export const WEEK_PASS_ENABLED = weekPassEnabled();
 
 // ---------------------------------------------------------------------------
 // Promo — a REAL Stripe coupon, or nothing at all.
@@ -156,6 +171,18 @@ export const PLANS = {
     global: { price: 14.99 },
     ppp: { price: 5.99 },
   },
+  // Not in planOrder(): pricing renders it as a secondary "try it" option.
+  week_pass: {
+    sku: 'week_pass',
+    name: 'Week Pass',
+    type: 'one_time',
+    cadence: 'one-time',
+    days: WEEK_PASS_DAYS,
+    months: 0,
+    blurb: 'Seven days of Pro to try it before test day. Never renews.',
+    global: { price: 4.99 },
+    ppp: { price: 1.99 },
+  },
 };
 
 // Lead with the same fixed one-time Exam Pass in every region. Regional
@@ -224,7 +251,8 @@ export function planPricing(planKey, ppp = false, now = Date.now()) {
 export function cheapestMonthlyRate(ppp = false, now = Date.now()) {
   return Object.keys(PLANS).reduce((min, key) => {
     const p = planPricing(key, ppp, now);
-    if (!p) return min;
+    // The Week Pass has no monthly rate; it never sets the "from $X/mo" line.
+    if (!p || !p.months) return min;
     const rate = p.perMonth == null ? p.price / p.months : p.perMonth;
     return min == null || rate < min ? rate : min;
   }, null);

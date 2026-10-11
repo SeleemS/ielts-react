@@ -30,6 +30,7 @@ describe('exam pass length migration', () => {
   });
 
   it('exposes exactly the lengths the app may advertise', () => {
+    // Superseded by 20261011120000 (adds the 7-day Week Pass); see week-pass-migration.test.js.
     expect(sql).toContain(`select array[${SUPPORTED_EXAM_PASS_DAYS.join(', ')}]`);
   });
 });
