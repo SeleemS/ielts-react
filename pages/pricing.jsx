@@ -1,6 +1,7 @@
 import { FUNNEL_VERSION } from '../lib/monetizationExperiment';
 import { analyticsConsentGranted } from '../src/lib/consent';
 import { normalizeUpgradeContext } from '../lib/upgradeContext';
+import { practiceAllowanceCopy } from '../lib/practiceAllowance';
 import * as React from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -77,13 +78,16 @@ const FREE_COPY = freeScoreCopy();
 // included" grid. The single Pro tier is sold three ways (Monthly, Annual, and
 // the one-time Exam Pass); prices and the promo live in src/lib/saleConfig.js
 // (the single source of truth).
+const PRACTICE_COPY = practiceAllowanceCopy();
+
 const FREE_INCLUDES = [
-  'Full Reading & Listening question bank',
-  'Instant marking with answer keys',
+  'Every Reading & Listening question and answer key',
+  PRACTICE_COPY.freeMarking,
   FREE_COPY.allowanceLine,
 ];
 
 const PRO_INCLUDES = [
+  ...(PRACTICE_COPY.proLine ? [PRACTICE_COPY.proLine] : []),
   'Full AI Writing reports on all four criteria',
   'AI Speaking scoring from your recordings',
   'Live AI examiner on gpt-live-1 — full-duplex, it listens while it speaks',
@@ -93,6 +97,7 @@ const PRO_INCLUDES = [
 ];
 
 const PERKS = [
+  ...(PRACTICE_COPY.proLine ? [`${PRACTICE_COPY.proLine} with band estimates`] : []),
   'Full AI Writing reports with all four criteria and corrected examples',
   'AI Speaking scores from your recordings',
   `30–60 minutes with the live gpt-live-1 examiner on your ${EXAM_PASS_DAYS}-day pass; monthly allowances on subscriptions`,
@@ -103,7 +108,8 @@ const PERKS = [
 ];
 
 const COMPARISON = [
-  ['Reading and Listening question bank', true, true],
+  ['Every Reading and Listening question and answer key', true, true],
+  ...(PRACTICE_COPY.proLine ? [[PRACTICE_COPY.proLine, false, true]] : []),
   [FREE_COPY.allowanceLine, true, true],
   ['Full Writing report and continued scoring', false, true],
   ['AI Speaking scoring and the live gpt-live-1 examiner', false, true],
@@ -268,6 +274,13 @@ function contextualCopy(upgrade, saved, currentReport) {
       body: 'Unlock timed full mocks with band scoring below.',
     };
   }
+  if (upgrade === 'practice') {
+    return {
+      icon: '📘',
+      title: 'Your answers are saved and waiting',
+      body: 'Return to your passage after checkout to see your score, then keep practising with unlimited marked Reading and Listening tests.',
+    };
+  }
   return null;
 }
 
@@ -290,7 +303,9 @@ function CanceledRecovery({ upgrade, saved, returnTo, passFirst = false, onSeePl
         ? 'Your recording is still saved — nothing was lost.'
         : upgrade === 'mock'
           ? 'Your mock is still ready whenever you are.'
-          : '';
+          : upgrade === 'practice'
+            ? 'Your answers are still saved on that passage.'
+            : '';
   return (
     <div className="mx-auto mt-6 max-w-xl rounded-xl border bg-card p-5 text-center shadow-sm">
       <p className="text-sm font-semibold text-foreground">
@@ -378,7 +393,9 @@ function ActivationChecklist({ upgrade, saved, returnTo }) {
         ? { href: '/speakingquestion', label: saved ? 'Score the recording you saved' : 'Practise Speaking' }
         : upgrade === 'mock'
           ? { href: '/mock-test', label: 'Sit the mock you opened' }
-          : { href: '/ielts-writing-checker', label: 'Score your first essay' };
+          : upgrade === 'practice'
+            ? { href: '/readingquestion', label: 'Submit your saved answers' }
+            : { href: '/ielts-writing-checker', label: 'Score your first essay' };
   return (
     <div className="mx-auto mt-6 max-w-2xl rounded-xl border border-emerald-300 bg-emerald-50 p-5 text-emerald-950">
       <div className="flex items-start gap-3">

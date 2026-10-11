@@ -10,6 +10,9 @@ import { track } from '../../lib/analytics';
 import NewsletterSignup from '../NewsletterSignup';
 import SignInDialog from '../auth/SignInDialog';
 import { canUseFreeSubmit, recordFreeSubmit } from '../../lib/freeAttempts';
+import { usePracticeAllowance } from '../../lib/usePracticeAllowance';
+import { practiceAllowanceCopy } from '../../../lib/practiceAllowance';
+import PracticeLimitDialog from './PracticeLimitDialog';
 import {
   resolvePassageId,
   saveAttemptToSupabase,
@@ -321,6 +324,7 @@ export default function QuestionEngine({
   const [hydrated, setHydrated] = useState(false);
   const [timerAnnouncement, setTimerAnnouncement] = useState('');
   const [signInOpen, setSignInOpen] = useState(false);
+  const [limitOpen, setLimitOpen] = useState(false);
   // Set when a signed-out visitor hits the free-question gate — the pending
   // submission resumes once the sign-up dialog closes with a session present.
   const pendingSubmitRef = useRef(false);
@@ -329,6 +333,10 @@ export default function QuestionEngine({
   const startedAtRef = useRef(null);
   const openedRef = useRef(null);
   const { user } = useAuth();
+  // Free accounts: a fixed number of marked Reading/Listening passages (mocks
+  // and review sessions have their own gates). Fails open on lookup errors.
+  const allowance = usePracticeAllowance({ skill, storageKey, enabled: !mockTestId && !reviewMode });
+  const refreshAllowance = allowance.refresh;
   const inProgressKey = useMemo(
     () => (storageKey ? `ielts-inprogress:${skill}:${reviewMode ? 'review:' : ''}${storageKey}` : null),
     [skill, storageKey, reviewMode]
@@ -427,6 +435,13 @@ export default function QuestionEngine({
       track('free_limit_gate', { skill, slug: storageKey });
       return;
     }
+    if (user?.id && allowance.limited && !allowance.canSubmit) {
+      setTimed(false);
+      setDeadline(null);
+      setLimitOpen(true);
+      track('premium_gate', { skill, slug: storageKey, source: 'practice_limit', used: allowance.used, limit: allowance.limit });
+      return;
+    }
     const result = gradeAll(groups, answers);
     setResults(result);
     setSubmitted(true);
@@ -442,9 +457,9 @@ export default function QuestionEngine({
     }
     if (user?.id) {
       // Cross-device mirror for signed-in users (fire-and-forget, fail-soft).
-      persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode).catch(
-        () => {}
-      );
+      persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode)
+        .catch(() => {})
+        .then(() => refreshAllowance());
     } else if (!mockTestId) {
       // Signed-out submission — this consumes the skill's free slot.
       recordFreeSubmit(skill, storageKey);
@@ -465,7 +480,7 @@ export default function QuestionEngine({
       });
       window.setTimeout(() => resultsRef.current?.focus(), 0);
     }
-  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId, reviewMode]);
+  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId, reviewMode, allowance.limited, allowance.canSubmit, allowance.used, allowance.limit, refreshAllowance]);
 
   // Two-step submit: with unanswered questions, the first click arms an
   // inline confirmation instead of submitting. Any answer change disarms it.
@@ -656,6 +671,13 @@ export default function QuestionEngine({
             {confirmArmed
               ? `${unansweredCount} question${unansweredCount === 1 ? '' : 's'} unanswered — submit anyway?`
               : `${answeredCount} / ${totalQuestions} answered`}
+            {!confirmArmed && allowance.limited && !allowance.isRetry ? (
+              <span className="block text-xs" data-testid="practice-allowance">
+                {allowance.remaining > 0
+                  ? `Free plan: ${allowance.remaining} of ${allowance.limit} marked practice tests left`
+                  : 'Free practice tests used — Pro unlocks your score'}
+              </span>
+            ) : null}
           </span>
           <Button
             variant={confirmArmed ? 'default' : 'accent'}
@@ -681,8 +703,15 @@ export default function QuestionEngine({
         }}
         redirectOnFinish={false}
         title={`Sign up free to submit this ${skill} question`}
-        description="Your answers are safe — create a free account to see your score and track your progress. Reading and listening practice stays free."
+        description={practiceAllowanceCopy().signUpDescription}
         trigger={`${skill}_free_limit`}
+      />
+      <PracticeLimitDialog
+        open={limitOpen}
+        onClose={() => setLimitOpen(false)}
+        skill={skill}
+        slug={storageKey}
+        used={allowance.used}
       />
     </div>
   );

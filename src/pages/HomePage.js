@@ -3,6 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { freeScoreCopy } from '../../lib/freeScorePeriod';
+import { practiceAllowanceCopy } from '../../lib/practiceAllowance';
 import {
   ArrowRight,
   BookOpen,
@@ -381,7 +382,7 @@ const HomePage = ({ counts = {}, directory = [] }) => {
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-200 sm:text-lg">
                   Paste a Task 1 or Task 2 answer. An AI examiner marks it on the four
                   official criteria in under a minute and shows the sentences holding your
-                  score back. Reading and Listening practice is free too.
+                  score back. Reading and Listening questions are free to try too.
                 </p>
               </div>
 
@@ -688,10 +689,10 @@ const HomePage = ({ counts = {}, directory = [] }) => {
               <div className="grid flex-1 gap-4 sm:grid-cols-2">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                    Free forever
+                    Free account
                   </p>
                   <p className="mt-1.5 text-sm text-foreground">
-                    The full Reading &amp; Listening bank with instant marking,{' '}
+                    {practiceAllowanceCopy().freeTier},{' '}
                     {freeScoreCopy().homeFreeTier}
                   </p>
                 </div>
