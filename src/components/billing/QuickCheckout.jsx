@@ -9,16 +9,20 @@ import { track } from '../../lib/analytics';
 
 // The plans a gate offers, each one click from Stripe. The Week Pass leads:
 // it was the most-picked plan in Oct 2026 and is the smallest commitment.
-export function quickCheckoutOptions(ppp = false, weekPassEnabled = WEEK_PASS_ENABLED) {
+export function quickCheckoutOptions(ppp = false, weekPassEnabled = WEEK_PASS_ENABLED, weekPercentOff = 0) {
   const week = weekPassEnabled ? planPricing('week_pass', ppp) : null;
+  const weekPrice = week && weekPercentOff > 0
+    ? Math.round(week.price * (100 - weekPercentOff)) / 100
+    : week?.price;
   const pass = planPricing('exam_pass', ppp);
   const monthly = planPricing('monthly', ppp);
   return [
     week && {
       sku: 'week_pass',
       label: `${WEEK_PASS_DAYS} days of Pro`,
-      price: money(week.price),
-      note: 'One payment · no auto-renew',
+      price: money(weekPrice),
+      was: weekPrice !== week.price ? money(week.price) : null,
+      note: weekPrice !== week.price ? `${weekPercentOff}% off · one payment · no auto-renew` : 'One payment · no auto-renew',
     },
     pass && {
       sku: 'exam_pass',
@@ -37,13 +41,13 @@ export function quickCheckoutOptions(ppp = false, weekPassEnabled = WEEK_PASS_EN
 
 // `onSelect`/`busySku` let the pricing page drive its own checkout flow
 // (sign-in resume, winback offers) through the same buttons.
-export default function QuickCheckout({ upgrade, stage = 'saved', returnTo = '', source, className, onSelect, busySku: busyOverride, compareHref }) {
+export default function QuickCheckout({ upgrade, stage = 'saved', returnTo = '', source, className, onSelect, busySku: busyOverride, compareHref, weekPercentOff = 0 }) {
   const { ppp } = useVisitorMarket();
   const direct = useDirectCheckout({ upgrade, stage, returnTo, ppp, source });
   const start = onSelect || direct.start;
   const busySku = onSelect ? busyOverride : direct.busySku;
   const { error, pricingHref } = direct;
-  const options = quickCheckoutOptions(ppp);
+  const options = quickCheckoutOptions(ppp, WEEK_PASS_ENABLED, weekPercentOff);
   const viewed = React.useRef(false);
   React.useEffect(() => {
     if (viewed.current) return;
@@ -78,6 +82,9 @@ export default function QuickCheckout({ upgrade, stage = 'saved', returnTo = '',
             </span>
             <span className="inline-flex shrink-0 items-center gap-1.5 text-base font-bold">
               {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+              {!busy && option.was ? (
+                <span className="text-xs font-medium line-through opacity-70">{option.was}</span>
+              ) : null}
               {busy ? 'Opening…' : option.price}
             </span>
           </button>

@@ -34,6 +34,7 @@ import {
 } from '../../../lib/billing';
 import { BILLING_USER_COLUMNS, checkoutEligibility } from '../../../lib/checkoutEligibility';
 import { sanitizeGaClientId } from '../../../lib/ga4mp';
+import { REPORT_OFFER, reportOfferEligible } from '../../../lib/reportOffer';
 import {
   LEGACY_EXAM_PASS_DAYS,
   WEEK_PASS_DAYS,
@@ -222,6 +223,11 @@ export default async function handler(req, res) {
   // rejecting the purchase.
   const offer =
     req.body?.offer === 'winback' && sku === 'monthly' ? 'winback' : null;
+  // The 48-hour first-report offer (lib/reportOffer.js) only discounts the
+  // Week Pass; any other plan, or an expired/ineligible learner, proceeds at
+  // list price.
+  const reportOfferRequested =
+    req.body?.offer === REPORT_OFFER.code && sku === REPORT_OFFER.sku;
 
   const admin = getAdmin();
   let userRow;
@@ -344,7 +350,19 @@ export default async function handler(req, res) {
     // The advertised promo, if any, must be a live Stripe coupon taking off
     // exactly the percentage saleConfig renders. The win-back coupon takes
     // precedence: Stripe accepts only one coupon per session.
-    const promoApplies = !winBackEligible && promoAppliesTo(sku);
+    let reportOfferCouponId = null;
+    if (reportOfferRequested && !winBackEligible && process.env.STRIPE_REPORT_OFFER_COUPON_ID) {
+      operationStage = 'report_offer';
+      const [{ data: billingRow }, { data: firstReport }] = await Promise.all([
+        admin.from('users').select('plan_sku, premium_since').eq('id', userRow.id).maybeSingle(),
+        admin.from('writing_reports').select('created_at').eq('user_id', userRow.id)
+          .order('created_at', { ascending: true }).limit(1).maybeSingle(),
+      ]);
+      if (reportOfferEligible({ firstReportAt: firstReport?.created_at, userRow: billingRow })) {
+        reportOfferCouponId = process.env.STRIPE_REPORT_OFFER_COUPON_ID;
+      }
+    }
+    const promoApplies = !winBackEligible && !reportOfferCouponId && promoAppliesTo(sku);
     let promoCouponId = null;
     if (promoApplies) {
       operationStage = 'coupon';
@@ -399,6 +417,7 @@ export default async function handler(req, res) {
       // Set only by pages/api/billing/resume.js (a request property, never the
       // body), so the webhook can attribute a purchase to the recovery email.
       ...(resumedFrom ? { resumed_from: resumedFrom } : {}),
+      ...(reportOfferCouponId ? { offer: REPORT_OFFER.code } : {}),
     };
     // Terms-of-service consent recorded by Stripe on the Checkout Session
     // (session.consent.terms_of_service = 'accepted' + a timestamp). Stripe
@@ -426,7 +445,7 @@ export default async function handler(req, res) {
     const oneTime = isOneTimeSku(sku);
     const couponId = winBackEligible
       ? process.env.STRIPE_WINBACK_COUPON_ID
-      : promoCouponId;
+      : reportOfferCouponId || promoCouponId;
     // Promotion codes and an attached coupon are mutually exclusive in
     // Stripe; recovered sessions follow the same rule as the original.
     const allowPromotionCodes = !couponId;

@@ -6,6 +6,7 @@ import { sendLifecycleEmail } from '../../../lib/lifecycleEmail';
 import { emailPrefFor, lifecycleEmailAllowed } from '../../../lib/emailPrefs';
 import { isPremiumRow, fetchPremiumStatus } from '../../../lib/premium';
 import { RECOVERY_EMAIL_COOLDOWN_DAYS } from '../../../lib/checkoutRecovery';
+import { reportOfferEndsAt } from '../../../lib/reportOffer';
 
 const AUDIENCE_PAGE_SIZE = 1000;
 const QUEUE_BATCH_SIZE = 1000;
@@ -377,6 +378,81 @@ export async function queuePaywallFollowup(admin, now = new Date()) {
   return insertQueueRows(admin, rows);
 }
 
+// 1-3h after a learner's FIRST free Writing report: one email with the
+// 48-hour Week Pass offer (lib/reportOffer.js). Never-paid learners only, once
+// per learner ever, and not if they already started a checkout since the
+// report (checkout_abandoned covers them).
+export async function queueFreeReportOffer(admin, now = new Date()) {
+  if (!process.env.STRIPE_REPORT_OFFER_COUPON_ID) return 0;
+  const { data: recent, error } = await admin
+    .from('writing_reports')
+    .select('attempt_id, user_id, created_at, result')
+    .is('unlocked_at', null)
+    .gte('created_at', new Date(now.getTime() - 3 * 3600000).toISOString())
+    .lt('created_at', new Date(now.getTime() - 3600000).toISOString())
+    .order('created_at', { ascending: true })
+    .limit(1000);
+  if (error) throw error;
+  const firstByUser = new Map();
+  for (const report of recent || []) {
+    if (!firstByUser.has(report.user_id)) firstByUser.set(report.user_id, report);
+  }
+  if (!firstByUser.size) return 0;
+  const userIds = [...firstByUser.keys()];
+
+  const { data: earlier, error: earlierError } = await admin
+    .from('writing_reports')
+    .select('user_id, created_at')
+    .in('user_id', userIds)
+    .lt('created_at', new Date(now.getTime() - 3 * 3600000).toISOString())
+    .limit(5000);
+  if (earlierError) throw earlierError;
+  const hadEarlier = new Set((earlier || []).map((row) => row.user_id));
+
+  const { data: users, error: usersError } = await admin
+    .from('users')
+    .select('id, email, plan_sku, premium_since')
+    .in('id', userIds)
+    .not('email', 'is', null);
+  if (usersError) throw usersError;
+  const neverPaid = new Map(
+    (users || []).filter((user) => !user.plan_sku && !user.premium_since).map((user) => [user.id, user])
+  );
+
+  const { data: checkouts, error: checkoutError } = await admin
+    .from('activity_events')
+    .select('user_id, created_at')
+    .eq('event', 'checkout_start')
+    .in('user_id', userIds)
+    .gte('created_at', new Date(now.getTime() - 3 * 3600000).toISOString());
+  if (checkoutError) throw checkoutError;
+  const startedCheckout = new Set(
+    (checkouts || [])
+      .filter((row) => Date.parse(row.created_at) >= Date.parse(firstByUser.get(row.user_id)?.created_at))
+      .map((row) => row.user_id)
+  );
+
+  const rows = [];
+  for (const [userId, report] of firstByUser) {
+    const user = neverPaid.get(userId);
+    if (!user || hadEarlier.has(userId) || startedCheckout.has(userId)) continue;
+    const band = Number(report.result?.overallBand);
+    rows.push({
+      user_id: userId,
+      recipient_email: user.email.toLowerCase(),
+      email_type: 'free_report_offer',
+      idempotency_key: `free_report_offer:${userId}`,
+      payload: {
+        report_id: report.attempt_id,
+        band: Number.isFinite(band) ? band : null,
+        offer_expires_at: reportOfferEndsAt(report.created_at),
+      },
+    });
+  }
+  if (!rows.length) return 0;
+  return insertQueueRows(admin, rows);
+}
+
 // Streak about to break: practiced yesterday (UTC), nothing today, streak >= 3.
 // Evaluated once daily at 17:00 UTC (evening for the South/Southeast Asia
 // audience). Marketing — suppressed for non-subscribers.
@@ -499,7 +575,7 @@ export async function recipientAllowsMarketing(admin, email) {
 // holders; newsletter-only recipients resolve by email. A missing row means
 // "never answered", which lib/emailPrefs.js resolves per type.
 async function recipientEmailProfile(admin, row) {
-  const base = admin.from('users').select('prefs, created_at');
+  const base = admin.from('users').select('prefs, created_at, signup_country');
   const scoped = row.user_id
     ? base.eq('id', row.user_id)
     : base.eq('email', String(row.recipient_email || '').trim().toLowerCase());
@@ -508,6 +584,9 @@ async function recipientEmailProfile(admin, row) {
   return {
     prefs: data?.prefs && typeof data.prefs === 'object' ? data.prefs : null,
     accountCreatedAt: data?.created_at || null,
+    // Consent region: the one recorded with the email-consent answer, else
+    // the edge-geolocated signup country. Unknown fails closed.
+    region: data?.prefs?.email_consent?.region || data?.signup_country || null,
   };
 }
 
@@ -522,18 +601,24 @@ export async function recipientEmailPrefs(admin, row) {
 export async function lifecycleGateFor(admin, row) {
   const pref = emailPrefFor(row.email_type);
   if (!pref) return lifecycleEmailAllowed(row.email_type, {});
-  const { prefs, accountCreatedAt } = await recipientEmailProfile(admin, row);
-  const decision = lifecycleEmailAllowed(row.email_type, { prefs, accountCreatedAt });
+  const { prefs, accountCreatedAt, region } = await recipientEmailProfile(admin, row);
+  const decision = lifecycleEmailAllowed(row.email_type, { prefs, accountCreatedAt, region });
   if (decision.allowed || decision.reason !== 'recipient-not-subscribed') return decision;
   const newsletterSubscribed = await recipientAllowsMarketing(admin, row.recipient_email);
-  return lifecycleEmailAllowed(row.email_type, { prefs, newsletterSubscribed, accountCreatedAt });
+  return lifecycleEmailAllowed(row.email_type, { prefs, newsletterSubscribed, accountCreatedAt, region });
 }
 
 // A checkout follow-up is pointless once the learner has Pro by any route. An
 // unknown status sends: the email is informational, and its resume link
 // (/billing/resume) re-runs the checkout guards before opening a session.
 async function checkoutFollowupStillRelevant(admin, row) {
-  if (row.email_type !== 'checkout_abandoned' || !row.user_id) return true;
+  if (row.email_type === 'free_report_offer') {
+    const ends = Date.parse(row.payload?.offer_expires_at || '');
+    if (!Number.isFinite(ends) || ends <= Date.now()) return false;
+  } else if (row.email_type !== 'checkout_abandoned') {
+    return true;
+  }
+  if (!row.user_id) return true;
   const status = await fetchPremiumStatus(admin, row.user_id);
   return !(status && !status.error && status.isPremium);
 }
@@ -660,6 +745,7 @@ export default async function handler(req, res) {
       paywallFollowupQueued,
       streakAtRiskQueued,
       day2Queued,
+      freeReportOfferQueued,
     ] = await Promise.all([
       queueWeeklyDigest(admin, req.query.weekly === '1'),
       queueWinBack(admin),
@@ -668,6 +754,7 @@ export default async function handler(req, res) {
       queuePaywallFollowup(admin),
       queueStreakAtRisk(admin, new Date(), req.query.streak === '1'),
       queueDay2Plan(admin),
+      queueFreeReportOffer(admin),
     ]);
     const delivery = await deliverDue(admin);
     return res.status(200).json({
@@ -678,6 +765,7 @@ export default async function handler(req, res) {
       paywallFollowupQueued,
       streakAtRiskQueued,
       day2Queued,
+      freeReportOfferQueued,
       ...delivery,
     });
   } catch (error) {

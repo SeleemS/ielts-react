@@ -2,7 +2,7 @@
 // Route-level tests for the Stripe webhook (real signature verification over
 // the raw body) and the checkout route (auth / anonymous / PPP mapping).
 // Lives outside pages/ so Next.js never serves it as a route.
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Readable } from 'node:stream';
 import { createHmac } from 'node:crypto';
 import Stripe from 'stripe';
@@ -155,6 +155,8 @@ function priceForLookupKey(lookupKey) {
     premium_3month_ppp: { unit_amount: 899, interval: 'month', interval_count: 3 },
     premium_annual_ppp: { unit_amount: 1999, interval: 'year', interval_count: 1 },
     premium_exam_pass_ppp: { unit_amount: 599 },
+    premium_week_pass: { unit_amount: 499 },
+    premium_week_pass_ppp: { unit_amount: 199 },
   }[lookupKey] || { unit_amount: 7999, interval: 'year', interval_count: 1 };
   return {
     id: 'price_mock_1',
@@ -192,7 +194,7 @@ vi.mock('@supabase/supabase-js', () => ({
     },
     from: (table) => table === 'writing_reports' ? {
       select: () => {
-        const query = { eq: (key, value) => { mockState.reportFilters.push([key, value]); return query; }, maybeSingle: async () => ({ data: mockState.reportRow, error: mockState.reportError }) };
+        const query = { eq: (key, value) => { mockState.reportFilters.push([key, value]); return query; }, order: () => query, limit: () => query, maybeSingle: async () => ({ data: mockState.reportRow, error: mockState.reportError }) };
         return query;
       },
     } : ({
@@ -830,6 +832,46 @@ describe('POST /api/billing/checkout', () => {
     expect(res.statusCode).toBe(200);
     expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
     expect(mockState.stripeCalls.sessionCreate.allow_promotion_codes).toBe(true);
+  });
+
+  describe('48-hour first-report offer', () => {
+    beforeEach(() => {
+      process.env.STRIPE_REPORT_OFFER_COUPON_ID = 'IELTSBANK_REPORT48_WEEK40';
+      process.env.NEXT_PUBLIC_WEEK_PASS = '1';
+      mockState.authUser = { id: 'user-1' };
+      mockState.userRow = { id: 'user-1', email: 'a@b.com', is_anonymous: false, plan: 'free' };
+      mockState.passDaysProbe = { data: [7, 30, 45], error: null };
+    });
+    afterEach(() => {
+      delete process.env.STRIPE_REPORT_OFFER_COUPON_ID;
+      delete process.env.NEXT_PUBLIC_WEEK_PASS;
+    });
+
+    it('attaches the coupon to a Week Pass within 48h of the first free report', async () => {
+      mockState.reportRow = { created_at: new Date(Date.now() - 5 * 3600000).toISOString() };
+      const res = await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { sku: 'week_pass', offer: 'report48' } });
+      expect(res.statusCode).toBe(200);
+      expect(mockState.stripeCalls.sessionCreate.discounts).toEqual([{ coupon: 'IELTSBANK_REPORT48_WEEK40' }]);
+      expect(mockState.stripeCalls.sessionCreate.allow_promotion_codes).toBe(false);
+      expect(mockState.stripeCalls.sessionCreate.metadata.offer).toBe('report48');
+    });
+
+    it('charges list price once the 48 hours are over', async () => {
+      mockState.reportRow = { created_at: new Date(Date.now() - 49 * 3600000).toISOString() };
+      const res = await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { sku: 'week_pass', offer: 'report48' } });
+      expect(res.statusCode).toBe(200);
+      expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
+    });
+
+    it('never discounts other plans or learners who have paid before', async () => {
+      mockState.reportRow = { created_at: new Date(Date.now() - 3600000).toISOString() };
+      await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { sku: 'monthly', offer: 'report48' } });
+      expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
+      mockState.stripeCalls = {};
+      mockState.userRow = { ...mockState.userRow, plan_sku: 'monthly', premium_since: '2026-01-01T00:00:00Z' };
+      await callCheckout({ headers: { authorization: 'Bearer tok' }, body: { sku: 'week_pass', offer: 'report48' } });
+      expect(mockState.stripeCalls.sessionCreate.discounts).toBeUndefined();
+    });
   });
 
   it('selects the PPP price from request geo, never from the client body', async () => {

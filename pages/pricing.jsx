@@ -28,6 +28,7 @@ import { Badge } from '../components/ui/badge';
 import SignInDialog from '../src/components/auth/SignInDialog';
 import ResumeNotice from '../src/components/billing/ResumeNotice';
 import QuickCheckout from '../src/components/billing/QuickCheckout';
+import { REPORT_OFFER } from '../lib/reportOffer';
 import SampleReportPreview from '../src/components/SampleReportPreview';
 import { TIMELINES, dailyCost, recommendedSku, timelineByKey, timelineFromExamDays } from '../src/lib/planFit';
 import { FaqSection, faqJsonLdFor } from '../src/components/SectionLanding';
@@ -510,7 +511,14 @@ export default function PricingPage() {
   const sessionId = typeof router.query.session_id === 'string' ? router.query.session_id : '';
   const activationKey = `${user?.id || ''}:${sessionId}`;
   const currentActivation = activationOwner === activationKey ? activation : 'idle';
-  const offer = router.query.offer === 'winback' ? 'winback' : '';
+  const offer = router.query.offer === 'winback' || router.query.offer === REPORT_OFFER.code
+    ? router.query.offer
+    : '';
+  // Display-only deadline from the offer email; checkout re-checks eligibility.
+  const reportOfferEnds = offer === REPORT_OFFER.code && typeof router.query.offer_ends === 'string'
+    ? Date.parse(router.query.offer_ends)
+    : NaN;
+  const reportOfferLive = Number.isFinite(reportOfferEnds) && reportOfferEnds > Date.now();
   const pauseActive =
     Boolean(pauseUntil) && new Date(pauseUntil).getTime() > Date.now();
   const pausePending = planStatus === 'paused';
@@ -892,8 +900,16 @@ export default function PricingPage() {
               <span aria-hidden="true">{context.icon}</span> {context.title}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">{context.body}</p>
+            {offer === REPORT_OFFER.code ? (
+              <p className="mt-3 rounded-lg bg-accent/10 px-3 py-2 text-sm font-semibold text-foreground" data-testid="report-offer">
+                {reportOfferLive
+                  ? `Your 48-hour offer: ${REPORT_OFFER.percentOff}% off the Week Pass, applied at checkout until ${new Date(reportOfferEnds).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}.`
+                  : 'This 48-hour offer has ended — the plans below are at their regular prices.'}
+              </p>
+            ) : null}
             {upgrade && !isPremium && !checkoutStatus ? (
               <QuickCheckout
+                weekPercentOff={reportOfferLive ? REPORT_OFFER.percentOff : 0}
                 className="mx-auto mt-4 max-w-md text-left"
                 upgrade={upgrade}
                 stage={stage}
