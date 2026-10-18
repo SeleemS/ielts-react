@@ -9,9 +9,10 @@ import { BandHero, BandMeter } from './question/ScoreUI';
 //
 // It is fictional (never a learner's result, never a promised score) and it
 // mirrors what the API really returns: the free payload keeps the overall band,
-// all four criterion bands with feedback and ONE corrected sentence
-// (reduceForFree in pages/api/score/writing.js); Pro adds the examiner summary,
-// the improvement plan, every correction and the Band 8 paragraph rewrite.
+// the FIRST criterion (band + feedback) and ONE corrected sentence
+// (reduceForFree in lib/writingReport.js); Pro adds the other three criteria,
+// the examiner summary, the improvement plan, every correction and the Band 8
+// paragraph rewrite.
 export const SAMPLE_REPORT = {
   overallBand: 6.5,
   task: 2,
@@ -177,9 +178,29 @@ export default function SampleReportPreview({
           <BandHero band={r.overallBand} subtitle={`Writing Task ${r.task} · ${r.wordCount} words`} />
         </div>
 
-        <Section tier="free" title="Band and feedback on all four criteria" testId="sample-criteria">
+        <Section tier="free" title={`Band and feedback on ${r.criteria[0].label}`} testId="sample-criteria">
           <ul className="space-y-3">
-            {r.criteria.map((c) => (
+            {r.criteria.slice(0, 1).map((c) => (
+              <li key={c.key}>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-sm font-semibold text-foreground">{c.label}</span>
+                  <span className="text-sm font-bold tabular-nums text-foreground">{formatBand(c.band)}</span>
+                </div>
+                <div className="mt-1.5">
+                  <BandMeter band={c.band} />
+                </div>
+                <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
+                  <span className="font-semibold text-accent">Strength:</span> {c.strength}{' '}
+                  <span className="font-semibold text-foreground">Fix:</span> {c.fix}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section tier="pro" title="Band and feedback on the other three criteria" testId="sample-criteria-pro">
+          <ul className="space-y-3">
+            {r.criteria.slice(1).map((c) => (
               <li key={c.key}>
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm font-semibold text-foreground">{c.label}</span>

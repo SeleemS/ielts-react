@@ -38,7 +38,7 @@ const FAQ = [
   },
   {
     q: 'Can I get my own essay scored?',
-    a: 'Yes. Every sample links to a practice page with the same prompt, where you can write your answer and get an AI band estimate for all four criteria. Your first Writing score is free after you create an account.',
+    a: 'Yes. Every sample links to a practice page with the same prompt, where you can write your answer and get an AI band estimate. Your first Writing score is free after you create an account and shows your overall band and first criterion; Pro covers all four criteria.',
   },
 ];
 

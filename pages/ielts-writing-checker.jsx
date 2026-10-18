@@ -58,7 +58,7 @@ const FAQ = [
   },
   {
     q: 'Is it free?',
-    a: `Yes, your first AI Writing score is free after you create an account. It shows your overall band, all four criterion bands and feedback, and one corrected example. The ${EXAM_PASS_DAYS}-day Exam Pass adds continued scoring with full reports, examiner summaries, improvement plans and all corrections for newly saved reports and your next essays.`,
+    a: `Yes, your first AI Writing score is free after you create an account. It shows your overall band, your Task Response (or Task Achievement) band with feedback, and one corrected example. The ${EXAM_PASS_DAYS}-day Exam Pass adds continued scoring with full reports, examiner summaries, improvement plans and all corrections for newly saved reports and your next essays.`,
   },
   {
     q: 'Do you store my essay?',

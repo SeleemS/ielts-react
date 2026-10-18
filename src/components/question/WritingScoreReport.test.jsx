@@ -11,6 +11,7 @@ vi.mock('next/link', () => ({
 }));
 
 import WritingScoreReport from './WritingScoreReport';
+import { reduceForFree } from '../../../lib/writingReport';
 import { track } from '../../lib/analytics';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
@@ -57,19 +58,10 @@ const result = {
   },
 };
 
-// What the API actually sends a free user (see reduceForFree in
-// pages/api/score/writing.js): every criterion band, ONE real correction, and
-// counts — never the withheld strings.
-const freeResult = {
-  overallBand: result.overallBand,
-  wordCount: result.wordCount,
-  free: true,
-  criteria: result.criteria,
-  correctedExamples: [result.correctedExamples[0]],
-  lockedCorrectionCount: 2,
-  rewriteLocked: true,
-  lockedIssueCount: 11,
-};
+// Exactly what the API sends a free user (reduceForFree in
+// lib/writingReport.js): the first criterion, ONE real correction, and counts —
+// never the withheld strings.
+const freeResult = { ...reduceForFree(result), wordCount: result.wordCount, free: true };
 
 function render(element) {
   act(() => {
@@ -90,19 +82,20 @@ afterEach(() => {
 });
 
 describe('WritingScoreReport free-score preview', () => {
-  it('shows all four criterion bands plus ONE real correction, and masks the rest', () => {
+  it('shows the overall band, the first criterion and ONE real correction, and masks the rest', () => {
+    expect(Object.keys(freeResult.criteria)).toEqual(['taskResponse']);
+    expect(freeResult.lockedCriteriaCount).toBe(3);
     render(<WritingScoreReport task={2} result={freeResult} />);
 
     const headings = [...container.querySelectorAll('h3')].map((node) => node.textContent);
     expect(headings).toContain('Task Response');
-    expect(headings).toContain('Coherence & Cohesion');
-    expect(headings).toContain('Lexical Resource');
-    expect(headings).toContain('Grammatical Range & Accuracy');
-    // All four criteria are fully visible on a free report.
+    // Only the first criterion's real feedback is on a free report; the other
+    // three are named but locked, with no band or text in the DOM.
     expect(container.textContent).toContain('A clear position');
-    expect(container.textContent).toContain('Logical paragraphs');
-    expect(container.textContent).toContain('Avoid repetition');
-    expect(container.textContent).toContain('Check agreement');
+    expect(container.textContent).toContain('Coherence & Cohesion');
+    expect(container.textContent).not.toContain('Logical paragraphs');
+    expect(container.textContent).not.toContain('Avoid repetition');
+    expect(container.textContent).not.toContain('Check agreement');
 
     // The first correction is real; the locked ones are shaped placeholders.
     expect(container.textContent).toContain('People are affected');
@@ -112,7 +105,8 @@ describe('WritingScoreReport free-score preview', () => {
     // The offer names the value THIS essay had withheld, not a generic perk.
     expect(container.textContent).toContain('this essay had 2 more we held back');
     expect(container.textContent).toContain('one was written for this essay');
-    expect(container.textContent).toContain('band on all four criteria and one real correction');
+    expect(container.textContent).toContain('overall band and your first criterion');
+    expect(container.textContent).toContain('Band and feedback on all four criteria');
 
     // No withheld text is in the DOM, so un-blurring reveals nothing.
     expect(container.textContent).not.toContain('In society today');
@@ -141,17 +135,9 @@ describe('WritingScoreReport free-score preview', () => {
       expect.objectContaining({ source: 'score_tease', stage: 'impression', band: 6 })
     );
 
-    const upgrade = container.querySelector('a[href^="/pricing?upgrade=writing"]');
     expect(container.querySelectorAll('a[href^="/pricing?upgrade=writing"]')).toHaveLength(1);
+    expect(container.querySelector('[data-testid="quick-checkout"]')).not.toBeNull();
     expect(container.textContent).toContain('this free sample stays as it is');
-    upgrade.addEventListener('click', (event) => event.preventDefault());
-    act(() => {
-      upgrade.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-    });
-    expect(track).toHaveBeenCalledWith(
-      'paywall_upgrade_click',
-      expect.objectContaining({ source: 'score_tease', skill: 'writing', band: 6 })
-    );
   });
 
   it('locks criteria a source withheld (the estimator free reveal)', () => {
@@ -171,7 +157,7 @@ describe('WritingScoreReport free-score preview', () => {
     expect(container.textContent).toContain('Pro');
     // Upgrade copy must not claim four visible bands when only one was sent.
     expect(container.textContent).toContain('overall band and your first criterion');
-    expect(container.textContent).not.toContain('all four criteria');
+    expect(container.textContent).not.toContain('seen your band on all four criteria');
   });
 
   it('renders the complete report without a preview for a paid score', () => {
@@ -183,7 +169,7 @@ describe('WritingScoreReport free-score preview', () => {
     expect(container.textContent).toContain('They were late');
     expect(container.textContent).toContain('A band eight version');
     expect(container.textContent).toContain('Second body paragraph');
-    expect(container.textContent).not.toContain('Continue to the Exam Pass');
+    expect(container.querySelector('[data-testid="quick-checkout"]')).toBeNull();
     expect(track).not.toHaveBeenCalled();
   });
   it('renders the afterOffer slot below the Pro offer on free reports only', () => {
@@ -191,8 +177,8 @@ describe('WritingScoreReport free-score preview', () => {
     render(<WritingScoreReport task={2} result={freeResult} afterOffer={slot} />);
     const html = container.innerHTML;
     expect(html).toContain('data-testid="after-offer"');
-    expect(html.indexOf('Continue to the Exam Pass')).toBeGreaterThan(-1);
-    expect(html.indexOf('data-testid="after-offer"')).toBeGreaterThan(html.indexOf('Continue to the Exam Pass'));
+    expect(html.indexOf('data-testid="quick-checkout"')).toBeGreaterThan(-1);
+    expect(html.indexOf('data-testid="after-offer"')).toBeGreaterThan(html.indexOf('data-testid="quick-checkout"'));
 
     render(<WritingScoreReport task={2} result={{ ...result, free: false }} afterOffer={slot} />);
     expect(container.innerHTML).not.toContain('after-offer');

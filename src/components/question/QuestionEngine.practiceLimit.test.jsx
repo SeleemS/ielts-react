@@ -60,7 +60,8 @@ it('blocks a new passage once the allowance is used, keeping answers and linking
   expect(container.textContent).not.toContain('Your results');
   expect(document.body.textContent).toContain('You\'ve used your 3 free practice tests');
   expect(document.body.textContent).toContain('Your answers on this passage are saved');
-  const link = [...document.body.querySelectorAll('a')].find((a) => /Exam Pass/.test(a.textContent));
+  expect(document.body.querySelector('[data-testid="quick-checkout"]')).not.toBeNull();
+  const link = [...document.body.querySelectorAll('a')].find((a) => /Compare plans/.test(a.textContent));
   const href = new URL(link.getAttribute('href'), 'https://example.test');
   expect(href.pathname).toBe('/pricing');
   expect(href.searchParams.get('upgrade')).toBe('practice');

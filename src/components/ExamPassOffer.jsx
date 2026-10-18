@@ -2,11 +2,9 @@ import { writingReportPath } from '../../lib/writingReport';
 import FeedbackPreview from './FeedbackPreview';
 import { OFFER_VERSION } from '../../lib/monetizationExperiment';
 import * as React from 'react';
-import NextLink from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { buildUpgradeHref } from '../../lib/upgradeContext';
-import { EXAM_PASS_DAYS, PASS_FIRST_LABEL, money, planPricing } from '../lib/saleConfig';
+import { CheckCircle2 } from 'lucide-react';
+import QuickCheckout from './billing/QuickCheckout';
+import { EXAM_PASS_DAYS, money } from '../lib/saleConfig';
 import { useVisitorMarket } from '../lib/useVisitorMarket';
 import { track } from '../lib/analytics';
 
@@ -27,6 +25,7 @@ export function lockedValueLines(skill, locked = {}) {
     ? locked.corrections
     : 0;
   return [
+    'Band and feedback on all four criteria',
     corrections > 0
       ? `Every corrected sentence — this essay had ${corrections} more we held back`
       : 'Every corrected sentence, not just the first',
@@ -52,7 +51,7 @@ export default function ExamPassOffer({ skill, source, band, locked, reportId, c
   const element = React.useRef(null);
   const viewed = React.useRef(false);
   const passFirstRef = React.useRef(false);
-  const { ppp: regional, passFirst } = useVisitorMarket();
+  const { passFirst } = useVisitorMarket();
   const [returnTo, setReturnTo] = React.useState('');
   React.useEffect(() => {
     setReturnTo(window.location.pathname);
@@ -71,12 +70,8 @@ export default function ExamPassOffer({ skill, source, band, locked, reportId, c
     return () => observer.disconnect();
   }, [skill, source, offerVersion]);
   passFirstRef.current = passFirst;
-  const href = buildUpgradeHref({ upgrade: skill, stage: 'sample', return_to: reportPath || returnTo });
-  const price = planPricing('exam_pass', regional);
-  const monthly = planPricing('monthly', regional);
   const speaking = skill === 'speaking';
   const next = speaking ? 'recording' : 'essay';
-  const daily = perDay(price.price, price.days || EXAM_PASS_DAYS);
   return (
     <section ref={element} aria-label={`${EXAM_PASS_DAYS}-day Exam Pass`} className="rounded-xl border-2 border-accent/40 bg-accent/[0.04] p-5 sm:p-6">
       <p className="text-xs font-bold uppercase tracking-wide text-accent">Your free sample is done</p>
@@ -94,28 +89,17 @@ export default function ExamPassOffer({ skill, source, band, locked, reportId, c
         ))}
       </ul>
 
-      <div className="mt-5 flex flex-col gap-1 rounded-lg border border-border bg-card p-4">
-        <p className="text-base font-bold text-foreground">
-          Exam Pass · {money(price.price)} USD · {passFirst ? PASS_FIRST_LABEL : 'one payment'}
-        </p>
-        <p className="text-sm text-muted-foreground">
-          {EXAM_PASS_DAYS} days of Pro{daily ? ` (about ${daily} a day)` : ''}. No automatic renewal. Scoring limits apply.
-        </p>
-        <Button asChild variant="accent" size="lg" className="mt-3 w-full sm:w-auto sm:self-start">
-          <NextLink href={href} className="no-underline" onClick={() => {
-            track('exam_pass_offer_click', { skill, source, sku: 'exam_pass', stage: 'sample', offer_version: offerVersion, pass_first: passFirst });
-            track('paywall_upgrade_click', { skill, source, band });
-          }}>{reportPath ? 'Unlock this report with the Exam Pass' : 'Continue to the Exam Pass'} <ArrowRight className="h-4 w-4" aria-hidden="true" /></NextLink>
-        </Button>
-        <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-          <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true" />
-          14-day money-back guarantee · secure checkout by Stripe
-        </p>
-      </div>
-
+      <QuickCheckout
+        className="mt-5"
+        upgrade={skill}
+        stage="sample"
+        returnTo={reportPath || returnTo}
+        source={source || 'score_tease'}
+      />
       <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        Prefer a subscription? Monthly is {money(monthly.price)} USD/month, renewing until canceled, with the same scoring limits.
-        {reportPath ? ' Both plans unlock this saved report and include continued practice. No resubmission needed.' : ` Pro applies to the ${next}s you score next — this free sample stays as it is.`}
+        {reportPath
+          ? 'Every plan unlocks this saved report and includes continued practice. No resubmission needed. Scoring limits apply.'
+          : `Pro applies to the ${next}s you score next — this free sample stays as it is. Scoring limits apply.`}
       </p>
       <FeedbackPreview skill={skill} />
     </section>

@@ -27,6 +27,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import SignInDialog from '../src/components/auth/SignInDialog';
 import ResumeNotice from '../src/components/billing/ResumeNotice';
+import QuickCheckout from '../src/components/billing/QuickCheckout';
 import SampleReportPreview from '../src/components/SampleReportPreview';
 import { TIMELINES, dailyCost, recommendedSku, timelineByKey, timelineFromExamDays } from '../src/lib/planFit';
 import { FaqSection, faqJsonLdFor } from '../src/components/SectionLanding';
@@ -891,6 +892,18 @@ export default function PricingPage() {
               <span aria-hidden="true">{context.icon}</span> {context.title}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">{context.body}</p>
+            {upgrade && !isPremium && !checkoutStatus ? (
+              <QuickCheckout
+                className="mx-auto mt-4 max-w-md text-left"
+                upgrade={upgrade}
+                stage={stage}
+                returnTo={returnTo}
+                source={`${upgrade}_pricing_quick`}
+                onSelect={(sku) => startCheckout(sku)}
+                busySku={busySku}
+                compareHref="#plans"
+              />
+            ) : null}
             {refillHint ? (
               <p className="mt-2 text-xs font-medium text-muted-foreground" data-testid="free-score-refill">
                 Not ready to upgrade? {refillHint}

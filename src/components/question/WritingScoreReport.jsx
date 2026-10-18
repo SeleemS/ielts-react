@@ -170,10 +170,10 @@ export default function WritingScoreReport({
       <div className="space-y-3">
         {criteriaMeta.map(([key, label]) => {
           const criterion = criteria[key] || {};
-          // Free reports now keep ALL FOUR criterion bands (see reduceForFree
-          // in the writing route). A criterion with no band means the source
-          // withheld it — the Band Estimator's free reveal still sends only
-          // the first — so it stays a locked placeholder there.
+          // Free reports keep only the first criterion (see reduceForFree in
+          // lib/writingReport.js; the Band Estimator's free reveal does the
+          // same). A criterion with no band was withheld by the server, so it
+          // renders as a locked placeholder with no real text.
           if (isTeaser && !hasBand(criterion)) {
             return <LockedPlaceholder key={key} label={label} />;
           }

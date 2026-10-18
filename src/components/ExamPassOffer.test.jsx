@@ -3,7 +3,11 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { createRoot } from 'react-dom/client';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
-vi.mock('../lib/analytics', () => ({ track: vi.fn() }));
+const auth = vi.hoisted(() => ({ user: { id: 'qa-user', is_anonymous: false } }));
+vi.mock('../lib/analytics', () => ({ track: vi.fn(), gaClientId: () => 'ga-1' }));
+vi.mock('../lib/auth', () => ({ useAuth: () => ({ user: auth.user }) }));
+vi.mock('../lib/sessionAccess', () => ({ getSessionAccess: vi.fn(async () => ({ accessToken: 'token-1' })) }));
+vi.mock('../../lib/supabase', () => ({ getSupabase: vi.fn() }));
 vi.mock('next/link', () => ({ default: ({ children, ...props }) => <a {...props}>{children}</a> }));
 import ExamPassOffer, { lockedValueLines, perDay } from './ExamPassOffer';
 import { track } from '../lib/analytics';
@@ -19,67 +23,96 @@ beforeEach(() => {
 });
 afterEach(() => { act(() => root.unmount()); container.remove(); vi.clearAllMocks(); vi.unstubAllGlobals(); });
 
-it('compares regional no-renewal and monthly options with a safe return and one primary action', () => {
+const buttons = () => [...container.querySelectorAll('[data-testid="quick-checkout"] button')];
+
+it('offers every plan as a one-click checkout at regional prices, with the pass-first copy', () => {
   document.cookie = 'ib_country=EG; path=/';
   act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} locked={{ corrections: 4, rewrite: true }} />));
-  expect(container.textContent).toContain('$5.99 USD');
-  expect(container.textContent).toContain('$3.99 USD/month');
+  expect(buttons().map((b) => b.dataset.sku)).toEqual(['exam_pass', 'monthly']);
+  expect(container.textContent).toContain('$5.99');
+  expect(container.textContent).toContain('$3.99/mo');
   expect(container.textContent).toContain('about $0.20 a day');
-  expect(container.textContent).toContain('Illustrative excerpt');
-  expect(container.textContent).toContain('not your result');
-  expect(container.textContent).toContain('No automatic renewal');
   expect(container.textContent).toContain('Get the full report on your next essay');
   expect(container.textContent).toContain('this essay had 4 more we held back');
   expect(container.textContent).toContain('14-day money-back guarantee');
-  // Honest expectation: buying never unlocks the old free sample.
   expect(container.textContent).toContain('this free sample stays as it is');
-  const links = container.querySelectorAll('a'); expect(links).toHaveLength(1);
-  expect(links[0].textContent).toContain('Continue to the Exam Pass');
-  const href = new URL(links[0].href, 'https://example.test');
-  expect(href.searchParams.get('return_to')).toBe('/writingquestion/example-task');
-  expect(href.searchParams.get('stage')).toBe('sample');
-  links[0].addEventListener('click', event => event.preventDefault());
-  act(() => links[0].dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })));
-  expect(track).toHaveBeenCalledWith('exam_pass_offer_click', expect.objectContaining({ sku: 'exam_pass', skill: 'writing', offer_version: OFFER_VERSION, pass_first: true }));
+  expect(container.textContent).toContain('Illustrative excerpt');
+  const compare = new URL(container.querySelector('a').href, 'https://example.test');
+  expect(compare.pathname).toBe('/pricing');
+  expect(compare.searchParams.get('return_to')).toBe('/writingquestion/example-task');
+  expect(compare.searchParams.get('stage')).toBe('sample');
 });
-it('labels the pass as one payment with no auto-renew in pass-first markets', () => {
-  document.cookie = 'ib_country=IN; path=/';
+
+it('goes straight to Stripe when a signed-in learner picks a plan', async () => {
+  const assign = vi.fn();
+  vi.stubGlobal('location', { ...window.location, assign, pathname: '/writingquestion/example-task' });
+  const fetchMock = vi.fn(async () => ({ ok: true, json: async () => ({ url: 'https://checkout.stripe.com/c/pay/cs_test' }) }));
+  vi.stubGlobal('fetch', fetchMock);
   act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} />));
-  expect(container.textContent).toContain('$5.99 USD · One payment · no auto-renew');
-  expect(container.textContent).toContain('Prefer a subscription? Monthly is $3.99 USD/month');
-  document.cookie = 'ib_country=CN; path=/';
-  act(() => root.unmount()); root = createRoot(container);
-  act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} />));
-  expect(container.textContent).toContain('$14.99 USD · One payment · no auto-renew');
+  await act(async () => {
+    buttons()[0].click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  const [url, init] = fetchMock.mock.calls[0];
+  expect(url).toBe('/api/billing/checkout');
+  expect(init.headers.Authorization).toBe('Bearer token-1');
+  expect(JSON.parse(init.body)).toEqual(expect.objectContaining({ sku: 'exam_pass', upgrade: 'writing', stage: 'sample' }));
+  expect(assign).toHaveBeenCalledWith('https://checkout.stripe.com/c/pay/cs_test');
+  expect(track).toHaveBeenCalledWith('checkout_start', expect.objectContaining({ sku: 'exam_pass', direct: true, source: 'score_tease' }));
 });
-it('keeps the standard offer copy outside pass-first markets', () => {
+
+it('sends signed-out learners to pricing with the same context', async () => {
+  auth.user = null;
+  const assign = vi.fn();
+  vi.stubGlobal('location', { ...window.location, assign });
+  vi.stubGlobal('fetch', vi.fn());
   act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} />));
-  expect(container.textContent).toContain('$14.99 USD · one payment');
-  expect(container.textContent).not.toContain('no auto-renew');
-  expect(container.textContent).toContain('Monthly is $8.99 USD/month');
+  await act(async () => {
+    buttons()[1].click();
+    await Promise.resolve();
+  });
+  expect(fetch).not.toHaveBeenCalled();
+  const target = new URL(assign.mock.calls[0][0], 'https://example.test');
+  expect(target.pathname).toBe('/pricing');
+  expect(target.searchParams.get('upgrade')).toBe('writing');
+  expect(target.hash).toBe('#monthly');
+  auth.user = { id: 'qa-user', is_anonymous: false };
+});
+
+it('shows a server refusal without leaving the page', async () => {
+  vi.stubGlobal('location', { ...window.location, assign: vi.fn() });
+  vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, status: 409, json: async () => ({ error: 'Your Exam Pass is already active.' }) })));
+  act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} />));
+  await act(async () => {
+    buttons()[0].click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  expect(container.querySelector('[role="alert"]').textContent).toContain('Your Exam Pass is already active.');
 });
 
 it('uses global pricing and records exposure once only when the offer is visible', () => {
   act(() => root.render(<ExamPassOffer skill="speaking" source="speaking_sample" />));
-  expect(container.textContent).toContain('$14.99 USD');
-  expect(container.textContent).toContain('about $0.50 a day');
+  expect(container.textContent).toContain('$14.99');
+  expect(container.textContent).toContain('$8.99/mo');
   expect(container.textContent).toContain('on your next recording');
-  expect(track).not.toHaveBeenCalled();
-  observed([{ isIntersecting: false }]); expect(track).not.toHaveBeenCalled();
+  const views = () => track.mock.calls.filter(([event]) => event === 'exam_pass_offer_view');
+  expect(views()).toHaveLength(0);
+  observed([{ isIntersecting: false }]); expect(views()).toHaveLength(0);
   observed([{ isIntersecting: true, intersectionRatio: 0.5 }]); observed([{ isIntersecting: true, intersectionRatio: 0.5 }]);
-  expect(track).toHaveBeenCalledTimes(1);
+  expect(views()).toHaveLength(1);
   expect(track).toHaveBeenCalledWith('exam_pass_offer_view', expect.objectContaining({ skill: 'speaking', stage: 'sample' }));
   expect(disconnect).toHaveBeenCalled();
 });
 
 it('only states withheld counts that the free payload actually reported', () => {
   const generic = lockedValueLines('writing');
-  expect(generic[0]).toBe('Every corrected sentence, not just the first');
+  expect(generic[0]).toBe('Band and feedback on all four criteria');
+  expect(generic[1]).toBe('Every corrected sentence, not just the first');
   expect(generic.join(' ')).not.toMatch(/this essay/);
   const specific = lockedValueLines('writing', { corrections: 3, rewrite: true });
-  expect(specific[0]).toContain('this essay had 3 more');
-  expect(specific[1]).toContain('one was written for this essay');
-  expect(lockedValueLines('writing', { corrections: -1 })[0]).toBe('Every corrected sentence, not just the first');
+  expect(specific[1]).toContain('this essay had 3 more');
+  expect(specific[2]).toContain('one was written for this essay');
+  expect(lockedValueLines('writing', { corrections: -1 })[1]).toBe('Every corrected sentence, not just the first');
 });
 
 it('computes a plain per-day cost', () => {
@@ -95,6 +128,7 @@ it('offers the current report only when a valid saved report ID exists', () => {
   expect(container.textContent).not.toContain('this free sample stays');
   const href = new URL(container.querySelector('a').href);
   expect(href.searchParams.get('return_to')).toBe('/writing-report/10000000-0000-4000-8000-000000000001');
+  expect(container.textContent).toContain('Every plan unlocks this saved report');
   observed([{ isIntersecting: true, intersectionRatio: 0.5 }]);
   expect(track).toHaveBeenCalledWith('exam_pass_offer_view', expect.objectContaining({ offer_version: 'current_report_v4' }));
 });
