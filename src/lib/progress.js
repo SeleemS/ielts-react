@@ -78,6 +78,12 @@ export async function resolvePassageId(slugOrLegacyId, skill) {
   }
 }
 
+// The attempts_free_practice_cap trigger rejects a free account's next new
+// Reading/Listening passage with SQLSTATE PT402 (HTTP 402 via PostgREST).
+export function isPracticeLimitError(error) {
+  return error?.code === 'PT402' || error?.message === 'free_practice_limit';
+}
+
 // Insert one attempt row for a signed-in user. Columns match 0004's `attempts`:
 //   user_id, passage_id (nullable), skill, responses (jsonb), raw_score, band,
 //   submitted_at, total and per_question.
@@ -112,7 +118,7 @@ export async function saveAttemptToSupabase({
       submitted_at: submittedAt || new Date().toISOString(),
     };
     const { error } = await supabase.from('attempts').insert(row);
-    if (error) return { ok: false, error };
+    if (error) return { ok: false, error, practiceLimit: isPracticeLimitError(error) };
     return { ok: true };
   } catch (error) {
     return { ok: false, error };

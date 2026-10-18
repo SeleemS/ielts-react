@@ -75,3 +75,31 @@ it('lets Pro learners and retries through without any allowance line', () => {
   submit();
   expect(container.textContent).toContain('Your results');
 });
+
+it('lets the database decide when the allowance lookup failed, and shows the upgrade dialog on PT402', async () => {
+  const { saveAttemptToSupabase, resolvePassageId } = await import('../../lib/progress');
+  resolvePassageId.mockResolvedValueOnce('passage-4');
+  saveAttemptToSupabase.mockResolvedValueOnce({ ok: false, practiceLimit: true, error: { code: 'PT402' } });
+  state.allowance = allowance({ limited: false, canSubmit: true, remaining: Infinity, uncertain: true });
+  act(() => root.render(<QuestionEngine groups={groups} storageKey="example" skill="reading" />));
+  submit();
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  expect(saveAttemptToSupabase).toHaveBeenCalledTimes(1);
+  expect(container.textContent).not.toContain('Your results');
+  expect(document.body.textContent).toContain('free practice tests');
+  expect(track).toHaveBeenCalledWith('premium_gate', expect.objectContaining({ source: 'practice_limit_server' }));
+});
+
+it('shows results after the database accepts an uncertain submission, without saving twice', async () => {
+  const { saveAttemptToSupabase } = await import('../../lib/progress');
+  state.allowance = allowance({ limited: false, canSubmit: true, remaining: Infinity, uncertain: true });
+  act(() => root.render(<QuestionEngine groups={groups} storageKey="example" skill="reading" />));
+  submit();
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+  expect(container.textContent).toContain('Your results');
+  expect(saveAttemptToSupabase).toHaveBeenCalledTimes(1);
+});

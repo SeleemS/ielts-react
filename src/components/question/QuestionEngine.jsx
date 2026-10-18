@@ -104,8 +104,10 @@ async function persistAttemptToSupabase(userId, skill, storageKey, answers, resu
       // migration pass (syncLocalAttempts) won't re-insert this submission.
       markAttemptSynced(`ielts-attempt:${skill}:${reviewMode ? 'review:' : ''}${storageKey}`, submittedAt);
     }
+    return res;
   } catch {
     /* never break the results UI on a persistence failure */
+    return null;
   }
 }
 
@@ -328,6 +330,7 @@ export default function QuestionEngine({
   // Set when a signed-out visitor hits the free-question gate — the pending
   // submission resumes once the sign-up dialog closes with a session present.
   const pendingSubmitRef = useRef(false);
+  const serverCheckRef = useRef(false);
   const announcedRef = useRef(new Set());
   const resultsRef = useRef(null);
   const startedAtRef = useRef(null);
@@ -420,7 +423,7 @@ export default function QuestionEngine({
     );
   }, []);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     // Free-tier gate: signed-out visitors get one free question per skill
     // (retrying the same question stays free; mock tests have their own
     // PremiumGate). Answers are already autosaved to localStorage, so nothing
@@ -443,10 +446,33 @@ export default function QuestionEngine({
       return;
     }
     const result = gradeAll(groups, answers);
-    setResults(result);
-    setSubmitted(true);
     const submittedAt = new Date().toISOString();
     const startedAt = startedAtRef.current || submittedAt;
+    // The client couldn't confirm this account's allowance (lookup still
+    // loading or failed): save first and let the database decide. A PT402
+    // rejection means the free cap is used up, so show the upgrade dialog
+    // instead of the marked results.
+    const serverDecides = Boolean(user?.id) && allowance.uncertain && !mockTestId && !reviewMode;
+    if (serverDecides) {
+      if (serverCheckRef.current) return;
+      serverCheckRef.current = true;
+      let saved;
+      try {
+        saved = await persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode);
+      } finally {
+        serverCheckRef.current = false;
+      }
+      if (saved?.practiceLimit) {
+        setTimed(false);
+        setDeadline(null);
+        setLimitOpen(true);
+        track('premium_gate', { skill, slug: storageKey, source: 'practice_limit_server' });
+        refreshAllowance();
+        return;
+      }
+    }
+    setResults(result);
+    setSubmitted(true);
     persistAttempt(skill, storageKey, answers, result, questions, startedAt, submittedAt, reviewMode);
     if (typeof window !== 'undefined' && inProgressKey) {
       try {
@@ -455,7 +481,9 @@ export default function QuestionEngine({
         /* localStorage unavailable — non-fatal */
       }
     }
-    if (user?.id) {
+    if (user?.id && serverDecides) {
+      refreshAllowance();
+    } else if (user?.id) {
       // Cross-device mirror for signed-in users (fire-and-forget, fail-soft).
       persistAttemptToSupabase(user.id, skill, storageKey, answers, result, questions, startedAt, submittedAt, module, mockTestId, reviewMode)
         .catch(() => {})
@@ -480,7 +508,7 @@ export default function QuestionEngine({
       });
       window.setTimeout(() => resultsRef.current?.focus(), 0);
     }
-  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId, reviewMode, allowance.limited, allowance.canSubmit, allowance.used, allowance.limit, refreshAllowance]);
+  }, [groups, answers, skill, storageKey, user?.id, inProgressKey, module, questions, answeredCount, mockTestId, reviewMode, allowance.limited, allowance.canSubmit, allowance.used, allowance.limit, allowance.uncertain, refreshAllowance]);
 
   // Two-step submit: with unanswered questions, the first click arms an
   // inline confirmation instead of submitting. Any answer change disarms it.

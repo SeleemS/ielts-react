@@ -16,6 +16,7 @@ import { track } from '../../lib/analytics';
 import { POST_AUTH_PATH } from '../../lib/authPaths';
 import { inter } from '../../lib/fonts';
 import { useDialogFocus } from '../../lib/dialogFocus';
+import { isDisposableEmail, suggestEmailFix } from '../../../lib/emailCheck';
 // Email and password -> verified email -> resume the caller's destination.
 // Optional profile details and email preferences remain in account settings.
 const SIGNUP_EXPERIMENT = 'signup_email_first_v1';
@@ -27,6 +28,30 @@ function matchesAuthError(error, code, legacyMessagePattern) {
 function normalizeOtp(value) {
   return value.replace(/[٠-٩۰-۹]/g, (digit) => String(digit.charCodeAt(0) - (digit >= '۰' ? 0x6f0 : 0x660))).replace(/\D/g, '');
 }
+
+// Server pre-check (pages/api/auth/signup-check.js): throwaway inboxes and
+// Gmail look-alikes of an existing account. Fails open — a slow or broken
+// check must never stop a real sign-up.
+async function precheckSignupEmail(email) {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 4000);
+    const response = await fetch('/api/auth/signup-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timer));
+    if (!response.ok) return { ok: true };
+    const data = await response.json();
+    return data && typeof data === 'object' ? data : { ok: true };
+  } catch {
+    return { ok: true };
+  }
+}
+
+const DISPOSABLE_MESSAGE =
+  'Please use an email address you’ll keep — temporary inboxes expire, and we send your sign-in codes there.';
 
 function verificationError(error) {
   const message = error?.message || '';
@@ -78,6 +103,9 @@ export default function SignInDialog({
   const [errorMsg, setErrorMsg] = React.useState('');
   const [notice, setNotice] = React.useState('');
   const [resendIn, setResendIn] = React.useState(0);
+  // "Did you mean …@gmail.com?" — shown on blur, and asked once before sign-up.
+  const [emailFix, setEmailFix] = React.useState(null);
+  const [typoAskedFor, setTypoAskedFor] = React.useState('');
   const dialogRef = React.useRef(null);
   const authInFlight = React.useRef(false);
   const wasOpen = React.useRef(false);
@@ -126,6 +154,8 @@ export default function SignInDialog({
       setBusy(false);
       setErrorMsg('');
       setNotice('');
+      setEmailFix(null);
+      setTypoAskedFor('');
       track('signin_gate_shown', { trigger, signed_in: false });
     }
   }, [open, trigger, initialMode, step]);
@@ -156,11 +186,40 @@ export default function SignInDialog({
     e.preventDefault();
     const trimmed = email.trim();
     if (!trimmed || !password || (mode === 'signup' && password.length < 8)) return;
+    if (mode === 'signup') {
+      if (isDisposableEmail(trimmed)) {
+        setErrorMsg(DISPOSABLE_MESSAGE);
+        return;
+      }
+      // A likely typo ("gamil.com") can never receive the code: ask once,
+      // then let a second click go ahead with what they typed.
+      const fix = suggestEmailFix(trimmed);
+      if (fix && typoAskedFor !== trimmed) {
+        setEmailFix(fix);
+        setTypoAskedFor(trimmed);
+        track('signup_email_typo_hint', { trigger, signed_in: false });
+        return;
+      }
+    }
     if (!beginAuth()) return;
     setErrorMsg('');
     setNotice('');
     try {
       if (mode === 'signup') {
+        const check = await precheckSignupEmail(trimmed);
+        if (check.ok === false && check.reason === 'disposable') {
+          setErrorMsg(DISPOSABLE_MESSAGE);
+          return;
+        }
+        if (check.ok === false && check.reason === 'alias') {
+          track('signup_email_alias', { trigger, signed_in: false });
+          setMode('signin');
+          setPassword('');
+          setNotice(
+            `This inbox already has an account${check.hint ? ` (${check.hint})` : ''}. Sign in with that address — or reset its password below.`
+          );
+          return;
+        }
         track('signup_start', { method: 'password', trigger, signed_in: false, experiment: SIGNUP_EXPERIMENT });
         const { data, error } = await signUpWithPassword(trimmed, password);
         if (error) {
@@ -355,6 +414,10 @@ export default function SignInDialog({
               {errorMsg}
             </p>
           )}
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Can’t find it? Codes can take a minute — check your Spam, Junk or Promotions folder for an
+            email from IELTS Bank.
+          </p>
           <Button type="submit" variant="accent" className="w-full" disabled={busy || code.length !== 6}>
             {busy ? 'Verifying…' : verifySource === 'recovery' ? 'Continue' : 'Verify email'}
           </Button>
@@ -449,9 +512,31 @@ export default function SignInDialog({
               required
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailFix(null);
+              }}
+              onBlur={() => setEmailFix(suggestEmailFix(email))}
+              aria-describedby={emailFix ? 'signin-email-fix' : undefined}
               disabled={busy}
             />
+            {emailFix && (
+              <p id="signin-email-fix" role="status" className="text-sm text-muted-foreground">
+                Did you mean{' '}
+                <button
+                  type="button"
+                  className="font-semibold text-foreground underline underline-offset-4"
+                  onClick={() => {
+                    setEmail(emailFix);
+                    setEmailFix(null);
+                    track('signup_email_typo_fixed', { trigger, mode });
+                  }}
+                >
+                  {emailFix}
+                </button>
+                ?
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="signin-password">Password</Label>

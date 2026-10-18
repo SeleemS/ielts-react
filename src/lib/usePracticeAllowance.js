@@ -56,10 +56,13 @@ export function usePracticeAllowance({ skill, storageKey, enabled = true }) {
 
   const refresh = React.useCallback(() => setRefreshKey((n) => n + 1), []);
 
+  // `uncertain` marks a fail-open answer for a signed-in account: the client
+  // could not tell, so the caller lets the database decide (the
+  // attempts_free_practice_cap trigger rejects an over-cap insert with PT402).
   if (!active) return { ...OPEN, refresh };
-  if (planLoading || usage.status === 'loading' || usage.status === 'idle') return { ...OPEN, loading: true, refresh };
+  if (planLoading || usage.status === 'loading' || usage.status === 'idle') return { ...OPEN, loading: true, uncertain: true, refresh };
   if (isPremium) return { ...OPEN, refresh };
   // Unknown usage or an unresolvable passage id: never block on a lookup failure.
-  if (usage.status !== 'ready' || !usage.currentId) return { ...OPEN, refresh };
+  if (usage.status !== 'ready' || !usage.currentId) return { ...OPEN, uncertain: true, refresh };
   return { loading: false, ...practiceAllowanceState({ usedIds: usage.usedIds, currentId: usage.currentId }), refresh };
 }

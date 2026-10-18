@@ -369,3 +369,71 @@ it('does not finish or navigate when mailbox verification rejects the session', 
   expect(onOpenChange).not.toHaveBeenCalled();expect(testState.replace).not.toHaveBeenCalled();
   expect(document.querySelector('#signin-otp')).not.toBeNull();
 });
+
+describe('SignInDialog sign-up email checks', () => {
+  async function submitSignup(email) {
+    setInput('#signin-email', email);
+    setInput('#signin-password', 'longenough1');
+    await act(async () => {
+      document.querySelector('[role="dialog"] button[type="submit"]').click();
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+  }
+
+  afterEach(() => {
+    delete globalThis.fetch;
+  });
+
+  it('asks about a likely domain typo once, then lets the learner fix or keep it', async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ ok: true }) });
+    await renderDialog('signup');
+    await submitSignup('learner@gamil.com');
+    expect(testState.signUpWithPassword).not.toHaveBeenCalled();
+    const fix = [...document.querySelectorAll('#signin-email-fix button')][0];
+    expect(fix.textContent).toBe('learner@gmail.com');
+
+    act(() => fix.click());
+    expect(document.querySelector('#signin-email').value).toBe('learner@gmail.com');
+    await act(async () => {
+      document.querySelector('[role="dialog"] button[type="submit"]').click();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(testState.signUpWithPassword).toHaveBeenCalledWith('learner@gmail.com', 'longenough1');
+  });
+
+  it('blocks throwaway inboxes before calling the auth service', async () => {
+    globalThis.fetch = vi.fn();
+    await renderDialog('signup');
+    await submitSignup('x@mailinator.com');
+    expect(testState.signUpWithPassword).not.toHaveBeenCalled();
+    expect(globalThis.fetch).not.toHaveBeenCalled();
+    expect(document.body.textContent).toContain('temporary inboxes expire');
+  });
+
+  it('sends a Gmail look-alike of an existing account to sign in', async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ ok: false, reason: 'alias', hint: 'ja•••@gmail.com' }),
+    });
+    await renderDialog('signup');
+    await submitSignup('janesmith+2@gmail.com');
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(testState.signUpWithPassword).not.toHaveBeenCalled();
+    expect(document.body.textContent).toContain('This inbox already has an account (ja•••@gmail.com)');
+    expect(document.body.textContent).toContain('Welcome back');
+  });
+
+  it('still signs up when the pre-check is unreachable', async () => {
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error('offline'));
+    await renderDialog('signup');
+    await submitSignup('fresh@school.edu');
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(testState.signUpWithPassword).toHaveBeenCalledWith('fresh@school.edu', 'longenough1');
+    expect(document.body.textContent).toContain('check your Spam, Junk or Promotions folder');
+  });
+});
