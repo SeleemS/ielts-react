@@ -223,7 +223,14 @@ export default function SignInDialog({
         track('signup_start', { method: 'password', trigger, signed_in: false, experiment: SIGNUP_EXPERIMENT });
         const { data, error } = await signUpWithPassword(trimmed, password);
         if (error) {
-          setErrorMsg(error.message || 'Could not create your account. Please try again.');
+          // The auth_mailbox_claim / disposable-email triggers surface through
+          // Supabase as a generic database error unless the Before User
+          // Created hook is enabled.
+          setErrorMsg(
+            /database error saving new user/i.test(error.message || '')
+              ? 'We couldn’t create an account with this email. If you already have one, sign in instead — or use an address you’ll keep.'
+              : error.message || 'Could not create your account. Please try again.'
+          );
           return;
         }
         // Supabase obfuscates existing accounts: user comes back with no
