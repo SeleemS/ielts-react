@@ -7,13 +7,13 @@
 //   numbers. For the charged amount to match what the page shows, the Stripe
 //   prices must be:
 //     premium_monthly        -> $8.99    /month
-//     premium_monthly_ppp    -> $3.99    /month
+//     premium_monthly_ppp    -> $4.99    /month
 //     premium_annual         -> $49.99   /year
 //     premium_annual_ppp     -> $19.99   /year
-//     premium_exam_pass      -> $14.99   one-time (EXAM_PASS_DAYS days)
+//     premium_exam_pass      -> $19.99   one-time (EXAM_PASS_DAYS days)
 //     premium_exam_pass_ppp  -> $5.99    one-time (EXAM_PASS_DAYS days)
 //     premium_week_pass      -> $4.99    one-time (7 days, no live examiner)
-//     premium_week_pass_ppp  -> $1.99    one-time (7 days, no live examiner)
+//     premium_week_pass_ppp  -> $2.99    one-time (7 days, no live examiner)
 //   pages/api/billing/checkout.js re-verifies every one of those against the
 //   live Stripe Price before a Checkout Session is created (PRICE MISMATCH).
 //
@@ -145,7 +145,7 @@ export const PLANS = {
     months: 1,
     blurb: 'Month-to-month while you decide.',
     global: { price: 8.99 },
-    ppp: { price: 3.99 },
+    ppp: { price: 4.99 },
   },
   annual: {
     sku: 'annual',
@@ -168,7 +168,7 @@ export const PLANS = {
     days: EXAM_PASS_DAYS,
     months: 1,
     blurb: 'One payment to cover your run-up to test day. Never renews.',
-    global: { price: 14.99 },
+    global: { price: 19.99 },
     ppp: { price: 5.99 },
   },
   // Not in planOrder(): pricing renders it as a secondary "try it" option.
@@ -181,7 +181,7 @@ export const PLANS = {
     months: 0,
     blurb: 'Seven days of Pro to try it before test day. Never renews.',
     global: { price: 4.99 },
-    ppp: { price: 1.99 },
+    ppp: { price: 2.99 },
   },
 };
 

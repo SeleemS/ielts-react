@@ -26,7 +26,7 @@ describe('planFit', () => {
   });
 
   it('computes daily cost from the real list prices', () => {
-    expect(dailyCost(planPricing('exam_pass'))).toBe(0.5);
+    expect(dailyCost(planPricing('exam_pass'))).toBe(0.67);
     expect(dailyCost(planPricing('monthly'))).toBe(0.3);
     expect(dailyCost(planPricing('annual'))).toBe(0.14);
     expect(dailyCost(planPricing('exam_pass', true))).toBe(0.2);
@@ -48,7 +48,7 @@ describe('planFit', () => {
       expect(fit.TIMELINES[0].label).toBe('Within 45 days');
       expect(fit.timelineFromExamDays(45)).toBe('soon');
       expect(fit.timelineFromExamDays(46)).toBe('months');
-      expect(fit.dailyCost(sale.planPricing('exam_pass'))).toBe(0.33);
+      expect(fit.dailyCost(sale.planPricing('exam_pass'))).toBe(0.44);
       expect(fit.dailyCost(sale.planPricing('exam_pass', true))).toBe(0.13);
     });
   });

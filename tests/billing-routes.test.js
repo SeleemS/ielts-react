@@ -150,13 +150,13 @@ function priceForLookupKey(lookupKey) {
     premium_monthly: { unit_amount: 899, interval: 'month', interval_count: 1 },
     premium_3month: { unit_amount: 1999, interval: 'month', interval_count: 3 },
     premium_annual: { unit_amount: 4999, interval: 'year', interval_count: 1 },
-    premium_exam_pass: { unit_amount: 1499 },
-    premium_monthly_ppp: { unit_amount: 399, interval: 'month', interval_count: 1 },
+    premium_exam_pass: { unit_amount: 1999 },
+    premium_monthly_ppp: { unit_amount: 499, interval: 'month', interval_count: 1 },
     premium_3month_ppp: { unit_amount: 899, interval: 'month', interval_count: 3 },
     premium_annual_ppp: { unit_amount: 1999, interval: 'year', interval_count: 1 },
     premium_exam_pass_ppp: { unit_amount: 599 },
     premium_week_pass: { unit_amount: 499 },
-    premium_week_pass_ppp: { unit_amount: 199 },
+    premium_week_pass_ppp: { unit_amount: 299 },
   }[lookupKey] || { unit_amount: 7999, interval: 'year', interval_count: 1 };
   return {
     id: 'price_mock_1',

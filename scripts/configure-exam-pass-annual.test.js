@@ -85,14 +85,14 @@ describe('desired catalogue', () => {
     expect(
       Object.fromEntries(DESIRED_PRICES.map((spec) => [spec.lookupKey, spec.unitAmount]))
     ).toEqual(expected);
-    // Founder decision: annual $49.99 global / $19.99 PPP, pass $14.99 / $5.99.
+    // Founder decision: annual $49.99 global / $19.99 PPP, pass $19.99 / $5.99 (Oct 20 2026).
     expect(expected).toMatchObject({
       premium_annual: 4999,
       premium_annual_ppp: 1999,
-      premium_exam_pass: 1499,
+      premium_exam_pass: 1999,
       premium_exam_pass_ppp: 599,
       premium_week_pass: 499,
-      premium_week_pass_ppp: 199,
+      premium_week_pass_ppp: 299,
     });
   });
 

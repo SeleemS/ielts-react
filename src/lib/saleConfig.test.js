@@ -135,7 +135,7 @@ describe('saleConfig planPricing — global list prices', () => {
 
   it('prices the one-time Exam Pass with no billing cadence', () => {
     const p = planPricing('exam_pass', false);
-    expect(p.price).toBe(14.99);
+    expect(p.price).toBe(19.99);
     expect(p.isOneTime).toBe(true);
     expect(p.interval).toBeNull();
     expect(p.days).toBe(EXAM_PASS_DAYS);
@@ -180,7 +180,7 @@ describe('Exam Pass length', () => {
 
 describe('saleConfig planPricing — regional (PPP)', () => {
   it('uses the lower regional prices', () => {
-    expect(planPricing('monthly', true).price).toBe(3.99);
+    expect(planPricing('monthly', true).price).toBe(4.99);
     expect(planPricing('annual', true).price).toBe(19.99);
     expect(planPricing('exam_pass', true).price).toBe(5.99);
   });
@@ -199,7 +199,7 @@ describe('saleConfig card layout', () => {
     expect(highlightedSku(ppp)).toBe('exam_pass');
     expect(planOrder(ppp)[0]).toBe(highlightedSku(ppp));
     expect(planOrder(ppp).map(sku => planPricing(sku, ppp).price))
-      .toEqual(ppp ? [5.99, 3.99, 19.99] : [14.99, 8.99, 49.99]);
+      .toEqual(ppp ? [5.99, 4.99, 19.99] : [19.99, 8.99, 49.99]);
     expect(planPricing('exam_pass', ppp)).toMatchObject({
       days: 30, isOneTime: true, interval: null, intervalCount: null,
     });

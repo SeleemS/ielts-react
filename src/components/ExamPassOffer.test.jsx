@@ -30,7 +30,7 @@ it('offers every plan as a one-click checkout at regional prices, with the pass-
   act(() => root.render(<ExamPassOffer skill="writing" source="score_tease" band={6} locked={{ corrections: 4, rewrite: true }} />));
   expect(buttons().map((b) => b.dataset.sku)).toEqual(['exam_pass', 'monthly']);
   expect(container.textContent).toContain('$5.99');
-  expect(container.textContent).toContain('$3.99/mo');
+  expect(container.textContent).toContain('$4.99/mo');
   expect(container.textContent).toContain('about $0.20 a day');
   expect(container.textContent).toContain('Get the full report on your next essay');
   expect(container.textContent).toContain('this essay had 4 more we held back');
@@ -92,7 +92,7 @@ it('shows a server refusal without leaving the page', async () => {
 
 it('uses global pricing and records exposure once only when the offer is visible', () => {
   act(() => root.render(<ExamPassOffer skill="speaking" source="speaking_sample" />));
-  expect(container.textContent).toContain('$14.99');
+  expect(container.textContent).toContain('$19.99');
   expect(container.textContent).toContain('$8.99/mo');
   expect(container.textContent).toContain('on your next recording');
   const views = () => track.mock.calls.filter(([event]) => event === 'exam_pass_offer_view');

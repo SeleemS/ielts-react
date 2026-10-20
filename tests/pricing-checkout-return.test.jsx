@@ -298,7 +298,7 @@ describe('pricing authentication handoff', () => {
     ).toEqual(['Choose Exam Pass plan', 'Choose Monthly plan', 'Choose Annual plan']);
     expect(container.textContent).toContain('$8.99');
     expect(container.textContent).toContain('$49.99');
-    expect(container.textContent).toContain('$14.99');
+    expect(container.textContent).toContain('$19.99');
     expect(container.textContent).toContain('60 live AI examiner minutes for your 30 days');
     expect(container.textContent).toContain('30 days · no subscription');
     // Item 39: no fictitious anchors — no price is struck through. The only
@@ -442,9 +442,9 @@ describe('pricing authentication handoff', () => {
     expect(container.textContent).toContain('30 days · no subscription');
     expect(container.textContent).toContain('$5.99');
     expect(container.textContent).toContain('30 live AI examiner minutes for your 30 days');
-    expect(container.textContent).toContain('$3.99');
+    expect(container.textContent).toContain('$4.99');
     expect(container.textContent).toContain('$19.99');
-    expect(container.textContent).not.toContain('$14.99');
+    expect(container.textContent).not.toContain('$8.99');
   });
 
   it('makes the pass the single primary offer, subscriptions second, in a pass-first market', async () => {
@@ -472,7 +472,7 @@ describe('pricing authentication handoff', () => {
     await renderPage();
 
     expect(container.textContent).toContain('Prefer a subscription?');
-    expect(container.textContent).toContain('$14.99');
+    expect(container.textContent).toContain('$19.99');
     expect(container.textContent).not.toContain('$5.99');
     expect(container.textContent).not.toContain('Priced for your region');
   });
@@ -662,7 +662,7 @@ describe('pricing plan fit and clarity', () => {
     act(() => pick('Not booked / 3+ months').click());
     expect(featuredName()).toBe('Annual');
     // Same three real prices, same checkout buttons in the same order.
-    expect(container.textContent).toContain('$14.99');
+    expect(container.textContent).toContain('$19.99');
     expect(container.textContent).toContain('$8.99');
     expect(container.textContent).toContain('$49.99');
     expect(
@@ -673,7 +673,7 @@ describe('pricing plan fit and clarity', () => {
   it('shows plain per-day costs and plan-specific button labels', async () => {
     testState.router = { isReady: true, query: {} };
     await renderPage();
-    expect(container.textContent).toContain('About $0.50 a day');
+    expect(container.textContent).toContain('About $0.67 a day');
     expect(container.textContent).toContain('About $0.30 a day');
     expect(container.textContent).toContain('About $0.14 a day');
     expect(container.querySelector('button[aria-label="Choose Monthly plan"]').textContent).toContain('Start Monthly');
@@ -704,7 +704,7 @@ describe('pricing plan fit and clarity', () => {
     expect(text.indexOf('Prefer a subscription?')).toBeLessThan(text.indexOf('Monthly'));
     // Display-only: prices unchanged.
     expect(container.textContent).toContain('$5.99');
-    expect(container.textContent).toContain('$3.99');
+    expect(container.textContent).toContain('$4.99');
   });
 
   it('restates the chosen plan in the sign-in step', async () => {

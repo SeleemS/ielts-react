@@ -48,7 +48,7 @@ describe('planItem', () => {
       item_id: 'pro_exam_pass',
       item_name: 'Pro Exam Pass',
       item_category: 'one_time',
-      price: 14.99,
+      price: 19.99,
     });
   });
 

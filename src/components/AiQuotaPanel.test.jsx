@@ -94,12 +94,12 @@ describe('AiQuotaPanel plan emphasis by market', () => {
     expect(text).toContain('Exam Pass: $5.99 · One payment · no auto-renew');
     expect(text.indexOf('Exam Pass')).toBeLessThan(text.indexOf('subscribe from'));
     expect(text).toContain('subscribe from $1.67/mo');
-    expect(text).not.toContain('$14.99');
+    expect(text).not.toContain('$19.99');
   });
 
   it('leads with the pass at global prices in China', () => {
     document.cookie = 'ib_country=CN; path=/';
     render();
-    expect(container.textContent).toContain('Exam Pass: $14.99 · One payment · no auto-renew');
+    expect(container.textContent).toContain('Exam Pass: $19.99 · One payment · no auto-renew');
   });
 });

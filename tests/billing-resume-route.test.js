@@ -95,7 +95,7 @@ vi.mock('../lib/billing', async (importOriginal) => {
           return { data: [{
             id: 'price_1', lookup_key: args.lookup_keys[0], active: true, currency: 'usd',
             ...(oneTime
-              ? { unit_amount: 1499, type: 'one_time', recurring: null }
+              ? { unit_amount: 1999, type: 'one_time', recurring: null }
               : { unit_amount: 899, type: 'recurring', recurring: { interval: 'month', interval_count: 1, usage_type: 'licensed' } }),
           }] };
         },

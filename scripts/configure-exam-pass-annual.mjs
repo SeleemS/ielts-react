@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 // scripts/configure-exam-pass-annual.mjs
 //
-// Moves the live Stripe catalogue to the pricing in src/lib/saleConfig.js:
-//   premium_annual         $44.99 -> $49.99  (recurring, year)
-//   premium_exam_pass_ppp   $6.99 ->  $5.99  (one-time)
+// Moves the live Stripe catalogue to the pricing in src/lib/saleConfig.js.
+// Oct 20 2026 run:
+//   premium_exam_pass       $14.99 -> $19.99  (one-time)
+//   premium_monthly_ppp      $3.99 ->  $4.99  (recurring, month)
+//   premium_week_pass_ppp    $1.99 ->  $2.99  (one-time)
+// (Sep run: premium_annual $44.99 -> $49.99, premium_exam_pass_ppp $6.99 -> $5.99.)
 // and verifies every other advertised price is already correct.
 //
 // Stripe price amounts are immutable, so a price change is: create a NEW price
@@ -47,7 +50,7 @@ export const DESIRED_PRICES = [
   },
   {
     lookupKey: 'premium_monthly_ppp',
-    unitAmount: 399,
+    unitAmount: 499,
     interval: 'month',
     intervalCount: 1,
     nickname: 'Pro Monthly (PPP)',
@@ -68,7 +71,7 @@ export const DESIRED_PRICES = [
   },
   {
     lookupKey: 'premium_exam_pass',
-    unitAmount: 1499,
+    unitAmount: 1999,
     nickname: 'Pro Exam Pass — 30 days (global)',
   },
   {
@@ -83,7 +86,7 @@ export const DESIRED_PRICES = [
   },
   {
     lookupKey: 'premium_week_pass_ppp',
-    unitAmount: 199,
+    unitAmount: 299,
     nickname: 'Pro Week Pass — 7 days (PPP)',
   },
 ];
