@@ -160,6 +160,20 @@ describe('WritingScoreReport free-score preview', () => {
     expect(container.textContent).not.toContain('seen your band on all four criteria');
   });
 
+  it('names how many fixes the examiner found, per locked criterion, without the text', () => {
+    render(<WritingScoreReport task={2} result={freeResult} />);
+    expect(container.textContent).toContain('The examiner found 8 things to fix in your essay.');
+    expect(container.textContent).toContain('Band and 1 specific fix for your essay.');
+    expect(container.textContent).not.toContain('Check agreement');
+  });
+
+  it('shows no fix-count banner for paid reports or when the count is absent', () => {
+    render(<WritingScoreReport task={2} result={{ ...result, free: false }} />);
+    expect(container.textContent).not.toContain('things to fix');
+    render(<WritingScoreReport task={2} result={{ ...freeResult, lockedIssueCount: undefined }} />);
+    expect(container.textContent).not.toContain('things to fix');
+  });
+
   it('renders the complete report without a preview for a paid score', () => {
     render(<WritingScoreReport task={2} result={{ ...result, free: false }} />);
     expect(container.textContent).toContain('Logical paragraphs');

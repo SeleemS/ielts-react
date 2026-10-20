@@ -130,6 +130,12 @@ export default function WritingScoreReport({
   // The Band Estimator's free reveal still withholds criteria 2-4, so the
   // upgrade copy must not claim all four bands are visible there.
   const visibleCriteria = criteriaMeta.filter(([key]) => hasBand(criteria[key] || {})).length;
+  // Bare counts from reduceForFree: how much the examiner found in THIS essay
+  // behind the lock. Absent on older saved reports and the estimator reveal.
+  const lockedIssues = Number.isFinite(result.lockedIssueCount) ? Math.max(0, result.lockedIssueCount) : 0;
+  const lockedCriteriaIssues = result.lockedCriteriaIssues && typeof result.lockedCriteriaIssues === 'object'
+    ? result.lockedCriteriaIssues
+    : {};
   const trackedRef = React.useRef(false);
 
   React.useEffect(() => {
@@ -148,12 +154,14 @@ export default function WritingScoreReport({
       corrections_shown: corrected.length,
       corrections_locked: lockedCorrections,
       rewrite_locked: result.rewriteLocked === true,
+      issues_locked: lockedIssues,
     });
   }, [
     analyticsSource,
     corrected.length,
     isTeaser,
     lockedCorrections,
+    lockedIssues,
     result.overallBand,
     result.rewriteLocked,
   ]);
@@ -167,6 +175,20 @@ export default function WritingScoreReport({
         }
       />
 
+      {isTeaser && lockedIssues > 0 ? (
+        <div className="flex items-start gap-3 rounded-lg border border-primary/30 bg-primary/5 p-4">
+          <Lock className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+          <p className="text-sm text-foreground">
+            <span className="font-bold">
+              The examiner found {lockedIssues} {lockedIssues === 1 ? 'thing' : 'things'} to fix in your {submissionLabel}.
+            </span>{' '}
+            <span className="text-muted-foreground">
+              Your first criterion and one correction are free below — Pro shows every fix.
+            </span>
+          </p>
+        </div>
+      ) : null}
+
       <div className="space-y-3">
         {criteriaMeta.map(([key, label]) => {
           const criterion = criteria[key] || {};
@@ -175,7 +197,16 @@ export default function WritingScoreReport({
           // same). A criterion with no band was withheld by the server, so it
           // renders as a locked placeholder with no real text.
           if (isTeaser && !hasBand(criterion)) {
-            return <LockedPlaceholder key={key} label={label} />;
+            const fixes = Number(lockedCriteriaIssues[key]) || 0;
+            return (
+              <LockedPlaceholder
+                key={key}
+                label={label}
+                hint={fixes > 0
+                  ? `Band and ${fixes} specific ${fixes === 1 ? 'fix' : 'fixes'} for your ${submissionLabel}.`
+                  : null}
+              />
+            );
           }
           return (
             <div key={key} className="rounded-lg border border-border bg-card p-4">
