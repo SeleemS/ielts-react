@@ -235,3 +235,35 @@ describe('deferred onboarding study-plan consent', () => {
     expect(lifecycleEmailAllowed('weekly_digest', context).allowed).toBe(false);
   });
 });
+
+describe('unanswered prefs in opt-out regions (Oct 20 2026)', () => {
+  const NEW = '2026-10-19T00:00:00Z';
+  const studyTypes = Object.entries(LIFECYCLE_EMAIL_GATES).filter(([, gate]) => gate.pref === STUDY_PLAN_PREF).map(([type]) => type);
+
+  it.each(studyTypes)('%s sends to a new account in an opt-out region', (type) => {
+    expect(lifecycleEmailAllowed(type, { accountCreatedAt: NEW, region: 'IN', prefs: {} })).toMatchObject({ allowed: true, reason: 'opt-out-region' });
+  });
+
+  it.each(['FR', 'GB', 'CH', 'CA', 'AU', 'JP', '', null, 'zz1'])('study plan stays consent-required for region %s', (region) => {
+    expect(lifecycleEmailAllowed('day2_first_week_plan', { accountCreatedAt: NEW, region, prefs: {} })).toMatchObject({
+      allowed: false,
+      reason: 'study-plan-consent-required',
+    });
+  });
+
+  it('paywall follow-up sends in opt-out regions and fails closed elsewhere', () => {
+    expect(lifecycleEmailAllowed('paywall_followup', { accountCreatedAt: NEW, region: 'PK' }).allowed).toBe(true);
+    expect(lifecycleEmailAllowed('paywall_followup', { accountCreatedAt: NEW, region: 'DE' }).allowed).toBe(false);
+    expect(lifecycleEmailAllowed('paywall_followup', { accountCreatedAt: NEW, region: null }).allowed).toBe(false);
+  });
+
+  it('an explicit opt-out always wins over the region default', () => {
+    expect(lifecycleEmailAllowed('paywall_followup', { accountCreatedAt: NEW, region: 'IN', prefs: NO }).allowed).toBe(false);
+    expect(lifecycleEmailAllowed('day2_first_week_plan', { accountCreatedAt: NEW, region: 'IN', prefs: NO }).allowed).toBe(false);
+  });
+
+  it('leaves the weekly digest and win-back on the newsletter basis', () => {
+    expect(lifecycleEmailAllowed('weekly_digest', { accountCreatedAt: NEW, region: 'IN' }).allowed).toBe(false);
+    expect(lifecycleEmailAllowed('win_back', { accountCreatedAt: NEW, region: 'IN' }).allowed).toBe(false);
+  });
+});

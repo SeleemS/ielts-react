@@ -437,3 +437,18 @@ describe('SignInDialog sign-up email checks', () => {
     expect(document.body.textContent).toContain('check your Spam, Junk or Promotions folder');
   });
 });
+
+describe('sign-up email opt-ins', () => {
+  it('shows both boxes on sign-up with offers never pre-ticked, and hides them on sign-in', async () => {
+    await renderDialog('signup');
+    const study = document.querySelector('#signup-pref-study-plan');
+    const offers = document.querySelector('#signup-pref-marketing');
+    expect(study).not.toBeNull();
+    expect(offers).not.toBeNull();
+    expect(String(offers.getAttribute('aria-checked') ?? offers.getAttribute('data-state') ?? offers.checked)).toMatch(/false|unchecked/);
+    act(() => root.unmount());
+    root = createRoot(container);
+    await renderDialog('signin');
+    expect(document.querySelector('#signup-pref-study-plan')).toBeNull();
+  });
+});

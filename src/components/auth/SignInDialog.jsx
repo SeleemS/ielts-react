@@ -10,6 +10,8 @@ import {
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
+import { Checkbox } from '../../../components/ui/checkbox';
+import { getSupabase } from '../../../lib/supabase';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../lib/auth';
 import { track } from '../../lib/analytics';
@@ -17,8 +19,11 @@ import { POST_AUTH_PATH } from '../../lib/authPaths';
 import { inter } from '../../lib/fonts';
 import { useDialogFocus } from '../../lib/dialogFocus';
 import { isDisposableEmail, suggestEmailFix } from '../../../lib/emailCheck';
+import { defaultEmailOptIns, saveSignupEmailConsent } from '../../lib/emailConsent';
 // Email and password -> verified email -> resume the caller's destination.
-// Optional profile details and email preferences remain in account settings.
+// The two email opt-ins sit under the password (study plan pre-ticked only
+// outside opt-in regions, offers never pre-ticked) and are saved once the
+// account has a session. Profile details remain in account settings.
 const SIGNUP_EXPERIMENT = 'signup_email_first_v1';
 
 function matchesAuthError(error, code, legacyMessagePattern) {
@@ -106,6 +111,11 @@ export default function SignInDialog({
   // "Did you mean …@gmail.com?" — shown on blur, and asked once before sign-up.
   const [emailFix, setEmailFix] = React.useState(null);
   const [typoAskedFor, setTypoAskedFor] = React.useState('');
+  // Region-dependent defaults read cookies, so they resolve after mount.
+  const [optIns, setOptIns] = React.useState({ studyPlan: false, marketing: false });
+  React.useEffect(() => {
+    setOptIns(defaultEmailOptIns());
+  }, []);
   const dialogRef = React.useRef(null);
   const authInFlight = React.useRef(false);
   const wasOpen = React.useRef(false);
@@ -119,6 +129,20 @@ export default function SignInDialog({
     authInFlight.current = false;
     setBusy(false);
   };
+
+  const saveOptIns = React.useCallback(() => {
+    const answer = { ...optIns };
+    track('email_prefs_saved', {
+      study_plan_emails: answer.studyPlan,
+      marketing_emails: answer.marketing,
+      source: 'signup',
+    });
+    try {
+      void saveSignupEmailConsent(getSupabase(), { ...answer, source: 'signup' });
+    } catch {
+      // No browser client (missing env): leave the prefs unanswered.
+    }
+  }, [optIns]);
 
   const finishStandardAuth = React.useCallback(() => {
     onOpenChange?.(false);
@@ -243,6 +267,7 @@ export default function SignInDialog({
         // Some projects auto-confirm; if a session exists, skip verification.
         if (data?.session) {
           track('signup_verified', { trigger, method: 'auto', experiment: SIGNUP_EXPERIMENT });
+          saveOptIns();
           setStep('account');
           finishStandardAuth();
           return;
@@ -310,6 +335,7 @@ export default function SignInDialog({
         return;
       }
       track('signup_verified', { trigger, method: 'otp', experiment: SIGNUP_EXPERIMENT });
+      saveOptIns();
       setStep('account');
       finishStandardAuth();
     } finally {
@@ -559,6 +585,29 @@ export default function SignInDialog({
               disabled={busy}
             />
           </div>
+          {mode === 'signup' && (
+            <fieldset className="flex flex-col gap-2 text-sm" disabled={busy}>
+              <legend className="sr-only">Email preferences</legend>
+              <label htmlFor="signup-pref-study-plan" className="flex cursor-pointer items-start gap-2.5">
+                <Checkbox
+                  id="signup-pref-study-plan"
+                  className="mt-0.5"
+                  checked={optIns.studyPlan}
+                  onCheckedChange={(value) => setOptIns((prev) => ({ ...prev, studyPlan: value === true }))}
+                />
+                <span className="leading-snug text-foreground">Email me a study plan for my exam</span>
+              </label>
+              <label htmlFor="signup-pref-marketing" className="flex cursor-pointer items-start gap-2.5">
+                <Checkbox
+                  id="signup-pref-marketing"
+                  className="mt-0.5"
+                  checked={optIns.marketing}
+                  onCheckedChange={(value) => setOptIns((prev) => ({ ...prev, marketing: value === true }))}
+                />
+                <span className="leading-snug text-muted-foreground">Send me score tips and occasional offers</span>
+              </label>
+            </fieldset>
+          )}
           {errorMsg && (
             <p role="alert" className="text-sm font-medium text-destructive">
               {errorMsg}

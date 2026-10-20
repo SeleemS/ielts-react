@@ -57,3 +57,35 @@ export function withEmailConsent(prefs, { studyPlan, marketing, source, at = new
     },
   };
 }
+
+// Persist the two sign-up checkboxes once the new account has a session.
+// Never overwrites an earlier answer (email_consent already present) and never
+// throws: a failed save leaves the prefs unanswered, which the server resolves
+// per region (lib/emailPrefs.js). Returns true when the answer was stored.
+export async function saveSignupEmailConsent(supabase, { studyPlan, marketing, source = 'signup' }) {
+  try {
+    const { data: auth } = await supabase.auth.getUser();
+    const userId = auth?.user?.id;
+    if (!userId) return false;
+    // The public.users row is created by a trigger on sign-up; allow it a
+    // moment to appear before giving up.
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const { data: row } = await supabase.from('users').select('prefs').eq('id', userId).maybeSingle();
+      if (row) {
+        if (row.prefs?.email_consent) return false;
+        const prefs = withEmailConsent(row.prefs, { studyPlan, marketing, source });
+        const { data, error } = await supabase
+          .from('users')
+          .update({ prefs })
+          .eq('id', userId)
+          .select('id')
+          .maybeSingle();
+        return Boolean(data && !error);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
+  } catch {
+    // Fall through: unanswered.
+  }
+  return false;
+}

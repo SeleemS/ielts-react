@@ -26,8 +26,9 @@ describe('free_report_offer consent gate', () => {
     expect(gate({ region: 'IN', prefs: { marketing_emails: false } })).toMatchObject({ allowed: false, reason: 'pref-opted-out' });
   });
 
-  it('leaves every other marketing email on its old rule', () => {
-    expect(lifecycleEmailAllowed('paywall_followup', { region: 'IN', accountCreatedAt: NEW_ACCOUNT }).allowed).toBe(false);
+  it('leaves the digest and win-back emails on their old rule', () => {
+    expect(lifecycleEmailAllowed('weekly_digest', { region: 'IN', accountCreatedAt: NEW_ACCOUNT }).allowed).toBe(false);
+    expect(lifecycleEmailAllowed('win_back', { region: 'IN', accountCreatedAt: NEW_ACCOUNT }).allowed).toBe(false);
   });
 });
 
