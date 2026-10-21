@@ -15,6 +15,7 @@ import {
 import { track } from '../lib/analytics';
 import { useAuth } from '../lib/auth';
 import { CONTACT_SEO } from '../../lib/contactSeo';
+import { PUBLISHER } from '../../lib/publisher';
 
 const fieldClasses =
   'flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm';
@@ -113,7 +114,11 @@ const ContactUs = () => {
             </p>
             <p className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4 text-accent" />
-              Send us a message below and we&rsquo;ll get back to you by email.
+              Email{' '}
+              <a href={`mailto:${PUBLISHER.email}`} className="font-medium text-primary underline-offset-2 hover:underline">
+                {PUBLISHER.email}
+              </a>{' '}
+              or send a message below.
             </p>
           </div>
 
@@ -213,6 +218,41 @@ const ContactUs = () => {
                   {pending ? 'Sending…' : 'Send Message'}
                 </Button>
               </form>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle as="h2">What we can help with</CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm leading-7 text-slate-700">
+              <ul className="list-disc space-y-1 pl-5">
+                <li>
+                  <strong className="font-semibold text-foreground">A mistake in a question or answer key</strong> —
+                  include the page link and question number. The editor checks every report, and we
+                  correct the page or explain the answer (see our{' '}
+                  <NextLink href="/editorial-policy" className="text-primary underline-offset-2 hover:underline">editorial policy</NextLink>).
+                </li>
+                <li>
+                  <strong className="font-semibold text-foreground">Premium, billing and refunds</strong> —
+                  send the email address you paid with so we can find your purchase.
+                </li>
+                <li>
+                  <strong className="font-semibold text-foreground">Your data</strong> — requests to
+                  access, export or delete your account data, as described in our{' '}
+                  <NextLink href="/privacypolicy" className="text-primary underline-offset-2 hover:underline">privacy policy</NextLink>.
+                </li>
+                <li>
+                  <strong className="font-semibold text-foreground">Study questions, feedback and partnerships</strong> —
+                  teachers and schools are welcome to get in touch.
+                </li>
+              </ul>
+              <p className="mt-4 border-t border-border pt-4 text-muted-foreground">
+                IELTS-Bank is operated by {PUBLISHER.legalName}, {PUBLISHER.country}. We are an
+                independent study resource, not affiliated with the British Council, IDP or
+                Cambridge — for questions about booking or sitting the IELTS test itself, contact
+                your test centre.
+              </p>
             </CardContent>
           </Card>
 

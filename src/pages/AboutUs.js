@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { ABOUT_SEO } from '../../lib/aboutSeo';
+import { PUBLISHER } from '../../lib/publisher';
 
 const AboutUs = () => {
   return (
@@ -58,6 +59,28 @@ const AboutUs = () => {
               </div>
 
               <div>
+                <h2 className="mb-1 text-base font-semibold text-foreground">Who We Are</h2>
+                <p>
+                  IELTS-Bank is built and run by {PUBLISHER.legalName}, a company based in
+                  {PUBLISHER.country}. We design the practice tests, write and
+                  review the study guides, and build the marking and feedback tools ourselves.
+                </p>
+              </div>
+
+              <div>
+                <h2 className="mb-1 text-base font-semibold text-foreground">How Our Content Is Made</h2>
+                <p>
+                  All of our practice material is original — we never publish real or
+                  &ldquo;leaked&rdquo; exam papers. Questions, model essays and articles are drafted
+                  with AI writing tools from our own briefs, then read, edited and approved by our
+                  editor before they go live. Every question has a checked answer key, and anything
+                  that cannot be marked reliably is withheld. Our{' '}
+                  <NextLink href="/editorial-policy" className="text-primary underline-offset-2 hover:underline">editorial policy</NextLink>{' '}
+                  explains the full process and how to report a mistake.
+                </p>
+              </div>
+
+              <div>
                 <h2 className="mb-1 text-base font-semibold text-foreground">What We Offer</h2>
                 <ul className="list-disc space-y-1 pl-6">
                   <li>
@@ -78,10 +101,12 @@ const AboutUs = () => {
               <div>
                 <h2 className="mb-1 text-base font-semibold text-foreground">How We Keep It Free</h2>
                 <p>
-                  Core practice content on IELTS-Bank is free to use, without an account. The site is
-                  supported by advertising and an optional Premium plan that unlocks full AI
-                  feedback, continued scoring, the live Speaking Examiner and timed mock mode. That model lets us keep publishing new questions and guides
-                  while staying free for the learners who need it most.
+                  Every practice test, answer-key page, model essay and guide on IELTS-Bank is free
+                  to read. A free account lets you have a limited number of tests marked; the
+                  optional Premium plan unlocks unlimited marking, full AI feedback, the live
+                  Speaking Examiner and timed mock mode. Advertising on our guides and articles
+                  (never on practice tests) helps pay for the rest, so we can keep publishing new
+                  questions while staying free for the learners who need it most.
                 </p>
               </div>
 
@@ -101,7 +126,7 @@ const AboutUs = () => {
                 <p>
                   Questions, feedback, or spotted a mistake in a question? We read everything. Reach
                   us at{' '}
-                  <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                  <a href={`mailto:${PUBLISHER.email}`} className="text-primary underline-offset-2 hover:underline">{PUBLISHER.email}</a>{' '}
                   or through our <NextLink href="/contactus" className="text-primary underline-offset-2 hover:underline">contact form</NextLink>.
                 </p>
               </div>

@@ -12,6 +12,7 @@ import AudioPlayer from '../components/question/AudioPlayer';
 import ListeningIntroModal from '../components/question/ListeningIntroModal';
 import RelatedPractice from '../components/RelatedPractice';
 import AnswerKeyLink from '../components/AnswerKeyLink';
+import ListeningTestAbout from '../components/question/ListeningTestAbout';
 import { sanitizeHtml } from '../../lib/sanitize';
 import { practicePageTitle } from '../../lib/answerKeys';
 import { track } from '../lib/analytics';
@@ -229,6 +230,7 @@ const ListeningQuestion = ({ id, passage, description, related = [], answersHref
               </div>
             </div>
           </div>
+          <ListeningTestAbout passage={passage} className="mt-10" />
           <RelatedPractice skill="listening" items={related} className="mt-10" />
 
           <AnswerKeyLink href={answersHref} title={title} skill="listening" />

@@ -178,7 +178,7 @@ const PrivacyPolicy = () => {
                 <h2 className="mb-1 text-base font-semibold text-foreground">13. Contact Us</h2>
                 <p>
                   If you have any questions about this Privacy Policy or wish to exercise any of your rights, email us at{' '}
-                  <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                  <a href="mailto:hello@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">hello@ielts-bank.com</a>{' '}
                   or use our <NextLink href="/contactus" className="text-primary underline-offset-2 hover:underline">contact form</NextLink>.
                 </p>
               </div>

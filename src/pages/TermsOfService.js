@@ -127,7 +127,7 @@ const TermsOfService = () => {
                   <li>
                     <strong className="font-semibold text-foreground">14-day money-back guarantee.</strong>{' '}
                     You may request a refund within 14 calendar days of your first paid purchase —
-                    a subscription or a one-time pass — by contacting <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                    a subscription or a one-time pass — by contacting <a href="mailto:hello@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">hello@ielts-bank.com</a>{' '}
                     from the email on your account. The guarantee applies once per customer. We may
                     refuse requests involving fraud, chargeback abuse, material violation of these
                     terms, or substantially consumed live-examiner usage.
@@ -158,7 +158,7 @@ const TermsOfService = () => {
                   them or your use of the website, are governed by the laws of the State
                   of Delaware, United States, without regard to its conflict-of-law
                   principles. If you have a concern, please first contact us at{' '}
-                  <a href="mailto:info@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">info@ielts-bank.com</a>{' '}
+                  <a href="mailto:hello@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">hello@ielts-bank.com</a>{' '}
                   so we can try to resolve it informally.
                 </p>
                 <p className="mt-3">

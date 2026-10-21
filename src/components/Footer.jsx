@@ -42,6 +42,7 @@ const GUIDE_LINKS = [
 const RESOURCE_LINKS = [
   { label: 'About Us', href: '/about' },
   { label: 'Contact Us', href: '/contactus' },
+  { label: 'Editorial Policy', href: '/editorial-policy' },
 ];
 
 const LEGAL_LINKS = [

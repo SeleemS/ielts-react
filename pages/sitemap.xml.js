@@ -15,6 +15,7 @@ import { collectAllSitemapSections } from '../lib/sitemapData';
 export const STATIC_ROUTES = [
   '/',
   '/about',
+  '/editorial-policy',
   '/contactus',
   '/privacypolicy',
   '/termsofservice',
