@@ -155,17 +155,16 @@ const TermsOfService = () => {
                 <h2 className="mb-1 text-base font-semibold text-foreground">8. Governing Law and Disputes</h2>
                 <p>
                   These Terms of Service, and any dispute arising out of or relating to
-                  them or your use of the website, are governed by the laws of the State
-                  of Delaware, United States, without regard to its conflict-of-law
-                  principles. If you have a concern, please first contact us at{' '}
+                  them or your use of the website, are governed by the laws in force in
+                  Canada, without regard to conflict-of-law principles. IELTS-Bank is
+                  operated by WSO Digital Inc., a company based in Canada. If you have a concern, please first contact us at{' '}
                   <a href="mailto:hello@ielts-bank.com" className="text-primary underline-offset-2 hover:underline">hello@ielts-bank.com</a>{' '}
                   so we can try to resolve it informally.
                 </p>
                 <p className="mt-3">
                   If a dispute cannot be resolved informally, you agree that it will be
-                  subject to the exclusive jurisdiction of the state and federal courts
-                  located in the State of Delaware, and you consent to personal
-                  jurisdiction in those courts.
+                  subject to the exclusive jurisdiction of the courts located in Canada,
+                  and you consent to the jurisdiction of those courts.
                 </p>
                 <p className="mt-3">
                   Nothing in this section removes any mandatory legal rights you have as a
@@ -177,7 +176,7 @@ const TermsOfService = () => {
               </div>
 
               <p>
-                <strong className="font-semibold text-foreground">Last Updated:</strong> July 20, 2026
+                <strong className="font-semibold text-foreground">Last Updated:</strong> October 21, 2026
               </p>
 
               <p>
